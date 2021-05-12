@@ -1,0 +1,66 @@
+- file: preface
+
+- part:  '第一篇 基础知识篇'
+  numbered: true  
+  sections:
+    #第一章 
+    - file: part00_basic/chapter01_00-content
+      sections:
+      - file: part00_basic/chapter01_01-Knowledge_Pyramy
+      - file: part00_basic/chapter01_02-
+    #第二章
+    - file: part00_basic/chapter02_00-content
+      sections:
+      - file: part00_basic/chapter02_01-Knowledge_Pyramy
+      - file: part00_basic/chapter02_02-
+
+- part:   '第二篇 知识表达篇'
+  numbered: true  
+  sections:
+    # 第四章
+    - file: part01_represation/content
+      sections:
+      - file: part01_represation/abc01
+      - file: part01_represation/abc02
+    
+
+- part:   '第三篇 知识获取篇'
+  numbered: true  
+  sections:
+    - file: part02_harvest/content
+      sections:
+       - file: part02_harvest/abc01
+       - file: part02_harvest/abc02
+
+
+- part:   '第四篇 知识管理篇'
+  numbered: true  
+  sections:
+    - file: part03_manage/content
+      sections:
+      - file: part03_manage/abc01
+      - file: part03_manage/abc02
+
+- part:   '第五篇 知识问答篇'
+  numbered: true  
+  sections:
+    - file: part04_answer/content
+      sections:
+      - file: part04_answer/abc01
+      - file: part04_answer/abc02
+
+- part:   '第六篇 知识推理篇'
+  numbered: true  
+  sections:
+    - file: part05_reasoning/content
+      sections:
+      - file: part05_reasoning/abc01
+      - file: part05_reasoning/abc02
+
+- part:   '第七篇 知识挖掘篇'
+  numbered: true  
+  sections:
+    - file: part06_mining/content
+      sections:
+      - file: part06_mining/abc01
+      - file: part06_mining/abc02
