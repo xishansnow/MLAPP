@@ -1,66 +1,16 @@
-- file: preface
-
-- part:  '第一篇 基础知识篇'
-  numbered: true  
-  sections:
-    #第一章 
-    - file: part00_basic/chapter01_00-content
-      sections:
-      - file: part00_basic/chapter01_01-Knowledge_Pyramy
-      - file: part00_basic/chapter01_02-
-    #第二章
-    - file: part00_basic/chapter02_00-content
-      sections:
-      - file: part00_basic/chapter02_01-Knowledge_Pyramy
-      - file: part00_basic/chapter02_02-
-
-- part:   '第二篇 知识表达篇'
-  numbered: true  
-  sections:
-    # 第四章
-    - file: part01_represation/content
-      sections:
-      - file: part01_represation/abc01
-      - file: part01_represation/abc02
-    
-
-- part:   '第三篇 知识获取篇'
-  numbered: true  
-  sections:
-    - file: part02_harvest/content
-      sections:
-       - file: part02_harvest/abc01
-       - file: part02_harvest/abc02
-
-
-- part:   '第四篇 知识管理篇'
-  numbered: true  
-  sections:
-    - file: part03_manage/content
-      sections:
-      - file: part03_manage/abc01
-      - file: part03_manage/abc02
-
-- part:   '第五篇 知识问答篇'
-  numbered: true  
-  sections:
-    - file: part04_answer/content
-      sections:
-      - file: part04_answer/abc01
-      - file: part04_answer/abc02
-
-- part:   '第六篇 知识推理篇'
-  numbered: true  
-  sections:
-    - file: part05_reasoning/content
-      sections:
-      - file: part05_reasoning/abc01
-      - file: part05_reasoning/abc02
-
-- part:   '第七篇 知识挖掘篇'
-  numbered: true  
-  sections:
-    - file: part06_mining/content
-      sections:
-      - file: part06_mining/abc01
-      - file: part06_mining/abc02
+file: preface
+sections:
+- file: "MLAPP-C1-\u5F15\u8A00/1.\u5F15\u8A00"
+- file: "MLAPP-C10-\u6709\u5411\u56FE\u6A21\u578B\uFF08\u8D1D\u53F6\u65AF\u7F51\u7EDC\
+    \uFF09/MLAPP-C10"
+- file: "MLAPP-C11-\u6DF7\u5408\u6A21\u578B\u4E0EEM\u7B97\u6CD5/C11 \u6DF7\u5408\u6A21\
+    \u578B\u548CEM\u7B97\u6CD5"
+- file: "MLAPP-C12-\u9690\u53D8\u91CF\u7EBF\u6027\u6A21\u578B/C12 \u9690\u53D8\u91CF\
+    \u7EBF\u6027\u6A21\u578B"
+- file: "MLAPP-C13-\u7A00\u758F\u7EBF\u6027\u6A21\u578B/13.\u7A00\u758F\u7EBF\u6027\
+    \u6A21\u578B"
+- file: "MLAPP-C14-\u6838\u65B9\u6CD5/C14-\u6838\u65B9\u6CD5"
+- file: "MLAPP-C17-\u9A6C\u5C14\u79D1\u592B\u4E0E\u9690\u9A6C\u5C14\u79D1\u592B\u6A21\
+    \u578B/17. \u9A6C\u5C14\u79D1\u592B\u4E0E\u9690\u9A6C\u5C14\u79D1\u592B\u6A21\u578B"
+- file: "MLAPP-C2-\u6982\u7387\u8BBA/2.\u6982\u7387\u8BBA"
+- file: MLAPP-C9/MLAPP-C9
