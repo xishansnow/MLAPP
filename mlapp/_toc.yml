@@ -1,4 +1,5 @@
-file: preface
+format: jb-article
+root: preface
 sections:
 - file: "MLAPP-C1-\u5F15\u8A00/1.\u5F15\u8A00"
 - file: "MLAPP-C10-\u6709\u5411\u56FE\u6A21\u578B\uFF08\u8D1D\u53F6\u65AF\u7F51\u7EDC\
