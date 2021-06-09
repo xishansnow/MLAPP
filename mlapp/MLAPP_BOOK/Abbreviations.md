@@ -16,22 +16,22 @@
 | HMM|Hidden Markov model|隐性马尔科夫模型
 | iid|Independent and identically distributed|独立同分布
 | iff|If and only if|当且仅当
-| KL|Kullback Leibler divergence|KL散度
+| KL|Kullback Leibler divergence|KL 散度
 | LDS|Linear dynamical system|线性动力系统
 | LHS|Left hand side (of an equation)|等式左边
 | MAP|Maximum A Posterior estimate|最大后验估计
 | MCMC|Markov chain Monte Carlo|马尔科夫链蒙特卡罗方法
-| MH|Metropolis Hastings|MH算法
+| MH|Metropolis Hastings|MH 算法
 | MLE|Maximum likelihood estimate|最大似然估计
 | MPM|Maximum of Posterior Marginals|最大后验边缘
 | MRF|Markov random ﬁeld|马尔科夫随机域
 | MSE|Mean squared error|均方误差
 | NLL|Negative log likelihood|负对数似然率
 | OLS|Ordinary least squares|普通最小二乘法
-| pd|Positive deﬁnite (matrix)|正定(矩阵)
+| pd|Positive deﬁnite (matrix)|正定（矩阵）
 | pdf|Probability density function|概率密度函数
 | pmf|Probability mass function|概率质量函数
-| RBPF|Rao-Blackwellised particle ﬁlter|Rao-Blackwell化粒子滤波算法
+| RBPF|Rao-Blackwellised particle ﬁlter|Rao-Blackwell 化粒子滤波算法
 | RHS|Right hand side (of an equation|等式右边
 | RJMCMC|Reversible jump MCMC|可逆跳变马尔科夫链蒙特卡罗方法
 | RSS|Residual sum of squares|残差平方和
@@ -40,4 +40,3 @@
 | UGM|Undirected graphical model|无向图模型
 | VB|Variational Bayes|变分贝叶斯
 | wrt|With respect to|关于
-

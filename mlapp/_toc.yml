@@ -1,17 +1,32 @@
-format: jb-article
+format: jb-book
 root: preface
-sections:
-- file: "MLAPP-C1-\u5F15\u8A00/1.\u5F15\u8A00"
-- file: "MLAPP-C10-\u6709\u5411\u56FE\u6A21\u578B\uFF08\u8D1D\u53F6\u65AF\u7F51\u7EDC\
-    \uFF09/MLAPP-C10"
-- file: "MLAPP-C11-\u6DF7\u5408\u6A21\u578B\u4E0EEM\u7B97\u6CD5/C11 \u6DF7\u5408\u6A21\
-    \u578B\u548CEM\u7B97\u6CD5"
-- file: "MLAPP-C12-\u9690\u53D8\u91CF\u7EBF\u6027\u6A21\u578B/C12 \u9690\u53D8\u91CF\
-    \u7EBF\u6027\u6A21\u578B"
-- file: "MLAPP-C13-\u7A00\u758F\u7EBF\u6027\u6A21\u578B/13.\u7A00\u758F\u7EBF\u6027\
-    \u6A21\u578B"
-- file: "MLAPP-C14-\u6838\u65B9\u6CD5/C14-\u6838\u65B9\u6CD5"
-- file: "MLAPP-C17-\u9A6C\u5C14\u79D1\u592B\u4E0E\u9690\u9A6C\u5C14\u79D1\u592B\u6A21\
-    \u578B/17. \u9A6C\u5C14\u79D1\u592B\u4E0E\u9690\u9A6C\u5C14\u79D1\u592B\u6A21\u578B"
-- file: "MLAPP-C2-\u6982\u7387\u8BBA/2.\u6982\u7387\u8BBA"
-- file: MLAPP-C9/MLAPP-C9
+chapters:
+- file: MLAPP_BOOK/01.Introduction
+- file: MLAPP_BOOK/02.Probability
+- file: MLAPP_BOOK/03.GenerativeModelsForDiscreteData
+- file: MLAPP_BOOK/04.GaussianModels
+- file: MLAPP_BOOK/05.BayesianStatistics
+- file: MLAPP_BOOK/06.FrequentistStatistics
+- file: MLAPP_BOOK/07.LinearRegression
+- file: MLAPP_BOOK/08.LogisticRegression
+- file: MLAPP_BOOK/09.GeneralizedLinearModelsAndTheExponentialFamily
+- file: MLAPP_BOOK/10.DirectedGraphicalModels (BayesNets)
+- file: MLAPP_BOOK/11.MixtureModelandEMAlgorithm
+- file: MLAPP_BOOK/12.LinearModelwithLatentVariable
+- file: MLAPP_BOOK/13.SparseLinearModel
+- file: MLAPP_BOOK/14.KernelMethod
+- file: MLAPP_BOOK/15.GaussianProcesses
+- file: MLAPP_BOOK/16.AdaptiveBasisFunctionModel
+- file: MLAPP_BOOK/17.MarkovAndHiddenMarkovModel
+- file: MLAPP_BOOK/18.StateSpaceModels
+- file: MLAPP_BOOK/19.UndirectedGraphicalModels(MarkovRandomFields)
+- file: MLAPP_BOOK/20.ExactInferenceForGraphicalModels
+- file: MLAPP_BOOK/21.VariationalInference
+- file: MLAPP_BOOK/22.MoreVariationalInference
+- file: MLAPP_BOOK/23.MonteCarloInference
+- file: MLAPP_BOOK/24.MarkovChainMonteCarlo(MCMC)Inference
+- file: MLAPP_BOOK/25.Clustering
+- file: MLAPP_BOOK/26.GraphicalModelStructureLearning
+- file: MLAPP_BOOK/27.LatentVariableModelsForDiscreteData
+- file: MLAPP_BOOK/28.DeepLearning
+- file: MLAPP_BOOK/Abbreviations
