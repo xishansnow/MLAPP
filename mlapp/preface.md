@@ -27,4 +27,73 @@
 
 本书中的很多图片都是使用 PMTK 生成的，这些相关的代码也都在 PMTK 网站上可以找到。这部分内容大家自己在 PMTK 的网站上看吧。
 
+## 符号说明
 
+- 向量：用加粗的数字模式小写字母表示，例如 $\boldsymbol{x}$。默认为列向量，即：
+ 
+$$  
+\boldsymbol{x}=\left[\begin{array}{c}
+x_{1} \\
+x_{2} \\
+\vdots \\
+x_{l}
+\end{array}\right], \text { or } \boldsymbol{x}=\left[\begin{array}{c}
+x(1) \\
+x(2) \\
+\vdots \\
+x(l)
+\end{array}\right]
+$$
+
+- 矩阵：用数字模式的大写字母表示，例如 $A$，即：
+
+$$
+X=\left[\begin{array}{cccc}
+x_{11} & x_{12} & \ldots & x_{1 l} \\
+\vdots & \vdots & \ddots & \vdots \\
+x_{l 1} & x_{l 2} & \ldots & x_{l l}
+\end{array}\right], \text { or } X=\left[\begin{array}{cccc}
+X(1,1) & X(1,2) & \ldots & X(1, l) \\
+\vdots & \vdots & \ddots & \vdots \\
+X(l, 1) & X(l, 2) & \ldots & X(l, l)
+\end{array}\right]
+$$  
+
+- 矩阵的行列式：表示为 $\text{det}\{A\}$，有时表示为 $|A|$ 。
+
+- 对角线上元素为 $a_{1}，a_{2}，\ldots，a_{l}$ 的对角矩阵：记为 $A=\text{diag}\{a_{1}，a_{2}，\ldots，a_{l}\}$。
+
+- 单位矩阵：记为 $I$。
+
+- 矩阵的迹：表示为 $\text{trace}\{A\}$。
+
+- 随机变量：用小写罗马字体表示，如 $\mathrm{x}$，其值用数学模式的小写字母表示，如 $x$。
+
+- 随机向量：用小写罗马黑体表示，如 $\mathbf{x}$，其值用加粗的数字模式小写字母表示，如 $\boldsymbol{x}$ 表示。
+
+- 随机矩阵：用大写的罗马黑体表示， $\mathbf{X}$，其值用数字模式的大写字母表示。如 $X$ 。
+
+- 离散型随机变量的概率值： 用大写 $P$ 表示，
+
+- 连续型随机变量的概率密度函数(PDF)：用小写 $p$ 表示。
+
+- 向量的转置：表示为 $\boldsymbol{x}^{T}$ 。
+ 
+- 埃尔米特共轭矩阵：表示为 $\boldsymbol{x}^{H}$ 。
+
+- 复数的共轭：表示为 $x^{*}$ ，${-1} := j$ 。符号 “ $:=$ ” 表示定义为。
+  
+- 实数、复数、整数和自然数的集合分别表示为 $\mathbb{R}$、$\mathbb{C}$、$\mathbb{Z}$ 和 $\mathbb{N}$。
+ 
+- 数值序列：依据上下文，数值序列表示为 $x_{n}$ 或 $x(N)$ 。
+
+- 向量序列：类似的，向量序列表示为 $\boldsymbol{x}_{n}$ 或 $\boldsymbol{x}(N)$。
+  
+- 函数：用小写字母表示，例如 $f$ ，或者用其带参数表示，例如 $f(x)$，如果没有指定特定参数，则有时用 $f(\cdot)$ 的形式表示单参数函数，类似的用 $f(\cdot,\cdot)$ 表示两个参数的函数，依此类推。
+
+- 单字母形式的概率分布：用花体表示，如：正态分布表示为 $\mathcal{N}$、学生 $t$ 分布为 $\mathcal{T}$、卡方分布为 $\mathcal{\chi}^2$。
+  
+- 单词缩写形式的分布用罗马字体表示： 如：伯努利分布为 $\text{Ber}$ 、狄利克雷分布为 $\text{Dir}$。
+
+- 数据集：用花体 $\mathcal{D}$ 表示。
+ 
