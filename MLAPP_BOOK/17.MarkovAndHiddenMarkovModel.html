@@ -1,0 +1,647 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>17 马尔科夫与隐马尔科夫模型 &#8212; 机器学习：概率视角</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet" />
+  <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.e8e5499552300ddf5d7adccae7cc3b70.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="18 状态空间模型" href="18.StateSpaceModels.html" />
+    <link rel="prev" title="16 自适应基函数模型" href="16.AdaptiveBasisFunctionModel.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+      <img src="../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">机器学习：概率视角</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../preface.html">
+   前言
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="01.Introduction.html">
+   01 引言
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="02.Probability.html">
+   02 概率论
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03.GenerativeModelsForDiscreteData.html">
+   03 离散数据的生成式模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="04.GaussianModels.html">
+   04 高斯模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="05.BayesianStatistics.html">
+   05 贝叶斯学派统计思想
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="06.FrequentistStatistics.html">
+   06 频率学派统计思想
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="07.LinearRegression.html">
+   07 线性回归
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="08.LogisticRegression.html">
+   08 逻辑回归
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="09.GeneralizedLinearModelsAndTheExponentialFamily.html">
+   09 广义线性模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="10.DirectedGraphicalModels%20%28BayesNets%29.html">
+   10 有向图模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="11.MixtureModelandEMAlgorithm.html">
+   11 混合模型与EM算法
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="12.LinearModelwithLatentVariable.html">
+   12 隐变量线性模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="13.SparseLinearModel.html">
+   13 稀疏线性模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="14.KernelMethod.html">
+   14 核方法
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="15.GaussianProcesses.html">
+   15 高斯过程
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="16.AdaptiveBasisFunctionModel.html">
+   16 自适应基函数模型
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   17 马尔科夫与隐马尔科夫模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="18.StateSpaceModels.html">
+   18 状态空间模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="19.UndirectedGraphicalModels%28MarkovRandomFields%29.html">
+   19 无向图模型（马尔科夫随机场）
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="20.ExactInferenceForGraphicalModels.html">
+   20 概率图的精确推断
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="21.VariationalInference.html">
+   21 变分推断
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="22.MoreVariationalInference.html">
+   22 更多变分推断方法
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="23.MonteCarloInference.html">
+   23 蒙特卡洛推断
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="24.MarkovChainMonteCarlo%28MCMC%29Inference.html">
+   24 马尔科夫链蒙特卡洛 MCMC
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="25.Clustering.html">
+   25 聚簇
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="26.GraphicalModelStructureLearning.html">
+   26 概率图的结构学习
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="27.LatentVariableModelsForDiscreteData.html">
+   27 离散数据的隐变量模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="28.DeepLearning.html">
+   28 深度学习
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Abbreviations.html">
+   本书常见缩写列表
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/MLAPP_BOOK/17.MarkovAndHiddenMarkovModel.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   17.1 前言
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   17.2 马尔科夫模型
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id4">
+     17.2.1 转移矩阵
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id5">
+     17.2.2 应用：语言模型
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id6">
+       17.2.2.1 马尔科夫语言模型的最大似然解
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id7">
+       17.2.2.2 删除插值法的经验贝叶斯版本
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id8">
+   17.3 隐马尔可夫模型
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#hmms">
+     17.3.1 HMMs的应用
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id9">
+   17.4 HMMs的推理
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id10">
+     17.4.1 时间模型中推理问题的类型
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id11">
+     17.4.2 前向算法
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id12">
+     17.4.3 前向-后向算法
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="id1">
+<h1>17 马尔科夫与隐马尔科夫模型<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<p>[原文] <a class="reference external" href="https://probml.github.io/pml-book/book0.html">https://probml.github.io/pml-book/book0.html</a></p>
+<p>[作者] <a class="reference external" href="https://www.cs.ubc.ca/~murphyk/">Kevin Patrick Murphy</a></p>
+<style>p{text-indent:2em;2}</style>
+<div class="section" id="id2">
+<h2>17.1 前言<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>本章，我们将讨论任意长度 <span class="math notranslate nohighlight">\(T\)</span> 的序列观测数据 <span class="math notranslate nohighlight">\(X_1,...,X_T\)</span> 的概率模型。这类模型可应用在计算机生物学，自然语言处理以及时序预测等领域。我们重点关注观测值在离散“时间”下产生的情况，尽管此处的”时间”也可以指一个序列中的不同位置。</p>
+</div>
+<div class="section" id="id3">
+<h2>17.2 马尔科夫模型<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>根据10.2.2节的内容，马尔科夫链背后的基本思想是：假设 <span class="math notranslate nohighlight">\(X_t\)</span> 包含所有用来预测未来信息的知识(换句话说，我们可以将它作为一个充分统计量)。如果我们假设时间是离散的，那么观测序列的联合概率分布可以表示为:
+$<span class="math notranslate nohighlight">\(
+p(X_{1:T})=p(X_1)p(X_2|X_1)p(X_3|X_2)...=p(X_1)\prod_{t=2}^Tp(X_t|X_{t-1})\tag{17.1}
+\)</span>$
+上式被称为<strong>马尔科夫链</strong>(Markov chain)或<strong>马尔科夫模型</strong>(Markov model)。</p>
+<p>如果假设转移函数<span class="math notranslate nohighlight">\(p(X_t|X_{t-1})\)</span>与时间无关，那么上述模型被称为是<strong>同质的</strong>(homogeneous), <strong>静态的</strong>(stationary)或者<strong>时不变的</strong>(time-invariant)。这是一个<strong>参数共享</strong>(parameter tying)的例子，因为同样的参数被用于多个变量的生成。这个假设允许我们可以使用固定数量的参数去生成任意数量的变量，这种模型被称为<strong>随机过程</strong>(stochastic processes)。</p>
+<p>如果假设我们观测到的是离散变量，也就是说<span class="math notranslate nohighlight">\(X_t \in \{1,...,K\}\)</span>，此时的马尔科夫链又被称为<strong>离散状态</strong>或者<strong>有限状态</strong>马尔科夫链。本章后面的内容将始终遵循该假设。</p>
+<div class="section" id="id4">
+<h3>17.2.1 转移矩阵<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>如果 <span class="math notranslate nohighlight">\(X_t\)</span> 是离散变量，即 <span class="math notranslate nohighlight">\(X_t\in\{1,...,K\}\)</span>，那么条件分布 <span class="math notranslate nohighlight">\(p(X_t|X_{t-1})\)</span> 的形式可以写成一个大小为 <span class="math notranslate nohighlight">\(K\times K\)</span> 的<strong>转移矩阵</strong>(transition matrix) <span class="math notranslate nohighlight">\(\bf{A}\)</span>，其中 <span class="math notranslate nohighlight">\(A_{ij}=p(X_t=j|X_{t-1}=i)\)</span> 为状态 <span class="math notranslate nohighlight">\(j\)</span> 转移到状态 <span class="math notranslate nohighlight">\(i\)</span> 的概率。矩阵的每一行满足 <span class="math notranslate nohighlight">\(\sum_jA_{ij}=1\)</span>，所以该矩阵又被称为<strong>随机矩阵</strong>(stochastic matrix)。</p>
+<p>一个静态的(参数共享)，有限状态(观测值离散)的马尔科夫链等价于一个<strong>随机自动机</strong>(stochastic automaton)。通常情况下我们会使用一个有向图来可视化这样的自动机，其中节点代表状态，箭头代表合法的状态转移(对应于矩阵 <span class="math notranslate nohighlight">\(\bf{A}\)</span> 中的非零元素)。该有向图被称为<strong>状态转移图</strong>(state transition diagram)。图中每一条弧线对应的权重代表转移的概率值。举例来说，图17.1(左)表示了一个 <span class="math notranslate nohighlight">\(2-\rm{state}\)</span> 马尔科夫链:
+$$
+\mathbf{A}=</p>
+<div class="amsmath math notranslate nohighlight" id="equation-d3df28e8-74f2-4dd5-aca3-7819b64f252e">
+<span class="eqno">(21)<a class="headerlink" href="#equation-d3df28e8-74f2-4dd5-aca3-7819b64f252e" title="Permalink to this equation">¶</a></span>\[\begin{pmatrix}
+1-\alpha &amp; \alpha \\
+\beta &amp; 1-\beta
+\end{pmatrix}\]</div>
+<div class="math notranslate nohighlight">
+\[
+图17.1(右)表示了一个 $3-\rm{state}$ 的马尔科夫链:
+\]</div>
+<p>\mathbf{A}=</p>
+<div class="amsmath math notranslate nohighlight" id="equation-ce979136-da68-43ca-83f8-7b53d36f0f9b">
+<span class="eqno">(22)<a class="headerlink" href="#equation-ce979136-da68-43ca-83f8-7b53d36f0f9b" title="Permalink to this equation">¶</a></span>\[\begin{pmatrix}
+A_{11} &amp; A_{12} &amp; 0 \\
+0 &amp; A_{22} &amp; A_{23} \\
+0 &amp; 0 &amp; 1 
+\end{pmatrix}\]</div>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}
+上式被称为$\mathbf{\rm{left-to-right\ transition\ matrix}}$, 在语音识别中被普遍使用(参考17.6.2节)。\\转移矩阵中的元素$A_{ij}$表示在状态 $i$ 经过单步到达状态 $j$ 的概率。$n$ 步转移矩阵 ${\bf{A}}({\it{n}})$ 定义为:
+\end{aligned}\end{align} \]</div>
+<p>A_{ij}(n)\triangleq p(X_{t+n}=j|X_t=i) \tag{17.4}
+$<span class="math notranslate nohighlight">\(
+上式表示状态 \)</span>i<span class="math notranslate nohighlight">\( 经过 \)</span>n<span class="math notranslate nohighlight">\( 步转移后到达状态 \)</span>j<span class="math notranslate nohighlight">\( 的概率值。 显然 \)</span>\mathbf{A}(1)=\mathbf{A}<span class="math notranslate nohighlight">\(。根据\)</span>\mathbf{Chapman-Kolmogorov}<span class="math notranslate nohighlight">\(等式，有:
+\)</span><span class="math notranslate nohighlight">\(
+A_{ij}(m+n)=\sum_{k=1}^KA_{ik}(m)A_{kj}(n) \tag{17.5}
+\)</span><span class="math notranslate nohighlight">\(
+换句话说，状态 \)</span>i<span class="math notranslate nohighlight">\( 经过 \)</span>m+n<span class="math notranslate nohighlight">\( 步到达状态 \)</span>j<span class="math notranslate nohighlight">\( 的概率等于从状态 \)</span>i<span class="math notranslate nohighlight">\( 经过 \)</span>m<span class="math notranslate nohighlight">\( 步到达状态 \)</span>k<span class="math notranslate nohighlight">\(, 再从状态 \)</span>k<span class="math notranslate nohighlight">\( 经过 \)</span>n<span class="math notranslate nohighlight">\( 步到达状态 \)</span>j<span class="math notranslate nohighlight">\( ，并对所有的状态 \)</span>k<span class="math notranslate nohighlight">\( 求和的概率。我们可以将上述公式写成矩阵乘法的形式:
+\)</span><span class="math notranslate nohighlight">\(
+\mathbf{A}(m+n)=\mathbf{A}(m)\mathbf{A}(n) \tag{17.6}
+\)</span><span class="math notranslate nohighlight">\(
+所以
+\)</span><span class="math notranslate nohighlight">\(
+\mathbf{A}(n)=\mathbf{A}\mathbf{A}(n-1)=\mathbf{A}\mathbf{A}\mathbf{A}(n-2)=...=\mathbf{A}^n \tag{17.7}
+\)</span>$
+所以我们可以通过使用转移矩阵的阶乘模拟马尔科夫链的多步转移。</p>
+</div>
+<div class="section" id="id5">
+<h3>17.2.2 应用：语言模型<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>马尔科夫的一个重要应用是构建统计<strong>语言模型</strong>（language models），即对序列单词的概率分布进行建模。我们定义状态空间为英语(或其他语言)中的所有单词。边际概率 <span class="math notranslate nohighlight">\(p(X_t=k)\)</span> 被称为 <span class="math notranslate nohighlight">\(\mathbf{unigram}\)</span>  统计量。如果我们使用一阶马尔科夫模型，那么 <span class="math notranslate nohighlight">\(p(X_t=k|X_{t-1}=j)\)</span> 被称为 <span class="math notranslate nohighlight">\(\mathbf{bigram}\)</span> 模型。如果我们使用二阶马尔科夫模型，那么 <span class="math notranslate nohighlight">\(p(X_t=k|X_{t-1}=j,X_{t-2}=i)\)</span> 被称为 <span class="math notranslate nohighlight">\(\mathbf{trigram}\)</span> 模型。以此类推，这类模型被称为 <span class="math notranslate nohighlight">\(\mathbf{n-gram}\)</span>模型。举例来说，图17-2展示了达尔文书籍《物种起源》中字母<span class="math notranslate nohighlight">\(\{a,...,z,-\}\)</span> (<span class="math notranslate nohighlight">\(-\)</span> 表示空格) 的 <span class="math notranslate nohighlight">\(1-\rm{gram}\)</span> 和 <span class="math notranslate nohighlight">\(2-\rm{grams}\)</span> 的统计频次。</p>
+<p>语言模型可以用来作以下几件事情：</p>
+<ul class="simple">
+<li><p><strong>句子补全</strong>(Sentence completion)：语言模型可以在给定一个句子的历史单词的情况下预测下一个单词。这可以用来减轻拼写的负担，这对于残疾人士特别重要(可以参考 David Mackay 的 Dasher系统)，或者用在移动设备上。</p></li>
+<li><p><strong>数据压缩</strong>(Data compression): 任何密度模型都可以用来定义一个编码策略，通过给那些高频字符串赋予短的编码词（译者注:参考 赫夫曼编码）。预测模型的精度越高，存储数据所需要的比特数越少。</p></li>
+<li><p><strong>文本分类</strong>(Text classification): 任何密度模型可以用作一个类条件密度模型，进而转换成一个(生成式)分类器。值得注意的是，如果使用 <span class="math notranslate nohighlight">\(0-\rm{gram}\)</span> 类条件密度模型(换句话说: 只使用 <span class="math notranslate nohighlight">\(\rm{unigram}\)</span> 统计量)，对应的分类器等价于朴素贝叶斯分类器(见3.5节)。</p></li>
+<li><p><strong>自动论文书写</strong>(Automatic essay writing):  我们可以从概率分布<span class="math notranslate nohighlight">\(p(x_{1:t})\)</span>中进行采样，从而人工生成文本。这是一种评估模型质量的方法。在表17.1中，我们给出了一个从 <span class="math notranslate nohighlight">\(4-\rm{gram}\)</span> 模型中生成的一段文本，该模型基于400 million个单词的语料库训练得到。(Mikolov等人描述了一个更好的语言模型，该模型基于一个循环神经网络，可以生成在语义上更合理的文本。)</p></li>
+</ul>
+<div class="section" id="id6">
+<h4>17.2.2.1 马尔科夫语言模型的最大似然解<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
+<p>我们现在讨论一种从训练集中估计转移矩阵的简单方法。长度为 <span class="math notranslate nohighlight">\(T\)</span> 的任意序列的概率分布可以表示为:
+$<span class="math notranslate nohighlight">\(
+p(x_{1:T}|\mathbf{\theta}) = \pi(x_1)A(x_1,x_2)...A(x_{T-1},x_T) =\prod_{j=1}^{K}(\pi_j)^{\mathbb{I}(x_i=j)}\prod_{t=2}^{T}\prod_{j=1}^{K}\prod_{k=1}^{K}(A_{jk})^{\mathbb{I}(x_t=k,x_{t-1}=j)}\tag{*}
+\)</span><span class="math notranslate nohighlight">\(
+因此对于一个序列集合 \)</span>\mathcal{D}=(\mathbf{x}_1,…\mathbf{x}<em>N)<span class="math notranslate nohighlight">\(，其中 \)</span>\mathbf{x}<em>i=(x</em>{i1},…,x</em>{i,T_i})<span class="math notranslate nohighlight">\( 为长度为 \)</span>T_i<span class="math notranslate nohighlight">\(，该集合的对数似然为:
+\)</span><span class="math notranslate nohighlight">\(
+{\rm{log}}\ p(\mathcal{D}|\mathbf{\theta})=\sum_{i=1}^N {\rm{log}}\ p(\mathbf{x}_i|\mathbf{\theta}) = \sum_{j} N_j^1 {\rm{log}} \ \pi_j + \sum_j\sum_k N_{jk} {\rm{log}}\ A_{jk} \tag{17.10}
+\)</span><span class="math notranslate nohighlight">\(
+其中我们定义：
+\)</span><span class="math notranslate nohighlight">\(
+N_j^1 \triangleq \sum_{i=1}^N \mathbb{I}(x_{i1}=j),N_{jk}\triangleq \sum_{i=1}^N\sum_{t=1}^{T_i-1}\mathbb{I}(x_{i,t}=j, x_{i,t+1}=k) \tag{17.11}
+\)</span><span class="math notranslate nohighlight">\(
+所以最大似然估计的结果为:
+\)</span><span class="math notranslate nohighlight">\(
+\hat{\pi}_j=\frac{N_j^1}{\sum_jN_j^1},\hat{A}_{jk}=\frac{N_{jk}}{\sum_kN_{jk}} \tag{17.12}
+\)</span>$</p>
+<p>上述结果可以直接推广至更高阶的马尔科夫模型。然而，当变量的状态值 <span class="math notranslate nohighlight">\(K\)</span> 或者模型阶数 <span class="math notranslate nohighlight">\(n\)</span> 很大时，零计数(<span class="math notranslate nohighlight">\(\rm{zero-counts}\)</span>) 问题会变得非常严重。一个 <span class="math notranslate nohighlight">\(n-\rm{gram}\)</span> 模型的参数量为 <span class="math notranslate nohighlight">\(O(K^n)\)</span>。如果在整个语料库中有近<span class="math notranslate nohighlight">\(K \sim 50,000\)</span> 个单词，那么 <span class="math notranslate nohighlight">\(\rm{bi-gram}\)</span> 模型将具有近 <span class="math notranslate nohighlight">\(2.5\ billion\)</span> 个自由参数，对应于所有可能的单词配对。显然我们没有办法在训练集中涵盖所有的配对。然而，我们并不希望将一个在训练集中没有出现的单词预测为完全不可能——这将导致严重的过拟合现象。</p>
+<p>一个简单的解决方法是<span class="math notranslate nohighlight">\(\rm{add-one}\)</span>平滑，在这种方法中，我们在归一化之前，将所有的经验计数加 <span class="math notranslate nohighlight">\(1\)</span>。章节3.3.4.1给出了这个方法的贝叶斯学派的证明。然而，<span class="math notranslate nohighlight">\(\rm{add-one}\)</span> 平滑方法假设所有的 <span class="math notranslate nohighlight">\(\rm{n-grams}\)</span> 具备同等的可能性，显然这不符合实际。一个更加复杂的贝叶斯方法将在17.2.2.2节介绍。</p>
+<p>一个可选方案是使用更好的先验知识去收集更多的数据。举例来说，基于从网站上收集的 <span class="math notranslate nohighlight">\(\rm{one}\ \rm{trillion}\)</span> 个单词，谷歌已经训练了一个 <span class="math notranslate nohighlight">\(\rm{n-gram}\)</span> 模型(<span class="math notranslate nohighlight">\(n=1:5\)</span>)。他们的数据解压后超过<span class="math notranslate nohighlight">\(100 \rm{GB}\)</span>并且已经开源。以下给出了一些数据库中 <span class="math notranslate nohighlight">\(\rm{4-grams}\)</span> 的统计数据：</p>
+<p><span class="math notranslate nohighlight">\(\rm{serve\ as\ the\ incoming\ 92}\)</span></p>
+<p><span class="math notranslate nohighlight">\(\rm{serve\ as\ the\ incubator\ 99}\)</span></p>
+<p><span class="math notranslate nohighlight">\(\rm{serve\ as\ the\ independent\ 794}\)</span></p>
+<p><span class="math notranslate nohighlight">\(\rm{serve\ as\ the\ index\ 223}\)</span></p>
+<p><span class="math notranslate nohighlight">\(\rm{serve\ as\ the\ indication\ 72}\)</span></p>
+<p><span class="math notranslate nohighlight">\(\rm{serve\ as\ the\ indicator\ 120}\)</span></p>
+<p><span class="math notranslate nohighlight">\(\rm{serve\ as\ the\ indicators\ 45}\)</span></p>
+<p><span class="math notranslate nohighlight">\(\rm{serve\ as\ the\ indispensable\ 111}\)</span></p>
+<p><span class="math notranslate nohighlight">\(\rm{serve\ as\ the\ indispensible\ 40}\)</span></p>
+<p><span class="math notranslate nohighlight">\(\rm{serve\ as\ the\ individual\ 234}\)</span></p>
+<p><span class="math notranslate nohighlight">\(...\)</span></p>
+<p>尽管这种依靠 “brute force and ignorance”的方式可能是成功的，但却不尽如人意，因为显然这并不是人类本身学习的方式。一种更加优雅的贝叶斯方法需要更少的数据，将在17.2.2.2节介绍。</p>
+</div>
+<div class="section" id="id7">
+<h4>17.2.2.2 删除插值法的经验贝叶斯版本<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
+<p>一种常见的解决稀疏数据的启发式方法被称为<strong>删除插值法</strong>(deleted interpolation)。该方法将转移矩阵定义为<span class="math notranslate nohighlight">\(\rm{bigram}\)</span>频率<span class="math notranslate nohighlight">\(f_{jk}=N_{jk}/N_j\)</span>和<span class="math notranslate nohighlight">\(\rm{unigram}\)</span>频率<span class="math notranslate nohighlight">\(f_k=N_k/N\)</span>的凸组合：
+$<span class="math notranslate nohighlight">\(
+A_{jk}=(1-\lambda)f_{jk}+\lambda f_k \tag{17.13}
+\)</span><span class="math notranslate nohighlight">\(
+式中\)</span>\lambda<span class="math notranslate nohighlight">\(通常使用交叉验证的方法得到。然后另一种相关的技术被称为\)</span>\mathbf{backoff\ smoothing}<span class="math notranslate nohighlight">\(; 其思想是如果\)</span>f_{jk}<span class="math notranslate nohighlight">\(的值过小，我们将&quot;back off&quot;一个更加可靠的估计量\)</span>f_k$。</p>
+</div>
+</div>
+</div>
+<div class="section" id="id8">
+<h2>17.3 隐马尔可夫模型<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<p>根据10.2.2节的介绍，一个隐马尔可夫模型(hidden Markov model, HMM)由一个离散时间，离散状态马尔科夫链，隐状态<span class="math notranslate nohighlight">\(z_t\in\{1,...,K\}\)</span>和观测模型<span class="math notranslate nohighlight">\(p(\mathbf{x}_t|z_t)\)</span>组成。对应的联合概率分布具备如下形式：
+$<span class="math notranslate nohighlight">\(
+p(\mathbf{z}_{1:T},\mathbf{x}_{1:T})=p(\mathbf{z}_{1:T})p(\mathbf{x}_{1:T}|\mathbf{z}_{1:T})=\left[ p(z_1)\prod_{t=2}^Tp(z_t|z_{t-1}) \right] \left[ \prod_{t=1}^Tp(\mathbf{x}_t|z_t) \right] \tag{17.39}
+\)</span><span class="math notranslate nohighlight">\(
+HMM模型中的观测值可以是离散或是连续的。如果是离散变量，那么观测模型对应于一个观测矩阵:
+\)</span><span class="math notranslate nohighlight">\(
+p(\mathbf{x}_t=l|z_t=k,\mathbf{\theta})=B(k,l) \tag{17.40}
+\)</span><span class="math notranslate nohighlight">\(
+如果观测值是连续的，那么观测模型通常是一个条件高斯分布:
+\)</span><span class="math notranslate nohighlight">\(
+p(\mathbf{x}_t|z_t=k,\mathbf{\theta})=\mathcal{N}(\mathbf{x}_t|\mathbf{\mu}_t,\mathbf{\Sigma}_k) \tag{17.41}
+\)</span><span class="math notranslate nohighlight">\(
+图17.7展示了一个具备3种状态的模型，每种状态对应一个不同的高斯分布。最终的模型与一个高斯混合模型相似，不同的是前者簇的中心具备\)</span>\rm{Markovian\ dynamics}<span class="math notranslate nohighlight">\(。(的确，HMMs有时也被称为 \)</span>\bf{Markov\ switching\ models}$)。我们发现，我们倾向于在同一个位置得到多个观测值，然后再跳转到一个新的簇中心。</p>
+<div class="section" id="hmms">
+<h3>17.3.1 HMMs的应用<a class="headerlink" href="#hmms" title="Permalink to this headline">¶</a></h3>
+<p>HMMs可以作为序列数据的黑箱密度模型。相较于马尔科夫模型，HMMs的优势在于，它可以间接地通过隐变量，来表示观测变量在较长范围内的相关性。特别地，在HMMs中，并不需要观测变量本身满足马尔科夫性质。这样的黑箱模型很适用于时间序列的预测。他们也可以用来在一个生成式分类器中定义类条件密度。</p>
+<p>然而，更常见的情况是，我们赋予隐变量一些特定的含义，并且尝试通过观测值来估计隐变量，即：在线场景下计算 <span class="math notranslate nohighlight">\(p(z_t|\mathbf{x}_{1:t})\)</span>，或者离线场景下计算 <span class="math notranslate nohighlight">\(p(z_t|\mathbf{x}_{1:T})\)</span>(17.4.1节将讨论这两种场景的区别)。接下来我们将介绍一些HMMs基于该方法的应用案例：</p>
+<ul class="simple">
+<li><p><strong>自动语音识别</strong>(Automatic speech recognition): 在这种场景下，<span class="math notranslate nohighlight">\(\mathbf{x}_t\)</span>表示从语音信号中提取出来的特征，<span class="math notranslate nohighlight">\(z_t\)</span>表示语音对应的单词。转移模型(transition model) <span class="math notranslate nohighlight">\(p(z_t|z_{t-1})\)</span> 表示语言模型(language model)，观测模型 <span class="math notranslate nohighlight">\(p(\mathbf{x}_t|z_t)\)</span>表示声学模型。</p></li>
+<li><p><strong>行为识别</strong>(Activity recognition): 此处 <span class="math notranslate nohighlight">\(\mathbf{x}_t\)</span> 表示从一个视频帧中提取的特征，<span class="math notranslate nohighlight">\(z_t\)</span> 表示视频中包含的行为的类型(比如: 奔跑，行走，坐下等等)。</p></li>
+<li><p><strong>词性标注</strong>(Part of speech tagging): 此处 <span class="math notranslate nohighlight">\(\mathbf{x}_t\)</span> 表示一个单词，<span class="math notranslate nohighlight">\(z_t\)</span> 表示它的词性(名词，动词，形容词等等)。19.6.2.1节将介绍更多关于POS和相关任务的细节。</p></li>
+<li><p><strong>基因识别</strong>(Gene finding): 此处<span class="math notranslate nohighlight">\(x_t\)</span>表示DNA核苷酸 (A,C,G,T)，<span class="math notranslate nohighlight">\(z_t\)</span>表示我们是否在一个基因编码区内。</p></li>
+<li><p><strong>蛋白质序列比对</strong>(Protein sequence alignment):  <span class="math notranslate nohighlight">\(x_t\)</span> 代表氨基酸，<span class="math notranslate nohighlight">\(z_t\)</span> 代表该氨基酸是否与该位置的潜在共有序列匹配。此模型称为<strong>配置HMM</strong>(profile HMM)，如图17.8所示。 HMM具有3种状态，分别称为匹配，插入和删除。如果<span class="math notranslate nohighlight">\(z_t\)</span>是匹配状态，则<span class="math notranslate nohighlight">\(x_t\)</span>等于共识的第<span class="math notranslate nohighlight">\(t\)</span>个值。如果<span class="math notranslate nohighlight">\(z_t\)</span>是插入状态，则<span class="math notranslate nohighlight">\(x_t\)</span>由与共有序列无关的均匀分布生成。如果<span class="math notranslate nohighlight">\(z_t\)</span>是删除状态，则<span class="math notranslate nohighlight">\(x_t =-\)</span>。这样，我们可以生成不同长度的共有序列的嘈杂副本。在图17.8(a)中，共识是 “<span class="math notranslate nohighlight">\(\rm{AGC}\)</span>”，我们在下面看到其各种版本。通过状态转换图的路径（如图17.8（b）所示）指定如何使序列与共识一致，例如，对于而言，最可能的路径是D，D，I，I，I，M。这意味着我们删除共有序列的A和G部分，插入3个A，然后匹配最终的C。我们可以通过计算此类过渡的数量以及每种类型的排放的数量来估算模型参数状态，如图17.8（c）所示。有关训练HMM的更多信息，请参见第17.5节；有关配置文件HMM的详细信息，请参见（Durbin等1998）。</p></li>
+</ul>
+<p>值得注意的是，在上面的任务中，HMMs的判别式版本，条件随机场可能更加适合。第19章将介绍更多细节。</p>
+</div>
+</div>
+<div class="section" id="id9">
+<h2>17.4 HMMs的推理<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
+<p>我们现在讨论在参数已知的情况下，如何预测HMM模型中隐状态序列。同样的算法也可以用于其他链式结构的图模型，比如链式条件随机场(见19.6.1节)。在第20章，我们将这些方法泛化到任意的图。在17.5.2节，我们将展示如何在参数估计的过程中利用这些推理输出。</p>
+<div class="section" id="id10">
+<h3>17.4.1 时间模型中推理问题的类型<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<p>对于HMM(或者更一般的状态空间模型,SSM)模型，有几种不同的推理任务。为了说明这些区别，我们会考虑一个叫<span class="math notranslate nohighlight">\(\bf{occasionally\ dishonest\ casino}\)</span>的例子。在这个模型中，<span class="math notranslate nohighlight">\(x_t\in\{1,2,...,6\}\)</span>代表骰子朝上的数字，<span class="math notranslate nohighlight">\(z_t\)</span>代表正在使用的骰子的编号。在大部分情况下，会使用一个公平的骰子，即<span class="math notranslate nohighlight">\(z=1\)</span>，但有的时候，在较短时间内也会使用一个不平衡的骰子，即<span class="math notranslate nohighlight">\(z=2\)</span>。如果<span class="math notranslate nohighlight">\(z=1\)</span>，那么观测值将服从一个均匀的多伯努利分布，分布的支撑集为<span class="math notranslate nohighlight">\(\{1,...,6\}\)</span>。如果<span class="math notranslate nohighlight">\(z=2\)</span>, 观测值的分布将倾向于 <span class="math notranslate nohighlight">\(6\)</span> (见图17.9)。如果我们从这个模型中采样，我们会得到如下的观察值：</p>
+<p>此处 “rolls” 表示观测到的符号，”die”表示隐状态(<span class="math notranslate nohighlight">\(\rm{L}\)</span>表示不平衡，<span class="math notranslate nohighlight">\(\rm{F}\)</span>表示平衡的骰子)。因此，我们看到该模型生成了一个符号序列，但是分布的统计信息时不时地突然变化。在一个特定的应用场景中，我们仅仅观察到rolls，然后想推测使用了哪个骰子。但有几种不同的推测方法，总结如下：</p>
+<ul class="simple">
+<li><p><strong>滤波</strong>(Filtering)表示随着数据流的输入，按在线或循环模式计算置信状态(belief state) <span class="math notranslate nohighlight">\(p(z_t|\mathbf{x}_{1:t})\)</span>。这种方式被称为”滤波”，因为它减轻噪声的影响，而不仅仅是简单地基于当前的估计值 <span class="math notranslate nohighlight">\(p(z_t|\mathbf{x}_t)\)</span> 去估计隐变量的值。接下来我们将看到在序列模型中如何只是使用贝叶斯法则实现滤波。图17.10(a)给出了一个例子。</p></li>
+<li><p><strong>平滑</strong>(Smoothing) 表示在离线状态下给定所有的线索，计算<span class="math notranslate nohighlight">\(p(z_t|\mathbf{x}_{1:T})\)</span>。图17.10(b)给出了一个例子。通过使用过去和未来的数据，我们预测的不确定性可以大幅度地降低。为了直观地理解这一点，考虑一个侦探试图找出谁犯了罪。 当他路过犯罪现场时，不确定性很高，直到找到关键线索为止。 然后他有一个“啊哈”时刻，他的不确定性降低了，事后看来，以前所有令人困惑的观察结果都很容易解释。</p></li>
+<li><p><strong>固定延迟平滑</strong>(Fixed lag smoothing)是在线和离线估算之间的有趣折衷，它涉及计算 <span class="math notranslate nohighlight">\(p(z_{t-l}|\mathbf{x}_{1:t})\)</span>，其中<span class="math notranslate nohighlight">\(l\gt0\)</span>称为滞后值(tag)。 这样可以提供比滤波方法更好的性能，但会产生一些延迟。 通过改变滞后的大小，我们可以权衡准确性与延迟。</p></li>
+<li><p><strong>预测</strong>(Prediction) 我们不希望像固定滞后平滑那样预测给定未来的过去，而是希望预测给定过去的未来，即计算 <span class="math notranslate nohighlight">\(p(z_{t+h}|\mathbf{x}_{1:t})\)</span>，其中<span class="math notranslate nohighlight">\(h&gt; 0\)</span>称为预测<strong>范围</strong>(horizon) 。 例如，假设<span class="math notranslate nohighlight">\(h = 2\)</span>； 然后我们有
+$<span class="math notranslate nohighlight">\(
+p(z_{t+2}|\mathbf{x}_{1:t})=\sum_{z_{t+1}}\sum_{z_{t}}p(z_{t+2}|z_{t+1})p(z_{t+1}|z_t)p(z_t|\mathbf{x}_{1:t}) \tag{17.42}
+\)</span><span class="math notranslate nohighlight">\(
+执行此计算非常简单：我们只需使用转移矩阵并将其应用于当前的置信状态。\)</span>p(z_{t+h}|\mathbf{x}_{1:t})<span class="math notranslate nohighlight">\(是关于未来隐藏状态的预测。 可以使用以下方法将其转换为对未来观测的预测:
+\)</span><span class="math notranslate nohighlight">\(
+p(\mathbf{x}_{t+h}|\mathbf{x}_{1:t})=\sum_{z_{t+h}}p(\mathbf{x}_{t+h}|z_{t+h})p(z_{t+h}|\mathbf{x}_{1:t}) \tag{17.43}
+\)</span>$
+上式为后验预测密度，可以用来作时间序列预测。图17.11给出了滤波，平滑和预测之间关系的示意图。</p></li>
+<li><p><strong>MAP估计</strong> 是指计算 <span class="math notranslate nohighlight">\({\rm{argmax}}_{\mathbf{z}_{1:T}}p(\mathbf{z}_{1:T}|\mathbf{x}_{1:T})\)</span>，即概率最高的状态序列。在HMMs中，上述问题被称为<span class="math notranslate nohighlight">\(\rm{Viterbi\ decoding}\)</span> (见17.4.4节)。图17.10说明了滤波，平滑以及MAP解码之间的区别。不难发现，使用离线平滑估计得到的结果确实比在线滤波方法得到的结果更加平滑。如果我们使用0.5作为预测的截断阈值，并且与真实的序列进行对比，我们发现滤波方法的误差为<span class="math notranslate nohighlight">\(71/300\)</span>，平滑方法的误差为<span class="math notranslate nohighlight">\(49/300\)</span>，MAP方法的误差为<span class="math notranslate nohighlight">\(60/300\)</span>。平滑方法优于Viterbi的结论并不意外，因为最小化<span class="math notranslate nohighlight">\(\rm{bit-error}\)</span>率的最优方式是基于后验边际分布使用阈值(见5.7.1.1节)。然而，在某些应用下，我们更倾向于使用Viterbi解码，我们将在17.4.4节进行讨论。</p></li>
+<li><p><strong>后验采样</strong>：如果存在多种关于数据的合理解释，我们可以基于后验分布 <span class="math notranslate nohighlight">\(\mathbf{z}_{1:T} {\sim} p(\mathbf{z}_{1:T}|\mathbf{x}_{1:T})\)</span>进行采样。相较于基于使用平滑方法得到的边际分布采样的序列，这些序列包含更多的信息。</p></li>
+<li><p><strong>证据的概率</strong>(Probability of the evidence): 通过对所有的隐变量序列求和 <span class="math notranslate nohighlight">\(p(\mathbf{x}_{1:T})=\sum_{\mathbf{z}_{1:T}}p(\mathbf{z}_{1:T},\mathbf{x}_{1:T})\)</span>得到证据的概率<span class="math notranslate nohighlight">\(p(\mathbf{x}_{1:T})\)</span>。对于<span class="math notranslate nohighlight">\(\rm{model-based}\)</span>聚类，<span class="math notranslate nohighlight">\(\rm{anomaly\ detection}\)</span>等任务，该值可以用于对序列进行分类 (举例来说，如果HMM被用来作为类条件密度函数)。</p></li>
+</ul>
+</div>
+<div class="section" id="id11">
+<h3>17.4.2 前向算法<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<p>我们现在描述在HMM中如何递归地计算滤波算法中的边际分布<span class="math notranslate nohighlight">\(p(z_t|\mathbf{x}_{1:t})\)</span>。</p>
+<p>算法分两个步骤。首先是预测阶段，在这个阶段，我们计算 <span class="math notranslate nohighlight">\(\rm{one-step-ahead\ predictive\  density}\)</span>，该值可以用作 <span class="math notranslate nohighlight">\(t\)</span> 时刻的最新的先验分布：
+$<span class="math notranslate nohighlight">\(
+p(z_t=j|\mathbf{x}_{1:t-1})=\sum_{i}p(z_t=j|z_{t-1}=i)p(z_{t-1}|\mathbf{x}_{1:t-1}) \tag{17.44}
+\)</span><span class="math notranslate nohighlight">\(
+接下来是更新步骤，在这个步骤中，我们使用贝叶斯法则将 \)</span>t<span class="math notranslate nohighlight">\( 时刻的观测值吸收进来：
+\)</span>$</p>
+<div class="amsmath math notranslate nohighlight" id="equation-0b592b2e-f528-411f-ba11-22da4ec8f584">
+<span class="eqno">(23)<a class="headerlink" href="#equation-0b592b2e-f528-411f-ba11-22da4ec8f584" title="Permalink to this equation">¶</a></span>\[\begin{align}
+\alpha_t(j)  &amp; \triangleq p(z_t=j|\mathbf{x}_{1:t})=p(z_t=j|\mathbf{x}_t,\mathbf{x}_{1:t-1}) \tag{17.45} \\
+&amp; = \frac{1}{Z_t}p(\mathbf{x}_t|z_t=j,\cancel{\mathbf{x_{1:t-1}}})p(z_t=j|\mathbf{x}_{1:t-1}) \tag{17.46}
+\end{align}\]</div>
+<div class="math notranslate nohighlight">
+\[
+其中归一化常数为:
+\]</div>
+<p>Z_t \triangleq p(\mathbf{x}<em>t|\mathbf{x}</em>{1:t-1})=\sum_j p(z_t=j|\mathbf{x}_{1:t-1})p(\mathbf{x}<em>t|z_t=j) \tag{17.47}
+$<span class="math notranslate nohighlight">\(
+该过程被称为\)</span>\rm{predict-update\ cycle}<span class="math notranslate nohighlight">\(。分布 \)</span>p(z_t|\mathbf{x}</em>{1:t})<span class="math notranslate nohighlight">\( 被称为 \)</span>t<span class="math notranslate nohighlight">\( 时刻的(滤波)置信状态，是一个长度为\)</span>K<span class="math notranslate nohighlight">\(的向量，通常表示为\)</span>\mathbf{\alpha}_t<span class="math notranslate nohighlight">\(。在矩阵向量的符号表达中，我们可以将更新部分写成如下简单的形式：
+\)</span><span class="math notranslate nohighlight">\(
+\mathbf{\alpha}_t \propto \psi_t \odot (\mathbf{\Psi}^T\mathbf{\alpha}_{t-1}) \tag{17.48}
+\)</span><span class="math notranslate nohighlight">\(
+其中\)</span>\psi_t(j)=p(\mathbf{x}<em>t|z_t=j)<span class="math notranslate nohighlight">\(表示 \)</span>t<span class="math notranslate nohighlight">\( 时刻的局部证据，\)</span>\Psi(i,j)=p(z_t=j|z</em>{t-1}=i)<span class="math notranslate nohighlight">\(表示转移矩阵，\)</span>\mathbf{u} \ \odot\ \mathbf{v}<span class="math notranslate nohighlight">\( 表示\)</span>\rm{Hadamard\ product}$，表示逐元素向量乘法。算法17.1给出了伪代码。</p>
+<p>除了计算隐状态，我们可以使用该算法计算证据的对数概率分布：
+$<span class="math notranslate nohighlight">\(
+{\rm{log}}\ p(\mathbf{x}_{1:T}|\mathbf{\theta})=\sum_{t=1}^T {\rm{log}}\ p(\mathbf{x}_t|\mathbf{x}_{1:t-1})=\sum_{t=1}^T {\rm{log}}\ Z_t \tag{17.49}
+\)</span>$
+(之所以使用对数是为了避免数值溢出。)</p>
+</div>
+<div class="section" id="id12">
+<h3>17.4.3 前向-后向算法<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./MLAPP_BOOK"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="16.AdaptiveBasisFunctionModel.html" title="previous page">16 自适应基函数模型</a>
+    <a class='right-next' id="next-link" href="18.StateSpaceModels.html" title="next page">18 状态空间模型</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Kevin Murphy<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>

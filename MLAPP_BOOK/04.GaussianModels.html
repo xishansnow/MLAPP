@@ -1,0 +1,1865 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>04 高斯模型 &#8212; 机器学习：概率视角</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet" />
+  <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.e8e5499552300ddf5d7adccae7cc3b70.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="05 贝叶斯学派统计思想" href="05.BayesianStatistics.html" />
+    <link rel="prev" title="03 离散数据的生成式模型" href="03.GenerativeModelsForDiscreteData.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+      <img src="../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">机器学习：概率视角</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../preface.html">
+   前言
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="01.Introduction.html">
+   01 引言
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="02.Probability.html">
+   02 概率论
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03.GenerativeModelsForDiscreteData.html">
+   03 离散数据的生成式模型
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   04 高斯模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="05.BayesianStatistics.html">
+   05 贝叶斯学派统计思想
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="06.FrequentistStatistics.html">
+   06 频率学派统计思想
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="07.LinearRegression.html">
+   07 线性回归
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="08.LogisticRegression.html">
+   08 逻辑回归
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="09.GeneralizedLinearModelsAndTheExponentialFamily.html">
+   09 广义线性模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="10.DirectedGraphicalModels%20%28BayesNets%29.html">
+   10 有向图模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="11.MixtureModelandEMAlgorithm.html">
+   11 混合模型与EM算法
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="12.LinearModelwithLatentVariable.html">
+   12 隐变量线性模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="13.SparseLinearModel.html">
+   13 稀疏线性模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="14.KernelMethod.html">
+   14 核方法
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="15.GaussianProcesses.html">
+   15 高斯过程
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="16.AdaptiveBasisFunctionModel.html">
+   16 自适应基函数模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="17.MarkovAndHiddenMarkovModel.html">
+   17 马尔科夫与隐马尔科夫模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="18.StateSpaceModels.html">
+   18 状态空间模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="19.UndirectedGraphicalModels%28MarkovRandomFields%29.html">
+   19 无向图模型（马尔科夫随机场）
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="20.ExactInferenceForGraphicalModels.html">
+   20 概率图的精确推断
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="21.VariationalInference.html">
+   21 变分推断
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="22.MoreVariationalInference.html">
+   22 更多变分推断方法
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="23.MonteCarloInference.html">
+   23 蒙特卡洛推断
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="24.MarkovChainMonteCarlo%28MCMC%29Inference.html">
+   24 马尔科夫链蒙特卡洛 MCMC
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="25.Clustering.html">
+   25 聚簇
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="26.GraphicalModelStructureLearning.html">
+   26 概率图的结构学习
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="27.LatentVariableModelsForDiscreteData.html">
+   27 离散数据的隐变量模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="28.DeepLearning.html">
+   28 深度学习
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Abbreviations.html">
+   本书常见缩写列表
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/MLAPP_BOOK/04.GaussianModels.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   4.1 简介
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id3">
+     4.1.1 记号
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id4">
+     4.1.2 基础知识
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id5">
+     4.1.3 多元正态分布的最大似然估计
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id6">
+       4.1.3.1 证明
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id7">
+     4.1.4 高斯分布最大熵推导*
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id8">
+       定理 4.1.2
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#gaussian-discriminant-analysis">
+   4.2 高斯判别分析 (Gaussian discriminant analysis)
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id9">
+     4.2.1 二次判别分析
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id10">
+     4.2.2 线性判别分析
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id11">
+     4.2.3 双类线性判别分析
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mle">
+     4.2.4 对于判别分析的最大似然估计 (MLE)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id12">
+     4.2.5 防止过拟合的策略
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#regularized-lda">
+     4.2.6 正交线性判别分析 (Regularized LDA)*
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#diagonal-lda">
+     4.2.7 对角线性判别分析 (Diagonal LDA)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#nearest-shrunken-centroids-classifier">
+     4.2.8 最近收缩质心分类器 (Nearest shrunken centroids classiﬁer)*
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#inference-in-jointly-gaussian-distributions">
+   4.3 联合正态分布的推论 (Inference in jointly Gaussian distributions)
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id13">
+     4.3.1 结果声明
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id14">
+       定理 4.3.1
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id15">
+     4.3.2 举例
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id16">
+       4.3.2.1 二维正态分布的边缘和条件分布
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#interpolating-noise-free-data">
+       4.3.2.2 无噪音数据插值 (Interpolating noise-free data)
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#data-imputation">
+       4.3.2.3 数据插补 (Data imputation)
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#information-form">
+     4.3.3 信息形式 (Information form)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id17">
+     4.3.4 结论证明 *
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#schur-schur-complements-inverse">
+       4.3.4.1 使用 Schur 补 (Schur complements) 得到分区矩阵的逆矩阵 (Inverse)
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id18">
+       定理 4.3.2
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id19">
+       证明
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#the-matrix-inversion-lemma">
+       4.3.4.2 矩阵求逆引理 (the matrix inversion lemma)
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#matrix-inversion-lemma">
+       推论 4.3.1 矩阵求逆引理 (matrix inversion lemma)
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id20">
+       证明
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#gaussian-conditioning-formulas">
+       4.3.4.3 高斯条件公式 (Gaussian conditioning formulas) 的证明
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#linear-gaussian-systems">
+   4.4 线性高斯系统 (Linear Gaussian systems)
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id21">
+     4.4.1 结论表述
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id22">
+       定理 4.4.1
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id23">
+     4.4.2 样例
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#noisy-measurements-unknown-scalar">
+       4.4.2.1 从有噪音测量 (noisy measurements) 中推测未知标量 (unknown scalar)
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#noisy-measurements-unknown-vector">
+       4.4.2.2 从有噪音测量 (noisy measurements) 中推测未知矢量 (unknown vector)
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id24">
+       4.4.2.3 插入噪音数据
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id25">
+     4.4.3 结论证明 *
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#digression-wishart-distribution">
+   4.5 题外话 (Digression): 威沙特分布 (Wishart distribution)
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#inverse-wishart-distribution">
+     4.5.1 逆威沙特分布 (Inverse Wishart distribution)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id26">
+     4.5.2 威沙特分布可视化 *
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#mvn">
+   4.6 多元正态分布 (MVN) 的参数推测
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mu">
+     4.6.1
+     <span class="math notranslate nohighlight">
+      \(\mu\)
+     </span>
+     的后验分布
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#sigma">
+     4.6.2
+     <span class="math notranslate nohighlight">
+      \(\Sigma\)
+     </span>
+     的后验分布 *
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#map-estimation">
+       4.6.2.1 最大后验估计 (MAP estimation)
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#univariate-posterior">
+       4.6.2.2 单变量后验 (Univariate posterior)
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mu-sigma">
+     4.6.3
+     <span class="math notranslate nohighlight">
+      \(\mu\)
+     </span>
+     和
+     <span class="math notranslate nohighlight">
+      \(\Sigma\)
+     </span>
+     的后验分布 *
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#likelihood">
+       4.6.3.1 似然函数 (likelihood)
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#prior">
+       4.6.3.2 先验 (Prior)
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id27">
+       4.6.3.3 后验
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#posterior-mode">
+       4.6.3.4 后验模 (Posterior mode)
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#id28">
+         4.6.3.5 后验边缘分布
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id29">
+       4.6.3.6 后验预测
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id30">
+     4.6.3.7 标量数据的后验
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#t">
+       4.6.3.8 贝叶斯 T 检验
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id31">
+       4.6.3.9 和频率论统计学的联系
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id32">
+     4.6.4 未知精度下的传感器融和 *
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="id1">
+<h1>04 高斯模型<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<p>[原文] <a class="reference external" href="https://probml.github.io/pml-book/book0.html">https://probml.github.io/pml-book/book0.html</a></p>
+<p>[作者] <a class="reference external" href="https://www.cs.ubc.ca/~murphyk/">Kevin Patrick Murphy</a></p>
+<style>p{text-indent:2em;2}</style>
+<div class="section" id="id2">
+<h2>4.1 简介<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>本章要讲的是<code class="docutils literal notranslate"><span class="pre">多元高斯分布</span> <span class="pre">(multivariate</span> <span class="pre">Gaussian)</span></code>, 或者<code class="docutils literal notranslate"><span class="pre">多元正态分布</span> <span class="pre">(multivariate</span> <span class="pre">normal</span> <span class="pre">,</span> <span class="pre">缩写为</span> <span class="pre">MVN)</span> </code>模型，该分布是对<code class="docutils literal notranslate"><span class="pre">连续变量的联合概率密度建模</span></code>最常用的模型。很多概率模型（包括本书后面很多模型）都是以多元高斯分布为基础的。
+不过，本章要求的数学水平比其他章节要高。具体来说就是严重依赖线性代数和矩阵微积分。然而要应对高维数据，必须要掌握它们。</p>
+<div class="section" id="id3">
+<h3>4.1.1 记号<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>向量用加粗的数字模式小写字母表示，比如 <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>。 矩阵用加粗的数字模式大写字母表示，比如 <span class="math notranslate nohighlight">\(\mathbf{X}\)</span>。 矩阵内的元素用数字模式的大写字母加下标表示，比如 <span class="math notranslate nohighlight">\(X_{ij}\)</span> 。</p>
+<p>在没有特别声明的情况下，所有向量都默认为列向量。通过堆叠 <span class="math notranslate nohighlight">\(D\)</span> 个标量得到的列向量记作 <span class="math notranslate nohighlight">\([ x_1,...,x_D ]\)</span>。 与之类似，多列向量（多个列向量沿着行方向堆叠）可以表示为 <span class="math notranslate nohighlight">\(\mathbf{x}= ( \mathbf{x}^T_1,...,\mathbf{x}^T_D )^T\)</span> （即向量先转置为行向量，然后沿行方向堆叠后，再装置）。矩阵（多个列向量沿列方向堆叠）可以 <span class="math notranslate nohighlight">\(\mathbf{X}=[ \mathbf{x}_1,...,\mathbf{x}_D ]\)</span> 。</p>
+</div>
+<div class="section" id="id4">
+<h3>4.1.2 基础知识<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>根据<code class="docutils literal notranslate"><span class="pre">第</span> <span class="pre">2.5.2</span> <span class="pre">节</span></code>内容，我们知道在 <span class="math notranslate nohighlight">\(\mathcal{D}\)</span> 维空间中 MVN 的概率密度函数为：</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{N}(x|\mu,\Sigma) \triangleq \frac{1}{(2\pi)^{D/2}|\Sigma |^{1/2}}\exp[ -\frac{1}{2}(x-\mu)^T\Sigma^{-1}(x-\mu)] ~~\tag {4.1}\label {eqn:4.1}
+\]</div>
+<p>上式中指数项中表达式为向量 <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> 和均值向量 <span class="math notranslate nohighlight">\(\mu\)</span> 之间的马氏距离。通过将矩阵进行特征分解，我们可以对马氏距离有更深的理解。  <span class="math notranslate nohighlight">\(\Sigma\)</span> 的分解式可以写成 <span class="math notranslate nohighlight">\(\Sigma = U \Lambda U^T\)</span> ，其中 <span class="math notranslate nohighlight">\(U\)</span> 为特征向量的标准正交矩阵，满足 <span class="math notranslate nohighlight">\(U^TU = I\)</span> ， <span class="math notranslate nohighlight">\(\Lambda\)</span> 为对应特征值构成的对角矩阵。</p>
+<p>利用特征分解，得到：</p>
+<div class="math notranslate nohighlight">
+\[
+\boldsymbol{\Sigma}^{-1}=\mathbf{U}^{-T} \boldsymbol{\Lambda}^{-1} \mathbf{U}^{-1}=\mathbf{U} \mathbf{\Lambda}^{-1} \mathbf{U}^{T}=\sum_{i=1}^{D} \frac{1}{\lambda_{i}} \mathbf{u}_{i} \mathbf{u}_{i}^{T} ~~\tag {4.2}\label {eqn:4.2}
+\]</div>
+<p>上式中的 <span class="math notranslate nohighlight">\(u_i\)</span> 是 <span class="math notranslate nohighlight">\(U\)</span> 的第 <span class="math notranslate nohighlight">\(i\)</span> 列，包含了第 <span class="math notranslate nohighlight">\(i\)</span> 个特征向量。 因此就可以把马氏距离写作：
+$$</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+(\mathbf{x}-\boldsymbol{\mu})^{T} \mathbf{\Sigma}^{-1}(\mathbf{x}-\boldsymbol{\mu}) &amp;=(\mathbf{x}-\boldsymbol{\mu})^{T}\left(\sum_{i=1}^{D} \frac{1}{\lambda_{i}} \mathbf{u}_{i} \mathbf{u}_{i}^{T}\right)(\mathbf{x}-\boldsymbol{\mu})  ~~\tag{4.3} \label{eqn:4.3}\\
+&amp;=\sum_{i=1}^{D} \frac{1}{\lambda_{i}}(\mathbf{x}-\boldsymbol{\mu})^{T} \mathbf{u}_{i} \mathbf{u}_{i}^{T}(\mathbf{x}-\boldsymbol{\mu})=\sum_{i=1}^{D} \frac{y_{i}^{2}}{\lambda_{i}} ~~\tag{4.4} \label{eqn:4.4}
+\end{align*}\]</div>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210723120629_5f.webp)\\**图 4.1** 二维高斯密度的可视化。椭圆长轴和短轴由协方差矩阵的前两个特征向量 $u_1$ 和 $u_2$ 定义。根据（Bishop 2006a）的图 2.7。\\上式中的 $ y_{i} \triangleq \mathbf{u}_{i}^{T}(\mathbf{x}-\boldsymbol{\mu})$。二维椭圆方程为：
+\end{aligned}\end{align} \]</div>
+<p>\frac{y_{1}^{2}}{\lambda_{1}}+\frac{y_{2}^{2}}{\lambda_{2}}=1
+$$</p>
+<p>我们发现对于多维高斯分布而言，其概率密度等值线是椭圆，如图 4.1 所示。特征向量决定了该椭圆的方向，特征值决定了对应方向曲线延伸的程度。</p>
+<p>通常将马氏距离等价为新坐标系中的一个欧式距离，该新坐标系可通过将现有坐标系（即图 4.1 中的 <span class="math notranslate nohighlight">\(x-y\)</span> 坐标系）按方向平移  <span class="math notranslate nohighlight">\(\mu\)</span> ，按 <span class="math notranslate nohighlight">\(U\)</span> 旋转后得到。</p>
+</div>
+<div class="section" id="id5">
+<h3>4.1.3 多元正态分布的最大似然估计<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>本节讨论如何使用最大似然估计法对 MVN 中的参数进行估计。在后面章节中，我们还会讨论如何使用贝叶斯方法做参数推断，该方法在缓解过拟合问题同时，还能够量化参数估计值的不确定度。</p>
+<p><strong>定理 4.1.1</strong> （高斯分布的最大似然估计）。如果有 <span class="math notranslate nohighlight">\(N\)</span> 个独立同分布的样本符合正态分布，即 <span class="math notranslate nohighlight">\(\mathbf{x}_i \sim  \mathcal{N}(\mu,\Sigma)\)</span>，则对参数的最大似然估计为：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\hat\mu_{mle} &amp;=\frac{1}{N}\sum^N_{i=1} \mathbf{x}_i \triangleq \mathbf{\bar x} ~~\tag{4.6}\\
+\hat\Sigma_{mle} &amp;=\frac{1}{N}\sum^N_{i=1}(\mathbf{x}_i-\mathbf{\bar x})(\mathbf{x}_i-\mathbf{\bar x})^T=\frac{1}{N}(\sum^N_{i=1}\mathbf{x}_i\mathbf{x}_i^T)-\mathbf{\bar x} \mathbf{\bar x}^T ~~\tag{4.7}
+\end{align*}
+\end{split}\]</div>
+<p>不难发现，最大似然估计 MLE 只是单纯的经验期望和方差。其实在一元高斯分布中，我们有类似的结果：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\hat\mu &amp;=\frac{1}{N}\sum_ix_i=\bar x \tag{4.8}\\
+\hat\sigma^2 &amp;=\frac{1}{N}\sum_i(x_i-x)^2=(\frac{1}{N}\sum_ix_i^2)-\bar x^2 \tag{4.9}
+\end{align*}
+\end{split}\]</div>
+<div class="section" id="id6">
+<h4>4.1.3.1 证明<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
+<p>为了证明上一节的结论，需要一些线性代数中的结论，总结如下。下式中，<span class="math notranslate nohighlight">\(\mathbf{a}\)</span> 和 <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> 为向量，<span class="math notranslate nohighlight">\(\mathbf{A}\)</span> 和 <span class="math notranslate nohighlight">\(\mathbf{B}\)</span> 为矩阵。符号 <span class="math notranslate nohighlight">\(\operatorname{tr}(\mathbf{A})\)</span> 表示矩阵的迹（矩阵对角线元素的和： <span class="math notranslate nohighlight">\(\operatorname{tr}(\mathbf{A})=\sum_i \mathbf{A}_{ii}\)</span> ）。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\frac{\partial(\mathbf{b}^T\mathbf{a})}{\partial \mathbf{a}} &amp;=\mathbf{b}\\
+\frac{\partial(\mathbf{a}^T \mathbf{A} \mathbf{a})}{\partial \mathbf{a}} &amp;=(\mathbf{A} + \mathbf{A}^T) \mathbf{a}\\
+\frac{\partial}{\partial \mathbf{A}} tr(\mathbf{B}\mathbf{A}) &amp;=\mathbf{B}^T\\
+\frac{\partial}{\partial \mathbf{A}} \log|\mathbf{A}| &amp;=\mathbf{A}^{-T}\overset{*}{=} (\mathbf{A}^{-1})^T\\
+\operatorname{tr} (\mathbf{ABC})=\operatorname{tr}(\mathbf{CAB}) &amp;=\operatorname{tr}(\mathbf{BCA})  \tag{4.10}
+\end{align*}
+\end{split}\]</div>
+<p>最后一个等式被称为迹运算的循环置换性质。使用该性质，可以将标量内积 <span class="math notranslate nohighlight">\(\mathbf{x}^T\mathbf{A}\mathbf{x}\)</span> 进行重新排序。</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{x}^T\mathbf{Ax}=\operatorname{tr}(\mathbf{x}^T\mathbf{Ax})=\operatorname{tr}(\mathbf{xx}^T\mathbf{A})=\operatorname{tr}(\mathbf{A}\mathbf{xx}^T) \tag{4.11}
+\]</div>
+<p>基于上述基本定理，可以展开证明。已知对数似然函数为：</p>
+<div class="math notranslate nohighlight">
+\[
+l(\mu,\Sigma)=\log p(D|\mu,\Sigma)=\frac{N}{2}\log|\Lambda| -\frac{1}{2}\sum^N_{i=1}(x_i-\mu)^T\Lambda (x_i-\mu) ~~\tag{4.12}
+\]</div>
+<p>上式中 <span class="math notranslate nohighlight">\(\Lambda=\Sigma^{-1}\)</span>，是精度矩阵 (precision matrix)</p>
+<p>然后进行一个替换 <span class="math notranslate nohighlight">\(y_i=x_i-\mu\)</span>，再利用微分的链式法则：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\frac{\partial}{\partial\mu} (x_i-\mu)^T\Sigma^{-1}(x_i-\mu) &amp;=  \frac{\partial}{\partial y_i}y_i^T\Sigma^{-1}y_i\frac{\partial y_i}{\partial\mu}   &amp;\text{(4.13)}\\
+&amp;=-1(\Sigma_{-1}+\Sigma^{-T})y_i &amp;\text{(4.14)}\\
+\end{align*}
+\end{split}\]</div>
+<p>因此：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\frac{\partial}{\partial\mu}l(\mu.\Sigma) &amp;= -\frac{1}{2} \sum^N_{i=1}-2\Sigma^{-1}(x_i-\mu)=\Sigma^{-1}\sum^N_{i=1}(x_i-\mu)=0 &amp;\text{(4.15)}\\
+&amp;=-1(\Sigma_{-1}+\Sigma^{-T})y_i &amp;\text{(4.16)}\\
+\end{align*}
+\end{split}\]</div>
+<p>所以 <span class="math notranslate nohighlight">\(\mu\)</span> 的最大似然估计就是经验均值 (empirical mean).</p>
+<p>然后利用求迹运算技巧来重写对 <span class="math notranslate nohighlight">\(\Lambda\)</span> 的对数似然函数：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+l(\Lambda)&amp;=  \frac{N}{2}\log|\Lambda|-\frac{1}{2}\sum_i tr[(x_i-\mu)(x_i-\mu)^T\Lambda] &amp;\text{(4.17)}\\
+&amp;= \frac{N}{2}\log|\Lambda| -\frac{1}{2}tr[S_{\mu}\Lambda]&amp;\text{(4.18)}\\
+&amp; &amp;\text{(4.19)}\\
+\end{align*}
+\end{split}\]</div>
+<p>上式中</p>
+<div class="math notranslate nohighlight">
+\[
+S_{\mu}\overset{*}{=} \sum^N_{i=1}(x_i-\mu)(x_i-\mu)^T \tag{4.20}
+\]</div>
+<p>是以 <span class="math notranslate nohighlight">\(\mu\)</span> 为中心的一个散射矩阵。对上面的表达式关于 <span class="math notranslate nohighlight">\(\Lambda\)</span> 求导得到：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\frac{\partial l(\Lambda)}{\partial\Lambda} &amp; = \frac{N}{2}\Lambda^{-T} -\frac{1}{2}S_{\mu}^T=0  \tag{4.21}\\
+\Lambda^{-T} &amp; = \Lambda^{-1}=\Sigma=\frac{1}{N}S_{\mu}  \tag{4.22}\\
+\end{align*}
+\end{split}\]</div>
+<p>因此有：</p>
+<div class="math notranslate nohighlight">
+\[
+\hat\Sigma=\frac{1}{N}\sum^N_{i=1}(x_i-\mu)(x_i-\mu)^T \tag{4.23}
+\]</div>
+<p>正好也就是以 <span class="math notranslate nohighlight">\(\mu\)</span> 为中心的经验协方差矩阵。如果插入最大似然估计 <span class="math notranslate nohighlight">\(\mu=\bar x\)</span> （因为所有参数都同时进行优化）， 就得到了协方差矩阵的最大似然估计的标准方程。</p>
+</div>
+</div>
+<div class="section" id="id7">
+<h3>4.1.4 高斯分布最大熵推导*<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p>在本节，要证明的是多元高斯分布 (multivariate Gaussian) 是适合于有特定均值和协方差的具有最大熵的分布 （参考本书 9.2.6). 这也是高斯分布广泛应用到一个原因，均值和协方差这两个矩 (moments) 一般我们都能通过数据来进行估计得到 （注：一阶矩（期望）归零，二阶矩（方差）), 所以我们就可以使用能捕获这这些特征的分布来建模，另外还要尽可能少做附加假设。
+为了简单起见，假设均值为 0. 那么概率密度函数 (pdf) 就是：
+如果定义 <span class="math notranslate nohighlight">\(f_{ij} (x) = x_i x_j , \lambda_{ij} = \frac {1}{2} (\Sigma^{-1})_{ij}\\ i, j \in \{1, ... , D\}\)</span>, 就会发现这个和等式 9.74 形式完全一样。这个分布（使用自然底数求对数）的（微分）熵为：
+接下来要证明有确定的协方差的情况下多元正态分布 (MVN) 在所有分布中有最大熵。</p>
+<div class="section" id="id8">
+<h4>定理 4.1.2<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
+<p>设 <span class="math notranslate nohighlight">\(q (x)\)</span> 是任意的一个密度函数，满足 <span class="math notranslate nohighlight">\(\int q (x) x_ix_j=\Sigma_{ij}\)</span>. 设 <span class="math notranslate nohighlight">\(p=N (0,\Sigma)\)</span>. 那么 <span class="math notranslate nohighlight">\(h (q)\le h (p)\)</span>.</p>
+<p>证明略。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>注：KL 是 Kullback-Leibler 散度，也称相对熵, 可以用来衡量 <span class="math notranslate nohighlight">\(p\)</span> 和 <span class="math notranslate nohighlight">\(q\)</span> 两个概率分布的差异性。更多细节参考第 2.8.2节。</p>
+</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin {align*}
+0 &amp;\le KL (q||p) =\int q (x)\log \frac {q (x)}{p (x)} dx&amp;\text {(4.26)}\\
+&amp; = -h (q) -\int q (x)\log p (x) dx &amp;\text {(4.27)}\\
+&amp; \overset {*}{=} -h (q) -\int ps (x)\log p (x) dx &amp;\text {(4.28)}\\
+&amp; = -h (q)+h (p) &amp;\text {(4.29)}\\
+\end {align*}
+\end{split}\]</div>
+<p>等式 4.28 那里的星号表示这一步是关键的，因为 q 和 p 对于由 <span class="math notranslate nohighlight">\(\log p (x)\)</span> 编码的二次形式产生相同的矩 (moments).</p>
+</div>
+</div>
+</div>
+<div class="section" id="gaussian-discriminant-analysis">
+<h2>4.2 高斯判别分析 (Gaussian discriminant analysis)<a class="headerlink" href="#gaussian-discriminant-analysis" title="Permalink to this headline">¶</a></h2>
+<p>多元正态分布的一个重要用途就是在生成式分类器中定义类条件密度，也就是：</p>
+<p><span class="math notranslate nohighlight">\(p (x|y=c,\theta)=N (x|\mu_c,\Sigma_c)\)</span>(4.30)</p>
+<p>这样就得到了高斯判别分析，也缩写为 GDA, 不过这其实还是生成式分类器 (generative classifier）, 而并不是判别式分类器（discriminative classifier）, 这两者的区别参考本书 8.6. 如果 \Sigma_c$$ 是对角矩阵，那这就等价于朴素贝叶斯分类器了。
+此处参考原书图 4.2</p>
+<p>从等式 2.13 可以推导出来下面的决策规则，对一个特征向量进行分类：
+<span class="math notranslate nohighlight">\(\hat y (x)=\arg \max_c [\log  p (y=c|\pi)  +\log p (x|\theta_c)]\)</span>(4.31)</p>
+<p>计算 x 属于每一个类条件密度的概率的时候，测量的距离是 x 到每个类别中心的马氏距离 (Mahalanobis distance). 这也是一种最近邻质心分类器 (nearest centroids classiﬁer).</p>
+<p>例如图 4.2 展示的就是二维下的两个高斯类条件密度，横纵坐标分别是身高和体重，包含了男女两类人。很明显身高体重这两个特征有相关性，就如同人们所想的，个子高的人更可能重。每个分类的椭圆都包含了 95% 的概率质量。如果对两类有一个均匀分布的先验，就可以用如下方式来对新的测试向量进行分类：
+<span class="math notranslate nohighlight">\(\hat y (x)=\arg \min_c (x-\mu_c)^T\Sigma_c^{-1}(x-\mu_c)\)</span>(4.32)</p>
+<div class="section" id="id9">
+<h3>4.2.1 二次判别分析<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<p>对类标签的后验如等式 2.13 所示。加入高斯密度定义后，可以对这个模型获得更进一步的理解：
+<span class="math notranslate nohighlight">\(p (y=c|x,\theta)  =\frac { \pi_c|2\pi\Sigma_c|^{-1/2} \exp [-1/2 (x-\mu_c)^T\Sigma_c^{-1}(x-\mu_c)]   }{   \Sigma_{c'}\pi_{c'}|2\pi\Sigma_{c'}|^{-1/2} \exp [-1/2 (x-\mu_{c'})^T\Sigma_{c'}^{-1}(x-\mu_{c'})]    }\)</span>(4.33)</p>
+<p>对此进行阈值处理 (thresholding) 就得到了一个 x 的二次函数 (quadratic function). 这个结果也叫做二次判别分析 (quadratic discriminant analysis, 缩写为 QDA). 图 4.3 所示的是二维平面中决策界线的范例。
+此处参考原书图 4.3</p>
+<p>此处参考原书图 4.4</p>
+</div>
+<div class="section" id="id10">
+<h3>4.2.2 线性判别分析<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<p>接下来考虑一种特殊情况，此事协方差矩阵为各类所共享 (tied or shared), 即 <span class="math notranslate nohighlight">\(\Sigma_c=\Sigma\)</span>. 这时候就可以把等式 4.33 简化成下面这样：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin {align*}
+p (y=c|x,\theta)&amp;\propto \pi_c\exp [\mu_c^T\Sigma^{-1} x-\frac12 x^T\Sigma^{-1} x - \frac12\mu_c^T\Sigma^{-1}\mu_c]&amp;\text {(4.34)}\\
+&amp; = \exp [\mu_c^T\Sigma^{-1} x-\frac12 \mu_c^T\Sigma^{-1}\mu_c+\log\pi_c]\exp [-\frac12 x^T\Sigma^{-1} x]&amp;\text {(4.35)}\\
+\end {align*}
+\end{split}\]</div>
+<p>由于二次项 <span class="math notranslate nohighlight">\(x^T\Sigma^{-1}\)</span> 独立于类别 c, 所以可以抵消掉分子分母。如果定义了：
+$<span class="math notranslate nohighlight">\(
+\begin {align*}
+\gamma_c &amp;= -\frac12\mu_c^T\Sigma^{-1}\mu_c+\log\pi_c&amp;\text {(4.36)}\\
+&amp;\text {(4.37)}\\
+\beta_c &amp;= \Sigma^{-1}\mu_c\end {align*}
+\)</span>$</p>
+<p>则有：
+<span class="math notranslate nohighlight">\(p (y=c|x,\theta)=\frac {e^{\beta^T_c+\gamma_c}}{\Sigma_{c'} e^{\beta^T_{c'}+\gamma_{c'}}}=S (\eta)_c\)</span>(4.38)</p>
+<p>当 <span class="math notranslate nohighlight">\(\eta =[\beta^T_1x+\gamma_1,...,\beta^T_Cx+\gamma_C]\)</span> 的时候，<span class="math notranslate nohighlight">\(S\)</span> 就是 Softmax 函数 (softmax function, 注：柔性最大函数，或称归一化指数函数）, 其定义如下：
+<span class="math notranslate nohighlight">\(S (\eta/T)= \frac {e^{\eta_c}}{\sum^C_{c'=1} e^{\eta_{c'}}}\)</span>(4.39)</p>
+<p>Softmax 函数如同其名中的 Max 所示，有点像最大函数。把每个 <span class="math notranslate nohighlight">\(\eta_c\)</span> 除以一个常数 T, 这个常数 T 叫做温度 (temperature). 然后让 T 趋于零，即 <span class="math notranslate nohighlight">\(T\rightarrow 0\)</span>, 则有：
+$<span class="math notranslate nohighlight">\(S (\eta/T)_c=\begin {cases} 1.0&amp;\text {if } c = \arg\max_{c'}\eta_{c'}\\
+0.0 &amp;\text {otherwise}\end {cases} 
+\)</span>$(4.40)</p>
+<p>也就是说，在低温情况下，分布总体基本都出现在最高概率的状态下，而在高温下，分布会均匀分布于所有状态。参见图 4.4 以及其注解。这个概念来自统计物理性，通常称为玻尔兹曼分布 (Boltzmann distribution), 和 Softmax 函数的形式一样。
+等式 4.38 的一个有趣性质是，如果取对数，就能得到一个关于 x 的线性函数，这是因为 <span class="math notranslate nohighlight">\(x^T\Sigma^{-1} x\)</span> 从分子分母中约掉了。这样两个类 c 和 c’ 之间的决策边界就是一条直线了。所以这种方法也叫做线性判别分析 (linear discriminant analysis, 缩写为 LDA). 可以按照如下方式来推导出这条直线的形式：
+$<span class="math notranslate nohighlight">\(
+\begin {align*}
+p (y=c|x,\theta)&amp; = p (y=c'|x,\theta)    &amp;\text {(4.41)}\\
+\beta^T_cx+\gamma_c&amp; = \beta^T_{c'} x+\gamma_{c'}   &amp;\text {(4.42)}\\
+x^T (\beta_{c'}-\beta)&amp; = \gamma_{c'}-\gamma_c    &amp;\text {(4.43)}\\
+\end {align*}
+\)</span>$</p>
+<p>样例参考图 4.5.</p>
+<p>除了拟合一个线性判别分析 (LDA) 模型然后推导类后验之外，还有一种办法就是对某 <span class="math notranslate nohighlight">\(C\times D\)</span> 权重矩阵 (weight matrix) W, 直接拟合 <span class="math notranslate nohighlight">\(p (y|x,W)=Cat (y|Wx)\)</span>. 这叫做多类逻辑回归 (multi-class logistic regression) 或者多项逻辑回归 (multinomial logistic regression). 此类模型的更多细节将在本书 8.2 中讲解，两种方法的区别在本书 8.6 中有解释。
+此处查看原书图 4.5</p>
+<p>此处查看原书图 4.6</p>
+</div>
+<div class="section" id="id11">
+<h3>4.2.3 双类线性判别分析<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<p>为了更好理解上面那些等式，咱们先考虑二值化分类的情况。这时候后验为：
+$<span class="math notranslate nohighlight">\(
+\begin {align*}
+p (y=1|x,\theta)&amp; =\frac {e^{\beta^T_1x+\gamma_1}}{e^{\beta^T_1x+\gamma_1}+e^{\beta^T_0x+\gamma_0}}    &amp;\text {(4.44)}\\
+&amp; = \frac {1}{1+e^{(\beta_0-\beta_1))^Tx+(\gamma_0-\gamma_1)}} =sigm ((\beta_1-\beta_0)^Tx+(\gamma_1-\gamma_0))  &amp;\text {(4.45)}\\
+\end {align*}
+\)</span>$</p>
+<p>上式中的 <span class="math notranslate nohighlight">\(sigm (\eta)\)</span> 就是之前在等式 1.10 中提到的 S 型函数 (sigmoid function). 现在则有：
+$<span class="math notranslate nohighlight">\(
+\begin {align*}
+\gamma_1-\gamma_0 &amp; = -\frac {1}{2}\mu^T_1\Sigma^{-1}\mu_1+\frac {1}{2}\mu^T_0\Sigma^{-1}\mu_0+\log (\pi_1/\pi_0) &amp;\text {(4.46)}\\
+&amp; =  -\frac {1}{2}(\mu_1-\mu_0)^T\Sigma^{-1}(\mu_1+\mu_0) +\log (\pi_1/\pi_0) &amp;\text {(4.47)}\\
+\end {align*}
+\)</span>$</p>
+<p>所以如果定义：
+$<span class="math notranslate nohighlight">\(
+\begin {align*}
+w&amp;=  \beta_1-\beta_0=\Sigma^{-1}(\mu_1-\mu_0)&amp;\text {(4.48)}\\
+x_0 &amp; =  -\frac {1}{2}(\mu_1+\mu_0)-(\mu_1-\mu_0)\frac {\log (\pi_1/\pi_0) }{(\mu_1-\mu_0)^T\Sigma^{-1}(\mu_1-\mu_0)} &amp;\text {(4.49)}\\
+\end {align*}
+\)</span>$</p>
+<p>然后就有 <span class="math notranslate nohighlight">\(w^Tx_0=-(\gamma_1-\gamma_0)\)</span>, 因此：
+<span class="math notranslate nohighlight">\(p (y=1|x,\theta) = sigm (w^T (x-x_0))\)</span> (4.50)</p>
+<p>这个形式和逻辑回归 (logistic regression) 关系密切，对此将在本书 8.2 中讨论。所以最终的决策规则为：将 x 移动 <span class="math notranslate nohighlight">\(x_0\)</span>, 然后投影到线 w 上，看结果的正负号。
+如果 <span class="math notranslate nohighlight">\(\Sigma=\sigma^2I\)</span>, 那么 w 就是 <span class="math notranslate nohighlight">\(\mu_1-\mu_0\)</span> 的方向。我们对点进行分类就要根据其投影距离 <span class="math notranslate nohighlight">\(\mu_1\)</span> 和 <span class="math notranslate nohighlight">\(\mu_0\)</span> 哪个更近。如图 4.6 所示。另外，如果 <span class="math notranslate nohighlight">\(\pi_1=\pi_0\)</span>, 那么 <span class="math notranslate nohighlight">\(x_0=\frac {1}{2}(\mu_1+\mu_0)\)</span>, 正好在两个均值的中间位置。如果让 <span class="math notranslate nohighlight">\(\pi_1&gt; \pi_0\)</span>, 则 <span class="math notranslate nohighlight">\(x_0\)</span> 更接近 <span class="math notranslate nohighlight">\(\mu_0\)</span>, 所以图中所示线上更多位置属于类别 1. 反过来如果 <span class="math notranslate nohighlight">\(\pi_1 &lt; \pi_0\)</span> 则边界右移。因此，可以看到类的先验 <span class="math notranslate nohighlight">\(\pi_c\)</span> 只是改变了决策阈值，而并没有改变总体的结合形态。类似情况也适用于多类情景。
+w 的大小决定了对数函数的陡峭程度，取决于均值相对于方差的平均分离程度。在心理学和信号检测理论中，通常定义一个叫做敏感度指数 (sensitivity index, 也称作 d-prime) 的量，表示信号和背景噪声的可区别程度：
+<span class="math notranslate nohighlight">\(d'\overset {*}{=} \frac {\mu_1-\mu_0}{\sigma}\)</span>(4.51)</p>
+<p>上式中的 <span class="math notranslate nohighlight">\(\mu_1\)</span> 是信号均值，<span class="math notranslate nohighlight">\(\mu_0\)</span> 是噪音均值，而 <span class="math notranslate nohighlight">\(\sigma\)</span> 是噪音的标准差。如果敏感度指数很大，那么就意味着信号更容易从噪音中提取出来。</p>
+</div>
+<div class="section" id="mle">
+<h3>4.2.4 对于判别分析的最大似然估计 (MLE)<a class="headerlink" href="#mle" title="Permalink to this headline">¶</a></h3>
+<p>现在来说说如何去拟合一个判别分析模型 (discriminant analysis model). 最简单的方法莫过于最大似然估计 (maximum likelihood). 对应的对数似然函数 (log-likelihood) 如下所示：
+<span class="math notranslate nohighlight">\(\log p (D|\theta) =[\sum^N_{i=1}\sum^C_{c=1} I (y_i=c)\log\pi_c] + \sum^C_{c=1}[\sum_{i:y_i=c}\log N (x|\mu_c,\Sigma_c)]\)</span>(4.52)</p>
+<p>显然这个式子可以因式分解成一个含有 <span class="math notranslate nohighlight">\(\pi\)</span> 的项，以及对应每个 <span class="math notranslate nohighlight">\(\mu_c,\Sigma_c\)</span> 的 C 个项。因此可以分开对这些参数进行估计。对于类先验 (class prior), 有 <span class="math notranslate nohighlight">\(\hat\pi_c=\frac {N_c}{N}\)</span>, 和朴素贝叶斯分类器里一样。对于类条件密度 (class-conditional densities), 可以根据数据的类别标签来分开，对于每个高斯分布进行最大似然估计：
+<span class="math notranslate nohighlight">\(\hat\mu_c=\frac {1}{N_c}\sum_{i:y_i=c} x_i,\hat\Sigma_c=\frac {1}{N_c}\sum_{i:y_i=c}(x_i-\hat\mu_c)(x_i-\hat\mu_c)^T\)</span>(4.53)</p>
+<p>具体实现可以参考本书配套的 PMTK3 当中的 discrimAnalysisFit 是 MATLAB 代码。一旦一个模型拟合出来了，就可以使用 discrimAnalysisPredict 来进行预测了，具体用到的是插值近似 (plug-in approximation).</p>
+</div>
+<div class="section" id="id12">
+<h3>4.2.5 防止过拟合的策略<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<p>最大似然估计 (MLE) 的最大优势之一就是速度和简洁。然而，在高维度数据的情况下，最大似然估计可能会很悲惨地发生过拟合。尤其是当 <span class="math notranslate nohighlight">\(N_c&lt;D\)</span>, 全协方差矩阵 (full covariance matrix) 是奇异矩阵的时候 (singular),MLE 方法很容易过拟合。甚至即便 <span class="math notranslate nohighlight">\(N_c&gt;D\)</span>,MLE 也可能是病态的 (ill-conditioned), 意思就是很接近奇异。有以下几种方法来预防或解决这类问题：</p>
+<ul class="simple">
+<li><p>假设类的特征是有条件独立的 (conditionally independent), 对这些类使用对角协方差矩阵 (diagonal covariance matrix); 这就等价于使用朴素贝叶斯分类器了，参考本书 3.5.</p></li>
+<li><p>使用一个全协方差矩阵，但强制使其对于所有的类都相同，即 <span class="math notranslate nohighlight">\(\Sigma_c=\Sigma\)</span>. 这称为参数绑定 (parameter tying) 或者参数共享 (parameter sharing), 等价于线性判别分析 (LDA), 参见本书 4.2.2.</p></li>
+<li><p>使用一个对角协方差矩阵，强迫共享。这叫做对角协方差线性判别分析，参考本书 4.2.7.</p></li>
+<li><p>使用全协方差矩阵，但倒入一个先验，然后整合。如果使用共轭先验 (conjugate prior) 就能以闭合形式 (closed form) 完成这个过程，利用了本书 4.6.3 当中的结果；这类似于本书 3.5.1.2 当中提到的使用贝叶斯方法的朴素贝叶斯分类器 (Bayesian naive Bayes), 更多细节参考 (Minka 2000f).</p></li>
+<li><p>拟合一个完整的或者对角协方差矩阵，使用最大后验估计 (MAP estimate), 接下来会讨论两种不同类型的实现。</p></li>
+<li><p>将数据投影到更低维度的子空间，然后在子空间中拟合其高斯分布。更多细节在本书 8.6.3.3, 其中讲了寻找最佳线性投影 （即最有区分作用） 的方法。
+接下来说一些可选类型。</p></li>
+</ul>
+</div>
+<div class="section" id="regularized-lda">
+<h3>4.2.6 正交线性判别分析 (Regularized LDA)*<a class="headerlink" href="#regularized-lda" title="Permalink to this headline">¶</a></h3>
+<p>假如我们在线性判别分析中绑定了协方差矩阵，即 <span class="math notranslate nohighlight">\(\Sigma_c=\Sigma\)</span>, 接下来就要对 <span class="math notranslate nohighlight">\(\Sigma\)</span> 进行最大后验估计了，使用一个逆向 Wishart 先验，形式为 <span class="math notranslate nohighlight">\(IW (diag (\hat\Sigma_{mle}),v_0)\)</span>, 更多内容参考本书 4.5.1. 然后就有了：
+<span class="math notranslate nohighlight">\(\hat\Sigma=\lambda diag (\hat\Sigma_{mle})+(1-\lambda)\hat\Sigma_{mle}\)</span>(4.54)</p>
+<p>上式中的 <span class="math notranslate nohighlight">\(\lambda\)</span> 控制的是正则化规模 (amount of regularization), 这和先验强度 (strength of the prior),<span class="math notranslate nohighlight">\(v_0\)</span> 有关，更多信息参考本书 4.6.2.1. 这个技巧就叫做正则化线性判别分析 (regularized discriminant analysis, 缩写为 RDA, 出自 Hastie et al. 2009, p656).</p>
+<p>当对类条件密度进行评估的时候，需要计算 <span class="math notranslate nohighlight">\(\hat\Sigma^{-1}\)</span>, 也就要计算 <span class="math notranslate nohighlight">\(\hat\Sigma^{-1}_{mle}\)</span>, 如果 <span class="math notranslate nohighlight">\(D&gt;N\)</span> 那就没办法计算了。不过可以利用对矩阵 X 的奇异值分解（Singular Value Decomposition, 缩写为 SVD, 参考本书 12.2.3) 来解决这个问题，如下面所述。（注意这个方法不能用于二次判别分析 QDA, 因为 QDA 不是关于 x 的线性函数，是非线性函数了。)</p>
+<p>设 <span class="math notranslate nohighlight">\(X=UDV^T\)</span> 是对设计矩阵 (design matrix) 的 SVD 分解，其中的 V/U 分别是 <span class="math notranslate nohighlight">\(D\times N\)</span> 和 <span class="math notranslate nohighlight">\(N\times N\)</span> 的正交矩阵 (orthogonal matrix), 而 D 是规模为 N 的对角矩阵 (diagonal matrix). 定义一个 <span class="math notranslate nohighlight">\(N\times N\)</span> 的矩阵 <span class="math notranslate nohighlight">\(Z=UD\)</span>; 这就像是一个在更低维度空间上的设计矩阵，因为我们假设了 <span class="math notranslate nohighlight">\(N&lt;D\)</span>. 另外定义 <span class="math notranslate nohighlight">\(\mu_z=V^T\mu\)</span> 作为降维空间中的数据均值；可以通过 <span class="math notranslate nohighlight">\(mu=V\mu_z\)</span> 来恢复到原始均值，因为 <span class="math notranslate nohighlight">\(V^TV=VV^T=I\)</span>. 有了这些定义之后，就可以把最大似然估计 (MLE) 改写成下面的形式了：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin {align*}\\
+\hat \Sigma_{mle} &amp;= \frac {1}{N} X^TX-\mu\mu^T &amp;\text {(4.55)}\\
+&amp;= \frac {1}{N}(ZV^T)^T (ZV^T)-(V\mu-z)(V\mu_z)^T &amp;\text {(4.56)}\\
+&amp;= \frac {1}{N} VZ^TZV^T-V\mu_z\mu_z^TV^T &amp;\text {(4.57)}\\
+&amp;= V (\frac {1}{N} Z^TZ-\mu_z\mu_z^T) V^T &amp;\text {(4.58)}\\
+&amp;= V\hat\Sigma_zV^T &amp;\text {(4.59)}\\
+\end {align*}\\
+\end{split}\]</div>
+<p>上式中的 <span class="math notranslate nohighlight">\(\hat\Sigma_z\)</span> 是 <strong>Z</strong> 的经验协方差 (empirical covariance). 因此要重新写成最大后验估计 (MAP) 为：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin {align*}
+\hat\Sigma_{map}&amp;=V\tilde\Sigma_zV^T &amp;\text {(4.60)}\\
+\tilde\Sigma_z &amp;= \lambda diag (\hat\Sigma_z)+(1-\lambda)\hat\Sigma_z &amp;\text {(4.61)}
+\end {align*}
+\end{split}\]</div>
+<p>注意，我们并不需要真正去计算出来这个 <span class="math notranslate nohighlight">\(D\times D\)</span> 矩阵 <span class="math notranslate nohighlight">\(\hat\Sigma_{map}\)</span>. 这是因为等式 4.38 告诉我们，要使用线性判别分析 (LDA) 进行分类，唯一需要计算的也就是 <span class="math notranslate nohighlight">\(p (y=c|x,\theta)\propto \exp (\delta_c)\)</span>, 其中：
+<span class="math notranslate nohighlight">\(\delta_c=-x^T\beta_c+\gamma_c,\beta_c=\hat\Sigma^{-1}\mu_c,\gamma_c=- \frac {1}{2}\mu_c^T \beta_c+\log \pi_c\)</span>(4.62)</p>
+<p>然后可以并不需要求逆 <span class="math notranslate nohighlight">\(D\times D\)</span> 矩阵就能计算正交线性判别分析 (RDA) 的关键项 <span class="math notranslate nohighlight">\(\beta_c\)</span>.
+<span class="math notranslate nohighlight">\(\beta_c =\hat\Sigma^{-1}_{map}\mu_c = (V\tilde\Sigma V^Ts)^{-1}\mu_c =V\tilde\Sigma^{-1} V^T\mu_c=V\tilde\Sigma^{-1}\mu_{z,c}\)</span>(4.63)</p>
+</div>
+<div class="section" id="diagonal-lda">
+<h3>4.2.7 对角线性判别分析 (Diagonal LDA)<a class="headerlink" href="#diagonal-lda" title="Permalink to this headline">¶</a></h3>
+<p>上文所述的是正交线性判别分析 (RDA), 有一种简单的替代方法，就是绑定协方差矩阵 (covariance matrice), 即线性判别分析 (LDA) 中 <span class="math notranslate nohighlight">\(\Sigma_c=\Sigma\)</span>, 然后对于每个类都是用一个对角协方差矩阵。这个模型就叫做对角线性判别分析模型 (diagonal LDA model), 等价于 <span class="math notranslate nohighlight">\(\lambda =1\)</span> 时候的正交线性判别分析 (RDA). 对应的判别函数如下所示 （和等式 4.33 相对比一下）:</p>
+<div class="math notranslate nohighlight">
+\[
+\delta _c (x)=\log p (x,y=c|\theta) =-\sum^D_{j=1}\frac {(x_j-\mu_{cj})^2}{2\sigma^2_j}+\log\pi_c  ~~\tag{4.64}
+\]</div>
+<p>通常设置 <span class="math notranslate nohighlight">\(\hat\mu_{cj}=\bar x_{cj},\hat\sigma^2_j=s^2_j\)</span>, 这个 <span class="math notranslate nohighlight">\(s^2_j\)</span> 是特征 j （跨类汇集） 的汇集经验方差 (pooled empirical variance).</p>
+<div class="math notranslate nohighlight">
+\[
+s^2_j=\frac {\sum^C_{c=1}\sum_{i:y_i=c}(x_{ij}-\bar x_{cj})^2}{N-C}  ~~\tag{4.65}
+\]</div>
+<p>对于高维度数据，这个模型比 LDA 和 RDA 效果更好 (Bickel and Levina 2004).</p>
+<p>此处查看原书图 4.7</p>
+</div>
+<div class="section" id="nearest-shrunken-centroids-classifier">
+<h3>4.2.8 最近收缩质心分类器 (Nearest shrunken centroids classiﬁer)*<a class="headerlink" href="#nearest-shrunken-centroids-classifier" title="Permalink to this headline">¶</a></h3>
+<p>对角线性判别分析 (diagonal LDA) 有一个弱点，就是要依赖所有特征。在高维度情况下，可能更需要一个只依赖部分子集特征的方法，可以提高准确性或者利于解释。比如可以使用筛选方法 (screening method), 基于互信息量 (mutual information), 如本书 3.5.4 所述。本节要说另外一种方法，即最近收缩质心分类器 (nearest shrunken centroids classiﬁer, Hastie et al. 2009, p652).</p>
+<p>基本思想是在稀疏先验 (sparsity-promoting/Laplace prior) 情况下对对角线性判别分析模型进行最大后验估计 (MAP), 参考本书 13.3. 更确切来说，用类独立特征均值 (class-independent feature mean)<span class="math notranslate nohighlight">\(m_j\)</span> 和类依赖偏移量 (class-speciﬁc offset)<span class="math notranslate nohighlight">\(\Delta_{cj}\)</span> 来定义类依赖特征均值 (class-speciﬁc feature mean)<span class="math notranslate nohighlight">\(\mu_{cj}\)</span>。 则有：</p>
+<div class="math notranslate nohighlight">
+\[
+\mu_{cj}=m_j+\Delta_{cj}  ~~\tag{4.66}
+\]</div>
+<p>接下来对 <span class="math notranslate nohighlight">\(\Delta_{cj}\)</span> 这一项设一个先验，使其为零，然后计算最大后验估计 (MAP). 对特征 j, 若有对于所有类别 c 都有 <span class="math notranslate nohighlight">\(\Delta_{cj}=0\)</span>, 则该特征在分类决策中则毫无作用，因为 <span class="math notranslate nohighlight">\(\mu_{cj}\)</span> 是与 c 独立的。这样这些不具有判别作用的特征就会被自动忽略掉。这个过程的细节可以参考 (Hastie et al. 2009, p652) 和 (Greenshtein and Park 2009). 代码可以参考本书配套的 PMTK3 程序中的 shrunkenCentroidsFit.</p>
+<p>基于 (Hastie et al. 2009, p652) 的内容举个例子。设要对一个基因表达数据集进行分类，其中有 2308 个基因，4 各类别，63 个训练样本，20 个测试样本。使用对角 LDA 分类器在测试集当中有五次错误。而是用最近收缩质心分类器对一系列不同的 <span class="math notranslate nohighlight">\(\lambda\)</span> 值，在测试集中都没有错误，如图 4.7 所示。更重要的是这个模型是稀疏的，所以更容易解读。图 4.8 所示的非惩罚估计 (unpenalized estimate), 灰色对应差值 (difference)<span class="math notranslate nohighlight">\(d_{cj}\)</span>, 蓝色的是收缩估计 (shrunken estimates)<span class="math notranslate nohighlight">\(\Delta_{cj}\)</span>.（这些估计的计算利用了通过交叉验证估计得到的 <span class="math notranslate nohighlight">\(\lambda\)</span> 值。) 在原始的 2308 个基因中，只有 39 个用在了分类当中。
+接下来考虑个更难的问题，有 16,603 个基因，来自 144 个病人的训练集，54 个病人的测试集，有 14 种不同类型的癌症 (Ramaswamy et al. 2001).Hastie 等 (Hastie et al. 2009, p656) 称最近收缩质心分类器用了 6520 个基因，在测试集上有 17 次错误，而正交判别分析 (RDA, 本书 4.3.6) 用了全部的 16,603 个基因，在测试集上有 12 次错误。本书配套的 PMTK3 程序当中的函数 cancerHighDimClassifDemo 可以再现这些数字。
+此处查看原书图 4.8</p>
+</div>
+</div>
+<div class="section" id="inference-in-jointly-gaussian-distributions">
+<h2>4.3 联合正态分布的推论 (Inference in jointly Gaussian distributions)<a class="headerlink" href="#inference-in-jointly-gaussian-distributions" title="Permalink to this headline">¶</a></h2>
+<p>给定联合分布 <span class="math notranslate nohighlight">\(p (x_1,x_2)\)</span>, 边界分布 (marginal)<span class="math notranslate nohighlight">\(p (x_1)\)</span> 和条件分布 <span class="math notranslate nohighlight">\(p (x_1|x_2)\)</span> 是有用的。下面就说一下如何去计算，并且给出一些应用举例。这些运算在最不理想的情况下大概需要 <span class="math notranslate nohighlight">\(O (D^3)\)</span> 的时间。本书的 20.4.3 会给出一些更快的方法。</p>
+<div class="section" id="id13">
+<h3>4.3.1 结果声明<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id14">
+<h4>定理 4.3.1<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h4>
+<p>多元正态分布 (MVN) 的边界和条件分布。设 <span class="math notranslate nohighlight">\(x=(x_1,x_2)\)</span> 是联合正态分布，其参数如下：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mu=\begin {pmatrix}
+        \mu_1\\
+        \mu_2
+        \end {pmatrix} ,
+\Sigma=\begin {pmatrix}
+        \Sigma_{11}&amp;\Sigma_{12}\\
+        \Sigma_{21}&amp;\Sigma_{22}
+        \end {pmatrix},
+\Lambda=\Sigma^{-1}=\begin {pmatrix}
+        \Lambda_{11}&amp;\Lambda_{12}\\
+        \Lambda_{21}&amp;\Lambda_{22}
+        \end {pmatrix}
+         ~~\tag{4.67}
+\end{split}\]</div>
+<p>则边缘分布为：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin {align*}
+p (x_1)&amp;=N (x_1|\mu_1,\Sigma_{11})\\
+p (x_2)&amp;=N (x_2|\mu_2,\Sigma_{22})   ~~\tag{4.68}
+\end {align*} 
+\end{split}\]</div>
+<p>后验条件分布则为 （重要公式）:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin {align*}
+p (x_1|x_2)&amp;=N (x_1|\mu_{1|2},\Sigma_{1|2})\\
+\mu_{1|2}&amp;=\mu_1+\Sigma_{12}\Sigma^{-1}_{1|2}(x_2-\mu_2)\\
+&amp;=\mu_1-\Lambda_{12}\Lambda^{-1}_{1|2}(x_2-\mu_2)\\
+&amp;= \Sigma_{1|2}(\Lambda_{11}\mu_1-\Lambda_{12}(x_2-\mu_2))\\
+\Sigma_{1|2}&amp;=\Sigma_{11}-\Sigma_{12}\Sigma^{-1}_{22}\Sigma_{21}=\Lambda^{-1}_{11}  ~~\tag{4.69}
+\end {align*} 
+\end{split}\]</div>
+<p>上面这个公式很重要，证明过程参考本书 4.3.4.</p>
+<p>可见边缘和条件分布本身也都是正态分布。对于边缘分布，只需要提取出与 <span class="math notranslate nohighlight">\(x_1\)</span> 或者 <span class="math notranslate nohighlight">\(x_2\)</span> 对应的行和列。条件分布就要复杂点了。不过也不是特别复杂，条件均值 (conditional mean) 正好是 <span class="math notranslate nohighlight">\(x_2\)</span> 的一个线性函数，而条件协方差 (conditional covariance) 则是一个独立于 <span class="math notranslate nohighlight">\(x_2\)</span> 的常数矩阵 (constant matrix). 给出了后验均值 (posterior mean) 的三种不同的等价表达形式，后验协方差 (posterior covariance) 的两种不同的等价表达方式，每个表达式都在不同情境下有各自的作用。</p>
+</div>
+</div>
+<div class="section" id="id15">
+<h3>4.3.2 举例<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<p>接下来就在实际应用中进行举例，可以让上面的方程更直观也好理解。</p>
+<div class="section" id="id16">
+<h4>4.3.2.1 二维正态分布的边缘和条件分布<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h4>
+<p>假设以一个二维正态分布为例，其协方差矩阵为：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\Sigma =\begin {pmatrix} \sigma_1^2 &amp; \rho\sigma_1\sigma_2   \\
+\rho\sigma_1\sigma_2 &amp; \sigma_2^2
+\end {pmatrix}  ~~\tag{4.70}
+\end{split}\]</div>
+<p>边缘分布 <span class="math notranslate nohighlight">\(p (x_1)\)</span> 则是一个一维正态分布，将联合分布投影到 <span class="math notranslate nohighlight">\(x_1\)</span> 这条线上即可得到：
+<span class="math notranslate nohighlight">\(p (x_1)=N (x_1|\mu_1,\sigma_1^2)\)</span>(4.71)</p>
+<p>此处查看原书图 4.9</p>
+<p>假如观测 <span class="math notranslate nohighlight">\(X_2=x_2\)</span>, 则可以通过使用 <span class="math notranslate nohighlight">\(X_2=x_2\)</span> 这条线来对联合分布进行 “切片 (slicing)” 得到条件分布 <span class="math notranslate nohighlight">\(p (x_1|x_2)\)</span>, 如图 4.9 所示：
+<span class="math notranslate nohighlight">\(p (x_1|x_2)= N (x_1|\mu_1+ \frac {\rho\sigma_1\sigma_2}{\sigma_2^2}(x_2-\mu_2),\sigma_1^2-\frac {(\rho\sigma_1\sigma_2 )^2}{\sigma_2^2})\)</span>(4.72)</p>
+<p>若 <span class="math notranslate nohighlight">\(\sigma_1=\sigma_2=\sigma\)</span>, 则有：
+<span class="math notranslate nohighlight">\(p (x_1|x_2)=N (x_1|\mu_1+\rho (x_2-\mu_2),\sigma^2 (1-\rho^2))\)</span>(4.73)</p>
+<p>图 4.9 所示的为 <span class="math notranslate nohighlight">\(\rho=0.8,\sigma_1=\sigma_2=1,\mu=0,x_2=1\)</span>. 可见 <span class="math notranslate nohighlight">\(E [x_1|x_2=1]=0.8\)</span>, 这很好理解，因为 <span class="math notranslate nohighlight">\(\rho=0.8\)</span> 就意味着如果 <span class="math notranslate nohighlight">\(x_2\)</span> 在其均值基础上加 1, 那么 <span class="math notranslate nohighlight">\(x_2\)</span> 则增加 0.8. 另外还可以发现 <span class="math notranslate nohighlight">\(var [x_1|x_2=1]=1-0.8^2=0.36\)</span>. 这也好理解，由于通过观测 <span class="math notranslate nohighlight">\(x_2\)</span> 而对 <span class="math notranslate nohighlight">\(x_1\)</span> 有了非直接的了解，所以对 <span class="math notranslate nohighlight">\(x_1\)</span> 的不确定性就降低了。如果 <span class="math notranslate nohighlight">\(\rho=1\)</span>, 就得到了 <span class="math notranslate nohighlight">\(p (x_1|x_2)=N (x_1|\mu_1,\sigma_1^2)\)</span>, 因为如果二者不相关也就是互相独立的话，<span class="math notranslate nohighlight">\(x_2\)</span> 就不可能承载关于 <span class="math notranslate nohighlight">\(x_1\)</span> 的任何信息了。</p>
+</div>
+<div class="section" id="interpolating-noise-free-data">
+<h4>4.3.2.2 无噪音数据插值 (Interpolating noise-free data)<a class="headerlink" href="#interpolating-noise-free-data" title="Permalink to this headline">¶</a></h4>
+<p>若我们要估计一个一维函数，定义在闭区间 [0,T] 上，对于 N 次观测的点 <span class="math notranslate nohighlight">\(t_i\)</span> 即为 <span class="math notranslate nohighlight">\(y_i=f (t_i)\)</span>. 暂时先假设数据没有噪音 (noise-free), 对其进行插值 (interpolate), 即拟合一个完全通过数据的函数。（对于有噪音的数据，参考本书 4.4.2.3.) 那么问题来了：在观测数据点之间间隔的地方，这个函数该是什么样的呢？通常都假设这个函数是光滑的。在本书第 15 章，会讲如何对函数进行先验编码，以及如何使用观测值对先验进行更新来得到对函数的后验估计。不过本章的内容要简单很多，直接对一维输入上定义的函数进行最大后验估计 (MAP), 参考了 (Calvetti and Somersalo 2007, p135) 的介绍。
+先将这个问题离散化 (discretizing). 首先咱们将这个函数的定义域 （支撑，support, 我就是要说定义域这种很平民化的词你能怎样？) 分割成 D 个等大子区间 (equal subintervals). 然后定义：
+<span class="math notranslate nohighlight">\(x_j=f (s_j),s_j=jh,h=\frac {T}{D},1\le j\le D\)</span>(4.74)</p>
+<p>此处查看原书图 4.10</p>
+<p>光滑先验的编码可以通过下面的方式实现：假设 <span class="math notranslate nohighlight">\(x_j\)</span> 是邻近两项 <span class="math notranslate nohighlight">\(x_{j-1},x_{j+1}\)</span> 的均值，再加上正态分布的噪音项：
+<span class="math notranslate nohighlight">\(x_j=\frac {1}{2}(x_{j-1}+x_{j+1})+\epsilon_j ,2\le j\le D-2\)</span>(4.75)</p>
+<p>上式中的 <span class="math notranslate nohighlight">\(\epsilon \sim  N (0, (1/\lambda) I)\)</span>. 精度项 (precision term)<span class="math notranslate nohighlight">\(\lambda\)</span> 控制了函数波动幅度：大的 <span class="math notranslate nohighlight">\(\lambda\)</span> 表示我们认为函数非常光滑，而小的 <span class="math notranslate nohighlight">\(\lambda\)</span> 则表示这个函数可能 “拐来拐去的 (wiggly)”. 用向量形式可以将上面的等式写成如下所示：
+<span class="math notranslate nohighlight">\(Lx=\epsilon\)</span>(4.76)
+上式中的 L 是一个 <span class="math notranslate nohighlight">\((D − 2) \times D\)</span> 的二阶有限差分矩阵 (second order ﬁnite difference matrix):
+$<span class="math notranslate nohighlight">\(
+L=\frac {1}{2}\begin {pmatrix} -1&amp;2&amp;-1&amp;&amp;&amp;\\
+&amp;-1&amp;2&amp;-1&amp;&amp;\\
+&amp;&amp;...&amp;&amp;&amp;\\
+&amp;&amp;&amp;-1&amp;2&amp;-1\\
+\end {pmatrix}
+\)</span>$(4.77)</p>
+<p>对应的先验形式如下：
+<span class="math notranslate nohighlight">\(p (x)=N (x|0,(\lambda^2L^TL)^{-1})\propto \exp (-\frac {\lambda^2}{2}||Lx||^2_2)\)</span>(4.78)</p>
+<p>以后就假设已经用 <span class="math notranslate nohighlight">\(\lambda\)</span> 对 L 进行过缩放了，所以就会忽略掉 <span class="math notranslate nohighlight">\(\lambda\)</span> 项，就只将精度矩阵 (precision matrix) 写成 <span class="math notranslate nohighlight">\(\Lambda=L^TL\)</span>.</p>
+<p>这里要注意，虽然 x 是 D 维的，但是精度矩阵 <span class="math notranslate nohighlight">\(\Lambda\)</span> 实际上的秩只是 D-2. 所以这是一个不适用先验 (improper prior), 也称作内在高斯随机场 (intrinsic Gaussian random ﬁeld)（更多相关信息参考本书 19.4.4).
+不过只要观测超过 2 个数据点，即 <span class="math notranslate nohighlight">\(N\ge2\)</span>, 这个先验就适用了。
+接下来设 <span class="math notranslate nohighlight">\(x_2\)</span> 是 N 个对函数的无噪音观测，而 <span class="math notranslate nohighlight">\(x_1\)</span> 是 <span class="math notranslate nohighlight">\(D-N\)</span> 个函数值。不考虑泛化损失，先假设未知变量和已知变量分别被排序。然后就可以对 L 矩阵进行如下所示的分割：
+<span class="math notranslate nohighlight">\(L=[L_1,L_2],L_1\in R^{(D-2)\times (D-N)},L_2\in R^{(D-2)\times (N)}\)</span>(4.79)
+然后也可以对联合分布的精度矩阵进行分割：
+$<span class="math notranslate nohighlight">\(
+\Lambda=L^TL=
+\begin {pmatrix}
+\Lambda_{11}&amp;\Lambda_{12}\\ 
+\Lambda_{21}&amp;\Lambda_{22}
+\end {pmatrix}=
+\begin {pmatrix}
+L_1^TL_1&amp;L_1^TL_2\\ 
+L_2^TL_1&amp;L_2^TL_2
+\end {pmatrix}
+\)</span>$(4.80)</p>
+<p>利用等式 4.69, 就可以写出条件分布：
+$<span class="math notranslate nohighlight">\(
+\begin {align*}
+p (x_1|x_2)&amp;=N (\mu_{1|2},\Sigma_{1|2}) &amp;\text {(4.81)}\\
+\mu_{1|2}&amp;= -\Lambda^{-1}_{11}\Lambda_{12} x_2=-L_1^TL_2x_2 &amp;\text {(4.82)}\\
+\Sigma_{1|2} &amp;= \Lambda^{-1}_{11}&amp;\text {(4.83)}\\
+\end {align*}
+\)</span>$</p>
+<p>解下面的线性方程组就可以计算出均值：
+<span class="math notranslate nohighlight">\(L_1\mu_{1|2}=-L_2x_2\)</span>(4.84)</p>
+<p><span class="math notranslate nohighlight">\(L_1\)</span> 是三角形矩阵，所以这解起来很容易。图 4.10 所示为这些等式的图像。从图中可见后验均值 <span class="math notranslate nohighlight">\(\mu_{1|2}\)</span> 等于特定各点的观测数据，而中间位置也都进行了光滑插值。
+图中灰色的部分是 95% 的逐点边界置信区间 (pointwise marginal credibility intervals),<span class="math notranslate nohighlight">\(\mu_j\pm 2\sqrt {\Sigma_{1|2,jj}}\)</span>. 观察这部分会发现，远离数据点则方差增大，降低先验精度 <span class="math notranslate nohighlight">\(\lambda\)</span> 也会导致方差的增大。不过有趣的是 <span class="math notranslate nohighlight">\(\lambda\)</span> 并不会影响后验均值，因为在乘以 <span class="math notranslate nohighlight">\(\Lambda_{11}\)</span> 和 <span class="math notranslate nohighlight">\(\Lambda_{12}\)</span> 的时候消掉了。与之形成对比的是本书 4.4.2.3 的有噪音数据，那时候咱们就能发现先验精度会影响后验均值估计的光滑程度了。
+边界置信区间并没有捕获到邻近位置上的相关性。对此可以从后验中推出完整的函数，也就是向量 x, 然后绘制函数图像。如图 4.10 中的细线所示。这就不像后验均值本身那么光滑了。这是因为先验只是处理了一阶差分 (prior only penalizes ﬁrst-order differences). 更多相关细节参考本书 4.4.2.3.</p>
+</div>
+<div class="section" id="data-imputation">
+<h4>4.3.2.3 数据插补 (Data imputation)<a class="headerlink" href="#data-imputation" title="Permalink to this headline">¶</a></h4>
+<p>假设一个设计矩阵 (design matrix) 中缺失了某些值 (entries). 如果各列 (columns) 相关，可以用观察到的值对缺失值进行预测。如图 4.11 所示。从一个 20 维的正态分布中取样若干数据，然后故意在每行 (row) 隐藏掉一般的数据。接下来使用存留数据对缺失数据进行推测，使用真实 （生成） 模型 (true (generating) model). 具体来说，对于每一行 i, 都计算 <span class="math notranslate nohighlight">\(p (x_{h_i}|x_{v_i} ,\theta)\)</span>, 其中的 <span class="math notranslate nohighlight">\(h_i\)</span> 和 <span class="math notranslate nohighlight">\(v_i\)</span> 分别是 i 条件下隐藏和可见值的索引值 (indices). 从这里就能计算出每个缺失值的边缘分布 <span class="math notranslate nohighlight">\(p (x_{h_{ij}}|x_{v_i} ,\theta)\)</span>. 然后对这个分布的均值 <span class="math notranslate nohighlight">\(\hat x_{ij}=E [x_j|x_{v_i},\theta]\)</span> 进行投图；这就代表着对缺失值位置真实值的 “最佳猜测”, 因为这使得期望平方误差 (expected squared error) 最小，更多细节参考本书 5.7. 如图 4.11 所示，这些估计和真实值还是很接近的。（当然了，如果 <span class="math notranslate nohighlight">\(j\in v_i\)</span> 则期望值就等于观测值，即 <span class="math notranslate nohighlight">\(\hat x_{ij} = x_{ij}\)</span>.)</p>
+<p>然后可以用 <span class="math notranslate nohighlight">\(var [x_{h_{ij}}|x_{v_i} ,\theta]\)</span> 来衡量对这个猜测的信心，不过图中没有展示出来。或者可以从 <span class="math notranslate nohighlight">\(p (x_{h_{ij}}|x_{v_i} ,\theta)\)</span> 中进行多次取样，这样就叫做多重插补 (multiple imputation).</p>
+<p>除了推算缺失值之外，我们可能还要计算表格中每个特定观测到的行 (row) 的似然率 (likelihood),<span class="math notranslate nohighlight">\(p (x_{v_i}|\theta)\)</span>, 这可以用等式 4.68 进行计算。这可以用于检测异常值 (outliers)（也就是不太正常的观测结果，atypical observations).</p>
+<p>此处参考原书图 4.11</p>
+</div>
+</div>
+<div class="section" id="information-form">
+<h3>4.3.3 信息形式 (Information form)<a class="headerlink" href="#information-form" title="Permalink to this headline">¶</a></h3>
+<p>设 <span class="math notranslate nohighlight">\(x \sim  N (\mu,\Sigma)\)</span>. 很明显 <span class="math notranslate nohighlight">\(E [x]=\mu\)</span> 就是均指向量，而 <span class="math notranslate nohighlight">\(cov [x]=\Sigma\)</span> 就是协方差矩阵 (covariance matrix). 这些都叫做分布的矩参数 (moment parameters). 不过有时候可能使用规范参数 (canonical parameters) 或者自然参数 (natural parameters) 更有用，具体定义如下所示：
+<span class="math notranslate nohighlight">\(\Lambda \overset {*}{=} \Sigma^{-1},\xi \overset {*}{=}  \Sigma^{-1} \mu\)</span>(4.85)
+还可以转换回矩参数：
+<span class="math notranslate nohighlight">\( \mu=\Lambda^{-1}\xi,\Sigma =\Lambda^{-1}\)</span>(4.86)
+使用规范参数，可以将多元正态分布 (MVN) 写成信息形式 (information form)（也就是写成指数组分布的形式 (exponential family form), 具体定义在本书 9.2):
+<span class="math notranslate nohighlight">\(N_c (x|\xi,\Lambda)=(2\pi)^{-D/2}|\Lambda|^{\frac {1}{2}} \exp [-\frac {1}{2}(x^T\Lambda x+\xi^T\Lambda^{-1}\xi-2x^T\xi)]\)</span>(4.87)</p>
+<p>上式中使用了 <span class="math notranslate nohighlight">\(N_c ()\)</span> 是为了和矩参数表达形式 <span class="math notranslate nohighlight">\(N ()\)</span> 相区分。
+边缘分布和条件分布公式也都可以推导出信息形式。为：
+<span class="math notranslate nohighlight">\(p (x_2)=N_c (x_2|\xi_2-\Lambda_{21}\Lambda_{11}^{-1}\xi_1,\Lambda_{22}-\Lambda_{21}\Lambda_{11}^{-1}\Lambda_{12})\)</span>(4.88)
+<span class="math notranslate nohighlight">\(p (x_1|x_2)=N_c (x_1|\xi_1-\Lambda_{12} x_2,\Lambda_{11})\)</span>(4.89)</p>
+<p>通过上式可见比矩参数形式求边缘分布更容易，而信息形势下求条件分布更容易。
+这种信息形式记法的另外一个好处是将两个正态分布相乘更简单了。如下所示：
+<span class="math notranslate nohighlight">\(N_c (\xi_f,\lambda_f) N_c (\xi_g,\lambda_g)=N_c (\xi_f+\xi_g,\lambda_f+\lambda_g)\)</span>(4.90)
+而在矩参数形式下，这相乘起来可就麻烦了：
+<span class="math notranslate nohighlight">\(N (\mu_f,\sigma_f^2) N (\mu_g,\sigma_g^2)=N (\frac {\mu_f\sigma_g^2+\mu_g\sigma_f^2}{\sigma_f^2+\sigma_g^2},\frac {\sigma_f^2 \sigma_g^2}{\sigma_f^2+\sigma_g^2})\)</span>(4.91)</p>
+</div>
+<div class="section" id="id17">
+<h3>4.3.4 结论证明 *<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<p>这一节是要证明定理 4.3.1. 害怕矩阵代数计算的读者可以直接跳过这部分内容。本节开始要先推到一些有用的结果，这些结论不仅在这节要用到，在本书其他地方也有用。然后在结尾部分就给出证明。</p>
+<div class="section" id="schur-schur-complements-inverse">
+<h4>4.3.4.1 使用 Schur 补 (Schur complements) 得到分区矩阵的逆矩阵 (Inverse)<a class="headerlink" href="#schur-schur-complements-inverse" title="Permalink to this headline">¶</a></h4>
+<p>要想个办法对一个分区矩阵求逆矩阵。可以使用下面的结论。</p>
+</div>
+<div class="section" id="id18">
+<h4>定理 4.3.2<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h4>
+<p>分区矩阵的逆矩阵。设有一个常规分区矩阵 (general partitioned matrix):
+$<span class="math notranslate nohighlight">\(M=\begin {pmatrix} E&amp;F\\ G&amp;H
+\end {pmatrix}
+\)</span>$(4.92)</p>
+<p>假设其中的 E 和 H 都是可逆的，则有：
+$<span class="math notranslate nohighlight">\(
+\begin {align*}
+M^{-1}&amp;= \begin {pmatrix}(M/H)^{-1}&amp;-(M/H)^{-1} FH^{-1}\\
+-H^{-1} G (M/H)^{-1}&amp;H^{-1}+H^{-1} G (M/H)^{-1} FH^{-1}
+\end {pmatrix}
+&amp;\text {(4.93)}\\
+&amp;= \begin {pmatrix} E^{-1}+E^{-1} F (M/E)^{-1} GE^{-1} &amp; -E^{-1} F (M/E)^{-1}\\
+-(M/E)^{-1} GE^{-1}&amp; (M/E)^{-1}
+\end {pmatrix}
+&amp;\text {(4.94)}
+\end {align*}
+\)</span><span class="math notranslate nohighlight">\(
+其中：
+\)</span>M/H\overset {<em>}{=} E-FH^{-1} G<span class="math notranslate nohighlight">\((4.95)
+\)</span>M/E\overset {</em>}{=} H-GE^{-1} F$(4.96)</p>
+<p>我们就说 <span class="math notranslate nohighlight">\(M/H\)</span> 是 <span class="math notranslate nohighlight">\(M wrt H\)</span> 的 Schur 补 (Schur complement). 等式 4.93 就叫做分区求逆公式 (partitioned inverse formula).</p>
+</div>
+<div class="section" id="id19">
+<h4>证明<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h4>
+<p>如果把矩阵 M 的对角 (diagonalize) 去掉 (block), 就更好求逆矩阵了。可以用如下方式预处理，矩阵 M 左侧乘以一个三角矩阵来得使矩阵 M 的右上角部分为零：
+$<span class="math notranslate nohighlight">\(
+\begin {pmatrix}
+I&amp;-FH^{-1}\\
+0&amp;I
+\end {pmatrix}
+\begin {pmatrix}
+E&amp;F\\
+G&amp;H
+\end {pmatrix}=
+\begin {pmatrix}
+E-FH^{-1}&amp;0\\
+G&amp;H
+\end {pmatrix}
+\)</span>$(4.97)</p>
+<p>用如下方式预处理，矩阵 M 右侧乘以一个三角矩阵来得使矩阵左下角部分为零：
+$<span class="math notranslate nohighlight">\(
+\begin {pmatrix}
+E-FH^{-1}&amp;0\\
+G&amp;H
+\end {pmatrix}
+\begin {pmatrix}
+I&amp;0\\
+-H^{-1} G&amp;I 
+\end {pmatrix}=\begin {pmatrix}
+E-FH^{-1}&amp;0\\
+0&amp;H
+\end {pmatrix}
+\)</span>$(4.98)</p>
+<p>把上面两步结合起来就得到了：
+$<span class="math notranslate nohighlight">\(
+\begin {pmatrix}
+I&amp;-FH^{-1}\\
+0&amp;I
+\end {pmatrix}
+\begin {pmatrix}
+E&amp;F\\
+G&amp;H
+\end {pmatrix}
+\begin {pmatrix}
+I&amp;0\\
+-H^{-1} G&amp;I 
+\end {pmatrix}=\begin {pmatrix}
+E-FH^{-1}&amp;0\\
+0&amp;H
+\end {pmatrix}
+\)</span><span class="math notranslate nohighlight">\((4.99)
+上面的四个矩阵从左到右分别为 X,M,Z,W, 对这几个矩阵同时求逆矩阵就得到了：
+\)</span>Z^{-1} M^{-1} X^{-1}=W^{-1}$(4.100)</p>
+<p>然后就能推出：
+<span class="math notranslate nohighlight">\(M^{-1}=ZW^{-1} X\)</span>(4.101)</p>
+<p>用定义拆解出来就得到了：
+$<span class="math notranslate nohighlight">\(
+\begin {align*}
+\begin {pmatrix} E&amp;F\\G&amp;H \end {pmatrix}^{-1}
+&amp;= \begin {pmatrix} I&amp;0 \\-H^{-1} G&amp;I 
+\end {pmatrix}
+\begin {pmatrix}(M/H)^{-1}&amp;0 \\0&amp;H^{-1} 
+\end {pmatrix}
+\begin {pmatrix} I&amp;-FH^{-1} \\0&amp;I 
+\end {pmatrix}
+&amp;\text {(4.102)}\\
+&amp;= \begin {pmatrix}(M/H)^{-1}&amp;0 \\-H^{-1} G (M/H)^{-1}&amp;H^{-1} 
+\end {pmatrix}
+\begin {pmatrix} I&amp;-FH^{-1} \\0&amp;I 
+\end {pmatrix}
+&amp;\text {(4.103)}\\
+&amp;= \begin {pmatrix}(M/H)^{-1}&amp; -(M/H)^{-1} FH^{-1} \\-H^{-1} G (M/H)^{-1}&amp;H^{-1} +H^{-1} G (M/H)^{-1} FH^{-1}
+\end {pmatrix}
+&amp;\text {(4.104)}
+\end {align*}
+\)</span>$</p>
+<p>或者也可以把矩阵 M 分解成用 E 来表示，这样就有 <span class="math notranslate nohighlight">\(M/E=(H-GE^{-1} F)\)</span>, 就得到了：
+$<span class="math notranslate nohighlight">\(
+\begin {align*}
+\begin {pmatrix} E&amp;F\\G&amp;H \end {pmatrix}^{-1} 
+= \begin {pmatrix} E^{-1}+E^{-1} F (&lt;/E)^{-1} GE^{-1} &amp; -E^{-1} F (M/E)^{-1} \\-H^{-1}-(M/E)^{-1} GE^{-1}&amp;(M/E)^{-1}
+\end {pmatrix}
+\end {align*}
+\)</span>$(4.105)</p>
+<p>证明完毕</p>
+</div>
+<div class="section" id="the-matrix-inversion-lemma">
+<h4>4.3.4.2 矩阵求逆引理 (the matrix inversion lemma)<a class="headerlink" href="#the-matrix-inversion-lemma" title="Permalink to this headline">¶</a></h4>
+<p>接下来要利用上面的结果推出一些有用的推论。</p>
+</div>
+<div class="section" id="matrix-inversion-lemma">
+<h4>推论 4.3.1 矩阵求逆引理 (matrix inversion lemma)<a class="headerlink" href="#matrix-inversion-lemma" title="Permalink to this headline">¶</a></h4>
+<p>设有一个常规分区矩阵 (general partitioned matrix)<span class="math notranslate nohighlight">\(M=\begin {pmatrix} E&amp;F \\  G&amp;H \end {pmatrix}\)</span>, 假设 E 和 H 都可逆。则有：
+<span class="math notranslate nohighlight">\((E-FH^{-1} G)^{-1}= E^{-1}+ E^{-1} F (H-GE ^{-1} F )^{-1} GE^{-1}\)</span>(4.106)
+<span class="math notranslate nohighlight">\((E-FH^{-1} G)^{-1} FH^{-1}=E^{-1} F (H-GE^{-1} F)^{-1}\)</span>(4.107)
+<span class="math notranslate nohighlight">\(|E-FH^{-1} G|=|H-GE^{-1} F||H^{-1}||E|\)</span>(4.108)
+上式中前两个方程就叫做矩阵求逆引理 (matrix inversion lemma) 或者叫做 Sherman Morrison-Woodbury 公式 (Sherman Morrison-Woodbury formula). 第三个等式叫做矩阵行列式引理 (matrix determinant lemma). 在机器学习和统计学中上面这些公式的典型用法如下所示。设 <span class="math notranslate nohighlight">\(E=\Sigma\)</span> 是一个 <span class="math notranslate nohighlight">\(N\times N\)</span> 的对角矩阵，设 <span class="math notranslate nohighlight">\(F=G^T= X\)</span> 规模为 <span class="math notranslate nohighlight">\(N\times D\)</span>, 其中的 N 远大于 D, 即 <span class="math notranslate nohighlight">\(N&gt;&gt;D\)</span>, 设 <span class="math notranslate nohighlight">\(H^{-1}=-I\)</span>. 则有：
+<span class="math notranslate nohighlight">\((\Sigma+XX^T )^{-1} =\Sigma^{-1}-\Sigma^{-1} X (I+X^T\Sigma^{-1} X)^{-1} X^T\Sigma^{-1} \)</span>(4.109)</p>
+<p>等号左侧的计算需要 <span class="math notranslate nohighlight">\(O (N^ 3)\)</span> 时间，等号右侧的计算需要 <span class="math notranslate nohighlight">\(O (D^ 3)\)</span> 时间。
+另外一种应用涉及到了对逆矩阵的一阶更新 (rank one update) 进行计算。设 <span class="math notranslate nohighlight">\(H=-1\)</span> 是一个标量 (scalar),<span class="math notranslate nohighlight">\(F=u\)</span> 是一个列向量 (column vector), 而 <span class="math notranslate nohighlight">\(G=v^T\)</span> 是一个行向量 (row vector). 然后则有：
+$<span class="math notranslate nohighlight">\(
+\begin {align*}
+(E+uv^T)^{-1}&amp;= E^{-1}+E^{-1} u (-1-v^TE^{-1} u) v^TE^{-1} &amp;\text {(4.110)}\\
+&amp;= E^{-1}- \frac {E^{-1} uv^TE^{-1}}{1+v^TE^{-1} u}&amp;\text {(4.111)}\\
+\end {align*}
+\)</span>$</p>
+<p>在对设计矩阵逐渐添加数据向量和对充分统计量进行更新的时候，可以用上上面的式子。（移除一个数据向量的方程与之类似，大家自己推导一下。)</p>
+</div>
+<div class="section" id="id20">
+<h4>证明<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h4>
+<p>要证明等式 4.106, 只需要把等式 4.93 的左上部分和 4.94 等同起来 (equate). 为了证明等式 4.107, 则将等式 4.93 的右上部分和 4.94 等同起来 (equate). 等式 4.108 的证明留作练习。</p>
+</div>
+<div class="section" id="gaussian-conditioning-formulas">
+<h4>4.3.4.3 高斯条件公式 (Gaussian conditioning formulas) 的证明<a class="headerlink" href="#gaussian-conditioning-formulas" title="Permalink to this headline">¶</a></h4>
+<p>接下来回到主线，也就是推导等式 4.69. 首先把联合概率分布 <span class="math notranslate nohighlight">\(p (x_1,x_2)\)</span> 因式分解成 <span class="math notranslate nohighlight">\(p (x_2) p (x_1|x_2)\)</span>:
+$<span class="math notranslate nohighlight">\(
+E=\exp\{-\frac {1}{2}{\begin {pmatrix}  x_1-\mu_1\\x_2-\mu_2 \end {pmatrix}}^T {\begin {pmatrix} \Sigma_{11}&amp;\Sigma_{12}\\ \Sigma_{21}&amp;\Sigma_{22}\end {pmatrix}}^{-1}{\begin {pmatrix}  x_1-\mu_1\\x_2-\mu_2 \end {pmatrix}}\}
+\)</span><span class="math notranslate nohighlight">\((4.112)
+利用等式 4.102, 则有：
+\)</span><span class="math notranslate nohighlight">\(
+\begin {align*}
+E&amp;=  \exp   \{-\frac {1}{2}{\begin {pmatrix}  x_1-\mu_1\\x_2-\mu_2 \end {pmatrix}}^T {\begin {pmatrix} I&amp;0\\ -\Sigma_{22}^{-1}\Sigma_{21}&amp;I\end {pmatrix}}^{-1}{\begin {pmatrix}  (\Sigma/\Sigma_{22})^{-1}&amp;0\\0&amp;\Sigma_{22}^{-1} \end {pmatrix}}        &amp;\text {(4.113)}\\
+&amp;\times   {\begin {pmatrix}  I &amp; -\Sigma_{12}\Sigma_{22}^{-1}\\0&amp;I\end {pmatrix}}{\begin {pmatrix}  x_1-\mu_1\\x_2-\mu_2 \end {pmatrix}}\}             &amp;\text {(4.114)}\\
+&amp;=    \exp\{     -\frac {1}{2}(x_1-\mu_1-\Sigma_{12}\Sigma_{22}^{-1}(x_2-\mu_2))^T (\Sigma/\Sigma_{22})^{-1})     &amp;\text {(4.115)}\\
+&amp; (x_1-\mu_1-\Sigma/\Sigma_{22})^{-1}(x_2-\mu_2)) \} \times \exp \{ -\frac {1}{2}(x_2-\mu_2)^T\Sigma_{-1}(x_2-\mu_2) \}           &amp;\text {(4.116)}\\
+\end {align*}
+\)</span>$</p>
+<p>这就成了下面这种形式：
+<span class="math notranslate nohighlight">\(\exp (x_1 , x_2 \text {的二次型 (quadratic form)} ) \times \exp (x_2  \text {的二次型})\)</span>(4.117)</p>
+<p>因此就可以成功地将联合分布拆解开：
+$<span class="math notranslate nohighlight">\(
+\begin {align*}
+p (x_1,x_2)&amp;=   p (x_1|x_2) p (x_2)     &amp;\text {(4.118)}\\
+&amp;=   N (x_1|\mu_{1|2},\Sigma_{1|2}) N (x_2|\mu_2,\Sigma_{22})      &amp;\text {(4.119)}\\
+\end {align*}
+\)</span><span class="math notranslate nohighlight">\(
+通过上面的等式也可以得到条件概率分布的参数：
+\)</span><span class="math notranslate nohighlight">\(
+\begin {align*}
+\mu_{1|2}&amp;=    \mu_1+\Sigma_{12}\Sigma_{22}^{-1}(x_2-\mu_2)     &amp;\text {(4.120)}\\
+\Sigma_{1|2}&amp;=   \Sigma/\Sigma_{22}=\Sigma_{11}-\Sigma_{12}\Sigma_{22}^{-1}\Sigma_{21}      &amp;\text {(4.121)}\\
+\end {align*}
+\)</span>$</p>
+<p>还可以根据 <span class="math notranslate nohighlight">\(|M| = |M/H||H|\)</span> 来检验归一化常数 (normalization constants) 是否正确：
+$<span class="math notranslate nohighlight">\(
+\begin {align*}
+(2\pi)^{(d_1+d_2)/2}|\Sigma|^{\frac {1}{2}} &amp;=     (2\pi)^{(d_1+d_2)/2}(|\Sigma/\Sigma_{22}||\Sigma_{22}|)^{\frac {1}{2}}     &amp;\text {(4.122)}\\
+&amp;=   (2\pi)^{d_1/2}|\Sigma/\Sigma_{22}|^{\frac {1}{2}}(2\pi)^{d_2/2}|\Sigma_{22}|^{\frac {1}{2}}        &amp;\text {(4.123)}\\
+\end {align*}
+\)</span>$</p>
+<p>上式中的 <span class="math notranslate nohighlight">\(d_1=\dim (x_1)\)</span>,<span class="math notranslate nohighlight">\(d_2=\dim (x_2)\)</span>.
+对等式 4.69 的其他形式证明留作练习了。</p>
+</div>
+</div>
+</div>
+<div class="section" id="linear-gaussian-systems">
+<h2>4.4 线性高斯系统 (Linear Gaussian systems)<a class="headerlink" href="#linear-gaussian-systems" title="Permalink to this headline">¶</a></h2>
+<p>加入我们有两个变量 x 和 y. 然后设 <span class="math notranslate nohighlight">\(x\in R^{D_x}\)</span> 是隐藏变量 (hidden variable), 而 <span class="math notranslate nohighlight">\(y\in R^{D_y}\)</span> 是对 x 的有噪音观察 (noisy observation). 假设有下面的先验和似然率 （重要公式）:
+$<span class="math notranslate nohighlight">\(
+\begin {align*}
+p (x)&amp;= N (x|\mu_x,\Sigma_x)   \\
+p (y|x)&amp;= N (y|Ax+b,\Sigma_y)   \\
+\end {align*}
+\)</span><span class="math notranslate nohighlight">\((4.124)
+上式中的 A 是一个 \)</span>D_y \times D_x<span class="math notranslate nohighlight">\( 的矩阵。这就是一个线性高斯系统 (linear Gaussian system). 可以表示为 \)</span>x\rightarrow y$, 意思也就是 x 生成 (generates) 了 y. 本节会讲如何去 “逆转箭头方向 (invert the arrow)”, 也就是根据 y 来推测 x. 首先是给出结论，然后举几个例子，最后给出推导结论的过程。后面的章节还能看到对这些结论的更多应用。</p>
+<div class="section" id="id21">
+<h3>4.4.1 结论表述<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id22">
+<h4>定理 4.4.1<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h4>
+<p>线性高斯系统的贝叶斯规则。
+给定一个线性高斯系统，如等式 4.124 所述，则后验 <span class="math notranslate nohighlight">\(p (x|y)\)</span> 为 （重要公式）:
+$<span class="math notranslate nohighlight">\(
+\begin {align*}
+p (x|y)&amp;= N (x|\mu_{x|y},\Sigma_{x|y})   \\
+\Sigma_{x|y}^{-1}&amp;=\Sigma_x^{-1}+A^T\Sigma_y^{-1} A  \\
+\mu_{x|y}&amp;= \Sigma_{x|y}[A^T\Sigma_y^{-1}(y-b)+\Sigma_x^{-1}\mu_x] \\
+\end {align*}
+\)</span>$(4.125)</p>
+<p>另外，归一化常数 (normalization constant)<span class="math notranslate nohighlight">\(p (y)\)</span> 为 （重要公式）:
+<span class="math notranslate nohighlight">\(p (y)=N (y|A\mu_x+b,\Sigma_y+A\Sigma_x A^T)\)</span>(4.126)
+证明过程参考本章 4.4.3</p>
+</div>
+</div>
+<div class="section" id="id23">
+<h3>4.4.2 样例<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h3>
+<p>本节举几个对上述结论进行应用的例子。</p>
+<div class="section" id="noisy-measurements-unknown-scalar">
+<h4>4.4.2.1 从有噪音测量 (noisy measurements) 中推测未知标量 (unknown scalar)<a class="headerlink" href="#noisy-measurements-unknown-scalar" title="Permalink to this headline">¶</a></h4>
+<p>假如我们对某个隐藏量 (underlying quantity) x 进行 N 此有噪音测量 <span class="math notranslate nohighlight">\(y_i\)</span>; 然后假设测量噪音有固定的精确度 (precision)<span class="math notranslate nohighlight">\(\lambda_y=\frac {1}{\sigma^2}\)</span>, 则似然率 (likelihood) 为：
+<span class="math notranslate nohighlight">\(p (y_i|x)=N (y_i|x,\lambda_y^{-1})\)</span>(4.127)</p>
+<p>然后对未知源 (unknown source) 的值使用一个高斯先验：
+<span class="math notranslate nohighlight">\(p (x)=N (x|\mu_0,\lambda_0^{-1})\)</span>(4.128)</p>
+<p>我们需要计算的是 <span class="math notranslate nohighlight">\(p (x|y_1,...,y_N,\sigma^2)\)</span>. 可以把这个改写成一种形式，以便于使用对高斯分布的贝叶斯规则，可以通过定义 <span class="math notranslate nohighlight">\(y=(y_1,...,y_N),A= a^T_N,\Sigma_y^{-1}=diag (\lambda_yI)\)</span>, 其中的 A 的意思是一个 <span class="math notranslate nohighlight">\(1\times N\)</span> 的由 1 构成的行向量 (row vector). 则有：
+$<span class="math notranslate nohighlight">\(\begin {align*}
+p (x|y)&amp;=N (x|\mu_N,\lambda_N^{-1})&amp;\text {(4.129)}\\
+\lambda_N&amp;=\lambda_0+N\lambda_y&amp;\text {(4.130)}\\
+\mu_N&amp;=\frac {N\lambda_y\bar y+\lambda_0\mu_0}{\lambda_N}=\frac {N\lambda_y}{N\lambda_y+\lambda_0}\bar y +\frac {\lambda_0}{N\lambda_y+\lambda_0}\mu_0&amp;\text {(4.131)}\\
+\end {align*}
+\)</span>$</p>
+<p>这几个等式很直观了：后验精度 (posterior precision)<span class="math notranslate nohighlight">\(\lambda_N\)</span> 就正好是先验精度 (prior precision)<span class="math notranslate nohighlight">\(\lambda_0\)</span> 和 N 个单位的测量精度 (measurement precision)<span class="math notranslate nohighlight">\(\lambda_y\)</span> 的和。另外后验均值 (posterior mean)<span class="math notranslate nohighlight">\(\mu_N\)</span> 也就是最大似然估计 (MLE)<span class="math notranslate nohighlight">\(\bar y\)</span> 和先验均值 (prior mean)<span class="math notranslate nohighlight">\(\mu_0\)</span> 的凸组合 (convex combination). 很明显，这就表明了后验均值是在最大似然估计 (MLE) 和先验 (prior) 之间的妥协折中 (compromise). 如果先验相对于信号强度来说比较弱 （即 <span class="math notranslate nohighlight">\(\lambda_0\)</span> 相对于 <span class="math notranslate nohighlight">\(\lambda_y\)</span> 来说较小）, 就赋予最大似然估计 (MLE) 更多权重。如果先验相对信号强度更强 （即 <span class="math notranslate nohighlight">\(\lambda_0\)</span> 相对于 <span class="math notranslate nohighlight">\(\lambda_y\)</span> 来说更大）, 就给先验 (prior) 更高权重。这如图 4.12 所示，这和图 3.6 当中的 <span class="math notranslate nohighlight">\(\beta\)</span> 二项模型 (beta-binomial model) 的模拟结果 (analogous results) 很相似。
+这里要注意后验均值写成了 <span class="math notranslate nohighlight">\(N\lambda_y \bar y\)</span> 的形式，因此具有测量 N 次，每次精度 <span class="math notranslate nohighlight">\(\lambda_y\)</span> 就相当于进行一次测量得到值 <span class="math notranslate nohighlight">\(\bar y\)</span> 而精度为 <span class="math notranslate nohighlight">\(N\lambda_y\)</span>.</p>
+<p>此处查看原书图 4.12</p>
+<p>我们可以把上面的结果写成后验方差 (posterior variance) 的形式，而不用后验精度 (posterior precision), 如下所示：
+$<span class="math notranslate nohighlight">\(
+\begin {align*}
+p (x|D,\sigma^2)&amp;= N (x|\mu_N,\Gamma_N^2 &amp;\text {(4.132)}\\
+\Gamma_N^2&amp;=\frac {1}{\frac {N}{\sigma^2}+\frac {1}{\Gamma_0^2} } =\frac {\sigma^2\Gamma_0^2}{N\Gamma_0^2+\sigma^2}&amp;\text {(4.133)}\\
+\mu_N&amp;= \Gamma_N^2 (\frac {\mu_0}{\Gamma_0^2}+\frac {N\bar y}{\sigma^2}) =\frac {\sigma^2}{N\Gamma_0^2+\sigma^2}\mu_0+\frac {N\Gamma_0^2}{N\Gamma_0^2+\sigma^2}\bar y&amp;\text {(4.134)}\\
+\end {align*}
+\)</span>$</p>
+<p>上式中的 <span class="math notranslate nohighlight">\(\Gamma_0^2=1/\lambda_0\)</span> 是先验方差 (prior variance), 而 <span class="math notranslate nohighlight">\(\Gamma_N^2 =1/\lambda_N\)</span> 是后验方差 (posterior variance).</p>
+<p>我们也可以通过每次观测后更新来逐渐计算后验。如果 <span class="math notranslate nohighlight">\(N=1\)</span>, 在进行一次单独观测后就可以重写后验，如下所示 （下面定义了 <span class="math notranslate nohighlight">\( \Sigma_y =\sigma^2,\Sigma_0= \Gamma_0^2, \Sigma_1=\Gamma_1^2\)</span> 分别是似然函数 / 先验 / 后验的方差）:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin {align*}
+p (x|y)&amp;= N (x|\mu_1,\Sigma_1) &amp;\text {(4.135)}\\
+\Sigma_1&amp;= (\frac {1}{\Sigma_0}+\frac {1}{\Sigma_y})^{-1} = \frac {\Sigma_y\Sigma_0}{\Sigma_0+\Sigma_y}&amp;\text {(4.136)}\\
+\mu_1&amp;= \Sigma_1 (\frac {\mu_0}{\Sigma_0}+\frac {y}{\Sigma_y})&amp;\text {(4.137)}\\
+\end {align*}
+\end{split}\]</div>
+<p>可以以下面三种不同形式来写出后验均值 (posterior mean):
+$<span class="math notranslate nohighlight">\(
+\begin {align*}
+\mu_1 &amp;=  \frac {\Sigma_y}{\Sigma_y+\Sigma_0}\mu_0+\frac {\Sigma_0}{\Sigma_y+\Sigma_0} y&amp;\text {(4.138)}\\
+&amp;=\mu_0+(y-\mu_0)\frac {\Sigma_0}{\Sigma_y+\Sigma_0} &amp;\text {(4.139)}\\
+&amp;=y-(y-\mu_0)\frac {\Sigma_y}{\Sigma_y+\Sigma_0} &amp;\text {(4.140)}\\
+\end {align*}
+\)</span>$</p>
+<p>上面的三个等式中，第一个式子就是对先验和数据的凸组合 (convex combination). 第二个是将先验均值朝向数据进行调整。第三个是将数据朝向先验均值调整，这也叫做收缩过程 (shrinkage). 这三者都是等价的，都表达了在似然率和先验之间的权衡妥协。如果 <span class="math notranslate nohighlight">\(\Sigma_0\)</span> 相对于 <span class="math notranslate nohighlight">\(\Sigma_Y\)</span> 较小，对应的就是强先验 (strong prior), 收缩规模 (amount of shrinkate) 就很大，参考图 4.12 (a), 而如果反过来 <span class="math notranslate nohighlight">\(\Sigma_0\)</span> 相对于 <span class="math notranslate nohighlight">\(\Sigma_Y\)</span> 更大，对应的就是弱先验 (weak prior) 收缩规模就小了，参考图 4.12 (b).</p>
+<p>另外一种对收缩规模定量的方法是用信噪比 (signal-to-noise ratio, 缩写为 SNR), 定义如下：
+<span class="math notranslate nohighlight">\(SNR\overset {*}{=} \frac {E [X^2]}{E [\epsilon^2]}= \frac {\Sigma_0+\mu_0^2}{\Sigma_y}\)</span>(4.141)
+上式中的 <span class="math notranslate nohighlight">\(x \sim  N (\mu_0,\Sigma_0)\)</span> 是真是信号 (true signal), 而 <span class="math notranslate nohighlight">\(y=x+\epsilon\)</span> 是观测信号，而 <span class="math notranslate nohighlight">\(\epsilon \sim  N (0,\Sigma_y)\)</span> 就是噪音项。</p>
+</div>
+<div class="section" id="noisy-measurements-unknown-vector">
+<h4>4.4.2.2 从有噪音测量 (noisy measurements) 中推测未知矢量 (unknown vector)<a class="headerlink" href="#noisy-measurements-unknown-vector" title="Permalink to this headline">¶</a></h4>
+<p>接下来考虑一个 N 次向量值的观测 <span class="math notranslate nohighlight">\(y_i \sim  N (x, \Sigma_y )\)</span>, 有高斯先验 <span class="math notranslate nohighlight">\(x \sim  N (\mu_0 ,\Sigma_0)\)</span>. 设 <span class="math notranslate nohighlight">\(A=I,b=0\)</span>, 精度为 <span class="math notranslate nohighlight">\(N\Sigma_y^{-1}\)</span> 的有效观测设为 <span class="math notranslate nohighlight">\(\bar y\)</span>, 则有：
+$<span class="math notranslate nohighlight">\(
+\begin {align*}
+p (x|y_1,...,y_N)&amp;= N (x|\mu_N,\Sigma_N)&amp;\text {(4.142)}\\
+\Sigma_N^{-1}&amp;= \Sigma_0^{-1} +N\Sigma_y^{-1}&amp;\text {(4.143)}\\
+\mu_N&amp;= \Sigma_N (\Sigma_y^{-1}(N\bar y)+\Sigma_0^{-1}\mu_0)  &amp;\text {(4.144)}\\
+\end {align*}
+\)</span>$</p>
+<p>图 4.13 所示是一个二维情况下的样例。可以把 x 理解为一个物体在二维空间内的真实位置，但这个位置是未知的，可以想象成导弹或者飞机，然后 <span class="math notranslate nohighlight">\(y_i\)</span> 就是带噪音的观测，也就类似雷达上面的信号点。随着收到的信号点越来越多了，就更好去对信号源的位置进行定位了。具体参考本书 18.31, 其中讲述了对这个例子进行扩展，去追踪运动物体，使用著名的卡尔曼滤波算法 (Kalman ﬁlter algorithm).</p>
+<p>然后设想我们有多个测量设备，然后想要将他们结合起来；这也就是传感器融合 (sensor fusion). 如果我们进行了多次观测，每次都有不同的协方差 (covariances)（对应的就是不同可靠程度的传感器）, 后验分布就应当是适当地对数据的加权平均。如图 4.14 所示。采用的是对 x 的无信息先验 (uninformative prior), 名为 <span class="math notranslate nohighlight">\(p (x)=N (\mu_0,\Sigma_0)=N (0,10^{10} I_2)\)</span>. 进行了两次有噪音的观测，分别为 <span class="math notranslate nohighlight">\(y_1 \sim  N (x, \Sigma_{y,1} )\)</span> 和 <span class="math notranslate nohighlight">\(y_2 \sim  N (x, \Sigma_{y,2} )\)</span>. 然后就可以计算 <span class="math notranslate nohighlight">\(p (x|y_1,y_2)\)</span>.</p>
+<p>在图 4.14 (a) 中，设置了 <span class="math notranslate nohighlight">\(\Sigma_{y,1} =\Sigma_{y,2} =0.01I_2\)</span>, 所以两个传感器就都是可靠程度相同。这时候后验均值就是两次观测 <span class="math notranslate nohighlight">\(y_1,y_2\)</span> 的均值。在图 4.14 (b) 中，设置的是 <span class="math notranslate nohighlight">\(\Sigma_{y,1} =0.05I_2,\Sigma_{y,2} =0.01I_2\)</span>, 这也就意味着第二个传感器比第一个更可靠。, 这时候后验均值就距离 <span class="math notranslate nohighlight">\(y_2\)</span> 更近了。在图 4.14 (c) 中，设置有：
+<span class="math notranslate nohighlight">\(\Sigma_{y,1} =  0.01\begin {pmatrix} 10&amp; 1\\1&amp;1 \end {pmatrix}  , \Sigma_{y,2} = 0.01 \begin {pmatrix}  1&amp;1\\1&amp;10 \end {pmatrix} \)</span>(4.145)</p>
+<p>所以也就是说第一个传感器对于 <span class="math notranslate nohighlight">\(y_2\)</span> 成分 (component)（竖着的方向） 更可靠，而第二个传感器对于 <span class="math notranslate nohighlight">\(y_1\)</span> 成分 （横着的方向） 更可靠。这时候后验均值就使用了 <span class="math notranslate nohighlight">\(y_1\)</span> 的竖直元素和 <span class="math notranslate nohighlight">\(y_2\)</span> 的水平元素。
+此处查看原书图 4.13</p>
+<p>此处查看原书图 4.14</p>
+<p>要注意，这个方法关键在于对每个传感器的不确定性的建模；没有考虑权重就计算均值会得到错误结果。不过这是已经假设了每个传感器的精度都已知了。如果不知道每个传感器的精确度，也还是要对 <span class="math notranslate nohighlight">\(\Sigma_1,\Sigma_2\)</span> 的精确度进行建模。更多细节参考本书 4.6.4.</p>
+</div>
+<div class="section" id="id24">
+<h4>4.4.2.3 插入噪音数据<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h4>
+<p>再回头看看本书 4.3.2.2 当中的例子。这次咱们不再假设观测是无噪音的。而是假设进行了 N 次的有噪音观测 <span class="math notranslate nohighlight">\(y_i\)</span>, 为了通用，就假设对应了 <span class="math notranslate nohighlight">\(x_1,...,x_N\)</span>. 可以用一个线性高斯系统来对此进行建模：
+<span class="math notranslate nohighlight">\(y=Ax+\epsilon\)</span>(4.146)
+上式中的 <span class="math notranslate nohighlight">\(\epsilon\sim  N (0, \Sigma_ y ), \Sigma_ y= \sigma^2 I\)</span>,<span class="math notranslate nohighlight">\(\sigma^2\)</span> 就是观测噪音，而 A 是一个 <span class="math notranslate nohighlight">\(N\times D\)</span> 的投影矩阵 (projection matrix), 对观测到的元素进行了筛选。例如，如果 N =2,D =4, 则有：
+<span class="math notranslate nohighlight">\(A=\begin {pmatrix} 1&amp;0&amp;0&amp;0\\0&amp;1&amp;0&amp;0 \end {pmatrix}\)</span>(4.147)</p>
+<p>还是用同样的不适用先验 (improper prior)<span class="math notranslate nohighlight">\(\Sigma_x=(L^TL)^{-1}\)</span>, 可以很容易计算得出后验均值和方差。如图 4.15 所示，对后验均值 / 后验方差以及一些后验样本进行投图。然后可以看出先验精确度 <span class="math notranslate nohighlight">\(\lambda\)</span> 同时影响着后验的均值和方差。对于一个强先验 （大的 <span class="math notranslate nohighlight">\(\lambda\)</span>), 这时候的估计就很光滑，而不确定性就很低。但对于弱先验 （小的 <span class="math notranslate nohighlight">\(\lambda\)</span>), 估计结果就扭来扭曲，远离数据部分的估计结果的不确定性就高了。
+解下面的优化问题就能计算出后验均值：
+<span class="math notranslate nohighlight">\(\min_x\frac {1}{2\sigma^2}\sum^N_{i=1}(x_i-y_i)^2+\frac {\lambda}{2}\sum^D_{j=1}[(x_j-x_{j-1})^2+(x_j-x_{j+1})^2]\)</span>(4.148)</p>
+<p>上式中定义了 <span class="math notranslate nohighlight">\(x_0=x_1,x_{D+1}=x_D\)</span> 来简化记号。这实际上是对下面问题的离散近似：
+<span class="math notranslate nohighlight">\(\min_f\frac {1}{2\sigma^2}\in (f (t)-y (t))^2dt+\frac {\lambda}{2}\int [f'(t)]^dt\)</span>(4.149)</p>
+<p>其中的 <span class="math notranslate nohighlight">\(f'(t)\)</span> 是 f 的一阶导数 (first derivative). 第一项用于拟合数据，第二项用于抑制函数避免过于扭曲。这是 Tikhonov 正则化 (Tikhonov regularization) 的一个例子，这是一种很流行的函数数据分析方法。参见本书第十五章可以看到更高级的方法，保证了更高阶的光滑性 （也就是得到的结果不会看上去有很多锯齿）.</p>
+<p>此处查看原书图 4.15</p>
+</div>
+</div>
+<div class="section" id="id25">
+<h3>4.4.3 结论证明 *<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h3>
+<p>接下来推导一下等式 4.125. 基本思想是推导联合分布 <span class="math notranslate nohighlight">\(p (x,y)=p (x) p (y|x)\)</span>, 然后使用本书 4.3.1 的结论来计算 <span class="math notranslate nohighlight">\(p (x|y)\)</span>.</p>
+<p>更详细来说，按照下面的步骤进行。首先是得到联合分布函数的对数形式，如下所示 （取对数是去除了不相关的常数项）:</p>
+<p><span class="math notranslate nohighlight">\(\log p (x,y)=-\frac {1}{2}(x-\mu_x)^T\Sigma_x^{-1}(x-\mu_x)-\frac {1}{2}(y-Ax-b)^T\Sigma_y^{-1}(y-Ax-b)\)</span>(4.150)</p>
+<p>很明显这就是一个联合高斯分布，因为是一个二次型的指数。
+扩展有 x 和 y 的二次项，然后线性项和常数项全部忽略掉，就得到了：
+$<span class="math notranslate nohighlight">\(
+\begin {align*}
+Q&amp;=  -\frac {1}{2} x^T\Sigma_x^{-1} x - \frac {1}{2} y^T\Sigma_y^{-1} y-\frac {1}{2}(Ax)^T\Sigma_t^{-1}(Ax)+y^T\Sigma_y^{-1} Ax  &amp;\text {(4.151)}\\
+&amp;= \frac {1}{2}\begin {pmatrix} x\\y \end {pmatrix}^T  \begin {pmatrix}  \Sigma_x^{-1}+A^T\Sigma_y^{-1} A&amp; -A^T\Sigma_y^{-1}\\-\Sigma_y^{-1} A&amp;\Sigma_y^{-1}\end {pmatrix}  \begin {pmatrix} x\\y \end {pmatrix}   &amp;\text {(4.152)}\\
+&amp;= \frac {1}{2}\begin {pmatrix} x\\y  \end {pmatrix} ^T\Sigma^{-1} \begin {pmatrix} x\\y \end {pmatrix}     &amp;\text {(4.153)}\\
+\end {align*}
+\)</span>$</p>
+<p>联合分布的精度矩阵则定义为：
+<span class="math notranslate nohighlight">\(\Sigma^{-1}=\begin {pmatrix}  \Sigma_x^{-1}+A^T\Sigma_y^{-1} A&amp; -A^T\Sigma_y^{-1}\\-\Sigma_y^{-1} A&amp;\Sigma_y^{-1}\end {pmatrix}\overset {*}{=} \Lambda=\begin {pmatrix}   \Lambda_{xx} &amp; \Lambda_{xy} \\\Lambda_{yx} &amp;\Lambda_{yy}     \end {pmatrix}\)</span>(4.154)</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin {align*}
+p (x|y)&amp;=  N (\mu_{x|y},\Sigma_{x|y})  &amp;\text {(4.155)}\\
+\Sigma_{x|y}&amp;= \Lambda^{-1}_{xx}= (\Sigma_x^{-1}+A^T\Sigma_y^{-1} A)^{-1}    &amp;\text {(4.156)}\\
+\mu_{x|y}&amp;= \Sigma_{x|y}(\Lambda_{xx}\mu_x-\Lambda_{xy}(y-\mu_y))    &amp;\text {(4.157)}\\
+&amp;=  \Sigma_{x|y}(\Sigma_x^{-1}\mu+A^T\Sigma_y^{-1}(y-b))   &amp;\text {(4.158)}\\
+\end {align*}
+\end{split}\]</div>
+</div>
+</div>
+<div class="section" id="digression-wishart-distribution">
+<h2>4.5 题外话 (Digression): 威沙特分布 (Wishart distribution)<a class="headerlink" href="#digression-wishart-distribution" title="Permalink to this headline">¶</a></h2>
+<p>威沙特分布 (Wishart distribution) 是将 <span class="math notranslate nohighlight">\(\gamma\)</span> 分布 (Gamma distrustion) 对正定矩阵 (positive deﬁnite matrices) 的推广。(Press 2005, p107) 称：按照重要性和有用性的顺序来排列，在多元统计中，威沙特分布仅次于正态分布。通常用这个模型来对协方差矩阵 <span class="math notranslate nohighlight">\(\Sigma\)</span> 或者逆矩阵 <span class="math notranslate nohighlight">\(\Lambda=\Sigma^{-1}\)</span> 的不确定性来进行建模。
+Wishart 分布的概率密度函数定义如下：
+<span class="math notranslate nohighlight">\(Wi (\Lambda|S,v)=\frac {1}{Z_{Wi}}|\Lambda|^{(v-D-1)/2}\exp (-\frac {1}{2} tr (\Lambda S^{-1})\)</span>(4.159)
+上式中的 v 也叫做自由度 (degrees of freedom),S 就是缩放矩阵 (scale matrix). 稍后会对这些参数的含义给出更多讲解。
+这个分布的归一化常数 (normalization constant)（需要在整个对称的概率密度矩阵上进行积分） 为下面的表达式：
+<span class="math notranslate nohighlight">\(Z_{Wi}=2^{vD/2} \Gamma_D (v/2)|S|^{v/2} \)</span>(4.160)
+上式中的 <span class="math notranslate nohighlight">\(\Gamma_D\)</span> 是多元 <span class="math notranslate nohighlight">\(\gamma\)</span> 函数 (multivariate gamma function):</p>
+<p><span class="math notranslate nohighlight">\(\Gamma _D (x)= \pi^{D (D-1)/4 }\prod^D_{i=1}\Gamma (x+(1-i)/2)\)</span>(4.161)
+因此 <span class="math notranslate nohighlight">\(\Gamma_1 (a)=\Gamma (a)\)</span>, 以及：
+<span class="math notranslate nohighlight">\(\Gamma_D (v_0/2)=\prod^D_{i=1}\Gamma (\frac {v_0+1-i}{2})\)</span>(4.162)</p>
+<p>只有当 <span class="math notranslate nohighlight">\(v&gt;D-1\)</span> 的时候才存在归一化常数，因此概率密度函数也仅在此时有意义。
+Wishart 分布和正态分布之间有一定联系。具体来说就是，设 <span class="math notranslate nohighlight">\(x_i \sim  N (0,\Sigma)\)</span> 为正态分布，那么散点矩阵 (scatter matrix)<span class="math notranslate nohighlight">\(S=\sum^N_{i=1} x_ix_i^T\)</span> 就有一个 Wishart 分布：<span class="math notranslate nohighlight">\(S \sim  Wi (\Sigma, 1)\)</span>. 因此 <span class="math notranslate nohighlight">\(E [S]=N\Sigma\)</span>. 另外可以得出分布 <span class="math notranslate nohighlight">\(Wi (S,v)\)</span> 的均值 (mean) 和众数 (mode) 为：
+<span class="math notranslate nohighlight">\(mean=vS, mode=(v-D-1) S\)</span>(4.163)</p>
+<p>其中众数 (mode) 仅当 <span class="math notranslate nohighlight">\(v&gt;D+1\)</span> 的时候才存在。
+如果 D=1, 那么 Wishart 就降回到了 <span class="math notranslate nohighlight">\(\gamma\)</span> 分布 (Gamma distribution):
+<span class="math notranslate nohighlight">\(Wi (\lambda|s^{-1},v)=Ga (\lambda|\frac {v}{2},\frac {s}{2})\)</span>(4.164)</p>
+<div class="section" id="inverse-wishart-distribution">
+<h3>4.5.1 逆威沙特分布 (Inverse Wishart distribution)<a class="headerlink" href="#inverse-wishart-distribution" title="Permalink to this headline">¶</a></h3>
+<p>在练习 2.10 中，如果 <span class="math notranslate nohighlight">\(\lambda\sim  Ga (a, b)\)</span> 则有 <span class="math notranslate nohighlight">\(\frac {1}{\lambda}\sim  IG (a, b)\)</span>. 类似地，如果有 <span class="math notranslate nohighlight">\(\Sigma^{-1} \sim Wi (S, v)\)</span>, 则有 <span class="math notranslate nohighlight">\(\Sigma\sim  IW (S^{-1}, v+D+1)\)</span>,IW 就是逆威沙特分布 (inverse Wishart), 是对逆 <span class="math notranslate nohighlight">\(\gamma\)</span> 分布 (inverse Gamma) 的多维推广。定义方式为：对于 <span class="math notranslate nohighlight">\(v&gt;D-1,S\succ 0\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin {align*}
+IW (\Sigma|S,v) &amp;= \frac {1}{Z_{IW}}|\Sigma|^{-(v+D+1)/2}\exp (-\frac {1}{2} tr (S^{-1}\Sigma^{-1}))
+&amp;\text {(4.165)}\\
+Z_{IW}&amp;= |S|^{-v/2} 2^{vD/2}\Gamma_D (v/2)  &amp;\text {(4.166)}
+\end {align*}\end{split}\]</div>
+<p>很显然，这个分布有如下的性质：
+<span class="math notranslate nohighlight">\(mean =\frac {S^{-1}}{v-D-1} , mode=\frac {S^{-1}}{v+D+1}\)</span>(4.167)</p>
+<p>如果 D=1, 这个分布就降到了拟 <span class="math notranslate nohighlight">\(\gamma\)</span> 分布了：
+<span class="math notranslate nohighlight">\(IW (\sigma^2|S^{-1},v)=IG (\sigma^2||v/2,S/2)\)</span>(4.168)</p>
+<p>此处查看原书图 4.16</p>
+</div>
+<div class="section" id="id26">
+<h3>4.5.2 威沙特分布可视化 *<a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h3>
+<p>威沙特分布 (Wishart) 是矩阵的分布，所以很难画出密度函数。不过在二维情况下，可以对其进行取样，使用取样结果矩阵的特征向量来定义一个椭圆，具体如本书 4.1.2 所述。图 4.16 是一些样例。
+对更高维度的矩阵，就可以投影威沙特分布的边缘分布 (marginals). 威沙特分布的矩阵的对角元素服从 <span class="math notranslate nohighlight">\(\gamma\)</span> 分布，所以也容易投影出来。非对角元素的分布通常就比较难以解出来了，不过可以从分钟抽样矩阵，然后根据经验计算抽样得到的矩阵的分布。可以把抽样得到的矩阵转各自转换成一个相关矩阵 (correlation matrix) 然后进行蒙特卡洛估计 （参考本书 2.7), 来得到相关系数期望：
+<span class="math notranslate nohighlight">\(E [R_{ij}]\approx \frac {1}{S}\sum^S_{s=1} R (\Sigma^s)_{ij}\)</span>(4.169)</p>
+<p>其中的 <span class="math notranslate nohighlight">\(\Sigma^{(s)} \sim Wi (\Sigma,v)\)</span> 和 <span class="math notranslate nohighlight">\(R (\Sigma)\)</span> 就把矩阵 <span class="math notranslate nohighlight">\(\Sigma\)</span> 转换成了一个相关矩阵：
+<span class="math notranslate nohighlight">\(R_{ij}=\frac {\Sigma_{ij}}{ \sqrt {\Sigma_{ii}\Sigma_{jj}}   }\)</span>(4.170)</p>
+<p>可以用核密度估计 (kernel density estimation, 参考本书 14.7.2) 来对单变量密度 <span class="math notranslate nohighlight">\(E [R_{ij}]\)</span> 生成一个光滑近似来投图。图 4.16 是一些例子。</p>
+</div>
+</div>
+<div class="section" id="mvn">
+<h2>4.6 多元正态分布 (MVN) 的参数推测<a class="headerlink" href="#mvn" title="Permalink to this headline">¶</a></h2>
+<p>之前已经讲的是在已知参数 <span class="math notranslate nohighlight">\(\theta=(\mu,\Sigma)\)</span> 的时候对一个高斯分布 （正态分布） 的推测。现在来讨论对这些参数本身的推测。假设数据形式为 <span class="math notranslate nohighlight">\(x_i\sim N (\mu,\Sigma),i= 1:N\)</span> 的全部范围都得到了观测，所以就没有缺失数据 （本书 11.6.1 是讨论在有缺失数据的情况下对多元正态分布 (MVN) 进行参数估计）. 简单来说，就是把后验推断分成三部分，首先是计算 <span class="math notranslate nohighlight">\(p (\mu|D,\Sigma)\)</span>, 然后计算 <span class="math notranslate nohighlight">\(p (\Sigma|D,\mu)\)</span>, 最后计算联合分布 <span class="math notranslate nohighlight">\(p (\mu,\Sigma|D)\)</span>.</p>
+<div class="section" id="mu">
+<h3>4.6.1<span class="math notranslate nohighlight">\(\mu\)</span> 的后验分布<a class="headerlink" href="#mu" title="Permalink to this headline">¶</a></h3>
+<p>之前说过如何对 <span class="math notranslate nohighlight">\(\mu\)</span> 进行最大似然估计 (MLE) 了，现在说下如何计算其后验，这对于对其本身值的不确定性进行建模很有用。
+似然函数形式为：
+<span class="math notranslate nohighlight">\(p (D|\mu)=N (\bar x|\mu,\frac {1}{N}\Sigma)\)</span>(4.171)</p>
+<p>为了简化，使用共轭先验 (conjugate prior), 这里用的是一个高斯分布。具体来说就是如果 <span class="math notranslate nohighlight">\(p (\mu)=N (\mu|m_0,V_0)\)</span>, 然后就可以推出一个对 <span class="math notranslate nohighlight">\(\mu\)</span> 的高斯后验分布，这要基于本书 4.4.2.2 的结论。这样得到了：
+$<span class="math notranslate nohighlight">\(
+\begin {align*}
+p (\mu|D,\Sigma)&amp;= N (\mu|m_N,V_N) &amp;\text {(4.172)}\\
+V_N^{-1}&amp;= V_0^{-1}+N\Sigma^{-1} &amp;\text {(4.173)}\\
+m_N&amp;=V_N (\Sigma^{-1}(N\bar x)+V_0^{-1} m_0)  &amp;\text {(4.174)}\\
+\end {align*}
+\)</span>$</p>
+<p>这就跟基于有噪音的雷达光电来推测目标位置是一模一样的过程，只不过这时候在推测的是一个分布的均值，而不是有噪音的样本。（对于一个贝叶斯方法来说，参数的不确定性和其他任何事情的不确定性没有区别。)</p>
+<p>可以设置 <span class="math notranslate nohighlight">\(V_0=\infty I\)</span> 来建立一个无信息先验。这样则有 <span class="math notranslate nohighlight">\(p (\mu|D,\Sigma)=N (\bar x \frac {1}{N}\Sigma)\)</span>, 所以后验均值就等于最大似然估计 (MLE). 另外我们还能发现后验方差降低到了 <span class="math notranslate nohighlight">\(\frac {1}{N}\)</span>, 这是频率视角概率统计 (frequentist statistics) 的标准结果。</p>
+</div>
+<div class="section" id="sigma">
+<h3>4.6.2<span class="math notranslate nohighlight">\(\Sigma\)</span> 的后验分布 *<a class="headerlink" href="#sigma" title="Permalink to this headline">¶</a></h3>
+<p>然后说如何计算 <span class="math notranslate nohighlight">\(p (\Sigma|D,\mu)\)</span>. 似然函数形式如下：
+<span class="math notranslate nohighlight">\(p (D|\mu,\Sigma)\propto |\Sigma|^{-\frac {N}{2}}\exp (-\frac {1}{&#64;} tr (S_{\mu}\Sigma^{-1}))\)</span>(4.175)</p>
+<p>对应的共轭先验正好是逆威沙特分布，参考 4.5.1. 还记得这就有下面的概率密度函数 (pdf):</p>
+<p><span class="math notranslate nohighlight">\(IW (\Sigma|S_0^{-1} ,v_0)\propto |\Sigma|^{-(v_0+D+1)/2} \exp (-\frac {1}{2} tr (S_0\Sigma^{-1}))\)</span>(4.176)</p>
+<p>上式中 <span class="math notranslate nohighlight">\(v_0 &gt; D-1\)</span> 就是自由度 (degrees of freedom, 缩写为 dof), 而 <span class="math notranslate nohighlight">\(S_0\)</span> 是对称的概率密度矩阵 (symmetric pd matrix).<span class="math notranslate nohighlight">\(S_0^{-1}\)</span> 就是先验散布矩阵 (prior scatter matrix), 而 <span class="math notranslate nohighlight">\(N_0\overset {*}{=} v_0+D+1\)</span> 控制了先验强度，所以扮演的角色也就类似于取样规模 N.</p>
+<p>此处查看原书图 4.17</p>
+<p>把似然函数和先验乘在一起，就可以发现后验也是一个逆威沙特分布 (inverse Wishart):</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin {align*}
+p (\Sigma|D,\mu)&amp;\propto |\Sigma|^{\frac N2}\exp (-\frac12tr (\Sigma^{-1} S_{\mu})|\Sigma|^{-(v_0+D+1)/2}))  \exp (-\frac12 tr (\Sigma^{-1} S_0) )&amp;\text {(4.177)}\\
+&amp;= |\Sigma|^{-\frac {N+(v_0+D+1)}{2}} \exp (-\frac12tr [\Sigma^{-1}(S_{\mu}+S_0 )] ) &amp;\text {(4.178)}\\
+&amp;= IW (\Sigma|S_N,v_N)&amp;\text {(4.179)}\\
+v_N&amp;=v_0+N &amp;\text {(4.180)}\\
+S_N^{-1}&amp;=S_0+S_{\mu} &amp;\text {(4.181)}\\
+\end {align*}
+\end{split}\]</div>
+<p>用文字来表述，就是说后验强度 (posterior strength)<span class="math notranslate nohighlight">\(v_N\)</span> 就是先验强度 (prior strength)<span class="math notranslate nohighlight">\(v_)\)</span> 加上观测次数 N, 而后验散布矩阵 (posterior scatter matrix)<span class="math notranslate nohighlight">\(S_N\)</span> 也就是先验散布矩阵 (prior scatter matrix)<span class="math notranslate nohighlight">\(S_0\)</span> 加上数据散布矩阵 (data scatter matrix)<span class="math notranslate nohighlight">\(S_{\mu}\)</span>.</p>
+<div class="section" id="map-estimation">
+<h4>4.6.2.1 最大后验估计 (MAP estimation)<a class="headerlink" href="#map-estimation" title="Permalink to this headline">¶</a></h4>
+<p>通过等式 4.7 可知 <span class="math notranslate nohighlight">\(\hat\Sigma_{mle}\)</span> 是一个秩 (rank) 为 <span class="math notranslate nohighlight">\(\min (N,D)\)</span> 的矩阵。如果 <span class="math notranslate nohighlight">\(N&lt;D\)</span>, 就是一个非满秩的 (not full rank), 因此就不可逆 (uninvertible). 而如果 <span class="math notranslate nohighlight">\(N&gt;D\)</span>, 也可能 <span class="math notranslate nohighlight">\(\hat\Sigma\)</span> 是病态的 (ill-conditioned)（意思就是近乎奇异矩阵）.</p>
+<p>要解决这些问题，可以用后验模 (posterior mode) 或者均值 (mean). 使用和最大似然估计 (MLE) 推导类似的技巧，就可以推出最大后验估计 (MAP):
+<span class="math notranslate nohighlight">\(\hat\Sigma_{map}=\frac {S_N}{v_N+D+1}=\frac {S_0+S_{\mu}}{N_0+N}\)</span>(4.182)</p>
+<p>如果用一个不适用均匀先验 (improper uniform prior), 对应的就是 <span class="math notranslate nohighlight">\(N_0=0,S_0=0\)</span>, 也就恢复到了最大似然估计 (MLE).</p>
+<p>如果使用一个适当的含信息先验 (proper informative prior), 只要 <span class="math notranslate nohighlight">\(D/N\)</span> 比较大，比如超过 0.1 的时候，就很被咬了。设 <span class="math notranslate nohighlight">\(\mu=\bar x\)</span>, 则 <span class="math notranslate nohighlight">\(S_{\mu}=S_{\bar x}\)</span>. 然后就可以吧最大后验估计 (MAP) 写成一个先验模 (prior mode) 和最大似然估计 (MLE) 的凸组合 (convex combination). 设 <span class="math notranslate nohighlight">\(\Sigma_0\overset {*}{=} \frac {S_0}{N_0}\)</span> 为先验模 (prior mode). 然后可以把后验模 (posterior mode) 写成如下形式：
+<span class="math notranslate nohighlight">\(\hat\Sigma_{map}=\frac {S_0+S_{\bar x}}{N_0+N}=\frac {N_0}{N_0+N}\frac {S_0}{N_0}   + \frac {N_0}{N_0+N} \frac {S}{N}=\lambda\Sigma_0+(1-\lambda)\hat\Sigma_{mle}\)</span>(4.183)</p>
+<p>其中的 <span class="math notranslate nohighlight">\(\lambda=\frac {N_0}{N_0+N}\)</span>, 控制的是朝向先验收缩 (shrinkage) 的规模 (amount).</p>
+<p>这就引出了另外一个问题：先验的那些参数都是哪来的？通常可以通过交叉验证来设置 <span class="math notranslate nohighlight">\(\lambda\)</span>. 或者可以使用闭合形式公式 (closed-form formula), 出自 (Ledoit and Wolf 2004b,a; Schaefer and Strimmer 2005), 是在使用平方损失 (squared loss) 的情况下的频率论角度的最优估计 (optimal frequentist estimate). 关于这是不是对协方差矩阵 (covariance matrices) 最自然的损失函数 (loss function) 还有争议，因为忽略了正定约束 (positive deﬁnite constraint), 不过确实能得到一个简单的估计器 (estimator), 本书配套的 PMTK 软件中的 shrinkcov 函数是一个实现。稍后再讨论贝叶斯角度对 <span class="math notranslate nohighlight">\(\lambda\)</span> 的估计。
+至于先验协方差矩阵 (prior covariance matrix)<span class="math notranslate nohighlight">\(S_0\)</span>, 可以用下面的 （依赖数据的） 先验：<span class="math notranslate nohighlight">\(S_0=diag (\hat\Sigma_{mle})\)</span>. 这时候最大后验估计为：
+<span class="math notranslate nohighlight">\(\hat\Sigma_{map}(i,j)=\begin {cases} \hat\Sigma_{mle}(i,j) &amp; \text {if } i=j\\ (1-\lambda)\hat\Sigma_{mle}(i,j)  &amp;\text {otherwise}\end {cases}\)</span>(4.184)</p>
+<p>这样就能发现对角项目等于他们的最大似然估计 (MLE), 而非对角元素就朝着 0 收缩了。这也叫收缩估计 (shrinkage estimation) 或者正则化估计 (regularized estimation).</p>
+<p>图 4.17 中就展示了最大后验估计 (MAP) 的好处。设对一个 50 维的正态分布进行拟合，分别使用 <span class="math notranslate nohighlight">\(N=100,N=50,N=25\)</span> 个数据点。很明显最大后验分布总是良好状态的 (well-conditioned), 而不像最大似然估计 (MLE) 会有病态的情况出现。特别是最大后验估计 (MAP) 的特征谱 (eigenvalue spectrum) 会比最大似然估计 (MLE) 的更接近真是矩阵。不过特征向量 (eigenvectors) 不受影响。
+在后面的章节中，当我们要对高维度数据的协方差矩阵进行拟合的时候，对 <span class="math notranslate nohighlight">\(\Sigma\)</span> 的正则估计的重要性就很明显了。</p>
+</div>
+<div class="section" id="univariate-posterior">
+<h4>4.6.2.2 单变量后验 (Univariate posterior)<a class="headerlink" href="#univariate-posterior" title="Permalink to this headline">¶</a></h4>
+<p>在一维情况下，似然函数 (likelihood) 形式如下所示：
+<span class="math notranslate nohighlight">\(p (D|\sigma^2)\propto (\sigma^2)^{-N/2}\exp (-\frac {1}{2\sigma^2}\sum^N_{i=1}(x_i-\mu)^2)\)</span>(4.185)</p>
+<p>标准共轭先验 (standard conjugate prior) 正好就是一个逆 <span class="math notranslate nohighlight">\(\gamma\)</span> 分布 (inverse Gamma distribution), 也就是标量版本的逆威沙特分布 (inverse Wishart):
+<span class="math notranslate nohighlight">\(IG (\sigma^2|a_0,b_0)\propto (\sigma^2)^{1 (a_0+1)}\exp (-\frac {b_0}{\sigma^2})\)</span>(4.186)</p>
+<p>此处参考原书图 4.18</p>
+<p>把似然函数 (likelihood) 和先验 (prior) 乘起来就会发现后验 (posterior) 也是 IG:
+$<span class="math notranslate nohighlight">\(
+\begin {align*}
+p (\sigma^2|D)&amp;=IG (\sigma^2|a_N,b_N)    &amp;\text {(4.187)}\\
+a_N&amp;= a_0+N/2   &amp;\text {(4.188)}\\
+b_N&amp;= b_0+\frac {1}{2}\sum^N_{i=1}(x_i-\mu)^2   &amp;\text {(4.189)}\\
+\end {align*}
+\)</span><span class="math notranslate nohighlight">\(
+图 4.18 为图示。
+后验的形式不像多元情况下的那样好看，因为有了因子 \)</span>\frac {1}{2}<span class="math notranslate nohighlight">\(. 这是因为 \)</span>IW (\sigma^2|s_0,v_0)=IG (\sigma^2|\frac {s_0}{2},\frac {v_0}{2})<span class="math notranslate nohighlight">\(. 使用逆正态分布 \)</span>IG (a_0,b_0)<span class="math notranslate nohighlight">\( 的另一个问题是先验同时对 \)</span>a_0,b_0<span class="math notranslate nohighlight">\( 进行编码 (encoded). 要避免这些问题，通常从统计学角度来说，都是使用对逆向高斯分布 (IG distribution) 的替代参数化，也就是 （缩放） 逆卡方分布 ((scaled) inverse chi-squared distribution), 定义如下所示：
+\)</span> \chi^{-2}(\sigma^2|v_0,\sigma_0^2)=IG (\sigma^2|\frac {v_0}{2})\frac {v_0\sigma^2_0}{2}\propto (\sigma^2)^{-v_0/2-1}\exp (-\frac {v_0\sigma^2_0}{2\sigma^2})$(4.190)</p>
+<p>上式中的 <span class="math notranslate nohighlight">\(v_0\)</span> 控制了先验的强度，而 <span class="math notranslate nohighlight">\(\sigma^2\)</span> 对先验的值进行了编码。这样后验则成了：
+$<span class="math notranslate nohighlight">\(
+\begin {align*}
+p (\sigma^2|D,\mu)&amp;= \chi^{-2}(\sigma^2|v_N,\sigma^2_N)  &amp;\text {(4.191)}\\
+v_N&amp;= v_0+N  &amp;\text {(4.192)}\\
+\sigma^2_N&amp;=  \frac {v_0\sigma_0^2+\sum^N_{i=1}(x_i-\mu)^2}{v_N} &amp;\text {(4.193)}\\
+\end {align*}
+\)</span>$</p>
+<p>可见后验的自由度 (dof)<span class="math notranslate nohighlight">\(v_N\)</span> 是先验自由度 (dof)<span class="math notranslate nohighlight">\(v_0\)</span> 加上 N, 而后验平方和 <span class="math notranslate nohighlight">\(v_n\sigma^2_N\)</span> 就是先验平方和 <span class="math notranslate nohighlight">\(v_0\sigma^2_0\)</span> 加上数据的平方和。
+可以设 <span class="math notranslate nohighlight">\(v_0=0\)</span> 来模拟一个无信息先验 (uninformative prior)<span class="math notranslate nohighlight">\(p (\sigma^2)\propto\sigma^{-2}\)</span>, 也很好直观理解，就是对应着零虚拟样本规模 (zero virtual sample size).</p>
+</div>
+</div>
+<div class="section" id="mu-sigma">
+<h3>4.6.3<span class="math notranslate nohighlight">\(\mu\)</span> 和 <span class="math notranslate nohighlight">\(\Sigma\)</span> 的后验分布 *<a class="headerlink" href="#mu-sigma" title="Permalink to this headline">¶</a></h3>
+<p>现在来讨论一下如何计算 <span class="math notranslate nohighlight">\(p (\mu,\Sigma|D)\)</span>. 这些结论有点复杂，不过在本书后面的章节会很有用。对于第一次阅读的读者来说，可以先跳过。</p>
+<div class="section" id="likelihood">
+<h4>4.6.3.1 似然函数 (likelihood)<a class="headerlink" href="#likelihood" title="Permalink to this headline">¶</a></h4>
+<p>似然函数为：
+<span class="math notranslate nohighlight">\(p (D|\mu,\Sigma) = (2\pi)^{-ND/2}|\Sigma|^{-\frac {N}{2}}\exp (-\frac {N}{2}(x_i-\mu)^T\Sigma^{-1}(x_i-\mu)  ) \)</span>(4.194)</p>
+<p>很明显：
+<span class="math notranslate nohighlight">\(\sum^N_{i=1}(x_i-\mu)^T\Sigma^{-1}(x_i-\mu)=tr (\Sigma^{-1} S_{\bar x})+ N (\bar x-\mu)^T\Sigma^{-1}(\bar x-\mu)\)</span>(4.195)</p>
+<p>因此可以把似然函数写成如下的形式：
+$<span class="math notranslate nohighlight">\(
+\begin {align*}
+p (D|\mu,\Sigma)&amp;= (2\pi)^{-ND/2}|\Sigma|^{-\frac {N}{2}}\exp (-\frac {N}{2}(\mu-\bar x)^T\Sigma^{-1} (\mu-\bar x)  )   &amp;\text {(4.196)}\\
+&amp;\exp (-\frac {N}{2} tr (\Sigma^{-1} S_{\bar x })) &amp;\text {(4.197)}
+\end {align*}
+\)</span>$
+后面会用到这个形式。</p>
+</div>
+<div class="section" id="prior">
+<h4>4.6.3.2 先验 (Prior)<a class="headerlink" href="#prior" title="Permalink to this headline">¶</a></h4>
+<p>先验形式为：
+<span class="math notranslate nohighlight">\(p (\mu,\Sigma)=N (\mu|m_0,V_0) IW (\Sigma|S_0,v_0)\)</span>(4.198)</p>
+<p>很不幸，这和似然函数不共轭 (not conjugate). 为什么呢？注意 <span class="math notranslate nohighlight">\(\mu\)</span> 和 <span class="math notranslate nohighlight">\(\Sigma\)</span> 在似然函数 (likelihood) 中以非因子形式 (non-factorized way) 共同出现，因此在后验中也会耦合在一起 (coupled together).</p>
+<p>上面的先验就也被叫做半共轭 (semi-conjugate) 或者条件共轭 (conditionally conjugate), 因为两个条件分布 <span class="math notranslate nohighlight">\(p (\mu|\Sigma),p (\Sigma|\mu )\)</span> 都是独立共轭 (individually conjugate) 的。要建立一个完全共轭先验 (full conjugate prior), 需要让 <span class="math notranslate nohighlight">\(\mu,\Sigma\)</span> 两者相互依赖。所以可以使用下面这样形式的联合分布：
+<span class="math notranslate nohighlight">\(p (\mu,\Sigma)=p (\Sigma) p (\mu|\Sigma)\)</span>(4.199)</p>
+<p>参考一下等式 4.197 中的似然函数等式，就可以发现自然共轭先验 (natural conjugate prior) 的形式为正态逆威沙特分布 (Normal-inverse-wishart, 缩写为 NIW), 定义形式如下所示：
+$<span class="math notranslate nohighlight">\(
+\begin {align*}
+NIW (\mu,\Sigma|m_0,k_0,v_0,S_0)&amp; \overset {*}{=}&amp; \text {(4.200)}\\
+ &amp; N (\mu|m_0,\frac {1}{k_0}\Sigma)\times IW (\Sigma|S_0,v_0 )   &amp; \text {(4.201)}\\
+&amp;=\frac {1}{Z_{NIW}}|\Sigma|^{\frac {1}{2}}\exp (-\frac {k_0}{2}\mu-m_0 ()^T\Sigma^{-1}(\mu-m_0))   &amp; \text {(4.202)}\\
+&amp;\times |\Sigma|^{-\frac {v_0+D+1}{2}}\exp (-\frac {1}{2} tr (\Sigma^{-1} S_0))   &amp; \text {(4.203)}\\
+&amp; = \frac {1}{Z_{NIW}}|\Sigma|^{-\frac {v_0+D+2}{2}}  &amp; \text {(4.204)}\\
+&amp;\times \exp (-\frac {k_0}{2}(\mu-m_0)^T\Sigma^{-1}(\mu-m_0) -\frac {1}{2} tr (\Sigma^{-1} S_0))   &amp; \text {(4.205)}\\
+Z_{NIW}&amp;= 2^{V_0D/2}\Gamma_D (v_0/2)(2\pi/k_0)^{D/2} |S_0|^{-v_0/2}  &amp; \text {(4.206)}\\
+\end {align*}
+\)</span>$</p>
+<p>上式中的 <span class="math notranslate nohighlight">\(\Gamma_D (a)\)</span> 是多元 <span class="math notranslate nohighlight">\(\gamma\)</span> 分布 (multivariate Gamma function).
+上面这个逆威沙特分布的参数可以通过如下步骤来进行推断：<span class="math notranslate nohighlight">\(m_0\)</span> 就是 <span class="math notranslate nohighlight">\(\mu\)</span> 的先验均值，而 <span class="math notranslate nohighlight">\(k_0\)</span> 就是对这个先验的相信程度，<span class="math notranslate nohighlight">\(S_0\)</span> 是正比于 <span class="math notranslate nohighlight">\(\Sigma\)</span> 的先验均值，而 <span class="math notranslate nohighlight">\(v_0\)</span> 是对这个先验的相信程度。
+参考 (Minka 2000f) 可以发现，（不适用 (improper)) 无信息先验 (uninformative prior) 的形式如下所示：
+$<span class="math notranslate nohighlight">\(
+\begin {align*}
+\lim _{k\rightarrow 0} N (\mu|m_0,\Sigma/k) IW (\Sigma|S_0,k&amp;\propto |2\pi\Sigma|^{\frac {1}{2}}|\Sigma|^{-(D+1)/2} &amp;\text {(4.207)}\\
+&amp;\propto |\Sigma|^{-(D/2+1)}\propto NIW (\mu,\Sigma|0,0,0,0I)   &amp;\text {(4.208)}\\
+\end {align*}
+\)</span>$</p>
+<p>在实践中，一般都是使用弱含信息数据依赖先验 (weakly informative data-dependent prior) 比较好。常规选择 （参考 (Chipman et al. 2001, p81), (Fraley and Raftery 2007, p6)) 是设置 <span class="math notranslate nohighlight">\(S_0=diag (S_{\bar x})/N, v_0=D+2\)</span> 来确保 <span class="math notranslate nohighlight">\(E [\Sigma]=S_0\)</span>, 然后设 <span class="math notranslate nohighlight">\(\mu_0=\bar x\)</span> 以及 <span class="math notranslate nohighlight">\(k_0\)</span> 为比较小的数值，比如 0.01.</p>
+</div>
+<div class="section" id="id27">
+<h4>4.6.3.3 后验<a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h4>
+<p>如练习 4.11 所示，后验可以表示成更新过参数的逆威沙特分布 (NIW):
+$<span class="math notranslate nohighlight">\(
+\begin {align*}
+p (\mu,\Sigma|D)&amp;=  NIW (\mu,\Sigma|m_N,k_N,v_N,S_N) &amp;\text {(4.209)}\\
+m_N&amp;= \frac {k_0m_0+N\bar x}{k_N} =\frac {k_0}{k_0+N} m_0+\frac {N}{k_0+N} \bar x &amp;\text {(4.210)}\\
+k_N&amp;=k_0+N   &amp;\text {(4.211)}\\
+v_N&amp;=v_0+N   &amp;\text {(4.212)}\\
+S_N&amp;= S_0+S_{\bar x}+\frac {k_) N}{k_0+N}(\bar x-m_0)(\bar x-m_0)^T  &amp;\text {(4.213)}\\
+&amp;= S_0+S+k_0m_0m_0^T-k_Nm_Nm_N^T  &amp;\text {(4.214)}\\
+\end {align*}
+\)</span>$</p>
+<p>上式中我们定义了 <span class="math notranslate nohighlight">\(S\overset {*}{=} \sum^N_{i=1} x_ix_i^T\)</span>, 这是一个未中心化的平方和矩阵 (uncentered sum-of-squares matrix), 相比中心化矩阵这样的更容易进行渐进的增量更新。
+结果很直观：后验均值 (posterior mean) 就是对先验均值 (prior mean) 和最大似然估计 (MLE) 的凸组合 (convex combination), 附带上强度控制项 <span class="math notranslate nohighlight">\(k_0+N\)</span>. 而后验散布矩阵 (posterior scatter matrix)<span class="math notranslate nohighlight">\(S_N\)</span> 就是先验散布矩阵 (prior scatter matrix)<span class="math notranslate nohighlight">\(S_0\)</span> 加上经验散布矩阵 (empirical scatter matrix)<span class="math notranslate nohighlight">\(S_\bar x\)</span>, 再加上由均值不确定性带来的附加项 （这也创造了自己的一个虚拟散布矩阵 (virtual scatter matrix)).</p>
+</div>
+<div class="section" id="posterior-mode">
+<h4>4.6.3.4 后验模 (Posterior mode)<a class="headerlink" href="#posterior-mode" title="Permalink to this headline">¶</a></h4>
+<p>联合分布的众数 (mode) 如下所示：
+<span class="math notranslate nohighlight">\(\arg\max p (\mu,\Sigma|D) = (m_N,\frac {S_N}{v_N+D+2})        \)</span>(4.215)</p>
+<p>如果设置 <span class="math notranslate nohighlight">\(k_0=0\)</span>, 就降低 (reduce) 成了：
+<span class="math notranslate nohighlight">\(\arg\max p (\mu,\Sigma|D) = (\bar x,\frac {S_0+S_{\bar x}}{v_N+N+D+2}) \)</span>(4.216)</p>
+<p>对应的估计 <span class="math notranslate nohighlight">\(\hat \Sigma\)</span> 几乎和等式 4.183 所述一样，唯一区别是分母上差了一个 1, 这是因为这个众数 (mode) 是联合分布的，而不是边缘分布的。</p>
+<div class="section" id="id28">
+<h5>4.6.3.5 后验边缘分布<a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h5>
+<p><span class="math notranslate nohighlight">\(\Sigma\)</span> 的后验边缘分布就很简单了，如下所示：
+<span class="math notranslate nohighlight">\(p (\Sigma|D) =\int p (\mu,\Sigma|D) d\mu=IW (\Sigma|S_N,v_N)  \)</span>(4.217)</p>
+<p>这个边缘分布的众数 (mode) 和均值 (mean) 分别为：
+<span class="math notranslate nohighlight">\(\hat\Sigma_{map}=\frac {S_N}{v_N+D+1}, E [\Sigma]=\frac {S_N}{v_N-D-1}\)</span>(4.218)</p>
+<p>不难发现对 <span class="math notranslate nohighlight">\(\mu\)</span> 的后验边缘分布正好就是一个多元学生Ｔ分布：
+<span class="math notranslate nohighlight">\(p (\mu|D)=\int p (\mu,\Sigma|D) d\Sigma = T (\mu|m_N,\frac {１}{v_N－Ｄ＋１} S_N,v_N－Ｄ＋１)      \)</span>(4.219)</p>
+<p>这是由于学生分布可以表示做多个高斯分布（正态分布）的缩放混合，参考本书等式 11.61.</p>
+<p>此处参考原书图 4.19</p>
+</div>
+</div>
+<div class="section" id="id29">
+<h4>4.6.3.6 后验预测<a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h4>
+<p>后验预测 (posterior predictive) 如下所示：
+<span class="math notranslate nohighlight">\(p (x|D)=\frac {p (x,D)}{p (D)}\)</span>(4.220)</p>
+<p>所以很容易用一系列边缘似然函数 (marginal likelihood) 的比值的形式来进行估算。
+结果这个比值也是多元学生 T 分布：
+$<span class="math notranslate nohighlight">\(
+\begin {align*}
+p (x|D)&amp;= \int \int N (x|\mu,\Sigma) NIW (\mu,\Sigma|m_N,k_N,S_N) d\mu d\Sigma   &amp;\text {(4.221)}\\
+&amp;= T (x|m_N,\frac {k_N+1}{k_N (v_N-D+1)} S_N,v_N-D+1)  &amp;\text {(4.222)}\\
+\end {align*}
+\)</span>$</p>
+</div>
+</div>
+<div class="section" id="id30">
+<h3>4.6.3.7 标量数据的后验<a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h3>
+<p>现在把上面的结论用到一个特殊情况，即 <span class="math notranslate nohighlight">\(x_i\)</span> 是一维的。这些结果在统计领域中有很广泛的应用。如本书 4.6.2.2 所示，通常可能不适用正常逆威沙特分布 (normal inverse Wishart), 而是使用正常逆卡方分布 (normal inverse chi-squared, 缩写为 NIX), 定义如下所示：
+$<span class="math notranslate nohighlight">\(
+\begin {align*}
+NI\chi^2 (\mu,\sigma^2|m_0,k_0,v_0,\sigma_0^2)&amp; \overset {*}{=} N (\mu|m_0,\sigma^2/k_0)\chi^{-2}(\sigma^2|v_0,\sigma_0^2)  &amp;\text {(4.223)}
+&amp;\propto (\frac {1}{\sigma^2})^{(v_0+3)/2} \exp (-\frac {v_0\sigma_0^2+k_0 (] mu-m_0)^2}{2\sigma^2}) &amp;\text {(4.224)}
+\end {align*}
+\)</span>$</p>
+<p>图 4.19 所示为其图像。沿着 <span class="math notranslate nohighlight">\(\mu\)</span> 轴，分布形状类似正态分布，而沿着 <span class="math notranslate nohighlight">\(\sigma^2\)</span> 轴分布形状就像是逆卡方分布 (<span class="math notranslate nohighlight">\(\chi^{-2}\)</span>); 整个联合概率密度函数的轮廓形状就像是压扁的蛋。有意思的是我们会发现 <span class="math notranslate nohighlight">\(\mu\)</span> 的形状比较小数值的 <span class="math notranslate nohighlight">\(\sigma^2\)</span> 有更显著的峰值，这也很好理解，因为数据本身方差小 (low variance), 就能进行更准确的估计了。
+后验如下所示</p>
+<div class="math notranslate nohighlight">
+\[
+\begin {align*}
+p (\mu,\sigma^2|D)&amp;=   NI\chi^2 (\mu,\sigma^2|m_N,k_N,v_N,\sigma^2_N)       &amp;\text {(4.225)}
+m_N&amp;= \frac {k_0m_0+N\bar x}{k_N}  &amp;\text {(4.226)}
+k_N&amp;= k_0+N   &amp;\text {(4.227)}
+v_N&amp;= v_0+N   &amp;\text {(4.228)}
+v_N\sigma^2_N&amp;=  v_0\sigma^2_0+\sum^N_{i=1}(x_i-\bar x)^2+\frac {Nk_)}{k_0+N}(m_0-\bar x)^2        &amp;\text {(4.229)}
+\end {align*}
+\]</div>
+<p><span class="math notranslate nohighlight">\(\sigma^2\)</span> 的后验边缘分布为：
+<span class="math notranslate nohighlight">\(p (\sigma^2|D)=\int p (\mu,\sigma^2|D) d\mu =\chi^{-2}(\sigma^2|v_N,\sigma^2_N)\)</span>(4.230)</p>
+<p>其后验均值为：<span class="math notranslate nohighlight">\(E [\sigma^2|D]=\frac {v_N}{v_N-2}\sigma^2_N\)</span></p>
+<p><span class="math notranslate nohighlight">\(\mu\)</span> 的后验边缘分布为学生 T 分布，是学生分布的缩放混合形式，如下所示：
+<span class="math notranslate nohighlight">\(p (\mu|D)= \int  p (\mu,\sigma^2|D) d\sigma^2 =T (\mu|m_N,\sigma^2_N/k_N,v_N) \)</span>(4.231)
+其后验均值为：<span class="math notranslate nohighlight">\(E [\mu|D]=m_N\)</span></p>
+<p>如果我们使用下面的无信息先验，结果会是什么样呢？
+<span class="math notranslate nohighlight">\(p (\mu,\sigma^2)\propto p (\mu) p (\sigma^2)\propto \sigma^{-2}\propto NI\chi^2 (\mu,\sigma^2|\mu_0=0,k_0=0,v_0=-1,\sigma^2_0=0)\)</span>(4.232)</p>
+<p>有了上面的先验，后验形式如下所示：
+<span class="math notranslate nohighlight">\(p (\mu,\sigma^2|D)= NI\chi^2 (\mu,\sigma^2|\mu_N=\bar x,k_N=N,v_N=N-1,\sigma^2_N = 是 ^2)\)</span>(4.233)</p>
+<p>上式中的：
+<span class="math notranslate nohighlight">\(s^2\overset {*}{=} \frac {1}{N-1}\sum^N_{i=1}(x_i-\bar x)^2 =   \frac {N}{N-1}\sigma^2_{mle}\)</span>(4.234)</p>
+<p>就是标准取样偏差 (sample standard deviation). 在本书 6.4.2 中会说明这是一个对方差的无偏见估计 (unbiased estimate). 这样后验均值的边缘分布为：
+<span class="math notranslate nohighlight">\(p (\mu|D)=T (\mu|\bar x,\frac {s^2}{N},N-1)\)</span>(4.235)</p>
+<p>而 <span class="math notranslate nohighlight">\(\mu\)</span> 的后验方差为：
+<span class="math notranslate nohighlight">\(\mathrm {var}[\mu|D]=\frac {v_N}{v_N-2}\sigma^2_N\)</span>(4.236)</p>
+<p>上面这个后验方差的平方根就是均值的标准差 (standard error of the mean):</p>
+<p><span class="math notranslate nohighlight">\(\sqrt { \mathrm {var}[\mu|D]}\approx \frac {s}{\sqrt {N}}\)</span>(4.237)</p>
+<p>然后均值的估计 95% 后验置信区间 (credible interval) 为：
+<span class="math notranslate nohighlight">\(I_{.95}(\mu|D)=\bar x \pm 2\frac {s}{\sqrt {N}}\)</span>(4.238)</p>
+<p>（贝叶斯理论的置信空间在本书的 5.2.2 有更多讲解，而频率论的置信区间与之对比的内容在本书 6.6.1.)</p>
+<div class="section" id="t">
+<h4>4.6.3.8 贝叶斯 T 检验<a class="headerlink" href="#t" title="Permalink to this headline">¶</a></h4>
+<p>我们要检验一个假设：给定正态分布 <span class="math notranslate nohighlight">\(x \sim N (\mu,\sigma^2)\)</span>, 对某个未知值 <span class="math notranslate nohighlight">\(\mu_0\)</span>（通常都是 0),<span class="math notranslate nohighlight">\(\mu \ne \mu_0\)</span>, 这叫做双面单样本 t 检验 (two-sided, one-sample t-test). 简单方法就是检查 <span class="math notranslate nohighlight">\(\mu_0\in I_{0.95+(\mu|D)}\)</span> 是否成立。如果不成立，则有 95% 的信心认为 <span class="math notranslate nohighlight">\(\mu\ne \mu_0\)</span>. 更普遍的做法是检验两对样本是否有同样的均值。更确切来说，设 <span class="math notranslate nohighlight">\(y_i \sim N (\mu_1,\sigma^2),z_i\sim N (\mu_2,\sigma^2)\)</span>. 就可以使用 <span class="math notranslate nohighlight">\(x_i=y_i-z_i\)</span> 来验证是否有 <span class="math notranslate nohighlight">\(\mu=\mu_1-\mu_2 &gt;0\)</span>. 可以用下面的形式来对这个量进行估计：
+<span class="math notranslate nohighlight">\(p (\mu&gt;\mu_0|D)= \int^{\infty}_{\mu_0} p (\mu|D) d {\mu} \)</span>(4.239)</p>
+<p>这也叫做单面成对 T 检验 (one sided paired t-text).（对未配对测试 (unpaired test) 有类似的方法，对比在二项比例 (binomial proportions) 上有所不同，本书 5.2.3 会介绍。)</p>
+<p>要计算这个后验，必须要指定一个先验。设用一个无信息先验。如上所述，这样 <span class="math notranslate nohighlight">\(\mu\)</span> 的后验边缘分布形式为：
+<span class="math notranslate nohighlight">\(p (\mu|D)= T (\mu|\bar x,\frac {s^2}{N},N-1)\)</span>(4.240)</p>
+<p>然后我们定义下面的 T 统计 (t statistic):</p>
+<p><span class="math notranslate nohighlight">\(t\overset {*}{=} \frac {\bar x -\mu_0}{s/\sqrt {N}}\)</span>(4.241)</p>
+<p>期中的分母是均值标准差。然后有：
+<span class="math notranslate nohighlight">\(p (\mu|D)=1-F_{N-1}(t)\)</span>(4.242)</p>
+<p>上式中的 <span class="math notranslate nohighlight">\(F_v (t)\)</span> 是标准学生Ｔ分布 <span class="math notranslate nohighlight">\(T (0,1,v)\)</span> 的累积密度函数 (cdf).</p>
+</div>
+<div class="section" id="id31">
+<h4>4.6.3.9 和频率论统计学的联系<a class="headerlink" href="#id31" title="Permalink to this headline">¶</a></h4>
+<p>如果我们使用了无信息先验，就会发现上面的贝叶斯分析给出的结果和使用频率论方法推导的一样。（关于频率论统计学的内容在本书第六章会有详细讲解。) 比如从上面的结果中，会看到有：
+<span class="math notranslate nohighlight">\(\frac {\mu-\bar x}{\sqrt {s/N}}|D\sim t_{N-1}\)</span>(4.243)</p>
+<p>这和最大似然估计 (MLE) 的取样分布 (sampling distribution) 有一样的形式：
+<span class="math notranslate nohighlight">\(\frac {\mu-\bar x}{\sqrt {s/N}}|\mu \sim t_{N-1}\)</span>(4.244)</p>
+<p>这是因为学生 T 分布是关于前两个参数 (arguments) 对称的 (symmetric), 所以有 <span class="math notranslate nohighlight">\(T (\bar x|\mu,\sigma^2,v)=T (\mu|\bar x,\sigma^2,v)\)</span>; 因此 <span class="math notranslate nohighlight">\(\mu\)</span> 的后验和 <span class="math notranslate nohighlight">\(\bar x\)</span> 的取样分布有一样的形式。结果导致了频率测试 (frequentist test) 返回的 （单向 (one sided)) p 值 （在本书 6.6.2 中有定义） 和贝叶斯方法返回的 <span class="math notranslate nohighlight">\(p (\mu&gt;\mu_0|D)\)</span> 一样。具体参考本书配套的 PMTK3 当中的 bayesTtestDemo 为例。
+尽管看着非常相似，这两个结果还是有不同阐述的：在贝叶斯方法中，<span class="math notranslate nohighlight">\(\mu\)</span> 是未知的，而 <span class="math notranslate nohighlight">\(\bar x\)</span> 是固定的，而在频率论方法中正好相反，<span class="math notranslate nohighlight">\(\bar X\)</span> 是未知的，而 <span class="math notranslate nohighlight">\(\mu\)</span> 是固定的。使用无信息先验的简单模型时，频率论和贝叶斯方法之间的更多共同点可以参考 (Box and Tiao 1973), 本书的 7.6.3.3 也有更多讲解。</p>
+</div>
+</div>
+<div class="section" id="id32">
+<h3>4.6.4 未知精度下的传感器融和 *<a class="headerlink" href="#id32" title="Permalink to this headline">¶</a></h3>
+<p>本节会利用 4.6.3 当中的结论来解决传感器融合的问题，每个测量设备的精确度都不知道。这对本书 4.4.2.2 的结论进行了泛化，在 4.4.2.2 里是设测量模型的位置精确度服从正态分布。未知的精确度会导致有定量意义的不同结果，产生一个潜在的多态后验 (multi-modal posterior). 这里的内容参考了 (Minka 2001e).</p>
+<p>假如我们想要从多个来源汇集数据，来估计某个量 <span class="math notranslate nohighlight">\(\mu\in R\)</span>, 但是信号源的可靠性都不知道。例如有两个不同的测试设备 x 和 y, 有不同的精确度：<span class="math notranslate nohighlight">\(x_i|\mu \sim N (\mu,\lambda_x^{-1},y_i|\mu \sim N (\mu,\lambda_y^{-1}\)</span>. 对两个设备各自进行独立测量，就得到了：
+<span class="math notranslate nohighlight">\(x_1=1.1,x_2=1.9,y_1=2.9,y_2=4.2\)</span>(4.245)</p>
+<p>对 <span class="math notranslate nohighlight">\(\mu,p (\mu)\propto 1\)</span> 使用一个无信息先验 (non-imformative prior), 使用一个无限宽度的正态分布 <span class="math notranslate nohighlight">\(p (\mu)=N (\mu|m_0=0,\lambda_0^{-1}=\infty)\)</span> 来模拟。如果 <span class="math notranslate nohighlight">\(\lambda_x,\lambda_y\)</span> 都知道了，那么后验就也是正态分布了：
+$<span class="math notranslate nohighlight">\(
+\begin {align*}
+p (\mu|D,\lambda_x,\lambda_y)&amp;= N (\mu|m_N,\lambda_N^{-1}) &amp;\text {(4.246)}\\
+\lambda_N &amp;= \lambda_0 +N_x\lambda_x+N_y\lambda_y  &amp;\text {(4.247)}\\
+m_N &amp;= \frac {\lambda_xN_x\bar x+\lambda_yN_y\bar y}{N_x\lambda_x+N_y\lambda_y} &amp;\text {(4.248)}\\
+\end {align*}
+\)</span>$</p>
+<p>上式中的 <span class="math notranslate nohighlight">\(N_x=2,N_y=2\)</span> 分别是 x 和 y 的观测次数，而 <span class="math notranslate nohighlight">\(\bar x =\frac {1}{N_x}\sum^N_{i=1} x_i=1.5,\bar y =\frac {1}{N_y}\sum^N_{i=1} y_i=3.5\)</span>. 这是因为后验精度 (posterior precision) 是测量精度的综合，而后验均值是先验均值 （这里是 0) 和数据均值的加权和。
+不过测试精度还是不知道啊。开始用最大似然估计来估计一下吧。对数似然函数 (log-likelihood) 为：
+<span class="math notranslate nohighlight">\(l (\mu,\lambda_x,\lambda_y)=\log \lambda_x-\frac {\lambda_x}{2}\sum_i (x_i-\mu)^2+\log \lambda_y-\frac {\lambda_y}{2}\sum_i (y_i-\mu)^2\)</span>(4.249)</p>
+<p>解出下面的联立方程，就能得到最大似然估计 (MLE) 了：
+$<span class="math notranslate nohighlight">\(
+\begin {align*}
+\frac {\partial l}{\partial \mu} &amp;= \lambda_x N_x (\bar x- \mu)+\lambda_y N_y (\bar y-\mu)=0  &amp;\text {(4.250)}\\
+\frac {\partial l}{\partial \lambda_x} &amp;= \frac {1}{\lambda_x}-\frac {1}{N_x}\sum^{N_x}_{i=1}(x_i-\mu)^2=0 &amp;\text {(4.251)}\\
+\frac {\partial l}{\partial \lambda_y} &amp;= \frac {1}{\lambda_y}-\frac {1}{N_y}\sum^{N_y}_{i=1}(y_i-\mu)^2=0 &amp;\text {(4.252)}\\
+\end {align*}
+\)</span>$</p>
+<p>解出来就是：
+$<span class="math notranslate nohighlight">\(
+\begin {align*}
+\hat \mu &amp;=  \frac { N_x\hat \lambda_x \bar x+N_y\hat\lambda_y\bar y}{N_x\hat\lambda_y +N_y\hat \lambda_y }  &amp;\text {(4.253)}\\
+\frac {1}{\hat\lambda_x}&amp;= \frac {1}{N_x}\sum_i (x_i-\hat \mu)^2  &amp;\text {(4.254)}\\
+\frac {1}{\hat\lambda_y}&amp;= \frac {1}{N_y}\sum_i (y_i-\hat \mu)^2 &amp;\text {(4.255)}\\
+\end {align*}
+\)</span>$</p>
+<p>很明显，<span class="math notranslate nohighlight">\(\mu\)</span> 的最大似然估计 (MLE) 与后验均值 <span class="math notranslate nohighlight">\(m_N\)</span> 有同样的形式。
+使用固定点迭代 (fixed point iteration) 就可以解出来了。首先初始化估计 <span class="math notranslate nohighlight">\(\lambda_x=1/s_x^2,\lambda_y=1/s_y^2\)</span>, 其中的 <span class="math notranslate nohighlight">\(s_x^2=\frac {1}{N_x}\sum^{N_x}_{i=1}(x_i-\bar x)^2=0.16,s_y^2=\frac {1}{N_y}\sum^{N_y}_{i=1}(y_i-\bar y)^2=0.36\)</span>.
+然后就解出来了 <span class="math notranslate nohighlight">\(\hat \mu =2.1154\)</span>, 所以有 <span class="math notranslate nohighlight">\(p (\mu|D,\hat \lambda_x,\hat \lambda_y)=N\mu|2.1154,0.0554)\)</span>. 如果现在进行迭代，最终会收敛到：<span class="math notranslate nohighlight">\(\hat \lambda_x=1/0.1662,\hat \lambda_y=1/4.0509,p (\mu|D,\hat \lambda_x,\hat \lambda_y)= N (\mu|,1.5788,0.0798)\)</span>.</p>
+<p>对这个后验的插值估计如图 4.20 (a) 所示。每个传感器的权重是根据其估计误差赋予的。由于估计误差标明传感器 y 远不如传感器 x 可靠，所以就有 <span class="math notranslate nohighlight">\(E [\mu|D\hat \lambda_x,\hat \lambda_y]\approx \bar x\)</span>, 实际上就是忽略了传感器 y.</p>
+<p>接下来我们用贝叶斯方法来来积分求未知精度，而不对其进行估计。也就是要计算：
+<span class="math notranslate nohighlight">\(p (\mu|D)\propto p (\mu)[\int p (D_x|\mu,\lambda_x) p (\lambda_x|\mu) d\lambda_x][\int p (D_y|\mu,\lambda_y) p (\lambda_y|\mu) d\lambda_y]\)</span>(4.256)</p>
+<p>使用无信息 Jeffrey 先验 (uninformative Jeffrey’s priors)<span class="math notranslate nohighlight">\(p (\mu)\propto 1,p (\lambda_x|\mu)\propto 1/\lambda_x,p (\lambda_y|mu)\propto 1/\lambda_y\)</span>.x 和 y 两项对称，所以只看其中一个就可以了。关键的积分步骤是：
+$<span class="math notranslate nohighlight">\(
+\begin {align*}
+I= \int p (D_x|\mu,\lambda_x) p (\lambda_x|\mu) d\lambda_x \propto &amp; \int \lambda_x^{-1}(N_x\lambda_x)^{N_x/2}   &amp;\text {(4.257)}
+&amp; \exp ( -\frac {N_x}{2}\lambda_x (\bar x-\mu)^2-\frac {N_x}{2} s^2_x\lambda_x  ) d\lambda_x  &amp;\text {(4.258)}
+\end {align*}
+\)</span>$</p>
+<p>利用 <span class="math notranslate nohighlight">\(N_x=2\)</span> 来简化到：
+<span class="math notranslate nohighlight">\(I=\int \lambda_x^{-1}\lambda_x^1\exp (-\lambda_x [(\bar x-\mu)^2+s_x^2]) d\lambda_x\)</span>(4.259)</p>
+<p>看出来了吧，这个和一个非正则 <span class="math notranslate nohighlight">\(\gamma\)</span> 密度函数 (unnormalized Gamma density) 的积分成正比：
+<span class="math notranslate nohighlight">\(Ga (\lambda|a,b)\propto \lambda^{a-1} e^{-\lambda b}    \)</span>(4.260)</p>
+<p>其中的 <span class="math notranslate nohighlight">\(a=1,b=(\bar x -\mu)^2+s^2_x\)</span>. 因此这个积分也就和 <span class="math notranslate nohighlight">\(\gamma\)</span> 分布的归一化常数 (normalizing constant)<span class="math notranslate nohighlight">\(\Gamma (a) b^{-a}\)</span> 成正比，就得到了：
+<span class="math notranslate nohighlight">\(I\propto \int p (D_x|\mu,\lambda_x) p (\lambda_x|\mu) d\lambda_x  \propto [(\bar x -\mu)^2+s_x^2]^{-1}\)</span>(4.261)</p>
+<p>然后后验则成了：
+<span class="math notranslate nohighlight">\(p (\mu|D)\propto \frac {1}{(\bar x -\mu)^2+s^2_x} \frac {1}{(\bar y -\mu)^2+s^2_y} \)</span>(4.262)</p>
+<p>具体的后验如图 4.20 (b) 所示。可以看到有两个众数 (mode), 分别在 <span class="math notranslate nohighlight">\(\bar x=1.5, \bar y=3.5\)</span> 这两个位置。对应的就是 x 传感器比 y 传感器更精确。第一个众数 (mode) 的权重更高，因为 x 传感器给出的数据互相更接近，所以看上去就是这个传感器更可靠。（很明显不可能两个都可靠，因为他们给出的值都不一样的。) 不过贝叶斯的方案保持了开放性，就是始终保持了 y 传感器可能更可靠的概率；从两次测量，其实还不能说就按照差值估计得到的结果一样来选择 x 传感器，这个结果可能过分有信心了，后验太窄了。
+练习略。</p>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./MLAPP_BOOK"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="03.GenerativeModelsForDiscreteData.html" title="previous page">03 离散数据的生成式模型</a>
+    <a class='right-next' id="next-link" href="05.BayesianStatistics.html" title="next page">05 贝叶斯学派统计思想</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Kevin Murphy<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>

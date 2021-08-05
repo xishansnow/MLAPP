@@ -1,0 +1,733 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>24 马尔科夫链蒙特卡洛 MCMC &#8212; 机器学习：概率视角</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet" />
+  <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.e8e5499552300ddf5d7adccae7cc3b70.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="25 聚簇" href="25.Clustering.html" />
+    <link rel="prev" title="23 蒙特卡洛推断" href="23.MonteCarloInference.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+      <img src="../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">机器学习：概率视角</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../preface.html">
+   前言
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="01.Introduction.html">
+   01 引言
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="02.Probability.html">
+   02 概率论
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03.GenerativeModelsForDiscreteData.html">
+   03 离散数据的生成式模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="04.GaussianModels.html">
+   04 高斯模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="05.BayesianStatistics.html">
+   05 贝叶斯学派统计思想
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="06.FrequentistStatistics.html">
+   06 频率学派统计思想
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="07.LinearRegression.html">
+   07 线性回归
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="08.LogisticRegression.html">
+   08 逻辑回归
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="09.GeneralizedLinearModelsAndTheExponentialFamily.html">
+   09 广义线性模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="10.DirectedGraphicalModels%20%28BayesNets%29.html">
+   10 有向图模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="11.MixtureModelandEMAlgorithm.html">
+   11 混合模型与EM算法
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="12.LinearModelwithLatentVariable.html">
+   12 隐变量线性模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="13.SparseLinearModel.html">
+   13 稀疏线性模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="14.KernelMethod.html">
+   14 核方法
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="15.GaussianProcesses.html">
+   15 高斯过程
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="16.AdaptiveBasisFunctionModel.html">
+   16 自适应基函数模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="17.MarkovAndHiddenMarkovModel.html">
+   17 马尔科夫与隐马尔科夫模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="18.StateSpaceModels.html">
+   18 状态空间模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="19.UndirectedGraphicalModels%28MarkovRandomFields%29.html">
+   19 无向图模型（马尔科夫随机场）
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="20.ExactInferenceForGraphicalModels.html">
+   20 概率图的精确推断
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="21.VariationalInference.html">
+   21 变分推断
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="22.MoreVariationalInference.html">
+   22 更多变分推断方法
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="23.MonteCarloInference.html">
+   23 蒙特卡洛推断
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   24 马尔科夫链蒙特卡洛 MCMC
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="25.Clustering.html">
+   25 聚簇
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="26.GraphicalModelStructureLearning.html">
+   26 概率图的结构学习
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="27.LatentVariableModelsForDiscreteData.html">
+   27 离散数据的隐变量模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="28.DeepLearning.html">
+   28 深度学习
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Abbreviations.html">
+   本书常见缩写列表
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/MLAPP_BOOK/24.MarkovChainMonteCarlo(MCMC)Inference.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   24.1 导言
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   24.2 吉布斯取样
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id3">
+     24.2.1 基本思想
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#gibbs">
+     24.2.2 示例：伊辛模型的 Gibbs 采样
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#gmm-gibbs">
+     24.2.3 示例：用于推断 GMM 参数的Gibbs采样
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id4">
+       24.2.3.1 标签切换
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id5">
+     24.2.4 折叠吉布斯采样
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#gmm">
+       24.2.4.1 示例：用于拟合GMM的折叠吉布斯
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#glmgibbs">
+     24.2.5 分层GLM的Gibbs采样
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ip">
+     24.2.7 补偿后验(IP)算法
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id6">
+     24.2.8 阻塞Gibbs采样
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#metropolis-hastings">
+   24.3 Metropolis Hastings算法
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id7">
+   24.4 MCMC的速度和精度
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id8">
+   24.5 辅助变量MCMC
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id9">
+   24.6 退火法
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id10">
+   24.7 边缘似然的近似
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="mcmc">
+<h1>24 马尔科夫链蒙特卡洛 MCMC<a class="headerlink" href="#mcmc" title="Permalink to this headline">¶</a></h1>
+<p>[原文] <a class="reference external" href="https://probml.github.io/pml-book/book0.html">https://probml.github.io/pml-book/book0.html</a></p>
+<p>[作者] <a class="reference external" href="https://www.cs.ubc.ca/~murphyk/">Kevin Patrick Murphy</a></p>
+<style>p{text-indent:2em;2}</style>
+<div class="section" id="id1">
+<h2>24.1 导言<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>第 23 章介绍了一些简单的蒙特卡洛方法，包括<code class="docutils literal notranslate"><span class="pre">拒绝采样</span></code>和<code class="docutils literal notranslate"><span class="pre">重要性采样</span></code>。这些方法的问题是在高维空间中无法很好地工作。从高维分布中采样的流行方法是<code class="docutils literal notranslate"><span class="pre">马尔可夫链蒙特卡洛</span></code> 或 <code class="docutils literal notranslate"><span class="pre">MCMC</span></code> 。在美国 <a class="reference external" href="http://www.siam.org/pdf/news/637.pdf">SIAM News</a> 中，MCMC 被列入 20 世纪十大最重要算法。</p>
+<p>MCMC 背后的基本思想是： 在状态空间 <span class="math notranslate nohighlight">\(\mathcal{X}\)</span> 上构造一个马尔可夫链（第 17.2 节），其平稳分布为目标分布 <span class="math notranslate nohighlight">\(p^*(\mathbf{x})\)</span> （先验或后验）。也就是说，在状态空间中，以在状态 <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> 中花费的时间正比于 <span class="math notranslate nohighlight">\(p^*(\mathbf{x})\)</span> 的方式做随机游走，基于所抽取的（相关）样本 <span class="math notranslate nohighlight">\(mathbf{x}_0，mathbf{x}_1，mathbf{x}_2，...\)</span> 构成的链，可以执行相对于 <span class="math notranslate nohighlight">\(p^*\)</span> 的蒙特卡洛积分。</p>
+<p>MCMC 算法有着有趣的历史。它是由二战期间在 Los Alamos 从事原子弹研究的物理学家发明的，首次发表在公开的化学杂志中（Metropolis 等，1953 年）。（Hastings，1970）在统计文献中发表了一个扩展，但基本上没有被注意到。1984 年，一种特殊情况（即吉布斯采样，第 24.2 节）在伊辛模型基础上被独立发表（Geman 和 Geman 1984）。但直到 1990 年，该算法才被统计界所熟知（Gelfand and Smith， 1990）。自那时起，MCMC 在贝叶斯统计和机器学习中变得越来越流行。</p>
+<p>值得简单地将 MCMC 与第 21 章的变分推理进行比较。</p>
+<p>变分推理的优点是：
+（1）对于中小问题，它通常更快；
+（2）具有确定性；
+（3）容易确定何时停止；
+（4）通常提供对数似然的下限。</p>
+<p>MCMC 采样方法的优点是：
+（1）往往更容易实现；
+（2）适用于更广泛的模型，例如其大小或结构根据某些变量的值而变化的模型（例如，在匹配问题中发生的情况），或者没有良好共轭先验的模型；
+（3）当应用于真正巨大的模型或数据集时，采样法可能比变分法更快。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>注：原因是采样方法传递变量（或变量集）的特定值，而在变分推理中，传递的是分布。因此，采样法传递的是稀疏信息，而变分法传递的是密集信息。关于这两种方法的比较，参见 (Yoshida and West， 2010) 和 (Bekkerman et al.，2011) 。</p>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>24.2 吉布斯取样<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>本节介绍一种最流行的 MCMC 算法，称为 <code class="docutils literal notranslate"><span class="pre">Gibbs</span> <span class="pre">采样</span></code>（Gibbs Sampling，在物理学中被称为格劳伯动力学或热浴法）。 这是坐标下降法的 MCMC 模拟。</p>
+<div class="section" id="id3">
+<h3>24.2.1 基本思想<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>Gibbs 采样背后的想法是：以分布中所有其他变量的值为条件，依次对每个变量进行采样。也就是说，给定所有变量的联合样本 <span class="math notranslate nohighlight">\(\mathbf{x}^S\)</span>，根据其他变量的最新值，通过轮流采样每个分量来生成新的样本 <span class="math notranslate nohighlight">\(\mathbf{x}^{S+1}\)</span>。例如，如果我们有 <span class="math notranslate nohighlight">\(D=3\)</span> 个变量，使用：</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(x_{1}^{s+1} \sim p\left(x_{1} \mid x_{2}^{s}, x_{3}^{s}\right)\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(x_{2}^{s+1} \sim p\left(x_{2} \mid x_{1}^{s+1}, x_{3}^{s}\right)\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(x_{3}^{s+1} \sim p\left(x_{3} \mid x_{1}^{s+1}, x_{2}^{s+1}\right)\)</span></p></li>
+</ul>
+<p>这很容易推广到 <span class="math notranslate nohighlight">\(D\)</span> 维变量。如果 <span class="math notranslate nohighlight">\(x_{i}\)</span> 是一个可观测变量，则不对其采样，因为其值已知。</p>
+<p>表达式 <span class="math notranslate nohighlight">\(p\left(x_{i} \mid \mathbf{x}_{-i}\right)\)</span> 被称为变量 <span class="math notranslate nohighlight">\(i\)</span> 的完全条件。一般来说，<span class="math notranslate nohighlight">\(x_{i}\)</span> 可能只依赖于其中部分变量。如果将 <span class="math notranslate nohighlight">\(p(\mathbf{x})\)</span> 表示为图模型，可以通过查看变量 <span class="math notranslate nohighlight">\(i\)</span> 的马尔可夫毯来推断其依赖关系，也就是它在图形中的邻居。因此，要采样 <span class="math notranslate nohighlight">\(x_{i}\)</span>，只需要知道变量 <span class="math notranslate nohighlight">\(i\)</span> 邻居的值。从这个意义上说，Gibbs 采样是一种分布式算法，但不是并行算法，因为样本必须按顺序生成。</p>
+<p>由于将在 24.4.1 节解释的原因，有必要丢弃一些初始样本，直到马尔可夫链老化或进入其平稳分布。我们将在 24.4.1 节讨论如何估计老化时机（Burned In）。在下面的示例中，为简单起见，丢弃了最初 <span class="math notranslate nohighlight">\(25%\)</span> 的样本。</p>
+</div>
+<div class="section" id="gibbs">
+<h3>24.2.2 示例：伊辛模型的 Gibbs 采样<a class="headerlink" href="#gibbs" title="Permalink to this headline">¶</a></h3>
+<p>在 21.3.2 节中，我们曾将平均场应用于伊辛模型。这里应用 Gibbs 采样。成对 MRF/CRF 中的 Gibbs 采样形式为：</p>
+<div class="math notranslate nohighlight">
+\[
+p\left(x_{t} \mid \mathbf{x}_{-t}, \boldsymbol{\theta}\right) \propto \prod_{s \in \operatorname{nbr}(t)} \psi_{s t}\left(x_{s}, x_{t}\right)
+\]</div>
+<p>在一个具有边缘势 <span class="math notranslate nohighlight">\(\psi \left( x_{s}, x_{t} \right)=\exp \left(J x_{s} x_{t} \right)\)</span> 的伊辛模型中（ <span class="math notranslate nohighlight">\(x_t \in \{-1,+1\}\)</span> ），完全条件变为：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+p\left(x_{t}=+1 \mid \mathbf{x}_{-t}, \boldsymbol{\theta}\right) &amp;=\frac{\prod_{s \in \operatorname{nbr}(t)} \psi_{s t}\left(x_{t}=+1, x_{s}\right)}{\prod_{s \in \operatorname{nbr}(t)} \psi\left(s_{t}=+1, x_{s}\right)+\prod_{s \in \operatorname{nbr}(t)} \psi\left(x_{t}=-1, x_{s}\right)} \\
+&amp;=\frac{\exp \left[J \sum_{s \in \operatorname{nbr}(t)} x_{s}\right]}{\exp \left[J \sum_{s \in \operatorname{nbr}(t)} x_{s}\right]+\exp \left[-J \sum_{s \in \operatorname{nbr}(t)} x_{s}\right]} \\
+&amp;=\frac{\exp \left[J \eta_{t}\right]}{\exp \left[J \eta_{t}\right]+\exp \left[-J \eta_{t}\right]}=\operatorname{sigm}\left(2 J \eta_{t}\right)
+\end{aligned}
+\end{split}\]</div>
+<p>其中 <span class="math notranslate nohighlight">\(J\)</span> 是耦合强度，<span class="math notranslate nohighlight">\(\eta_{t} \triangleq \sum_{s \in \operatorname{nbr}(t)} x_{t}\)</span> 和 <span class="math notranslate nohighlight">\(\operatorname{sigm}(u)=1 /\left(1+e^{-u}\right)\)</span> 是<code class="docutils literal notranslate"><span class="pre">Sigmoid</span> <span class="pre">函数</span></code>。很容易看到 <span class="math notranslate nohighlight">\(\eta_{t}=x_{t}\left(a_{t}-d_{t}\right)\)</span> ，其中 <span class="math notranslate nohighlight">\(a_{t}\)</span> 表示与 <span class="math notranslate nohighlight">\(t\)</span> 一致（与 <span class="math notranslate nohighlight">\(t\)</span> 具有相同符号）的邻居数量，<span class="math notranslate nohighlight">\(d_{t}\)</span> 是不一致的邻居数量。如果数字相等，则对 <span class="math notranslate nohighlight">\(x_{t}\)</span> 的“作用力”会抵消掉，因此完全条件是一致的。</p>
+<p>我们可以将伊辛先验与局部证据项 <span class="math notranslate nohighlight">\(\psi_{t}\)</span> 相结合。例如，对于高斯观测模型，有 <span class="math notranslate nohighlight">\(\psi_{t}\left(x_{t}\right)=\mathcal{N}\left(y_{t} \mid x_{t}, \sigma^{2}\right)\)</span> 。完全条件变成：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+p\left(x_{t}=+1 \mid \mathbf{x}_{-t}, \mathbf{y}, \boldsymbol{\theta}\right) &amp;=\frac{\exp \left[J \eta_{t}\right] \psi_{t}(+1)}{\exp \left[J \eta_{t}\right] \psi_{t}(+1)+\exp \left[-J \eta_{t}\right] \psi_{t}(-1)} \\
+&amp;=\operatorname{sigm}\left(2 J \eta_{t}-\log \frac{\psi_{t}(+1)}{\psi_{t}(-1)}\right)
+\end{aligned}
+\end{split}\]</div>
+<p>现在，<span class="math notranslate nohighlight">\(x_{t}\)</span> 进入各状态的概率既取决于与其邻居的兼容性（伊辛先验），也取决于与数据的兼容性（局部似然项）。</p>
+<p>如图 24.1 所示，该算法适用于一个简单的图像去噪问题。结果类似于平均场（图 21.3），但由于平均场往往过于自信，最终估计（基于平均样本）有点“模糊”。</p>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210718185840_8c.webp" /></p>
+<p>图 24.1 图像去噪示例。对于伊辛先验( <span class="math notranslate nohighlight">\(W_{ij}=J=1\)</span> )和高斯噪声模型( <span class="math notranslate nohighlight">\(σ=2\)</span> )，使用吉布斯抽样(第 24.2 节)进行近似推断。(a) 扫描图像 1 次后从后验取样。(b) 在 5 次扫描后取样。(c) 后验平均数，以超过 15 次扫描的平均数计算。与图 21.3 的平均场推断对比。</p>
+</div>
+<div class="section" id="gmm-gibbs">
+<h3>24.2.3 示例：用于推断 GMM 参数的Gibbs采样<a class="headerlink" href="#gmm-gibbs" title="Permalink to this headline">¶</a></h3>
+<p>推导 Gibbs 采样算法来“拟合”混合模型是很简单的，特别是在使用共轭先验的情况下。虽然结果很容易推广到其他类型的混合模型，但我们将重点讨论高斯混合模型的情况（根据第 4.6 节的结果进行的推导比第 26.1 节中相应的变分贝叶斯算法容易得多）。</p>
+<p>假设我们使用半共轭先验，则完整的联合分布由下式给出：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+p(\mathbf{x}, \mathbf{z}, \boldsymbol{\mu}, \mathbf{\Sigma}, \boldsymbol{\pi})=&amp; p(\mathbf{x} \mid \mathbf{z}, \boldsymbol{\mu}, \mathbf{\Sigma}) p(\mathbf{z} \mid \boldsymbol{\pi}) p(\boldsymbol{\pi}) \prod_{k=1}^{K} p\left(\boldsymbol{\mu}_{k}\right) p\left(\boldsymbol{\Sigma}_{k}\right) \\
+=&amp;\left(\prod_{i=1}^{N} \prod_{k=1}^{K}\left(\pi_{k} \mathcal{N}\left(\mathbf{x}_{i} \mid \boldsymbol{\mu}_{k}, \boldsymbol{\Sigma}_{k}\right)\right)^{\mathbb{I}\left(z_{i}=k\right)}\right) \times \\
+&amp; \operatorname{Dir}(\boldsymbol{\pi} \mid \boldsymbol{\alpha}) \prod_{k=1}^{K} \mathcal{N}\left(\boldsymbol{\mu}_{k} \mid \mathbf{m}_{0}, \mathbf{V}_{0}\right) \operatorname{IW}\left(\boldsymbol{\Sigma}_{k} \mid \mathbf{S}_{0}, \nu_{0}\right)
+\end{aligned}
+\end{split}\]</div>
+<p>对每个混合组分使用相同的先验。完整的条件分布如下。对于离散型变量，有：</p>
+<div class="math notranslate nohighlight">
+\[
+p\left(z_{i}=k \mid \mathbf{x}_{i}, \boldsymbol{\mu}, \mathbf{\Sigma}, \boldsymbol{\pi}\right) \quad \propto \quad \pi_{k} \mathcal{N}\left(\mathbf{x}_{i} \mid \boldsymbol{\mu}_{k}, \mathbf{\Sigma}_{k}\right)
+\]</div>
+<p>对于混合权重，有（使用 3.4 节的结果）</p>
+<div class="math notranslate nohighlight">
+\[
+p(\boldsymbol{\pi} \mid \mathbf{z})=\operatorname{Dir}\left(\left\{\alpha_{k}+\sum_{i=1}^{N} \mathbb{I}\left(z_{i}=k\right)\right\}_{k=1}^{K}\right)
+\]</div>
+<p>对于均值，有 (使用 4.6.1节 的结果)：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+p\left(\boldsymbol{\mu}_{k} \mid \boldsymbol{\Sigma}_{k}, \mathbf{z}, \mathbf{x}\right) &amp;=\mathcal{N}\left(\boldsymbol{\mu}_{k} \mid \mathbf{m}_{k}, \mathbf{V}_{k}\right) \\
+\mathbf{V}_{k}^{-1} &amp;=\mathbf{V}_{0}^{-1}+N_{k} \boldsymbol{\Sigma}_{k}^{-1} \\
+\mathbf{m}_{k} &amp;=\mathbf{V}_{k}\left(\boldsymbol{\Sigma}_{k}^{-1} N_{k} \overline{\mathbf{x}}_{k}+\mathbf{V}_{0}^{-1} \mathbf{m}_{0}\right) \\
+N_{k} &amp; \triangleq \sum_{i=1}^{N} \mathbb{I}\left(z_{i}=k\right) \\
+\overline{\mathbf{x}}_{k} &amp; \triangleq \frac{\sum_{i=1}^{N} \mathbb{I}\left(z_{i}=k\right) \mathbf{x}_{i}}{N_{k}}
+\end{aligned}
+\end{split}\]</div>
+<p>对于协方差，有 (使用4.6.2节的结果) ：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+p\left(\boldsymbol{\Sigma}_{k} \mid \boldsymbol{\mu}_{k}, \mathbf{z}, \mathbf{x}\right) &amp;=\operatorname{IW}\left(\boldsymbol{\Sigma}_{k} \mid \mathbf{S}_{k}, \nu_{k}\right) \\
+\mathbf{S}_{k} &amp;=\mathbf{S}_{0}+\sum_{i=1}^{N} \mathbb{I}\left(z_{i}=k\right)\left(\mathbf{x}_{i}-\boldsymbol{\mu}_{k}\right)\left(\mathbf{x}_{i}-\boldsymbol{\mu}_{k}\right)^{T}
+\end{aligned}
+\end{split}\]</div>
+<div class="section" id="id4">
+<h4>24.2.3.1 标签切换<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
+<p>虽然实现起来很简单，但混合模型的 Gibbs 采样有一个根本的弱点。问题是模型参数 <span class="math notranslate nohighlight">\(θ\)</span> 和指示函数 <span class="math notranslate nohighlight">\(\mathbf{z}\)</span> 的<code class="docutils literal notranslate"><span class="pre">不可识别性</span></code>，因为我们可以在不影响似然的情况下任意排列隐标签（参见第 11.3.1 节）。不能只取样本的蒙特卡罗平均值来计算后验均值，因为一个样本考虑簇 1 的参数可能与另一个样本考虑簇 2 的参数相同。实际上，如果可以对所有众数进行平均，我们会发现 <span class="math notranslate nohighlight">\(\mathbb{E}[μ_k|D]\)</span> 对于所有 <span class="math notranslate nohighlight">\(k\)</span> 都是相同的（假设为对称先验），这被称为<code class="docutils literal notranslate"><span class="pre">标签切换</span></code> 问题。</p>
+<p>这个问题在 EM 或 VBEM 中不会出现，因为它们只是“锁定”到单一的众数。但它出现在访问多个众数的任何方法中。在一维问题中，人们可以通过对参数引入约束来确保可识别性，例如，<span class="math notranslate nohighlight">\(μ_1&lt;μ_2&lt;μ_3\)</span> (Richardson And Green 1997)。然而，这并不总是有效，因为这种似然可能会压倒之前的情况，并导致标签切换。此外，这种技术不能扩展到更高维度。另一种方法是通过搜索全局标签排列来对样本进行后处理，以应用于使某些损失函数最小化的每个样本(Stephens 2000)；但这可能会很慢。</p>
+<p>也许最好的解决方案就是简单地“不问”那些无法唯一确定的问题。例如，不是询问数据点 <span class="math notranslate nohighlight">\(i\)</span> 属于簇 <span class="math notranslate nohighlight">\(k\)</span> 的概率，而是询问数据点 <span class="math notranslate nohighlight">\(i\)</span> 和 <span class="math notranslate nohighlight">\(j\)</span> 属于同一簇的概率。后一个问题对于标签来说是不变的。此外，它只指可观测的量( <span class="math notranslate nohighlight">\(i\)</span> 和 <span class="math notranslate nohighlight">\(j\)</span> 是否组合在一起)，而不是指不可观测的量，如潜在的簇。这种方法还有另一个优点，即它扩展到无限混合模型 (在第25.2节中讨论) ，其中 <span class="math notranslate nohighlight">\(K\)</span> 是无界的；在这样的模型中，隐藏簇的概念没有很好地定义，但是数据分区的概念做了很好地定义。</p>
+</div>
+</div>
+<div class="section" id="id5">
+<h3>24.2.4 折叠吉布斯采样<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>在某些情况下，可以解析地积分出部分未知量，而只对其余部分实施采样。这种采样器被称为折叠吉布斯采样器，由于它在低维空间进行采样，所以效率往往要高得多。</p>
+<p>更准确地说，假设采样<span class="math notranslate nohighlight">\(z\)</span> 而积分 <span class="math notranslate nohighlight">\(θ\)</span> ， 则 <span class="math notranslate nohighlight">\(θ\)</span> 参数不参与马尔可夫链；因此，可以提取条件独立的样本 <span class="math notranslate nohighlight">\(θ^s \sim p(θ|z^s，D)\)</span> ，其方差将比从联合状态空间提取的样本低得多 ( Liu等人, 1994年) 。这个过程被称为<code class="docutils literal notranslate"><span class="pre">拉奥-布莱克韦尔化（Rao-Blackwellisation）</span></code>，以下列定理命名：</p>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210718180827_8c.webp" /></p>
+<p>这一定理保证了通过解析地积分出 <span class="math notranslate nohighlight">\(θ\)</span> 而产生的估计方差将始终低于（或者更确切地说，永远不会高于）直接蒙特卡洛估计的方差。在折叠吉布斯中，我们用 <span class="math notranslate nohighlight">\(θ\)</span> 积分对 <span class="math notranslate nohighlight">\(z\)</span> 进行采样；上面的<code class="docutils literal notranslate"><span class="pre">Rao-Blackwell定理</span></code>在这种情况下仍然适用 ( Liu et al., 1994年)。</p>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210718180900_40.webp" /></p>
+<p>图24.2(a)混合模型。(b)在积分出参数之后。</p>
+<p>我们将在第 23.6 节再次遇到 <code class="docutils literal notranslate"><span class="pre">Rao-Blackwell化</span></code>。虽然它可以减少统计方差，但只有在积分比较快的情况下才值得做，否则就不能像朴素方法那样每秒生成那么多的样本。下面给出一个这样的例子。</p>
+<div class="section" id="gmm">
+<h4>24.2.4.1 示例：用于拟合GMM的折叠吉布斯<a class="headerlink" href="#gmm" title="Permalink to this headline">¶</a></h4>
+<p>考虑具有完全共轭先验的高斯混合模型。在这种情况下，我们可以解析地积分出模型参数 <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_{k}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{\Sigma}_{k}\)</span> 和  <span class="math notranslate nohighlight">\(\boldsymbol{\pi}\)</span> ，并且只采样指示变量（隐变量） <span class="math notranslate nohighlight">\(\mathrm{z}\)</span>。一旦积分出 <span class="math notranslate nohighlight">\(\boldsymbol{\pi}\)</span>，所有的 <span class="math notranslate nohighlight">\(z_{i}\)</span> 节点就变得相互依赖。类似地，一旦积分出 <span class="math notranslate nohighlight">\(\boldsymbol{\theta}_{k}\)</span>，所有 <span class="math notranslate nohighlight">\(\mathrm{x}_{i}\)</span> 节点就变得相互依赖，如图24.2(b)所示。然而，我们可以很容易地计算出完整的条件如下：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+p\left(z_{i}=k \mid \mathbf{z}_{-i}, \mathbf{x}, \boldsymbol{\alpha}, \boldsymbol{\beta}\right) \quad \propto &amp; p\left(z_{i}=k \mid \mathbf{z}_{-i}, \boldsymbol{\alpha}, \boldsymbol{\beta}\right) p\left(\mathbf{x} \mid z_{i}=k, \mathbf{z}_{-i}, \boldsymbol{\alpha}, \boldsymbol{\beta}\right) \\
+\propto &amp; p\left(z_{i}=k \mid \mathbf{z}_{-i}, \boldsymbol{\alpha}\right) p\left(\mathbf{x}_{i} \mid \mathbf{x}_{-i}, z_{i}=k, \mathbf{z}_{-i}, \boldsymbol{\beta}\right) \\
+&amp; p\left(\mathbf{x}_{-i} \mid z_{i}-k, \mathbf{z}_{-i}, \boldsymbol{\beta}\right) \\
+&amp; \propto p\left(z_{i}=k \mid \mathbf{z}_{-i}, \boldsymbol{\alpha}\right) p\left(\mathbf{x}_{i} \mid \mathbf{x}_{-i}, z_{i}=k, \mathbf{z}_{-i}, \boldsymbol{\beta}\right)
+\end{aligned}
+\end{split}\]</div>
+<p>其中 <span class="math notranslate nohighlight">\(\boldsymbol{\beta}=\left(\mathbf{m}_{0}, \mathbf{V}_{0}, \mathbf{S}_{0}, \nu_{0}\right)\)</span> 是类条件密度的超参数。第一项可以通过积分 <span class="math notranslate nohighlight">\(\pi\)</span> 得到。假设使用形式为 <span class="math notranslate nohighlight">\(\boldsymbol{\pi} \sim \operatorname{Dir}(\boldsymbol{\alpha})\)</span> 的对称先验，其中 <span class="math notranslate nohighlight">\(\alpha_{k}=\alpha / K\)</span>。 通过公式 5.26 有：</p>
+<div class="math notranslate nohighlight">
+\[
+p\left(z_{1}, \ldots, z_{N} \mid \alpha\right)=\frac{\Gamma(\alpha)}{\Gamma(N+\alpha)} \prod_{k=1}^{K} \frac{\Gamma\left(N_{k}+\alpha / K\right)}{\Gamma(\alpha / K)}
+\]</div>
+<p>因此</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+p\left(z_{i}=k \mid \mathbf{z}_{-i}, \alpha\right) &amp;=\frac{p\left(\mathbf{z}_{1: N} \mid \alpha\right)}{p\left(\mathbf{z}_{-i} \mid \alpha\right)}=\frac{\frac{1}{\Gamma(N+\alpha)}}{\frac{1}{\Gamma(N+\alpha-1)}} \times \frac{\Gamma\left(N_{k}+\alpha / K\right)}{\Gamma\left(N_{k,-i}+\alpha / K\right)} \\
+&amp;=\frac{\Gamma(N+\alpha-1)}{\Gamma(N+\alpha)} \frac{\Gamma\left(N_{k,-i}+1+\alpha / K\right)}{\Gamma\left(N_{k,-i}+\alpha / K\right)}=\frac{N_{k,-i}+\alpha / K}{N+\alpha-1}
+\end{aligned}
+\end{split}\]</div>
+<p>其中： <span class="math notranslate nohighlight">\(N_{k,-i} \triangleq \sum_{n \neq i} \mathbb{I}\left(z_{n}=k\right)=N_{k}-1\)</span>，我们利用了 <span class="math notranslate nohighlight">\(\Gamma(x+1)=   x \Gamma(x)\)</span> 的事实。</p>
+<p>为了得到公式 24.23 中的第二项，它是所有其他数据和所有赋值的后验预测分布，我们使用以下事实</p>
+<div class="math notranslate nohighlight">
+\[
+p\left(\mathbf{x}_{i} \mid \mathbf{x}_{-i}, \mathbf{z}_{-i}, z_{i}=k, \boldsymbol{\beta}\right)=p\left(\mathbf{x}_{i} \mid \mathcal{D}_{-i, k}\right)
+\]</div>
+<p>其中 <span class="math notranslate nohighlight">\(\mathcal{D}_{-i, k}=\left\{\mathbf{x}_{j}: z_{j}=k, j \neq i\right\}\)</span> 是分配给群集 <span class="math notranslate nohighlight">\(k\)</span> 的除 <span class="math notranslate nohighlight">\(\mathbf{x}_{i}\)</span> 之外的所有数据。如果对 <span class="math notranslate nohighlight">\(\theta_{k}\)</span> 使用共轭先验，我们可以计算闭合形式的 <span class="math notranslate nohighlight">\(p\left(\mathbf{x}_{i} \mid \mathcal{D}_{-i, k}\right)\)</span>。此外，通过缓存每个簇的足够统计数据，我们可以有效地更新这些预测可能性。为了计算上述表达式，我们将 <span class="math notranslate nohighlight">\(\mathrm{x}_{i}\)</span> 的统计量从其当前聚类(即 <span class="math notranslate nohighlight">\(z_{i}\)</span> )中去掉，然后评估 <span class="math notranslate nohighlight">\(\mathbf{x}_{i}\)</span> 在每个聚类下的后验预测。一旦我们选择了一个新集群，我们就将Xi的统计信息添加到这个新集群中。</p>
+<p>基于(Sudderth 2006，P94)的算法 24.1 中显示了该算法的一个步骤的一些伪代码。(我们按随机顺序更新节点以改善混合时间，如(Roberts和Sahu 1997)中所建议的。)。我们可以通过从 <span class="math notranslate nohighlight">\(p\left(z_{i} \mid \mathbf{z}_{1: i-1}, \mathbf{x}_{1: i}\right)\)</span> 顺序采样来初始化样本。(请参见由Yee-Whye Teh编写的fmGibbs中的一些Matlab代码。)。在GMM的情况下，朴素采样器和折叠采样器每一步都需要 <span class="math notranslate nohighlight">\(O(NKD)\)</span> 时间。</p>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210718181807_ec.webp" /></p>
+<p>该方法与标准吉布斯取样器的比较如图24.3所示。垂直轴是每次迭代的数据记录概率，使用</p>
+<div class="math notranslate nohighlight">
+\[
+\log p(\mathcal{D} \mid \mathbf{z}, \boldsymbol{\theta})=\sum_{i=1}^{N} \log \left[\pi_{z_{i}} p\left(\mathbf{x}_{i} \mid \boldsymbol{\theta}_{z_{i}}\right)\right]
+\]</div>
+<p>要使用折叠采样器计算这个量，我们必须在给定数据和当前分配z的情况下对 <span class="math notranslate nohighlight">\(\theta=\left(\pi, \boldsymbol{\theta}_{1: K}\right)\)</span> 进行采样。</p>
+<p>在图24.3中，我们看到折叠采样器确实比传统采样器工作得更好。然而，有时这两种方法都会陷入较差的本地模式。(请注意，图24.3(b)中的误差栏是起始值的平均值，而该定理指的是单次运行中的MC样本。)</p>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210718182549_99.webp" /></p>
+<p>图24.3对N=300个数据点应用K=4二维高斯分布的折叠(红色)和传统(蓝色)Gibbs采样的比较(如图25.7所示)。我们绘制数据与迭代的对数概率图。(a)20种不同的随机初始化。(b)logprob平均进行了100多次不同的随机初始化。实线是中位数，粗虚线在0.25和0.75分位数，细虚线是0.05和0.95五分位数。资料来源：2006年首德的图2.20。得到埃里克·萨德思的善意许可后使用。</p>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210718182619_7c.webp" /></p>
+<p>图24.4(a)100所学校的数学成绩与社会经济状况的最小二乘回归线。总体平均值(合并估计)以粗体显示。(b)该100所学校的ˆw2j(斜度)与Nj(样本量)的地块。极端斜坡往往对应于样本量较小的学校。(c)来自分层模型的预测。人口平均值用粗体表示。基于(Hoff 2009)的图11.1。</p>
+</div>
+</div>
+<div class="section" id="glmgibbs">
+<h3>24.2.5 分层GLM的Gibbs采样<a class="headerlink" href="#glmgibbs" title="Permalink to this headline">¶</a></h3>
+<p>通常，我们拥有来自多个相关来源的数据。如果某些来源比其他来源更可靠和/或数据丰富，那么同时对所有数据进行建模是有意义的，以便能够借用统计数据。解决此类问题最自然的方法之一是使用分层贝叶斯建模，也称为多级建模。在第9.6节中，我们讨论了一种使用变分方法在这类模型中执行近似推理的方法。这里我们讨论如何使用Gibbs采样。</p>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210718182838_bd.webp" /></p>
+<p>图24.5 线性回归的多层次模型。</p>
+<p>为了解释该方法，请考虑以下示例。假设我们有不同学校学生的数据。这样的数据自然是在两级层次中建模的：我们让 <span class="math notranslate nohighlight">\(y_{i j}\)</span> 作为我们想要对 <span class="math notranslate nohighlight">\(j\)</span> 学校的 <span class="math notranslate nohighlight">\(i\)</span> 学生进行预测的响应变量。该预测可以基于学校和学生特定的协变量 <span class="math notranslate nohighlight">\( \mathrm{x}_{i j}\)</span> 。由于学校的质量各不相同，我们希望为每所学校使用单独的参数。所以我们的模型变成了</p>
+<div class="math notranslate nohighlight">
+\[
+y_{i j}=\mathbf{x}_{i j}^{T} \mathbf{w}_{j}+\epsilon_{i j}
+\]</div>
+<p>下面我们将使用(Hoff 2009，p197)中的一个数据集来说明这个模型，其中 <span class="math notranslate nohighlight">\(x_{i j}\)</span> 是 <span class="math notranslate nohighlight">\(y\)</span> 学校 <span class="math notranslate nohighlight">\(i\)</span> 学生的社会经济地位(SES)，<span class="math notranslate nohighlight">\( y_{i j}\)</span> 是他们的数学成绩。</p>
+<p>我们可以分别对每个 <span class="math notranslate nohighlight">\( \mathbf{w}_{j}\)</span> 进行拟合，但如果给定学校的样本量很小，结果可能会很差。图24.4(a)说明了这一点，它绘制了分别为 <span class="math notranslate nohighlight">\(J=100\)</span> 所学校中的每一所学校估计的最小二乘回归线。我们看到大部分斜坡都是正斜率，但也有少数是负斜率的“误区”。如图24.4(b)所示，有极端斜率的线往往在样本量较小的学校。因此，我们可能不一定信任这些拟合。</p>
+<p>如果我们构造一个多层贝叶斯模型，其中的 <span class="math notranslate nohighlight">\(\mathbf{w}_{j}\)</span> 假设来自一个共同的先验：<span class="math notranslate nohighlight">\(\mathbf{w}_{j} \sim \mathcal{N}\left(\boldsymbol{\mu}_{w}, \boldsymbol{\Sigma}_{w}\right)\)</span>，我们可以得到更好的结果。这一点如图24.5所示。在该模型中，样本容量较小的学校借用了样本容量较大的学校的统计强度，因为 <span class="math notranslate nohighlight">\(\mathbf{w}_{j}\)</span> 是通过潜在的共同家长 <span class="math notranslate nohighlight">\(\left(\boldsymbol{\mu}_{w}, \boldsymbol{\Sigma}_{w}\right)\)</span> 进行关联的。(关键是要从数据中推断出这些超参数；如果它们是固定常量，<span class="math notranslate nohighlight">\(\mathbf{w}_{j}\)</span> 将有条件地独立，并且它们之间不会有信息共享。)</p>
+<p>为了完成模型规范，我们必须为共享参数指定优先级。在(Hoff 2009，第198页)之后，为方便起见，我们将使用以下半共轭形式：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+\boldsymbol{\mu}_{w} &amp; \sim \mathcal{N}\left(\boldsymbol{\mu}_{0}, \mathbf{V}_{0}\right) \\
+\boldsymbol{\Sigma}_{w} &amp; \sim \operatorname{IW}\left(\eta_{0}, \mathbf{S}_{0}^{-1}\right) \\
+\sigma^{2} &amp; \sim \operatorname{IG}\left(\nu_{0} / 2, \nu_{0} \sigma_{0}^{2} / 2\right)
+\end{aligned}
+\end{split}\]</div>
+<p>鉴于此，很容易说明Gibbs采样所需的全部条件具有以下形式。对于组特定权重：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+p\left(\mathbf{w}_{j} \mid \mathcal{D}_{j}, \boldsymbol{\theta}\right) &amp;=\mathcal{N}\left(\mathbf{w}_{j} \mid \boldsymbol{\mu}_{j}, \boldsymbol{\Sigma}_{j}\right) \\
+\boldsymbol{\Sigma}_{j}^{-1} &amp;=\boldsymbol{\Sigma}^{-1}+\mathbf{X}_{j}^{T} \mathbf{X}_{j} / \sigma^{2} \\
+\boldsymbol{\mu}_{j} &amp;=\boldsymbol{\Sigma}_{j}\left(\boldsymbol{\Sigma}^{-1} \boldsymbol{\mu}+\mathbf{X}_{j}^{T} \mathbf{y}_{j} / \sigma^{2}\right)
+\end{aligned}
+\end{split}\]</div>
+<p>对总体均值：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+p\left(\boldsymbol{\mu}_{w} \mid \mathbf{w}_{1: J}, \mathbf{\Sigma}_{w}\right) &amp;=\mathcal{N}\left(\boldsymbol{\mu} \mid \boldsymbol{\mu}_{N}, \boldsymbol{\Sigma}_{N}\right) \\
+\boldsymbol{\Sigma}_{N}^{-1} &amp;=\mathbf{V}_{0}^{-1}+J \boldsymbol{\Sigma}^{-1} \\
+\boldsymbol{\mu}_{N} &amp;=\boldsymbol{\Sigma}_{N}\left(\mathbf{V}_{0}^{-1} \boldsymbol{\mu}_{0}+J \boldsymbol{\Sigma}^{-1} \overline{\mathbf{w}}\right)
+\end{aligned}
+\end{split}\]</div>
+<p>其中 <span class="math notranslate nohighlight">\(\overline{\mathbf{w}}=\frac{1}{J} \sum_{j} \mathbf{w}_{j}\)</span> .</p>
+<p>对总体协方差：</p>
+<div class="math notranslate nohighlight">
+\[
+p\left(\boldsymbol{\Sigma}_{w} \mid \boldsymbol{\mu}_{w}, \mathbf{w}_{1: J}\right)=\operatorname{IW}\left(\left(\mathbf{S}_{0}+\mathbf{S}_{\mu}\right)^{-1}, \eta_{0}+J\right)
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{S}_{\mu}=\sum_{j}\left(\mathbf{w}_{j}-\boldsymbol{\mu}_{w}\right)\left(\mathbf{w}_{j}-\boldsymbol{\mu}_{w}\right)^{T}
+\]</div>
+<p>对噪声方差：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+p\left(\sigma^{2} \mid \mathcal{D}, \mathbf{w}_{1: J}\right) &amp;=\operatorname{IG}\left(\left[\nu_{0}+N\right] / 2,\left[\nu_{0} \sigma_{0}^{2}+\operatorname{SSR}\left(\mathbf{w}_{1: J}\right)\right] / 2\right) \\
+\operatorname{SSR}\left(\mathbf{w}_{1: J}\right) &amp;=\sum_{j=1}^{J} \sum_{i=1}^{N_{j}}\left(y_{i j}-\mathbf{w}_{j}^{T} \mathbf{x}_{i j}\right)^{2}
+\end{aligned}
+\end{split}\]</div>
+<p>将Gibbs采样应用于我们的分层模型，我们得到如图24.4(c)所示的结果。浅灰色线条表示每个学校的后验预测分布的平均值：</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbb{E}\left[y_{j} \mid \mathbf{x}_{i j}\right]=\mathbf{x}_{i j}^{T} \hat{\mathbf{w}}_{j}
+\]</div>
+<p>其中：</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{\mathbf{w}}_{j}=\mathbb{E}\left[\mathbf{w}_{j} \mid \mathcal{D}\right] \approx \frac{1}{S} \sum_{s=1}^{S} \mathbf{w}_{j}^{(s)}
+\]</div>
+<p>中间的深灰色线标出了使用总体平均参数 <span class="math notranslate nohighlight">\(\mathbf{x}_{i j}^{T} \hat{\boldsymbol{\mu}}_{w}\)</span> 进行预测的情况。我们看到，该方法很好地使拟合正则化，而没有强制太多的均匀性。(收缩量由 <span class="math notranslate nohighlight">\(\boldsymbol{\Sigma}_{w}\)</span> 控制，而后者又取决于超级参数；在本例中，我们使用了模糊值。)</p>
+</div>
+<div class="section" id="ip">
+<h3>24.2.7 补偿后验(IP)算法<a class="headerlink" href="#ip" title="Permalink to this headline">¶</a></h3>
+<p>归一化后验或IP算法(Tanner and Wong，1987)是Gibbs采样的一个特例，我们将变量分为两类：隐藏变量z和参数θ。这听起来应该很熟悉：它基本上是EM的MCMC版本，其中E步骤替换为I步骤，而M步骤替换为P步骤。这是一个称为数据增强的更一般策略的例子，我们引入辅助变量来简化后验计算(这里是p(θ|D)的计算)。有关更多信息，请参见(Tanner 1996；van Dyk and Meng 2001)。</p>
+</div>
+<div class="section" id="id6">
+<h3>24.2.8 阻塞Gibbs采样<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>Gibbs采样可能相当慢，因为它一次只更新一个变量(所谓的单站点更新)。如果变量高度相关，将需要很长时间才能脱离当前状态。图24.6说明了这一点，我们在图24.6中说明了从二维高斯模型进行采样(有关详细信息，请参阅练习24.1)。如果变量高度相关，则算法在状态空间中的移动将非常缓慢。特别地，移动的大小由条件分布的方差控制。如果是这样的话？在x1方向，分布的支撑度沿着这个维度是L，那么我们需要O((L/？)2)步才能得到一个独立的样本。</p>
+<p>在某些情况下，我们可以一次有效地对变量组进行采样。这称为阻塞Gibbs采样或阻塞Gibbs采样(Jensen等人)。1995；Wilkinson和YEung 2002)，并且可以在州空间中做出更大的动作。</p>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210718184126_aa.webp" /></p>
+<p>图24.6 对倾斜的二维高斯使用Gibbs采样时，可能的采样速度较慢的插图。基于(毕晓普2006b)的图11.11。</p>
+</div>
+</div>
+<div class="section" id="metropolis-hastings">
+<h2>24.3 Metropolis Hastings算法<a class="headerlink" href="#metropolis-hastings" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="id7">
+<h2>24.4 MCMC的速度和精度<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="id8">
+<h2>24.5 辅助变量MCMC<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="id9">
+<h2>24.6 退火法<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="id10">
+<h2>24.7 边缘似然的近似<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./MLAPP_BOOK"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="23.MonteCarloInference.html" title="previous page">23 蒙特卡洛推断</a>
+    <a class='right-next' id="next-link" href="25.Clustering.html" title="next page">25 聚簇</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Kevin Murphy<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>

@@ -1,0 +1,999 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>23 蒙特卡洛推断 &#8212; 机器学习：概率视角</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet" />
+  <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.e8e5499552300ddf5d7adccae7cc3b70.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="24 马尔科夫链蒙特卡洛 MCMC" href="24.MarkovChainMonteCarlo%28MCMC%29Inference.html" />
+    <link rel="prev" title="22 更多变分推断方法" href="22.MoreVariationalInference.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+      <img src="../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">机器学习：概率视角</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../preface.html">
+   前言
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="01.Introduction.html">
+   01 引言
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="02.Probability.html">
+   02 概率论
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03.GenerativeModelsForDiscreteData.html">
+   03 离散数据的生成式模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="04.GaussianModels.html">
+   04 高斯模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="05.BayesianStatistics.html">
+   05 贝叶斯学派统计思想
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="06.FrequentistStatistics.html">
+   06 频率学派统计思想
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="07.LinearRegression.html">
+   07 线性回归
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="08.LogisticRegression.html">
+   08 逻辑回归
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="09.GeneralizedLinearModelsAndTheExponentialFamily.html">
+   09 广义线性模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="10.DirectedGraphicalModels%20%28BayesNets%29.html">
+   10 有向图模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="11.MixtureModelandEMAlgorithm.html">
+   11 混合模型与EM算法
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="12.LinearModelwithLatentVariable.html">
+   12 隐变量线性模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="13.SparseLinearModel.html">
+   13 稀疏线性模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="14.KernelMethod.html">
+   14 核方法
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="15.GaussianProcesses.html">
+   15 高斯过程
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="16.AdaptiveBasisFunctionModel.html">
+   16 自适应基函数模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="17.MarkovAndHiddenMarkovModel.html">
+   17 马尔科夫与隐马尔科夫模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="18.StateSpaceModels.html">
+   18 状态空间模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="19.UndirectedGraphicalModels%28MarkovRandomFields%29.html">
+   19 无向图模型（马尔科夫随机场）
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="20.ExactInferenceForGraphicalModels.html">
+   20 概率图的精确推断
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="21.VariationalInference.html">
+   21 变分推断
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="22.MoreVariationalInference.html">
+   22 更多变分推断方法
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   23 蒙特卡洛推断
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="24.MarkovChainMonteCarlo%28MCMC%29Inference.html">
+   24 马尔科夫链蒙特卡洛 MCMC
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="25.Clustering.html">
+   25 聚簇
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="26.GraphicalModelStructureLearning.html">
+   26 概率图的结构学习
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="27.LatentVariableModelsForDiscreteData.html">
+   27 离散数据的隐变量模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="28.DeepLearning.html">
+   28 深度学习
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Abbreviations.html">
+   本书常见缩写列表
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/MLAPP_BOOK/23.MonteCarloInference.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   23.1 导言
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   23.2 从标准分布中采样
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#cdf">
+     23.2.1 使用累积密度函数（cdf）
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#box-muller">
+     23.2.2 高斯分布的采样 (Box-Muller 方法）
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id4">
+   23.3 拒绝采样
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id5">
+     23.3.1 基本思路
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id6">
+     23.3.2 案例
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id7">
+     23.3.3 贝叶斯统计应用
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id8">
+     23.3.4 自适应拒绝采样
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id9">
+     23.3.5 高维拒绝采样
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id10">
+   23.4 重要性采样
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id11">
+     23.4.1 基本思路
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id12">
+     23.4.2 处理未归一化的分布
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#dgm">
+     23.4.3 DGM 的重要性采样：似然加权
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id13">
+     23.4.4 采样重要性重采样
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id14">
+   23.5 粒子滤波
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id15">
+     23.5.1 序列重要性采样
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id16">
+     23.5.2 退化问题
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id17">
+     23.5.3 重采样步数
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id18">
+     23.5.4 提议分布
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id19">
+     23.5.5 应用：机器人定位
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id20">
+     23.5.6 应用：视觉对象跟踪
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id21">
+     23.5.7 应用：时间序列预测
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#rao-blackwellised">
+   23.6 Rao-Blackwellised 粒子滤波器
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#lg-ssm-rbpf">
+     23.6.1 用于 LG-SSM 切换的 RBPF
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id22">
+     23.6.2 应用：跟踪机动目标
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#slam">
+     23.6.3 应用：快速 SLAM
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id23">
+   习题
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="id1">
+<h1>23 蒙特卡洛推断<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<p>[原文] <a class="reference external" href="https://probml.github.io/pml-book/book0.html">https://probml.github.io/pml-book/book0.html</a></p>
+<p>[作者] <a class="reference external" href="https://www.cs.ubc.ca/~murphyk/">Kevin Patrick Murphy</a></p>
+<style>p{text-indent:2em;2}</style>
+<div class="section" id="id2">
+<h2>23.1 导言<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>到目前为止，我们讨论了后验推断的各种确定性算法。这些方法享有贝叶斯方法的许多好处，同时仍然和基于优化的点估计方法一样快。但这些方法的问题是：它们的推导可能相当复杂，并且适用范围有些受限（例如：通常假设共轭先验和指数族似然，尽管利用平均场近似更复杂分布有了一些新扩展（Wand 等，2011））。此外，尽管它们很快，但精度经常受到所选择近似形式的限制。</p>
+<p>本章将讨论基于蒙特卡罗近似思想的另一类算法，想法很简单：从后验中生成一些（未加权的）样本， <span class="math notranslate nohighlight">\(x^S ~ p(x|D)\)</span>，然后使用这些样本计算任何感兴趣的量，例如：后验的边缘分布 <span class="math notranslate nohighlight">\(p(x_1|D)\)</span> ，或者两个量之差 <span class="math notranslate nohighlight">\(p(x1 - x2 | D)\)</span> 的后验，或者后验预测性分布 <span class="math notranslate nohighlight">\(p(y|D)\)</span> 等。对于适合的函数 <span class="math notranslate nohighlight">\(f\)</span>，可以用 <span class="math notranslate nohighlight">\(\mathbf{E}[f|D] \approx \frac{1}{S} \sum \limits_{\mathbf{s}=1}^S f(\mathbf{x}^\mathbf{S})\)</span> 来近似上述所有量。</p>
+<p>通过生成足够样本，可以达到任何我们预期的精度水平。该方法的主要问题是：<strong>如何有效地从概率分布中生成样本，尤其是在高维情况下？</strong></p>
+<p>本章将讨论生成<code class="docutils literal notranslate"><span class="pre">独立样本</span></code>的非迭代方法。下章将讨论一种称为<code class="docutils literal notranslate"><span class="pre">马尔可夫链蒙特卡罗（简称</span> <span class="pre">MCMC）</span></code>的迭代方法，该方法会产生<code class="docutils literal notranslate"><span class="pre">相关样本</span></code>，但在高维情况下效果很好。请注意：采样是一个很大的话题。读者应查阅其他书籍，如（Liu, 2001；Robert and Casella 2004） 。</p>
+</div>
+<div class="section" id="id3">
+<h2>23.2 从标准分布中采样<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>本节简要讨论从标准形式的一维或二维分布中采样的一些方法。这些方法经常被更复杂的方法用作子程序。</p>
+<div class="section" id="cdf">
+<h3>23.2.1 使用累积密度函数（cdf）<a class="headerlink" href="#cdf" title="Permalink to this headline">¶</a></h3>
+<p>从单变量分布中采样的最简单方法是基于逆概率变换。 让 <span class="math notranslate nohighlight">\(F\)</span> 是我们要从中采样的某个分布的 <span class="math notranslate nohighlight">\(cdf\)</span>，令 <span class="math notranslate nohighlight">\(F^{-1}\)</span> 为其逆分布。那么有以下结果：</p>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210717165258_fc..png" /></p>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210717165117_2c..png" /></p>
+<p>因此，我们可以从任何单变量分布中进行采样，为此我们可以评估其逆 cdf，如下所示：使用伪随机数生成器生成随机数 U∨U(0，1)（例如，参见 (Press 等人，1988) 以了解详细信息）。让 u 代表 y 轴上的高度。然后沿着 x 轴“滑动”，直到与 F 曲线相交，然后“下拉”，返回相应的 x 值。这相当于计算 x = f1(u)。参见图 23.1。</p>
+<p>例如，考虑指数分布</p>
+<div class="math notranslate nohighlight">
+\[
+\operatorname{Expon}(x \mid \lambda) \triangleq \lambda e^{-\lambda x} \mathbb{I}(x \geq 0)
+\]</div>
+<p><span class="math notranslate nohighlight">\(cdf\)</span> 是：</p>
+<div class="math notranslate nohighlight">
+\[
+F(x)=1-e^{-\lambda x} \mathbb{I} (x \leq 0)
+\]</div>
+<p>其反函数是分位数函数：</p>
+<div class="math notranslate nohighlight">
+\[
+F^{-1}(p) = - \frac{\ln (1-p)}{\lambda}
+\]</div>
+<p>通过上述定理，如果 <span class="math notranslate nohighlight">\(U \sim Unif(0，1)\)</span> ，则 <span class="math notranslate nohighlight">\(F^{-1}(U) \sim \operatorname{Expon(\lambda)}\)</span> 。此外，对于 <span class="math notranslate nohighlight">\(1-U \sim Unif(0，1)\)</span> 也一样。为实现从指数分布中采样，可以首先从均匀分布中采样，然后使用 <span class="math notranslate nohighlight">\(\ln (u)/λ\)</span> 转换结果。</p>
+</div>
+<div class="section" id="box-muller">
+<h3>23.2.2 高斯分布的采样 (Box-Muller 方法）<a class="headerlink" href="#box-muller" title="Permalink to this headline">¶</a></h3>
+<p>我们现在描述一种从高斯分布中采样的方法。其思想是我们从一个单位半径的圆上均匀采样，然后利用变量的变化公式从一个球面 2d 高斯中导出样本。这可以被认为是来自一维高斯的两个样本。</p>
+<p>更详细地说，均匀采样 <span class="math notranslate nohighlight">\(z_1、z_2 \in (1，1)\)</span> 对，然后丢弃不满足 <span class="math notranslate nohighlight">\(z^2_1 + z^2_2 ≤ 1\)</span> 条件的对。结果将是在单位圆内均匀分布的点，所以 <span class="math notranslate nohighlight">\(p(z) = \frac{1}{\pi} \mathbb{I}\)</span> （ <span class="math notranslate nohighlight">\(z\)</span> 位于圆内）。现在定义</p>
+<div class="math notranslate nohighlight">
+\[
+x_i=z_i(\frac{-2 \ln r^2}{r^2})^{\frac{1}{2}}
+\]</div>
+<p>对于 <span class="math notranslate nohighlight">\(i=1:2\)</span>， 其中 <span class="math notranslate nohighlight">\(r^2=z^2_1 + z^2_2\)</span>。 使用变量的多元偏微分公式，有：</p>
+<div class="math notranslate nohighlight">
+\[
+p(x_1,x_2)=p(z_1,z_2) \left |\frac{\partial (z_1,z_2)}{\partial (x_1,x_2)} \right | = \left [ \frac{1}{\sqrt{2 \pi }} \exp(−\frac{1}{2}x^2_1) \right ] \left [ \frac{1}{\sqrt{2 \pi }} \exp(−\frac{1}{2}x^2_2) \right ]
+\]</div>
+<p>因此，<span class="math notranslate nohighlight">\(x_1\)</span> 和 <span class="math notranslate nohighlight">\(x_2\)</span> 是来自单变量高斯的两个独立样本。这就是众所周知的 Box-Muller 方法。</p>
+<p>对于多元高斯样本，首先计算其协方差矩阵的 Cholesky 分解，<span class="math notranslate nohighlight">\(\sum = \mathbf{L}\mathbf{L}^T\)</span>，其中 <span class="math notranslate nohighlight">\(\mathbf{L}\)</span> 为下三角矩阵。接下来，使用 Box-Muller 方法从 <span class="math notranslate nohighlight">\(\mathbf{x} \sim \mathcal{N}(0，\mathbf{I})\)</span> 中采样。最后设置 <span class="math notranslate nohighlight">\(y = \)</span>\mathbb{Lx} + μ$ 。这是有效的，因为</p>
+<div class="math notranslate nohighlight">
+\[
+\operatorname{cov}[\mathbb{y}] = \mathbf{L} \operatorname{cov}[\mathbf{x}] \mathbf{L}^T = \mathbf{L}\mathbf{I}\mathbf{L}^T = \sum
+\]</div>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>23.3 拒绝采样<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>当无法使用 <code class="docutils literal notranslate"><span class="pre">cdf</span> <span class="pre">逆函数</span></code> 的方法时，一个简单的替代方法是使用拒绝采样。</p>
+<div class="section" id="id5">
+<h3>23.3.1 基本思路<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>在拒绝采样中，我们创建一个对于某个常数 <span class="math notranslate nohighlight">\(M\)</span> ，满足 <span class="math notranslate nohighlight">\(M q(x) \geq \tilde{p}(x)\)</span> 的提议分布 <span class="math notranslate nohighlight">\(q(x)\)</span>，其中 <span class="math notranslate nohighlight">\(\tilde{p}(x)\)</span> 是 <span class="math notranslate nohighlight">\(p(x)\)</span> 的非归一化版本。函数 <span class="math notranslate nohighlight">\(Mq(x)\)</span> 为 <span class="math notranslate nohighlight">\(\tilde{p}\)</span> 提供了一个上包络，然后对 <span class="math notranslate nohighlight">\(x \sim q(x)\)</span> 进行采样，这对应于选取随机的 <span class="math notranslate nohighlight">\(x\)</span> 的位置，然后对 <span class="math notranslate nohighlight">\(u \sim \mathbf{U}(0,1)\)</span> 进行采样，对应于选取包络下的随机高度 ( <span class="math notranslate nohighlight">\(y\)</span> 的位置）。如果 <span class="math notranslate nohighlight">\(u &gt; \frac{p(x)}{Mq(x)}\)</span> ，则拒绝该样品，否则接受。见图 23.2(a)。其中接受区域显示为阴影，拒绝区域为阴影区域和上包络之间的白色区域。</p>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210717180735_fe..png" /></p>
+<p>图 23.2 (a) 拒绝采样示意图。资料来源：(Andrieu et al. 2003) 的图 2。(b)  <span class="math notranslate nohighlight">\(Ga(α = 5.7，λ = 2)\)</span> 分布（纯蓝色）的拒绝采样，使用 <span class="math notranslate nohighlight">\(MGa(k,\lambda -1)\)</span> （红色虚线）的提议分布形式，其中 <span class="math notranslate nohighlight">\(k = \lfloor 5.7 \rfloor =5\)</span> 。曲线在 <span class="math notranslate nohighlight">\(α-k = 0.7\)</span> 时接触。</p>
+<p>现在证明拒绝采样过程的正确性。令</p>
+<div class="math notranslate nohighlight">
+\[
+S=\{(x, u): u \leq \tilde{p}(x) / M q(x)\}, S_{0}=\left\{(x, u): x \leq x_{0}, u \leq \tilde{p}(x) / M q(x)\right\}
+\]</div>
+<p>那么接受点的 <span class="math notranslate nohighlight">\(cdf\)</span> 由下式给出：
+$$</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+P\left(x \leq x_{0} \mid x \text { accepted }\right) &amp;=\frac{P\left(x \leq x_{0}, x \text { accepted }\right)}{P(x \text { accepted })} \\
+&amp;=\frac{\iint \mathbb{I}\left((x, u) \in S_{0}\right) q(x) d u d x}{\iint \mathbb{I}((x, u) \in S) q(x) d u d x}=\frac{\int_{-\infty}^{x_{0}} \tilde{p}(x) d x}{\int_{-\infty}^{\infty} \tilde{p}(x) d x}
+\end{align*}\]</div>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}这也是目标分布 $p(x)$ 的 $cdf$ 。\\这种方法有效吗？\\因为用概率 $q(x)$ 生成，用概率 $\frac{\tilde{p}(x)}{M q(x)}$ 接受，所以接受概率是：\end{aligned}\end{align} \]</div>
+<p>p(\text { accept })=\int \frac{\tilde{p}(x)}{M q(x)} q(x) d x=\frac{1}{M} \int \tilde{p}(x) dx
+$$</p>
+<p>因此，我们希望选择尽可能小的 <span class="math notranslate nohighlight">\(M\)</span>，同时仍然满足 <span class="math notranslate nohighlight">\(M q(x) \geq \tilde{p}(x)\)</span> 。</p>
+</div>
+<div class="section" id="id6">
+<h3>23.3.2 案例<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>例如，假设想从伽马分布中采样：</p>
+<div class="math notranslate nohighlight">
+\[
+\mathrm{Ga}(x \mid \alpha, \lambda)=\frac{1}{\Gamma(\alpha)} x^{\alpha-1} \lambda^{\alpha} \exp (-\lambda x)
+\]</div>
+<p>可以证明，如果 <span class="math notranslate nohighlight">\(X_{i} \stackrel{i i d}{\sim} \operatorname{Expon}(\lambda)\)</span>， 并且 <span class="math notranslate nohighlight">\(Y=X_{1}+\cdots+X_{k}\)</span>, 则 <span class="math notranslate nohighlight">\(Y \sim \operatorname{Ga}(k, \lambda)\)</span>。 但对于非整型的形状参数，该技巧无法使用，但依然可以使用拒绝采样方法。</p>
+<p>使用 <span class="math notranslate nohighlight">\(Ga(k，λ_1)\)</span> 分布作为提议分布，其中 <span class="math notranslate nohighlight">\(k = \lfloor α \rfloor\)</span> 。则有以下形式：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}  
+\frac{p(x)} {q(x)} &amp;= \frac { Ga (x|\alpha,\lambda )} { Ga (x| k,\lambda - 1) } \\ 
+&amp;= \frac {x^{a-1} \lambda^\alpha  \exp (-\lambda x)/\Gamma(\alpha)} {x^{k-1} (\lambda-1)^k \exp (-(\lambda - 1)x )/\Gamma(k)} \\
+&amp;= \frac{\Gamma(k)\lambda^\alpha}{\Gamma(\alpha)(\lambda-1)^k} x^{\alpha-k} \exp(-x)
+\end{align*}
+\end{split}\]</div>
+<p>当 <span class="math notranslate nohighlight">\(x =\alpha- k\)</span> 时，该比值达到最大值。此时：</p>
+<div class="math notranslate nohighlight">
+\[
+M=\frac{Ga(\alpha -k|\alpha,\lambda)}{Ga(\alpha-k|k,\lambda -1)}
+\]</div>
+<p>见 <code class="docutils literal notranslate"><span class="pre">图</span> <span class="pre">23.2(b)</span></code>。</p>
+</div>
+<div class="section" id="id7">
+<h3>23.3.3 贝叶斯统计应用<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p>假设想从后验中抽取（未加权）样本，<span class="math notranslate nohighlight">\(p(θ|D) = p(D|θ)p(θ)/p(D)\)</span> 。可以使用拒绝采样， <span class="math notranslate nohighlight">\(\tilde{p}(θ)= p(D|θ)p(θ)\)</span> 为目标分布，<span class="math notranslate nohighlight">\(q(θ) = p(θ)\)</span> 为提议分布，<span class="math notranslate nohighlight">\(M=p(D|\hatθ)\)</span>，其中 <span class="math notranslate nohighlight">\(\hat θ = \operatorname{arg max} p(D|θ)\)</span> 为最大似然估计；这是在 1992 年首次提出的。我们采用如下概率接受采样点：</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\tilde{p}(\theta)}{Mq(\theta)}=\frac{p(D|\theta)}{p(D|\hat \theta)}
+\]</div>
+<p>因此，先验中拥有很高似然的样本，更有可能保留在后验中。当然，如果先验和后验之间有很大的不匹配（如果先验是模糊的，似然是信息性的，就会出现这种情况），该过程是非常低效的。</p>
+</div>
+<div class="section" id="id8">
+<h3>23.3.4 自适应拒绝采样<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<p>现在描述另外一种方法，该方法可自动得出任意对数凹密度分布 <span class="math notranslate nohighlight">\(p(X)\)</span> 的紧致上包 <span class="math notranslate nohighlight">\(q(X)\)</span>。其思想是用分段线性函数来确定对数密度的上限，如<code class="docutils literal notranslate"><span class="pre">图</span> <span class="pre">23.3(a)</span></code>所示。基于固定网格而不是分布的支持来选择分段的初始位置。然后，评估这些位置的对数密度的梯度，并使直线在这些点处相切。</p>
+<p>由于包络的对数是分段线性的，因此包络本身是分段指数型：</p>
+<div class="math notranslate nohighlight">
+\[
+q(x)=M_i \lambda_i \exp (-\lambda_i(x-x_{i-1})),x_{i-1} &lt; x \leq x_i
+\]</div>
+<p>其中 <span class="math notranslate nohighlight">\(x_i\)</span> 是网格点。从该分布中采样相对简单。如果样本 <span class="math notranslate nohighlight">\(x\)</span> 被拒绝，将在 <span class="math notranslate nohighlight">\(x\)</span> 处创建一个新网格点，从而优化包络。随着网格点数目增加，包络的密封性提高，拒绝率降低。这被称为<code class="docutils literal notranslate"><span class="pre">自适应拒绝采样</span> <span class="pre">(ARS)</span></code> (Gilks And Wild 1992)。<code class="docutils literal notranslate"><span class="pre">图</span> <span class="pre">23.3(b-c)</span></code> 给出了该方法的实际应用示例。与标准拒绝采样一样，它可以应用于非归一化分布。</p>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210717174927_71..png" /></p>
+<p>图 23.3 (a) 自适应拒绝采样背后的想法。把分段线性上（下）界放在对数凹密度上。基于 (Gilks and Wild，1992) 的图 1。(b-c) 使用自回归分析从半高斯样本中进行采样。</p>
+</div>
+<div class="section" id="id9">
+<h3>23.3.5 高维拒绝采样<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<p>很明显，我们希望使提议分布 <span class="math notranslate nohighlight">\(q(X)\)</span> 尽可能接近目标分布 <span class="math notranslate nohighlight">\(p(X)\)</span> ，同时仍然保持是一个上界。但这在高维领域很难实现。要了解这一点，请考虑从 <span class="math notranslate nohighlight">\(p(\mathbf{X})= \mathcal{N}(0，σ^2_p \mathbb{I})\)</span> 中采样，作为提议使用 <span class="math notranslate nohighlight">\(q(\mathbf{x})= \mathcal{N}(0，σ^2_q\mathbb{I})\)</span> 。显然，必须有<span class="math notranslate nohighlight">\(σ^2_q \geq σ^2_p\)</span> 才能成为上界。在 <span class="math notranslate nohighlight">\(D\)</span> 维中，最佳值由 <span class="math notranslate nohighlight">\(M=(σ_q/σ_p)^D\)</span> 给出。接受率为 <span class="math notranslate nohighlight">\(1/M\)</span> （因为 <span class="math notranslate nohighlight">\(p\)</span> 和 <span class="math notranslate nohighlight">\(q\)</span> 均设为归一化），它随着维数呈指数快速下降。例如，如果 <span class="math notranslate nohighlight">\(σ_q\)</span> 仅超过 <span class="math notranslate nohighlight">\(σ_p\)</span> 1%，则在 <span class="math notranslate nohighlight">\(D = 1000\)</span> 维中，接受率将约为 <span class="math notranslate nohighlight">\(1/20,000\)</span> 。这是拒绝采样的一个根本弱点。</p>
+<p>在下一章中，将介绍 <code class="docutils literal notranslate"><span class="pre">MCMC</span> <span class="pre">采样</span></code>，这是从高维分布中采样的一种更有效的方法。有时它会使用（自适应）拒绝采样作为子程序，被称为<code class="docutils literal notranslate"><span class="pre">自适应拒绝</span> <span class="pre">Metropolis</span> <span class="pre">采样</span></code> （Gilks et al., 1995 年）。</p>
+</div>
+</div>
+<div class="section" id="id10">
+<h2>23.4 重要性采样<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
+<p>现在描述一种被称为<code class="docutils literal notranslate"><span class="pre">重要性采样</span></code>的蒙特卡罗方法，该方法并不求分布的近似形式，而是直接获得如下形式积分的近似解：</p>
+<div class="math notranslate nohighlight">
+\[
+I = \mathbb{E}[f] = \int f(\mathbf{x}p(\mathbf{x}))d \mathbf{x}
+\]</div>
+<div class="section" id="id11">
+<h3>23.4.1 基本思路<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<p>这个想法是在概率 p(X) 很高，但|f(X)|也很大的区域中绘制样本 x。结果可能是超级有效的，这意味着它需要的样本比我们从精确分布 p(X) 中采样所需要的样本更少。原因是样品集中在太空的重要部分。例如，假设我们想要估计一个罕见事件的概率。定义 f(X)=I(x∈E)，对于某个集合 E，那么从形式为 q(X)∝f(X)p(X) 的提议中采样要比从 p(X) 本身中采样要好。</p>
+<p>任何方案的重要采样样本，q(X)。然后，它使用这些样本来估计积分，如下所示：</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbb{E}[f]=\int f(\mathbf{x}) \frac{p(\mathbf{x})}{q(\mathbf{x})} q(\mathbf{x}) d \mathbf{x} \approx \frac{1}{S} \sum_{s=1}^{S} w_{s} f\left(\mathbf{x}^{s}\right)=\hat{I}
+\]</div>
+<p>其中 <span class="math notranslate nohighlight">\(w_{s} \triangleq \frac{p\left(\mathbf{x}^{s}\right)}{q\left(\mathbf{x}^{s}\right)}\)</span> 是重要性权重。注意，与拒绝采样不同，我们会使用所有样本。
+如何选择提议分布呢？ 一个自然准则是最小化估计 <span class="math notranslate nohighlight">\(\hat{I}=\sum_{s} w_{s} f\left(\mathbf{x}^{s}\right)\)</span> 的方差。 现在：</p>
+<div class="math notranslate nohighlight">
+\[
+\operatorname{var}_{q(\mathbf{x})}[f(\mathbf{x}) w(\mathbf{x})]=\mathbb{E}_{q(\mathbf{x})}\left[f^{2}(\mathbf{x}) w^{2}(\mathbf{x})\right]-I^{2}
+\]</div>
+<p>由于最后一项独立于 <span class="math notranslate nohighlight">\(q\)</span>，我们可以忽略它。 通过 Jensen 不等式， 可以得到如下下界：</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbb{E}_{q(\mathbf{x})}\left[f^{2}(\mathbf{x}) w^{2}(\mathbf{x})\right] \geq\left(\mathbb{E}_{q(\mathbf{x})}[|f(\mathbf{x}) w(\mathbf{x})|]\right)^{2}=\left(\int|f(\mathbf{x})| p(\mathbf{x}) d \mathbf{x}\right)^{2}
+\]</div>
+<p>下界用优化的重要性分布获得：</p>
+<div class="math notranslate nohighlight">
+\[
+q^{*}(\mathbf{x})=\frac{|f(\mathbf{x})| p(\mathbf{x})}{\int\left|f\left(\mathbf{x}^{\prime}\right)\right| p\left(\mathbf{x}^{\prime}\right) d \mathbf{x}^{\prime}}
+\]</div>
+<p>当我们无法获取特定目标函数 <span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span> 时，可以尽可能让 <span class="math notranslate nohighlight">\(q(\mathbf{x})\)</span> 接近 <span class="math notranslate nohighlight">\(p(\mathbf{x})\)</span> 。 通常这很困难，尤其是在高维情况下，但可以调整提议分布以改进近似。这被称为自适应重要性采样 （Oh and Berger, 1992）。</p>
+</div>
+<div class="section" id="id12">
+<h3>23.4.2 处理未归一化的分布<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<p>通常情况下，我们可以估计非归一化目标分布˜p(X)，但不能估计其归一化常数 Zp。我们可能还想使用一个非标准化方案˜q(X)，其中可能具有未知的标准化常数 Zq。我们可以这样做，如下所示。首先，我们评估</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbb{E}[f]=\frac{Z_{q}}{Z_{p}} \int f(\mathbf{x}) \frac{\tilde{p}(\mathbf{x})}{\tilde{q}(\mathbf{x})} q(\mathbf{x}) d \mathbf{x} \approx \frac{Z_{q}}{Z_{p}} \frac{1}{S} \sum_{s=1}^{S} \tilde{w}_{s} f\left(\mathbf{x}^{s}\right)
+\]</div>
+<p>其中 <span class="math notranslate nohighlight">\(\tilde{w}_{s} \triangleq \frac{\tilde{p}\left(\mathbf{x}^{s}\right)}{\tilde{q}\left(\mathbf{x}^{s}\right)}\)</span> 为未归一化的重要性权重。我们可以使用同一样本集来评估比例 <span class="math notranslate nohighlight">\(Z_{p} / Z_{q}\)</span> ：</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{Z_{p}}{Z_{q}}=\frac{1}{Z_{q}} \int \tilde{p}(\mathbf{x}) d \mathbf{x}=\int \frac{\tilde{p}(\mathbf{x})}{\tilde{q}(\mathbf{x})} q(\mathbf{x}) d \mathbf{x} \approx \frac{1}{S} \sum_{s=1}^{S} \tilde{w}_{s}
+\]</div>
+<p>有：</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{I}=\frac{\frac{1}{S} \sum_{s} \tilde{w}_{s} f\left(\mathbf{x}^{s}\right)}{\frac{1}{S} \sum_{s} \tilde{w}_{s}}=\sum_{s=1}^{S} w_{s} f\left(\mathbf{x}^{s}\right)
+\]</div>
+<p>其中：</p>
+<div class="math notranslate nohighlight">
+\[
+w_s \triangleq \frac{\tilde{w_s}}{\sum_{s'}\tilde{w_{s'}}}
+\]</div>
+<p>是归一化的重要性权重。由此得出的估计值是两个估计值的比率，因此是有偏的。然而，由于 <span class="math notranslate nohighlight">\(S \to \infin \)</span> ，我们有弱假设下的 <span class="math notranslate nohighlight">\(\hat I \to I\)</span> （Robert and Casella 2004） 。</p>
+</div>
+<div class="section" id="dgm">
+<h3>23.4.3 DGM 的重要性采样：似然加权<a class="headerlink" href="#dgm" title="Permalink to this headline">¶</a></h3>
+<p>我们现在描述一种使用重要性采样从分布生成样本的方法，该分布可以表示为有向图形模型（第 10 章）。</p>
+<p>如果没有证据，我们可以从 DGM p(X) 的无条件联合分布中采样：先采样根结点，然后采样它们的子节点，然后采样它们的子节点，等等。这就是所谓的祖先采样。它之所以有效，是因为在 DAG 中，我们总是可以对节点进行拓扑排序，以便父节点先于子节点。（请注意，对于无条件、无方向的图形模型，没有同等简单的采样方法。)。</p>
+<p>现在假设我们有一些证据，所以一些节点被“钳制”到观测值，我们想要从后验 p(x|D) 进行采样。如果所有变量都是离散的，我们可以使用以下简单的程序：执行祖先采样，但一旦我们采样的值与观测值不一致，就拒绝整个样本并重新开始。这就是所谓的逻辑采样 (Henrion 1988)。</p>
+<p>不用说，逻辑采样的效率很低，当我们有实实在在的证据时，它就不能应用了。但是，可以按如下方式对其进行修改。像以前一样采样未观察到的变量，条件是它们的父项。但是不要对观察到的变量进行采样；相反，我们只使用它们的观测值。这相当于使用以下形式的提议</p>
+<div class="math notranslate nohighlight">
+\[
+q(\mathbf{x})=\prod_{t \notin E} p\left(x_{t} \mid \mathbf{x}_{\mathrm{pa}(t)}\right) \prod_{t \in E} \delta_{x_{t}^{*}}\left(x_{t}\right)
+\]</div>
+<p>其中 <span class="math notranslate nohighlight">\(E\)</span> 是观察到的节点集合，<span class="math notranslate nohighlight">\(x_{t}^{*}\)</span> 是节点 <span class="math notranslate nohighlight">\(t\)</span> 的观测值。因此，我们应该给整个样本一个重要权重，如下所示：</p>
+<div class="math notranslate nohighlight">
+\[
+w(\mathbf{x})=\frac{p(\mathbf{x})}{q(\mathbf{x})}=\prod_{t \notin E} \frac{p\left(x_{t} \mid \mathbf{x}_{\mathrm{pa}(t)}\right)}{p\left(x_{t} \mid \mathbf{x}_{\mathrm{pa}(t)}\right)} \prod_{t \in E} \frac{p\left(x_{t} \mid \mathbf{x}_{\mathrm{pa}(t)}\right)}{1}=\prod_{t \in E} p\left(x_{t} \mid \mathbf{x}_{\mathrm{pa}(t)}\right)
+\]</div>
+<p>这种技术被称为似然加权（Fung and Chang，1989；Shachter and Peot，1989）。</p>
+</div>
+<div class="section" id="id13">
+<h3>23.4.4 采样重要性重采样<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<p>我们可以从 <span class="math notranslate nohighlight">\(p(X)\)</span> 中抽取未加权的样本，方法是首先使用重要性采样（使用提议分布 <span class="math notranslate nohighlight">\(q\)</span> ）来生成以下形式的分布：</p>
+<div class="math notranslate nohighlight">
+\[
+p(\mathbf{x}) \approx \sum_{s} w_{s} \delta_{\mathbf{x}^{s}}(\mathbf{x})
+\]</div>
+<p>其中 ws 是归一化重要性权重。然后我们用公式 23.30 中的替换进行采样，其中我们选择 xx 的概率是 ws。让这个过程得到一个由ˆp.t 表示的分布，以查看这是有效的，请注意</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+\hat{p}\left(x \leq x_{0}\right) &amp;=\sum_{s} \mathbb{I}\left(x^{s} \leq x_{0}\right) w_{s}=\frac{\sum_{s} \mathbb{I}\left(x^{s} \leq x_{0}\right) \tilde{p}\left(x^{s}\right) / q\left(x^{s}\right)}{\sum_{s} \tilde{p}\left(x^{s}\right) / q\left(x^{s}\right)} \\
+&amp; \rightarrow \frac{\int \mathbb{I}\left(x \leq x_{0}\right) \frac{\tilde{p}(x)}{q(x)} q(x) d x}{\int \frac{\tilde{p}(x)}{q(x)} q(x) d x} \\
+&amp;=\frac{\int \mathbb{I}\left(x \leq x_{0}\right) \tilde{p}(x) d x}{\int \tilde{p}(x) d x}=\int \mathbb{I}\left(x \leq x_{0}\right) p(x) d x=p\left(x \leq x_{0}\right)
+\end{aligned}
+\end{split}\]</div>
+<p>这称为采样重要性重采样 (SIR)(Rubin 1998)。结果是未加权的形式近似值</p>
+<div class="math notranslate nohighlight">
+\[
+p(\mathbf{x}) \approx \frac{1}{S^{\prime}} \sum_{s=1}^{S^{\prime}} \delta_{\mathbf{x}^{s}}(\mathbf{x})
+\]</div>
+<p>请注意，我们通常采用<span class="math notranslate nohighlight">\(S^{\prime} \ll S\)</span> 。</p>
+<p>该算法可用于在低维环境下执行贝叶斯推理 (Smith 和 Gelfand 1992)。也就是说，假设我们要从后方抽取（未加权的）样本，<span class="math notranslate nohighlight">\(p(\boldsymbol{\theta} \mid \mathcal{D})=p(\mathcal{D} \mid \boldsymbol{\theta}) p(\boldsymbol{\theta}) / p(\mathcal{D})\)</span>。我们可以使用重要性采样，<span class="math notranslate nohighlight">\(\tilde{p}(\boldsymbol{\theta})=p(\mathcal{D} \mid \boldsymbol{\theta}) p(\boldsymbol{\theta})\)</span> 作为非归一化后验，<span class="math notranslate nohighlight">\(q(\boldsymbol{\theta})=p(\boldsymbol{\theta})\)</span> 作为提议分布。归一化权重的形式为</p>
+<div class="math notranslate nohighlight">
+\[
+w_{s}=\frac{\tilde{p}\left(\boldsymbol{\theta}_{s}\right) / q\left(\boldsymbol{\theta}_{s}\right)}{\sum_{s^{\prime}} \tilde{p}\left(\boldsymbol{\theta}_{s^{\prime}}\right) / q\left(\boldsymbol{\theta}_{s^{\prime}}\right)}=\frac{p\left(\mathcal{D} \mid \boldsymbol{\theta}_{s}\right)}{\sum_{s^{\prime}} p\left(\mathcal{D} \mid \boldsymbol{\theta}_{s^{\prime}}\right)}
+\]</div>
+<p>然后，可以使用 SIR 对 <span class="math notranslate nohighlight">\(p(\boldsymbol{\theta} \mid \mathcal{D})\)</span> 进行采样。</p>
+<p>当然，如果我们的提议（先验）和目标（后验）之间有很大的差异，将需要大量的重要性样本才能可靠地工作，否则重要性权重的方差将非常大，这意味着大多数样本没有携带有用的信息。（此问题将在第 23.5 节中与粒子滤波一起讨论。)</p>
+</div>
+</div>
+<div class="section" id="id14">
+<h2>23.5 粒子滤波<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h2>
+<p>粒子滤波 (PF) 是一种基于蒙特卡罗或基于模拟的递归贝叶斯推断算法。也就是说，它近似于 18.3.1 节中描述的预测-更新周期。它在很多领域都有非常广泛的应用，包括跟踪、时间序列预测、在线参数学习等。有关书籍请参见（Doucet et al.，2001）；相关好的教程，请参见（Arulampalam et al.,2002），或者继续阅读。</p>
+<div class="section" id="id15">
+<h3>23.5.1 序列重要性采样<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<p>序列重要性采样（SIS）的基本思想是使用一组加权粒子来接近整个状态轨迹的信念状态：</p>
+<div class="math notranslate nohighlight">
+\[
+p\left(\mathbf{z}_{1: t} \mid \mathbf{y}_{1: t}\right) \approx \sum_{s=1}^{S} \hat{w}_{t}^{s} \delta_{\mathbf{z}_{1: t}^{s}}\left(\mathbf{z}_{1: t}\right)
+\]</div>
+<p>其中  <span class="math notranslate nohighlight">\(\hat{w}_{t}^{s}\)</span> 是样本 <span class="math notranslate nohighlight">\(s\)</span> 在时间 <span class="math notranslate nohighlight">\(t\)</span> 的归一化权重。根据这种表示，通过简单地忽略轨迹的前一部分 <span class="math notranslate nohighlight">\(\mathbf{z}_{1: t-1}\)</span>，可以很容易地计算出最近状态 <span class="math notranslate nohighlight">\(p\left(\mathbf{z}_{t} \mid \mathbf{y}_{1: t}\right)\)</span> 的边缘分布。（粒子滤波在整个轨迹空间中采样具有多种含义，将在后面讨论。)</p>
+<p>现在使用重要性采样来更新该信念状态。如果提议分布的形式为 <span class="math notranslate nohighlight">\(q\left(\mathbf{z}_{1: t}^{s} \mid \mathbf{y}_{1: t}\right)\)</span> ，则重要性权重由下式给出</p>
+<div class="math notranslate nohighlight">
+\[
+w_{t}^{s} \propto \frac{p\left(\mathbf{z}_{1: t}^{s} \mid \mathbf{y}_{1: t}\right)}{q\left(\mathbf{z}_{1: t}^{s} \mid \mathbf{y}_{1: t}\right)}
+\]</div>
+<p>其可以标准化如下：</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{w}_{t}^{s}=\frac{w_{t}^{s}}{\sum_{s^{\prime}} w_{t}^{s^{\prime}}}
+\]</div>
+<p>可以重写分子项为递归形式如下：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+p\left(\mathbf{z}_{1: t} \mid \mathbf{y}_{1: t}\right) &amp;=\frac{p\left(\mathbf{y}_{t} \mid \mathbf{z}_{1: t}, \mathbf{y}_{1: t-1}\right) p\left(\mathbf{z}_{1: t} \mid \mathbf{y}_{1: t-1}\right)}{p\left(\mathbf{y}_{t} \mid \mathbf{y}_{1: t-1}\right)} \\
+&amp;=\frac{p\left(\mathbf{y}_{t} \mid \mathbf{z}_{t}\right) p\left(\mathbf{z}_{t} \mid \mathbf{z}_{1: t-1}, \mathbf{y}_{1: t-1}\right) p\left(\mathbf{z}_{1: t-1} \mid \mathbf{y}_{1: t-1}\right)}{p\left(\mathbf{y}_{t} \mid \mathbf{y}_{1: t-1}\right)} \\
+&amp; \propto p\left(\mathbf{y}_{t} \mid \mathbf{z}_{t}\right) p\left(\mathbf{z}_{t} \mid \mathbf{z}_{t-1}\right) p\left(\mathbf{z}_{1: t-1} \mid \mathbf{y}_{1: t-1}\right)
+\end{aligned}
+\end{split}\]</div>
+<p>通常做马尔可夫假设，只关注以下形式的提议分布：</p>
+<div class="math notranslate nohighlight">
+\[
+q\left(\mathbf{z}_{1: t} \mid \mathbf{y}_{1: t}\right)=q\left(\mathbf{z}_{t} \mid \mathbf{z}_{1: t-1}, \mathbf{y}_{1: t}\right) q\left(\mathbf{z}_{1: t-1} \mid \mathbf{y}_{1: t-1}\right)
+\]</div>
+<p>这样就可以通过在末尾添加新状态来“增长”轨迹。这种情况下，重要性权重简化为：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+w_{t}^{s} &amp; \propto \frac{p\left(\mathbf{y}_{t} \mid \mathbf{z}_{t}^{s}\right) p\left(\mathbf{z}_{t}^{s} \mid \mathbf{z}_{t-1}^{s}\right) p\left(\mathbf{z}_{1: t-1}^{s} \mid \mathbf{y}_{1: t-1}\right)}{q\left(\mathbf{z}_{t}^{s} \mid \mathbf{z}_{1: t-1}^{s}, \mathbf{y}_{1: t}\right) q\left(\mathbf{z}_{1: t-1}^{s} \mid \mathbf{y}_{1: t-1}\right)} \\
+&amp;=w_{t-1}^{s} \frac{p\left(\mathbf{y}_{t} \mid \mathbf{z}_{t}^{s}\right) p\left(\mathbf{z}_{t}^{s} \mid \mathbf{z}_{t-1}^{s}\right)}{q\left(\mathbf{z}_{t}^{s} \mid \mathbf{z}_{1: t-1}^{s}, \mathbf{y}_{1: t}\right)}
+\end{aligned}
+\end{split}\]</div>
+<p>如果进一步假设 <span class="math notranslate nohighlight">\(q\left(\mathbf{z}_{t} \mid \mathbf{z}_{1: t-1}, \mathbf{y}_{1: t}\right)=q\left(\mathbf{z}_{t} \mid \mathbf{z}_{t-1}, \mathbf{y}_{t}\right)\)</span> ，那么为计算新样本，只需要保留轨迹和观测序列最新的部分，而不是完整历史。在这种情况下，权重变为：</p>
+<div class="math notranslate nohighlight">
+\[
+w_{t}^{s} \propto w_{t-1}^{s} \frac{p\left(\mathbf{y}_{t} \mid \mathbf{z}_{t}^{s}\right) p\left(\mathbf{z}_{t}^{s} \mid \mathbf{z}_{t-1}^{s}\right)}{q\left(\mathbf{z}_{t}^{s} \mid \mathbf{z}_{t-1}^{s}, \mathbf{y}_{t}\right)}
+\]</div>
+<p>因此，可以使用以下公式来近似后验的滤波后密度：</p>
+<div class="math notranslate nohighlight">
+\[
+p\left(\mathbf{z}_{t} \mid \mathbf{y}_{1: t}\right) \approx \sum_{s=1}^{S} \hat{w}_{t}^{s} \delta_{\mathbf{z}_{t}^{s}}\left(\mathbf{z}_{t}\right)
+\]</div>
+<p>当 <span class="math notranslate nohighlight">\(S \rightarrow \infty\)</span> 时，可以证明其接近真实后验 (Crisan 等，1999)。</p>
+<p>基本算法看起来非常简单：对于每个旧样本 <span class="math notranslate nohighlight">\(s\)</span> ，使用 <span class="math notranslate nohighlight">\(\mathbf{z}_{t}^{s} \sim q\left(\mathbf{z}_{t} \mid \mathbf{z}_{t-1}^{s}, \mathbf{y}_{t}\right)\)</span> 提议一个扩展粒子，并使用等式 23.45 给出新粒子的权重 <span class="math notranslate nohighlight">\(w_{t}^{s}\)</span> 。但不幸的是，该基本算法并非如想象中那样容易工作。</p>
+</div>
+<div class="section" id="id16">
+<h3>23.5.2 退化问题<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<p>基本的序列重要性采样算法在若干步骤后失败，因为大多数粒子的权重将被忽略不计，这被称为退化问题。其原因是在长时的高维空间中使用了短时的提议分布进行采样。</p>
+<p>可以使用<code class="docutils literal notranslate"><span class="pre">有效样本数</span></code>来量化退化程度，定义如下：
+$<span class="math notranslate nohighlight">\(
+S_{\mathrm{eff}} \triangleq \frac{S}{1+\operatorname{var}\left[w_{t}^{* s}\right]}
+\)</span>$</p>
+<p>其中 <span class="math notranslate nohighlight">\(w_{t}^{* s}=p\left(\mathbf{z}_{t}^{s} \mid \mathbf{y}_{1: t}\right) / q\left(\mathbf{z}_{t}^{s} \mid \mathbf{z}_{t-1}^{s}, \mathbf{y}_{t}\right)\)</span> 是粒子 <span class="math notranslate nohighlight">\(s\)</span> 的“真实权重”，有效样本数无法精确计算，因为不知道真实的后验。但可以用下面的量来近似：</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{S}_{\text {eff }}=\frac{1}{\sum_{s=1}^{S}\left(w_{t}^{s}\right)^{2}}
+\]</div>
+<p>如果权重的方差很大，那么就是在浪费资源来更新权重较低的粒子，这对后验估计没有太大贡献。</p>
+<p>退化问题主要有两种解决方案：增加重采样步数和使用良好的提议分布。下面分别讨论这两个问题。</p>
+</div>
+<div class="section" id="id17">
+<h3>23.5.3 重采样步数<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<p>对基本序列重要性采样算法的主要改进是监测有效采样的大小，当其降到阈值以下时，消除低权重粒子，然后创建幸存粒子的副本。因此，粒子滤波有时被称为适者生存 (Kanazawa et al.。1995)。特别地，通过对加权的分布进行 <span class="math notranslate nohighlight">\(S\)</span> 次替换采样来生成新集合 <span class="math notranslate nohighlight">\(\left\{\mathbf{z}_{t}^{s *}\right\}_{s=1}^{S}\)</span> ：</p>
+<div class="math notranslate nohighlight">
+\[
+p\left(\mathbf{z}_{t} \mid \mathbf{y}_{1: t}\right) \approx \sum_{s=1}^{S} \hat{w}_{t}^{s} \delta_{\mathbf{z}_{t}^{s}}\left(\mathbf{z}_{t}\right)
+\]</div>
+<p>其中选择粒子 <span class="math notranslate nohighlight">\(j\)</span> 用于复制的概率是 <span class="math notranslate nohighlight">\(w_{t}^{j}\)</span> （有时被称为返老还童）。结果是来自离散密度方程 23.49 的 IID 未加权样本，因此将新的权重设置为 <span class="math notranslate nohighlight">\(w_{t}^{s}=1 / S\)</span>。该方案如图 23.4 所示。</p>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210718112128_9e..png" /></p>
+<p>图 23.4 粒子滤波展示。</p>
+<p>有多种算法可用于执行重采样步骤。最简单的是多项式重采样：</p>
+<div class="math notranslate nohighlight">
+\[
+(K_1,...,K_S) \sim M_u(S,(w^1_t,...,w^S_t))
+\]</div>
+<p>可以制作 <span class="math notranslate nohighlight">\(K_S\)</span> 个 <span class="math notranslate nohighlight">\(z^S_t\)</span> 的拷贝。目前已经提出了诸如系统重采样、残差重采样、分层采样等多种改进方法，降低了权值的方差。所有这些方法都需要 <span class="math notranslate nohighlight">\(O(S)\)</span> 时间（Doucet et al.。2001）。</p>
+<p>算法 6 总结了整个粒子滤波算法（注：如果需要状态估计，则应在重采样步骤前计算，因为这将导致较低的方差）。</p>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210718112348_45..png" /></p>
+<p>虽然重采样步骤有助于解决退化问题，但其本身也会带来问题。特别是，由于权重高的粒子会被多次选择，因此种群会失去多样性，导致<code class="docutils literal notranslate"><span class="pre">样本贫化（sample</span> <span class="pre">impoverishment）</span></code>。在没有过程噪声的极端情况下（例如，将静态但未知的参数作为状态空间的一部分），所有粒子将在几次迭代内塌陷到单个点。</p>
+<p>为缓解该问题，也已经提出了几种解决方案：</p>
+<p>（1）仅在必要时重采样，而不是在每个时间步都做重采样。</p>
+<p>（2） 在复制旧粒子后，使用不会导致后验改变的 MCMC 步骤来采样新值（例如，(Gilks And Berzuini 2001) 中的重采样-移动算法）。</p>
+<p>（3） 在粒子之上创建核密度估计，
+$<span class="math notranslate nohighlight">\(
+p\left(\mathbf{z}_{t} \mid \mathbf{y}_{1: t}\right) \approx \sum_{s=1}^{S} w_{t}^{s} \kappa\left(\mathbf{z}_{t}-\mathbf{z}_{t}^{s}\right)
+\)</span>$</p>
+<p>其中 <span class="math notranslate nohighlight">\(\kappa\)</span> 是某种平滑核。然后从上述平滑后的分布中采样，这被称为<code class="docutils literal notranslate"><span class="pre">正则化粒子滤波器</span></code>  (Musso et al.。2001)。</p>
+<p>（4）在对静态参数进行推断时，加入一些人为过程噪声。如果这是不希望的，则必须使用其他算法进行在线参数估计，例如 (Andrieu 等人，2005)。</p>
+</div>
+<div class="section" id="id18">
+<h3>23.5.4 提议分布<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
+<p>最简单、使用最广泛的提议分布是从之前的样本中进行采样：</p>
+<div class="math notranslate nohighlight">
+\[
+q\left(\mathbf{z}_{t} \mid \mathbf{z}_{t-1}^{s}, \mathbf{y}_{t}\right)=p\left(\mathbf{z}_{t} \mid \mathbf{z}_{t-1}^{s}\right)
+\]</div>
+<p>本例中权重更新简化为：</p>
+<div class="math notranslate nohighlight">
+\[
+w_{t}^{s} \propto w_{t-1}^{s} p\left(\mathbf{y}_{t} \mid \mathbf{z}_{t}^{s}\right)
+\]</div>
+<p>这可被认为是一种“生成并测试”的方法：从动态模型中采样，然后在看到数据后评估它们的好坏（参见图 23.4)。该方法曾在视觉跟踪中的<code class="docutils literal notranslate"><span class="pre">冷凝算法</span></code>（“条件密度传播”) 中使用 (Isard 和 Blake，1998)。但当<code class="docutils literal notranslate"><span class="pre">似然</span></code>比动力学<code class="docutils literal notranslate"><span class="pre">先验</span></code>更窄（意味着传感器比运动模型提供更多信息）时，这是一种非常低效的方法，因为大多数粒子将被指定非常低的权重。</p>
+<p>在生成提议分布时，实际查看一下数据 <span class="math notranslate nohighlight">\(\mathbf{y}_{t}\)</span> 会好很多。事实上，最优的提议分布具有以下形式：</p>
+<div class="math notranslate nohighlight">
+\[
+q\left(\mathbf{z}_{t} \mid \mathbf{z}_{t-1}^{s}, \mathbf{y}_{t}\right)=p\left(\mathbf{z}_{t} \mid \mathbf{z}_{t-1}^{s}, \mathbf{y}_{t}\right)=\frac{p\left(\mathbf{y}_{t} \mid \mathbf{z}_{t}\right) p\left(\mathbf{z}_{t} \mid \mathbf{z}_{t-1}^{s}\right)}{p\left(\mathbf{y}_{t} \mid \mathbf{z}_{t-1}^{s}\right)}
+\]</div>
+<p>如果使用该提议，则新的权重由下式确定：</p>
+<div class="math notranslate nohighlight">
+\[
+w_{t}^{s} \propto w_{t-1}^{s} p\left(\mathbf{y}_{t} \mid \mathbf{z}_{t-1}^{s}\right)=w_{t-1}^{s} \int p\left(\mathbf{y}_{t} \mid \mathbf{z}_{t}^{\prime}\right) p\left(\mathbf{z}_{t}^{\prime} \mid \mathbf{z}_{t-1}^{s}\right) d \mathbf{z}_{t}^{\prime}
+\]</div>
+<p>该提议是最优的，因为对于任何给定的 <span class="math notranslate nohighlight">\( \mathbf{z}_{t-1}^{s}\)</span>，无论为 <span class="math notranslate nohighlight">\(\mathbf{z}_{t}^{s}\)</span> 抽取的值是多少，新的权重 <span class="math notranslate nohighlight">\(w_{t}^{s}\)</span> 都具有相同的值。因此，在旧值  <span class="math notranslate nohighlight">\(\mathbf{z}_{t-1}\)</span> 条件下，真权重的方差 <span class="math notranslate nohighlight">\(\operatorname{var}\left[w_{t}^{* s}\right]\)</span> 等于 0。</p>
+<p>一般而言，从 <span class="math notranslate nohighlight">\(p(\mathbf{z}_t|\mathbf{z}^s_{t−1},\mathbf{y}_t)\)</span> 中采样并计算预测性密度  <span class="math notranslate nohighlight">\(p(\mathbf{y}_t|\mathbf{z}^s_{t−1})\)</span>  所需积分是困难的。但在两种情况下可使用最优提议分布。第一个情况是当  <span class="math notranslate nohighlight">\(\mathbf{z}_t\)</span>  为离散型时，积分变成求和。当然，如果整个状态空间都是离散的，可以使用 HMM 滤波器，但更多情况下，仅部分状态为离散的，其他为连续的。第二个情况是当   <span class="math notranslate nohighlight">\(p(\mathbf{z}_t|\mathbf{z}^s_{t−1},\mathbf{y}_t)\)</span>  为高斯分布时。这种情况往往发生在动力学非线性，但观测线性的场景中。请参见练习 23.3。</p>
+<p>在模型非线性高斯的情况下，仍然可以使用<code class="docutils literal notranslate"> <span class="pre">无迹变换</span></code> ( 18.5.2 节）计算   <span class="math notranslate nohighlight">\(p(\mathbf{z}_t|\mathbf{z}^s_{t−1},\mathbf{y}_t)\)</span>  的高斯近似，并将其用作提议分布，这就是众所周知的<code class="docutils literal notranslate"><span class="pre">无迹粒子滤波器</span></code> (van der Merwe et al.。2000)。在更一般的情况中，可能基于判别式模型使用其他类型的<code class="docutils literal notranslate"><span class="pre">数据驱动型提议</span></code> 。与 MCMC 不同，我们不需要担心该提议是否可逆。</p>
+</div>
+<div class="section" id="id19">
+<h3>23.5.5 应用：机器人定位<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
+<p>假设一个移动机器人在办公环境中游荡。假设它已经有了一张世界地图，以<code class="docutils literal notranslate"><span class="pre">占用网格</span></code>的形式表示（<code class="docutils literal notranslate"><span class="pre">占用网格图</span></code>是一种指定每个网格单元是否被障碍物占据的图，每个网格单元存在<code class="docutils literal notranslate"><span class="pre">空</span></code>和<code class="docutils literal notranslate"><span class="pre">非空</span></code>两种状态）。目标是让机器人估计自己的位置。因为此处假设状态空间是离散的，所以可以使用 HMM 滤波器解决。然而，由于状态数 <span class="math notranslate nohighlight">\(K\)</span> 非常大，每次更新的 <span class="math notranslate nohighlight">\(O(K^2)\)</span> 时间复杂度令人望而却步。可以使用粒子滤波器作为信念状态的稀疏近似。这被称为`蒙特卡罗定位 (Thrun 等，2006)。</p>
+<p>图 23.5 给出了运行示例。该机器人使用声纳测距仪，因此能感知障碍物的距离。它从均匀先验分布开始，反映出机器人可能在任意位置开机。（从一个均匀先验分布开始找出你所在的位置，被称为<code class="docutils literal notranslate"><span class="pre">全局定位</span></code>。)。在第一次扫描（表示两侧各有一面墙）之后，信任状态如 (b) 所示。后验仍然相当宽，因为机器人可以在任何距离墙壁相当近的地方（如走廊、任何狭窄的房间）。在移动到位置 2 之后，机器人非常确定它一定在走廊里，如 (c) 所示。在移动到位置 3 之后，传感器能够检测到走廊尽头。然而，由于对称性的原因，不能确定它是在（d）中的<code class="docutils literal notranslate"><span class="pre">位置</span> <span class="pre">I</span></code>（真实位置）还是<code class="docutils literal notranslate"><span class="pre">位置</span> <span class="pre">II</span></code>。在移动到 4 号和 5 号位置后，它终于能够准确地找出自己的位置了。整个过程类似于一个人在办公楼里迷了路，在走廊里徘徊，直到看到自己认得的某些标志。</p>
+<p>在 23.6.3 节中，我们将讨论如何同时估计位置和地图。</p>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210718113731_a1..png" /></p>
+<p>图 23.5 蒙特卡罗定位的示意图。资料来源：(Thrun et al.。2006) 的图 8.7。</p>
+</div>
+<div class="section" id="id20">
+<h3>23.5.6 应用：视觉对象跟踪<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
+<p>下一个示例涉及视频序列中的对象跟踪（本例为跟踪视频中的一架遥控直升机）。该方法使用简单的线性运动模型对目标质心建模，颜色直方图作为似然模型，使用 <code class="docutils literal notranslate"><span class="pre">Bhattacharya</span> <span class="pre">距离</span></code> 来比较直方图。提议分布通过从似然中采样获得  (Nummiaro et al.，2003)。</p>
+<img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210718144746_76.webp" style="zoom: 33%;" />
+<p>图 23.6 基于颜色直方图的粒子滤波应用于视觉对象跟踪的示例。(a-c) 成功跟踪：绿色椭圆位于直升机顶部。(d-f)：追踪器被背景中的灰色杂乱所分散注意力。</p>
+<p>图 23.6 显示了一些示例框架。该系统使用 <span class="math notranslate nohighlight">\(S=250\)</span> 粒子，有效样本大小为 <span class="math notranslate nohighlight">\(\hat S_{eff}=134\)</span>。(a) 显示第 1 帧的信任状态。系统必须重采样 5 次才能将有效样本大小保持在阈值 150 以上；(b) 显示第 251 帧的信念状态；红线显示在过去 250 帧中对象中心的估计位置。(c) 显示系统可以处理视觉杂波，只要它与目标对象的颜色不同即可。(d) 显示系统混淆了直升机的灰色和建筑物的灰色。后验为双峰型，代表后验均值和协方差的绿色椭圆位于两种模式之间。(e) 显示概率质量转移到了错误模式：系统已丢失轨迹。(f) 显示粒子散布在灰色建筑上，使用此提议将很难从该状态中恢复物体。</p>
+<p>我们看到，尽管有杂波存在，该方法仍然能够保持相当长时间的跟踪。但最终它会失去跟踪。请注意，由于算法是随机的，因此只需重新运行演示即可解决问题。但现实世界无法做这种选择。提高性能最简单的方法是使用更多粒子。另一种选择是通过每隔几帧在图像上运行对象检测器来执行跟踪。详情见 (Forsyth and Ponce 2002；Szeliski 2010；Prince 2012)。</p>
+</div>
+<div class="section" id="id21">
+<h3>23.5.7 应用：时间序列预测<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
+<p>在 18.2.4 节中，我们讨论了如何使用卡尔曼滤波进行时间序列预测，其假设模型为<code class="docutils literal notranslate"><span class="pre">线性高斯状态空间</span></code>。但有许多模型要么是非线性的，要么是非高斯的。例如，金融中广泛使用的<code class="docutils literal notranslate"><span class="pre">随机波动率模型</span></code>假设系统和/或观测噪声的方差随着时间推移而变化。粒子滤波在这些情境中被广泛使用。例如 (Doucet et al.，2001)。</p>
+</div>
+</div>
+<div class="section" id="rao-blackwellised">
+<h2>23.6 Rao-Blackwellised 粒子滤波器<a class="headerlink" href="#rao-blackwellised" title="Permalink to this headline">¶</a></h2>
+<p>在一些模型中，可以将隐藏变量分成 <span class="math notranslate nohighlight">\(\mathbf{q}_{t}\)</span>  和  <span class="math notranslate nohighlight">\(\mathbf{z}_{t}\)</span> 两类，这样只要知道了 <span class="math notranslate nohighlight">\(\mathbf{q}_{1: t}\)</span> 的值，就可以解析地积分得出 <span class="math notranslate nohighlight">\(\mathbf{z}_{t}\)</span> 。这意味着我们只要拥有样本 <span class="math notranslate nohighlight">\(\mathbf{q}_{1: t}\)</span>，就可以参数化表示 <span class="math notranslate nohighlight">\(p\left(\mathbf{z}_{t} \mid \mathbf{q}_{1: t}\right)\)</span>。因此，每个粒子 <span class="math notranslate nohighlight">\(s\)</span> 代表了  <span class="math notranslate nohighlight">\(\mathbf{q}_{1: t}^{s}\)</span> 的一个值和形式为  <span class="math notranslate nohighlight">\(p\left(\mathbf{z}_{t} \mid \mathbf{y}_{1: t}, \mathbf{q}_{1: t}^{s}\right)\)</span>  的一个分布。这些混合粒子有时被称为分布式粒子或已塌陷粒子 (Koller 和 Friedman 2009，第 12.4 节）。</p>
+<p>上述方法的优点是降低了采样空间的维数，从而降低了估计方差。因此，该技术被称为 <code class="docutils literal notranslate"><span class="pre">拉奥-布莱克韦利粒子滤波</span></code> 或简称 <code class="docutils literal notranslate"><span class="pre">RBPF</span></code>。</p>
+<p>下面用一个具体的例子来解释该方法。</p>
+<div class="section" id="lg-ssm-rbpf">
+<h3>23.6.1 用于 LG-SSM 切换的 RBPF<a class="headerlink" href="#lg-ssm-rbpf" title="Permalink to this headline">¶</a></h3>
+<p>可应用 RBPF 的典型例子是 18.6 节中讨论的切换线性动力系统 (SLDS) 模型 (Chen 和 Liu 2000；Doucet et al.， 2001) 。我们可以使用每个粒子 <span class="math notranslate nohighlight">\(s\)</span> 的均值和协方差矩阵来表示 <span class="math notranslate nohighlight">\(p\left(\mathbf{z}_{t} \mid \mathbf{y}_{1: t}, \mathbf{q}_{1: t}^{s}\right) \)</span>，其中 <span class="math notranslate nohighlight">\(q_{t} \in\{1, \ldots, K\}\)</span> 。如果从先验中给出提议  <span class="math notranslate nohighlight">\(q\left(q_{t}=k \mid q_{t-1}^{s}\right)\)</span>，则权重更新变成：</p>
+<div class="math notranslate nohighlight">
+\[
+w_{t}^{s} \propto w_{t-1}^{s} p\left(\mathbf{y}_{t} \mid q_{t}=k, \mathbf{q}_{1: t-1}^{s}, \mathbf{y}_{1: t-1}\right)=w_{t-1}^{s} L_{t, k}^{s}
+\]</div>
+<p>其中：</p>
+<div class="math notranslate nohighlight">
+\[
+L_{t k}^{s}=\int p\left(\mathbf{y}_{t} \mid q_{t}=k, \mathbf{z}_{t}, \mathbf{y}_{1: t-1}, \mathbf{q}_{1 . t-1}^{s}\right) p\left(\mathbf{z}_{t} \mid q_{t}=k, \mathbf{y}_{1: t-1} \mathbf{q}_{1: t-1}^{s},\right) d \mathbf{z}_{t}
+\]</div>
+<p><span class="math notranslate nohighlight">\(L_{t k}^{s}\)</span> 是以 <span class="math notranslate nohighlight">\(q_{t}=k\)</span> 和历史 <span class="math notranslate nohighlight">\(\mathbf{q}_{1: t-1}^{s}\)</span> 为条件的新观测 <span class="math notranslate nohighlight">\(\mathbf{y}_{t}\)</span> 的预测性概率密度。在 SLDS 模型下，可以使用卡尔曼滤波的归一化常数（方程 18.41) 来计算。</p>
+<p>我们在算法 23.2 中给出了一些伪代码。其中标记为 <code class="docutils literal notranslate"><span class="pre">KFupdate</span></code> 的步骤指 18.3.1 节中的卡尔曼滤波器更新方程。这被称为<code class="docutils literal notranslate"><span class="pre">卡尔曼滤波器的混合</span></code>。</p>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210718120023_40..png" /></p>
+<p>如果 <span class="math notranslate nohighlight">\(K\)</span> 很小，可以计算最优的提议分布，即：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+p\left(q_{t}=k \mid \mathbf{y}_{1: t}, \mathbf{q}_{1: t-1}^{s}\right) &amp;=\hat{p}_{t-1}^{s}\left(q_{t}=k \mid \mathbf{y}_{t}\right) \\
+&amp;=\frac{\hat{p}_{t-1}^{s}\left(\mathbf{y}_{t} \mid q_{t}=k\right) \hat{p}_{t-1}^{s}\left(q_{t}=k\right)}{\hat{p}_{t-1}^{s}\left(\mathbf{y}_{t}\right)} \\
+&amp;=\frac{L_{t k}^{s} p\left(q_{t}=k \mid q_{t-1}^{s}\right)}{\sum_{k^{\prime}} L_{t k^{\prime}}^{s} p\left(q_{t}=k^{\prime} \mid q_{t-1}^{s}\right)}
+\end{aligned}
+\end{split}\]</div>
+<p>其中使用以下速记：</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{p}^s_{t−1}(·)=p(·| y_{1:t−1}，q^s_{1:t−1})
+\]</div>
+<p>然后从 <span class="math notranslate nohighlight">\(p(q_t|q^s_{1:t−1}，y_{1:t})\)</span> 采样，并给出新粒子的权重：
+$<span class="math notranslate nohighlight">\(
+w^s_t ∝ w^s_{t−1}p(y_t|q^s_{1:t−1}，y_{1:t−1})=w^s_{t-1} \sum \limits_K [L^s_{tk}p(q_t=k|q^s_{t−1})]
+\)</span>$</p>
+<p>由于公式 23.62 中粒子的权重与实际采样的新值 <span class="math notranslate nohighlight">\(q_t\)</span> 无关，因此可以先计算这些权重，并用它们来确定要传播哪些粒子。也就是说，使用来自时间 <span class="math notranslate nohighlight">\(t\)</span> 的信息选择时间 <span class="math notranslate nohighlight">\(t−1\)</span> 中最合适的粒子。这被称为<code class="docutils literal notranslate"><span class="pre">超前</span> <span class="pre">RBPF</span></code> (de Freitas 等，2004 年）。</p>
+<p>更详细地说，将从先验中抽取的每个样本传递所有 <span class="math notranslate nohighlight">\(K\)</span> 个模型从而得到 <span class="math notranslate nohighlight">\(K\)</span> 个后验，每个样本一个。该过程的归一化常数允许我们计算公式 23.62 中的最优权重。然后，重采样 <span class="math notranslate nohighlight">\(S\)</span> 个切片。最后，对于选择的每个旧粒子 <span class="math notranslate nohighlight">\(s\)</span> ，从 <span class="math notranslate nohighlight">\(K\)</span> 个可能选择的后验分布中采样一个新状态 <span class="math notranslate nohighlight">\(q_t^s=k\)</span> ，伪码如算法 23.3 所示。该方法需要 <span class="math notranslate nohighlight">\(O(KS)\)</span> 的存储，但其优点是每个粒子都依据最新信息 <span class="math notranslate nohighlight">\(y_t\)</span> 来选择的。</p>
+<p>利用状态空间为离散的这一事实，可获得进一步的改进。例如可以使用 (Fearnhead 2004) 的重采样方法，避免出现重复粒子。</p>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210718152017_43.webp" /></p>
+</div>
+<div class="section" id="id22">
+<h3>23.6.2 应用：跟踪机动目标<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h3>
+<p>SLDS 的一个应用是跟踪具有分段线性动力学特征的移动对象。例如，假设要跟踪一架飞机或导弹；<span class="math notranslate nohighlight">\(q_t\)</span> 可以指定对象是正在正常飞行还是正在采取规避动作。这就是所谓的<code class="docutils literal notranslate"><span class="pre">机动目标跟踪</span></code>。</p>
+<p>图 23.7 给出了一个物体在 2D 中移动的例子。设置基本与 18.2.1 节相同，只是增加了一个控制系统输入的三态离散马尔可夫链。我们定义 <span class="math notranslate nohighlight">\(u_t=1\)</span> 并设置</p>
+<div class="math notranslate nohighlight">
+\[
+B_1=(0，0，0，0)^T，B_2=(-1.225，-0.35，1.225，0.35)^T，B_3=(1.225，0.35，-1.225，-0.35)^T
+\]</div>
+<p>因此，系统会根据离散状态不同而转向不同的方向。</p>
+<p>图 23.7(a) 显示了从 (0，0) 开始的样本运行真实状态：彩色符号表示离散状态，符号位置表示 (x，y) 坐标。小圆点代表嘈杂的观测。图 23.7(b) 显示了使用 500 个粒子的粒子滤波状态估计，其中提议从先验中采样。彩色符号表示状态的最大后验估计，符号的位置表示由后验均值给出的最小均方误差位置估计。图 23.7(c) 显示了使用 500 个粒子的 RBPF，使用最优提议分布估计。</p>
+<p>表 23.1 显示了更定量的比较。可以看到 RBPF 的性能略好一些，尽管稍微慢一些。</p>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210718120927_5c..png" /></p>
+<p>图 23.7 (a) 机动目标。彩色符号表示隐藏的离散状态。(b) 粒子滤波估计。(c) RBPF 估计。</p>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210718152043_a2.webp" /></p>
+<p>表 23.1 图 23.7 中粒子滤波和 RBPF 在机动目标问题上的比较。</p>
+<p>图 23.8 可视化了系统的信念状态。 (a) 中显示了离散状态上的分布。信念状态的粒子滤波估计（第二列）一开始并不像 RBPF 估计（第三列）那么精确，尽管在最初几个观察之后，两种方法的性能相似。 (b) 中绘制 <span class="math notranslate nohighlight">\(x\)</span> 位置上的后验。为简单起见，使用粒子滤波估计（是一组加权的样本），不过也可以使用 RBPF 估计（是一组加权的高斯分布）。</p>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210718121222_c7.webp" /></p>
+<p>图 23.8 与图 23.7 对应的信念状态。(a) 离散状态。系统从状态 2（图 23.7 中的红色 x) 开始，移动到状态 3（图 23.7 中的黑色*)，短暂地返回到状态 2，然后切换到状态 1（图 23.7 中的蓝色圆圈），依此类推 ；(b) 水平位置 （粒子滤波估计）。</p>
+</div>
+<div class="section" id="slam">
+<h3>23.6.3 应用：快速 SLAM<a class="headerlink" href="#slam" title="Permalink to this headline">¶</a></h3>
+<p>在 18.2.2 节中，我们介绍了移动机器人的同步定位和地图绘制 (SLAM) 问题。卡尔曼滤波实现存在的主要问题是地标数量呈立方。然而，通过查看图 18.2 中的 DGM，可以看到，在已知机器人路径  <span class="math notranslate nohighlight">\(q_{1:t}\)</span> （ 其中 <span class="math notranslate nohighlight">\(q_t \in \mathbb{R}^2\)</span> ） 的条件下，地标位置 <span class="math notranslate nohighlight">\(z \in \mathbb{R}^{2L}\)</span> 是独立的。（我们假设地标不移动，因此去掉了下标 <span class="math notranslate nohighlight">\(t\)</span> ）。即 <span class="math notranslate nohighlight">\(p(z|q_{1：t}，y_{1：t})= \prod_{l=1}^L p(z_l|q_{1：t}，y_{1：t})\)</span> 。因此，可以使用 RBPF：我们采样机器人的轨迹  <span class="math notranslate nohighlight">\(q_{1：t}\)</span>，并在每个粒子内部运行 <span class="math notranslate nohighlight">\(L\)</span> 个独立的二维卡尔曼滤波器。这需要每个粒子 <span class="math notranslate nohighlight">\(O(L)\)</span> 时间。幸运的是，良好性能所需的粒子数量非常少（这在一定程度上取决于控制/探索策略），因此该算法在粒子数量上基本上是线性的。</p>
+<p>这种技术还有一个额外的优点，那就是易于使用采样来处理数据关联的模糊性，并且允许地图的其他表示，例如占用栅格。这一想法最早是在 (Murphy 2000) 中提出的，随后在 (Thrun 等人,2004）中得到了推广和实践。他将这项技术命名为 FastSLAM。</p>
+</div>
+</div>
+<div class="section" id="id23">
+<h2>习题<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h2>
+<p><strong>练习 23.1</strong> 从柯西分布采样</p>
+<p>展示如何使用逆概率变换从标准柯西分布中采样。</p>
+<p><strong>练习 23.2</strong> 使用柯西提议从伽玛分布中拒绝采样</p>
+<p>展示如何使用柯西提议从伽玛分布中进行拒绝采样。推导出最佳常数 <span class="math notranslate nohighlight">\(M\)</span>，并绘制密度及其上界。</p>
+<p><strong>练习23.3</strong> 使用线性高斯测量模型进行粒子滤波的最佳提议</p>
+<p>考虑以下形式的状态空间模型：
+$$</p>
+<p>\begin{aligned}
+\mathbf{z}<em>{t} &amp;=f</em>{t}\left(\mathbf{z}<em>{t-1}\right)+\mathcal{N}\left(\mathbf{0}, \mathbf{Q}</em>{t-1}\right) \
+\mathbf{y}<em>{t} &amp;=\mathbf{H}</em>{t} \mathbf{z}<em>{t}+\mathcal{N}\left(\mathbf{0}, \mathbf{R}</em>{t}\right)
+\end{aligned}
+$$</p>
+<p>推导出 <span class="math notranslate nohighlight">\(p\left(\mathbf{z}_{t} \mid \mathbf{z}_{t-1}, \mathbf{y}_{t}\right)\)</span>  和 <span class="math notranslate nohighlight">\(p\left(\mathbf{y}_{t} \mid \mathbf{z}_{t-1}\right)\)</span> 的表达式，以便计算最佳（最小方）提议分布。提示：使用高斯贝叶斯规则。</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./MLAPP_BOOK"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="22.MoreVariationalInference.html" title="previous page">22 更多变分推断方法</a>
+    <a class='right-next' id="next-link" href="24.MarkovChainMonteCarlo%28MCMC%29Inference.html" title="next page">24 马尔科夫链蒙特卡洛 MCMC</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Kevin Murphy<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>

@@ -1,0 +1,1629 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>02 概率论 &#8212; 机器学习：概率视角</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet" />
+  <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.e8e5499552300ddf5d7adccae7cc3b70.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="03 离散数据的生成式模型" href="03.GenerativeModelsForDiscreteData.html" />
+    <link rel="prev" title="01 引言" href="01.Introduction.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+      <img src="../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">机器学习：概率视角</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../preface.html">
+   前言
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="01.Introduction.html">
+   01 引言
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   02 概率论
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03.GenerativeModelsForDiscreteData.html">
+   03 离散数据的生成式模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="04.GaussianModels.html">
+   04 高斯模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="05.BayesianStatistics.html">
+   05 贝叶斯学派统计思想
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="06.FrequentistStatistics.html">
+   06 频率学派统计思想
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="07.LinearRegression.html">
+   07 线性回归
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="08.LogisticRegression.html">
+   08 逻辑回归
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="09.GeneralizedLinearModelsAndTheExponentialFamily.html">
+   09 广义线性模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="10.DirectedGraphicalModels%20%28BayesNets%29.html">
+   10 有向图模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="11.MixtureModelandEMAlgorithm.html">
+   11 混合模型与EM算法
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="12.LinearModelwithLatentVariable.html">
+   12 隐变量线性模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="13.SparseLinearModel.html">
+   13 稀疏线性模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="14.KernelMethod.html">
+   14 核方法
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="15.GaussianProcesses.html">
+   15 高斯过程
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="16.AdaptiveBasisFunctionModel.html">
+   16 自适应基函数模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="17.MarkovAndHiddenMarkovModel.html">
+   17 马尔科夫与隐马尔科夫模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="18.StateSpaceModels.html">
+   18 状态空间模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="19.UndirectedGraphicalModels%28MarkovRandomFields%29.html">
+   19 无向图模型（马尔科夫随机场）
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="20.ExactInferenceForGraphicalModels.html">
+   20 概率图的精确推断
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="21.VariationalInference.html">
+   21 变分推断
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="22.MoreVariationalInference.html">
+   22 更多变分推断方法
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="23.MonteCarloInference.html">
+   23 蒙特卡洛推断
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="24.MarkovChainMonteCarlo%28MCMC%29Inference.html">
+   24 马尔科夫链蒙特卡洛 MCMC
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="25.Clustering.html">
+   25 聚簇
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="26.GraphicalModelStructureLearning.html">
+   26 概率图的结构学习
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="27.LatentVariableModelsForDiscreteData.html">
+   27 离散数据的隐变量模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="28.DeepLearning.html">
+   28 深度学习
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Abbreviations.html">
+   本书常见缩写列表
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/MLAPP_BOOK/02.Probability.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   2.1 前言
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   2.2 关于概率论的简单综述
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id4">
+     2.2.1 离散型随机变量
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id5">
+     2.2.2 基本定理
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id6">
+       2.2.2.1 两个事件并集发生的概率
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id7">
+       2.2.2.2 联合概率
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id8">
+       2.2.2.3 条件概率
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id9">
+     2.2.3 贝叶斯法则
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id10">
+       2.2.3.1 案例：医疗诊断
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id11">
+       2.2.3.2 案例：生成式分类器
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id12">
+     2.2.4 独立性和条件独立性
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id13">
+     2.2.5 连续型随机变量
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id14">
+     2.2.6 分位数
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id15">
+     2.2.7 均值和方差
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id16">
+   2.3 离散型随机变量的常见分布
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id17">
+     2.3.1 二项分布和伯努利分布
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id18">
+     2.3.2 多项分布和多重伯努利分布
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id19">
+     2.3.3 泊松分布
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id20">
+     2.3.4 经验分布
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id21">
+   2.4 连续性随机变量的常见分布
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id22">
+     2.4.1 高斯（正态）分布
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id23">
+     2.4.2 狄拉克函数（退化的高斯分布）
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#t">
+     2.4.3 学生
+     <span class="math notranslate nohighlight">
+      \(t\)
+     </span>
+     分布
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id24">
+     2.4.4 拉普拉斯分布
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id25">
+     2.4.5 伽马分布族
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id26">
+     2.4.6 贝塔分布
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id27">
+     2.4.7 帕累托分布
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id28">
+   2.5 联合概率分布
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id29">
+     2.5.1 协方差和相关系数
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id30">
+     2.5.2 多元高斯分布
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id31">
+     2.5.3 多元学生
+     <span class="math notranslate nohighlight">
+      \(t\)
+     </span>
+     分布
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id32">
+     2.5.4 狄利克雷分布
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id33">
+   2.6 随机变量变换
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id34">
+     2.6.1 线性变换
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id35">
+     2.6.2 通用变换
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id36">
+       2.6.2.1 变量的多重变化
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id37">
+     2.6.3 中心极限定理
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id38">
+   2.7 蒙特卡罗近似方法
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mc">
+     2.7.1 样例：更改变量，使用 MC （蒙特卡罗）方法
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#pi">
+     2.7.2 样例：估计圆周率
+     <span class="math notranslate nohighlight">
+      \(\pi\)
+     </span>
+     , 使用蒙特卡罗积分
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id39">
+     2.7.3 蒙特卡罗方法的精确度
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id40">
+   2.8 信息理论
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id41">
+     2.8.1 信息熵
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#kl">
+     2.8.2 KL 散度
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#information-inequality">
+       定理 2.8.1 信息不等式 (Information inequality)
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id42">
+       证明
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mutual-information">
+     2.8.3 信息量 (Mutual information)
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id43">
+       2.8.3.1 连续随机变量的互信息量
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id44">
+   练习 2
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="id1">
+<h1>02 概率论<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<p>[原文] <a class="reference external" href="https://probml.github.io/pml-book/book0.html">https://probml.github.io/pml-book/book0.html</a></p>
+<p>[作者] <a class="reference external" href="https://www.cs.ubc.ca/~murphyk/">Kevin Patrick Murphy</a></p>
+<style>p{text-indent:2em;2}</style>
+<div class="section" id="id2">
+<h2>2.1 前言<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>在前面章节中，我们已经了解了概率论在机器学习中所扮演的重要角色。本章将讨论更多关于概率论的细节。我们并没有足够的篇幅展开相关领域的深层次讨论 —— 读者可以自行参考更多的相关书籍。但在后面的章节中，将简明扼要的介绍许多可能会用到的关键思想。</p>
+<p>在探讨更多技术细节之前，请思考一个问题：什么是概率？我们对诸如「一个硬币面朝上的概率为 0.5」的表述已经非常熟悉。但这句话到底意味着什么？</p>
+<p>关于概率至少有两种不同的解释。一种是 <code class="docutils literal notranslate"><span class="pre">频率</span> <span class="pre">(frequentist)</span> <span class="pre">学派</span></code> 的解释。在这种观点中，概率代表事件在长时间实验情况下出现的频率。比如，在前面例子中，是指如果投掷一枚硬币很多次，那么我们相信有一半的次数硬币正面朝上。</p>
+<p>另一种为 <code class="docutils literal notranslate"><span class="pre">贝叶斯</span> <span class="pre">(</span> <span class="pre">Bayesian</span> <span class="pre">)</span> <span class="pre">学派</span></code> 的解释。在这种观点中，概率是用来量化人们对某些事件的 <code class="docutils literal notranslate"><span class="pre">不确定性</span> <span class="pre">(</span> <span class="pre">uncertainty</span> <span class="pre">)</span></code> ，所以本质上与信息而非重复的实验相关。从贝叶斯学派观点看待上述例子，意味着我们相信在下一次投掷硬币时，硬币正面朝上的可能性为 0.5。</p>
+<p>贝叶斯解释的一个重要优势在于，它可以用来衡量那些无法进行重复试验的事件的不确定度。比如说估计到 2020 年冰川融化的概率。该事件本身可能只发生一次甚至不会发生，也就是说它是不能被重复的试验。然而，我们可以量化针对该事件发生的不确定度 ( 比如说基于采取的一些抑制全球变暖的行为，可以认为该事件发生的可能性会变小 ) 。再比如第 1 章中提及的垃圾邮件分类任务，我们可能已经收到一个特定邮件信息，希望计算它是垃圾邮件的可能性。或者在雷达屏幕上观察到一个移动光点，我们希望计算这个飞行物身份的概率分布 ( 它是一只鸟还是一个飞机呢？ ) 。在上述所有案例中，尽管没有一个事件是可以重复试验的，但贝叶斯观点却是有效且具备可解释性的。<code class="docutils literal notranslate"><span class="pre">所以在本书中我们将采用贝叶斯观点对概率的解释</span></code>。 不过幸运的是，无论采取哪种观点看待概率，概率论的基本规则都一样。</p>
+</div>
+<div class="section" id="id3">
+<h2>2.2 关于概率论的简单综述<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>本节介绍概率论基础知识，仅针对那些对相关知识已经生疏的读者。关于更多相关细节，可以参考其他书籍。已对这块知识比较熟悉的读者可直接跳过本节。</p>
+<div class="section" id="id4">
+<h3>2.2.1 离散型随机变量<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>表达式 <span class="math notranslate nohighlight">\(p ( A )\)</span> 表示事件 <span class="math notranslate nohighlight">\(A\)</span> 发生的概率。比如 <span class="math notranslate nohighlight">\(A\)</span> 可能表示 “明天会下雨”。其中 <span class="math notranslate nohighlight">\(p ( A )\)</span> 满足 <span class="math notranslate nohighlight">\(0 \le p ( A ) \le1\)</span> ，如果 <span class="math notranslate nohighlight">\(p ( A ) =0\)</span> ，表示事件 <span class="math notranslate nohighlight">\(A\)</span> 不可能发生， <span class="math notranslate nohighlight">\(p ( A ) =1\)</span> 意味着事件 <span class="math notranslate nohighlight">\(A\)</span> 肯定发生。我们使用 <span class="math notranslate nohighlight">\(p ( \bar A )\)</span> 表示事件非 <span class="math notranslate nohighlight">\(A\)</span> 发生的可能性，满足 <span class="math notranslate nohighlight">\(p ( \bar A ) =1-p ( A )\)</span> 。通常将 “<span class="math notranslate nohighlight">\(A\)</span> 发生” 这个事件记为 <span class="math notranslate nohighlight">\(A=1\)</span> ，”<span class="math notranslate nohighlight">\(A\)</span> 不发生” 记为 <span class="math notranslate nohighlight">\(A=0\)</span> 。</p>
+<p>通过定义 <code class="docutils literal notranslate"><span class="pre">离散型随机变量</span> <span class="pre">(</span> <span class="pre">discrete</span> <span class="pre">random</span> <span class="pre">variable</span> <span class="pre">)</span></code>  <span class="math notranslate nohighlight">\(X\)</span> ，可以扩展出二元事件 ( 即事件只存在两种状态 ) 的符号表达，该离散型变量取值于一个有限集或者可数无限集 <span class="math notranslate nohighlight">\(\chi\)</span>( 译者注：关于可数无限集的例子：比如做一个抛掷硬币的试验，直到第一次出现正面时抛掷硬币的次数 <span class="math notranslate nohighlight">\(\chi\)</span> 的取值所构成的就是一个可数无限集 ) 。</p>
+<p>我们将事件 <span class="math notranslate nohighlight">\(X=x\)</span> 发生的概率表示为 <span class="math notranslate nohighlight">\(p ( X=x )\)</span> ，或者直接写成 <span class="math notranslate nohighlight">\(p ( x )\)</span> 。其中符号 <span class="math notranslate nohighlight">\(p ( )\)</span> 称为 <code class="docutils literal notranslate"><span class="pre">概率质量函数</span> <span class="pre">(</span> <span class="pre">probability</span> <span class="pre">mass</span> <span class="pre">function</span> <span class="pre">)</span></code> , 满足性质 <span class="math notranslate nohighlight">\(0 \le p ( x ) \le 1,\sum_{x\in\chi} p ( x ) =1\)</span>。<code class="docutils literal notranslate"><span class="pre">图</span> <span class="pre">2.1</span></code> 展示了定义在一个有限状态空间 ( state space ) <span class="math notranslate nohighlight">\(\chi = \{1,2,3,4\}\)</span> 上的两种概率质量函数。其中左图属于均匀分布， <span class="math notranslate nohighlight">\(p ( x ) =1/4\)</span> ，右图为一个退化分布 <span class="math notranslate nohighlight">\(p ( x ) =\mathbb {I} ( x=1 )\)</span> ，其中 <span class="math notranslate nohighlight">\(\mathbb {I} ( )\)</span> 为二元指示函数 ( indicator function ) ，该分布意味着 <span class="math notranslate nohighlight">\(X\)</span> 永远等于 1，换句话说，它是一个常数。</p>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210718220911_a1.webp" /></p>
+<p>图 2.1 (a) 是 <span class="math notranslate nohighlight">\(\{1，2，3，4\}\)</span> 上的均匀分布，其中 <span class="math notranslate nohighlight">\(p(x=k)=1/4\)</span> 。(b) 退化分布， 当 <span class="math notranslate nohighlight">\(x=1\)</span> 时，<span class="math notranslate nohighlight">\(p(x)=1\)</span>，当 <span class="math notranslate nohighlight">\(x \in \{2，3，4\}\)</span> 时，<span class="math notranslate nohighlight">\(p(x)=0\)</span> 。</p>
+</div>
+<div class="section" id="id5">
+<h3>2.2.2 基本定理<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id6">
+<h4>2.2.2.1 两个事件并集发生的概率<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
+<p>给定两个事件 <span class="math notranslate nohighlight">\(A\)</span> 和 <span class="math notranslate nohighlight">\(B\)</span> ，定义事件 <span class="math notranslate nohighlight">\(A\)</span> 或 <span class="math notranslate nohighlight">\(B\)</span> 发生的概率为：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin {align*}
+p(A \vee B)&amp;=p(A)+p(B)-p(A \wedge B)  ~~\tag {2.1}\label {eqn:2.1}\\\\
+&amp;=p(A)+p(B) \text { if } A \text { and } B \text { are mutually exclusive } ~~\tag {2.2}\label {eqn:2.2}
+\end {align*}
+\end{split}\]</div>
+</div>
+<div class="section" id="id7">
+<h4>2.2.2.2 联合概率<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
+<p>定义事件 <span class="math notranslate nohighlight">\(A\)</span> 和 <span class="math notranslate nohighlight">\(B\)</span> 同时发生的概率为：</p>
+<div class="math notranslate nohighlight">
+\[
+p ( A,B ) =p ( A \wedge  B ) =p ( A|B ) p ( B ) ~~\tag {2.3}\label {eqn:2.3}
+\]</div>
+<p>上式通常又被称为 <code class="docutils literal notranslate"><span class="pre">乘法法则</span> <span class="pre">(</span> <span class="pre">product</span> <span class="pre">rule</span> <span class="pre">)</span></code> 。</p>
+<p>给定两个事件的 <code class="docutils literal notranslate"><span class="pre">联合概率分布</span> <span class="pre">(</span> <span class="pre">joint</span> <span class="pre">distribution</span> <span class="pre">)</span></code> <span class="math notranslate nohighlight">\(p ( A,B )\)</span> ，定义 <code class="docutils literal notranslate"><span class="pre">边缘分布</span> <span class="pre">(</span> <span class="pre">marginal</span> <span class="pre">distribution</span> <span class="pre">)</span></code> 如下：</p>
+<div class="math notranslate nohighlight">
+\[
+p ( A ) =\sum_b p ( A,B ) =\sum_b p ( A|B=b ) p ( B=b ) ~~\tag {2.4}\label {eqn:2.4}
+\]</div>
+<p>上式针对事件 <span class="math notranslate nohighlight">\(B\)</span> 所有可能的状态进行求和（积分）。类似地，也可以定义 <span class="math notranslate nohighlight">\(p ( B )\)</span> 。 该式被称为 <code class="docutils literal notranslate"><span class="pre">求和法则</span> <span class="pre">(</span> <span class="pre">sum</span> <span class="pre">rule</span> <span class="pre">)</span></code> 或者叫 <code class="docutils literal notranslate"><span class="pre">全概率法则</span> <span class="pre">(</span> <span class="pre">rule</span> <span class="pre">of</span> <span class="pre">total</span> <span class="pre">probability</span> <span class="pre">)</span></code> 。</p>
+<p>可以多次使用乘法法则，进而引出概率论中的 <code class="docutils literal notranslate"><span class="pre">链式法则</span> <span class="pre">(</span> <span class="pre">chain</span> <span class="pre">rule</span> <span class="pre">)</span></code> ：</p>
+<div class="math notranslate nohighlight">
+\[
+p ( X_{1: D} ) =p ( X_1 ) p ( X_2|X_1 ) p ( X_3|X_2,X_1 ) ...p ( X_D|X_{1: D-1} ) ~~\tag {2.5}\label {eqn:2.5}
+\]</div>
+<p>式中模仿了 Matlab 中的一种符号写法 <span class="math notranslate nohighlight">\(1: D\)</span> 表示集合 <span class="math notranslate nohighlight">\(\{1,2,…,D\}\)</span> 。</p>
+</div>
+<div class="section" id="id8">
+<h4>2.2.2.3 条件概率<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
+<p>我们定义在事件 <span class="math notranslate nohighlight">\(B\)</span> 发生的前提下，事件 <span class="math notranslate nohighlight">\(A\)</span> 发生的概率为 <code class="docutils literal notranslate"><span class="pre">条件概率</span> <span class="pre">(</span> <span class="pre">conditional</span> <span class="pre">probability</span> <span class="pre">)</span></code> ：</p>
+<div class="math notranslate nohighlight">
+\[
+p ( A|B ) =\frac {p ( A,B )}{p ( B )} \ {\rm {if}} \ p ( B ) \gt 0 ~~\tag {2.6}\label {eqn:2.6}
+\]</div>
+</div>
+</div>
+<div class="section" id="id9">
+<h3>2.2.3 贝叶斯法则<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<p>根据求和法则和求积法则，结合条件概率定义，可以得到 <code class="docutils literal notranslate"><span class="pre">贝叶斯法则(</span> <span class="pre">Bayes</span> <span class="pre">rule</span> <span class="pre">)</span></code> 或者 <code class="docutils literal notranslate"><span class="pre">贝叶斯定理</span> <span class="pre">(</span> <span class="pre">Bayes</span> <span class="pre">Theorem</span> <span class="pre">)</span></code>。</p>
+<div class="math notranslate nohighlight">
+\[
+p ( X=x|Y=y ) =\frac {p ( X=x,Y=y )}{p ( Y=y )}=\frac {p ( X=x ) p ( Y=y|X=x )}{\sum_{x^\prime} p ( X=x^\prime ) p ( Y=y|X=x^\prime )} ~~\tag {2.7}\label {eqn:2.7}
+\]</div>
+<p>Sir Harold Jeffreys 认为：「<code class="docutils literal notranslate"><span class="pre">贝叶斯定理之于概率论等价于勾股定理之于几何学</span></code>」 。下面介绍两个贝叶斯理论的应用，不过在全书后面内容中，我们将会碰到更多例子。</p>
+<div class="section" id="id10">
+<h4>2.2.3.1 案例：医疗诊断<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h4>
+<p>考虑一个关于使用贝叶斯法则的案例：医疗诊断问题。假设你是一个 40 多岁的女性，你决定去做一个名叫 <code class="docutils literal notranslate"><span class="pre">manmogram</span></code> 的检测，以判断自己是否患有乳腺癌。如果检测结果显示为阳性，那么你患病的概率有多大？</p>
+<p>这个问题的答案显然与检测方法的可靠性有关。假设你被告知检测方法的 <code class="docutils literal notranslate"><span class="pre">敏感性</span> <span class="pre">(</span> <span class="pre">sensitivity</span> <span class="pre">)</span></code> 为 80%，也就是说，如果你患有癌症，那么测试结果显示为阳性的可能性为 0.8。换句话说：</p>
+<div class="math notranslate nohighlight">
+\[
+p ( x=1|y=1 ) =0.8 ~~\tag {2.8}\label {eqn:2.8}
+\]</div>
+<p>其中 <span class="math notranslate nohighlight">\(x=1\)</span> 表示检测结果为阳性， <span class="math notranslate nohighlight">\(y=1\)</span> 表示你确实患有乳腺癌。许多人因此就认为他们患有癌症的可能性为 80%。但这是错误的！因为他们忽略了患有乳腺癌的先验概率，幸运的是，这个概率相当低：</p>
+<div class="math notranslate nohighlight">
+\[
+p ( y=1 ) =0.004 ~~\tag {2.9}\label {eqn:2.9}
+\]</div>
+<p>忽略先验概率的情况被称为 <code class="docutils literal notranslate"><span class="pre">基率谬论</span></code>( base rate fallacy ) 。我们同样需要考虑测试结果可能是 <code class="docutils literal notranslate"><span class="pre">假正例</span> <span class="pre">(</span> <span class="pre">false</span> <span class="pre">positive</span> <span class="pre">)</span></code> 或者 <code class="docutils literal notranslate"><span class="pre">虚警</span> <span class="pre">(</span> <span class="pre">false</span> <span class="pre">alarm</span> <span class="pre">)</span></code> 的情况。不幸的是，类似这样的假正例发生的可能性还很高 ( 在现有的筛选技术下 ) ：</p>
+<div class="math notranslate nohighlight">
+\[
+p ( x=1|y=0 ) =0.1 ~~\tag {2.10}\label {eqn:2.10}
+\]</div>
+<p>将上述三项通过贝叶斯法则进行合并，我们可以计算出正确的答案：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin {align*}
+p ( y=1|x=1 ) &amp; = \frac {p ( x=1|y=1 ) p ( y=1 )}{p ( x=1|y=1 ) p ( y=1 ) +p ( x=1|y=0 ) p ( y=0 )} ~~\tag {2.11}\label {eqn:2.11} \\
+&amp; = \frac {0.8 \times 0.004}{0.8 \times 0.004 + 0.1 \times 0.996} ~~\tag {2.12}\label {eqn:2.12}
+\end {align*}
+\end{split}\]</div>
+<p>其中 <span class="math notranslate nohighlight">\(p ( y=0 ) =1-p ( y=1 ) =0.996\)</span> 。换句话说，如果你的检测结果为阳性，你也只有大概 3% 的可能性患有乳腺癌。 ( 该案例中的数据来自于相关文献，基于该项分析，美国政府决定不再推荐女性在 40 岁时进行每年的 mammogram 检测：因为假正例会导致不必要的担心和压力，并最终导致不必要的，昂贵的，并且可能存在潜在伤害的后续检测。5.7 节将介绍当我们在不确定的情况下权衡利弊的最优方法 ) 。</p>
+</div>
+<div class="section" id="id11">
+<h4>2.2.3.2 案例：生成式分类器<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h4>
+<p>我们可以将医疗诊断的例子一般化，从而实现对任意形式的特征向量 <span class="math notranslate nohighlight">\(\mathbf {x}\)</span> 进行分类：</p>
+<div class="math notranslate nohighlight">
+\[
+p ( y=c|\mathbf {x},\mathbf {\theta} ) =\frac {p ( y=c \mid \mathbf {\theta}) p ( \mathbf {x}|y=c,\mathbf {\theta})}{\sum_{c^\prime} p ( y=c^\prime|\mathbf {\theta} ) p ( \mathbf {x}|y=c^\prime ,\mathbf {\theta})} ~~\tag {2.13}\label {eqn:2.13}
+\]</div>
+<p>上式被称为 <code class="docutils literal notranslate"><span class="pre">生成式分类器</span></code>( generative classifier ) ，因为它通过使用类条件概率密度（似然） <span class="math notranslate nohighlight">\(p ( \mathbf {x}|y=c )\)</span> 和类先验分布 <span class="math notranslate nohighlight">\(p ( y=c )\)</span> 来指定如何生成样本。我们会在第 3 章和第 4 章详细讨论这一类模型。与该模型不同的是，判别式分类器直接对类后验概率分布 <span class="math notranslate nohighlight">\(p ( y=c|\mathbf {x} )\)</span> 进行训练。我们会在 8.6 节讨论两种方法的优缺点。</p>
+</div>
+</div>
+<div class="section" id="id12">
+<h3>2.2.4 独立性和条件独立性<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<p>如果两个随机变量 <span class="math notranslate nohighlight">\(X\)</span> 和 <span class="math notranslate nohighlight">\(Y\)</span> 的联合概率分布可以表示为边缘分布的乘积，则称 <span class="math notranslate nohighlight">\(X\)</span> 和 <span class="math notranslate nohighlight">\(Y\)</span> 是 <code class="docutils literal notranslate"><span class="pre">无条件独立</span></code>( unconditionally independent ) 或者 <code class="docutils literal notranslate"><span class="pre">边缘独立</span></code> ( marginally independent ) 的，</p>
+<div class="math notranslate nohighlight">
+\[
+X \perp Y {\Leftrightarrow} p ( X,Y ) =p ( X ) p ( Y ) ~~\tag {2.14}\label {eqn:2.14}
+\]</div>
+<p>一般情况下，如果一系列变量的联合概率分布等于各边缘分布的乘积，我们称这些变量相互独立。不幸的是，无条件独立很少会发生，因为大部分变量会相互影响，不过这种影响有时可通过其他变量间接产生。因此称已知变量 <span class="math notranslate nohighlight">\(Z\)</span> 的情况下， <span class="math notranslate nohighlight">\(X\)</span> 和 <span class="math notranslate nohighlight">\(Y\)</span> 之间<code class="docutils literal notranslate"><span class="pre">条件独立</span></code> ( conditionally independent,CI ) 的充要条件是：<code class="docutils literal notranslate"><span class="pre">条件联合分布等于条件边缘分布的乘积</span></code>。如下所示：</p>
+<div class="math notranslate nohighlight">
+\[
+X \perp Y |Z {\Leftrightarrow} p ( X,Y|Z ) =p ( X|Z ) p ( Y|Z ) ~~\tag {2.15}\label {eqn:2.15}
+\]</div>
+<p>第 10 章会讨论概率图模型，届时可以发现这种关系可以表示为一种 <span class="math notranslate nohighlight">\(X-Z-Y\)</span> 形式的图结构，该结构反映出 <span class="math notranslate nohighlight">\(X\)</span> 和 <span class="math notranslate nohighlight">\(Y\)</span> 之间的所有关联性都需要通过 <span class="math notranslate nohighlight">\(Z\)</span> 实现。举例来说，如果已经知道今天是否会下雨 ( <span class="math notranslate nohighlight">\(Z\)</span> ) ，那么明天将会下雨的概率 ( 事件 <span class="math notranslate nohighlight">\(X\)</span> ) 与今天的地是否潮湿 ( 事件 <span class="math notranslate nohighlight">\(Y\)</span> ) 之间是独立的。直觉上，因为 <span class="math notranslate nohighlight">\(Z\)</span> 同时导致了 <span class="math notranslate nohighlight">\(X\)</span> 和 <span class="math notranslate nohighlight">\(Y\)</span> ，所以如果已经知道了 <span class="math notranslate nohighlight">\(Z\)</span> ，那么为了解 <span class="math notranslate nohighlight">\(X\)</span> ，并不需要关于 <span class="math notranslate nohighlight">\(Y\)</span> 的信息，反之亦然。</p>
+<p>条件独立的另一个特性为：</p>
+<p><strong>定理 2.2.1</strong> <span class="math notranslate nohighlight">\(X \perp Y | Z\)</span> 当且仅当存在函数 <span class="math notranslate nohighlight">\(g\)</span> 和 <span class="math notranslate nohighlight">\(h\)</span> 满足：</p>
+<div class="math notranslate nohighlight">
+\[
+p ( x,y|z ) = g ( x,z ) h ( y,z ) ~~\tag {2.16}\label {eqn:2.16}
+\]</div>
+<p>对于所有的 <span class="math notranslate nohighlight">\(x,y,z\)</span> 成立，且 <span class="math notranslate nohighlight">\(p ( z )&gt;0\)</span> .</p>
+<p>条件独立性假设允许通过一些局部信息去构建大规模概率模型。本书将介绍大量相关案例，特别是 3.5 节，将会讨论朴素贝叶斯分类器，在 17.2 节会讨论马尔可夫模型，在第 10 章讨论概率图模型；所有这些模型都充分应用了条件独立性的性质。</p>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210718223943_36.webp" /></p>
+<p>图 2.2 计算 <span class="math notranslate nohighlight">\(p(x，y)=p(X)p(Y)\)</span> ，其中 <span class="math notranslate nohighlight">\(X⊥Y\)</span> 。此处 <span class="math notranslate nohighlight">\(X\)</span> 和 <span class="math notranslate nohighlight">\(Y4 是离散型随机变量；\)</span>X<span class="math notranslate nohighlight">\( 有6种可能的状态，\)</span>Y<span class="math notranslate nohighlight">\( 有5种可能状态。正常情况下，两个变量上的联合分布需要 \)</span>(6×5)−1=29<span class="math notranslate nohighlight">\( 个参数来定义( 概率总和等于 1 的约束条件所致）。但通过无条件独立性假设，只需要 \)</span>(6−1)+(5−1)=9<span class="math notranslate nohighlight">\( 个参数来定义 \)</span>p(x，y)$ 。 这种通过假设来简化模型的方法，在本书中会大量出现。</p>
+</div>
+<div class="section" id="id13">
+<h3>2.2.5 连续型随机变量<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<p>截至目前，我们只是讨论了关于离散型变量的情况。本节将介绍有关连续型变量的相关内容。</p>
+<p>假设 <span class="math notranslate nohighlight">\(X\)</span> 是某个未知的连续型随机变量。变量 <span class="math notranslate nohighlight">\(X\)</span> 满足 <span class="math notranslate nohighlight">\(a \le X \le b\)</span> 的概率可以通过如下的方式进行计算。 接下来，定义三个事件 <span class="math notranslate nohighlight">\(A= ( X \le a ) , B= ( X \le b ) , W= ( a \lt X \lt b )\)</span>。 显然有 <span class="math notranslate nohighlight">\(B = A \vee W\)</span> ， 因为事件 <span class="math notranslate nohighlight">\(A\)</span> 和事件 <span class="math notranslate nohighlight">\(W\)</span> 互斥，根据概率论的求和法则，有：</p>
+<div class="math notranslate nohighlight">
+\[
+p ( B ) = p ( A ) + p ( W ) ~~\tag {2.17}\label {eqn:2.17}
+\]</div>
+<p>所以</p>
+<div class="math notranslate nohighlight">
+\[
+p ( W ) = p ( B ) - p ( A ) ~~\tag {2.18}\label {eqn:2.18}
+\]</div>
+<p>接下来定义函数 <span class="math notranslate nohighlight">\(F ( q ) \triangleq =p ( X\leq q)\)</span>，该函数被称为 <code class="docutils literal notranslate"><span class="pre">累积分布函数</span> <span class="pre">(</span> <span class="pre">cumulative</span> <span class="pre">distribution</span> <span class="pre">function,</span> <span class="pre">cdf</span> <span class="pre">)</span></code> ，属于单调递增函数。 图 2.3 ( a ) 给出了示意图。基于该定义有：</p>
+<div class="math notranslate nohighlight">
+\[
+p ( a \lt X \le b ) =F ( b ) -F ( a ) ~~\tag {2.19}\label {eqn:2.19}
+\]</div>
+<p>定义 <span class="math notranslate nohighlight">\(f ( x ) =\frac {d}{dx} F ( x )\)</span>( 假设导数存在 ) ，该式被称为 <code class="docutils literal notranslate"><span class="pre">概率密度函数</span> <span class="pre">(</span> <span class="pre">probability</span> <span class="pre">density</span> <span class="pre">function,</span> <span class="pre">pdf</span> <span class="pre">)</span></code> 。 图 2.3 ( b ) 给出了示意图。 在已知概率密度函数的情况下，我们可以计算一个连续型变量属于某个有限区间的概率：</p>
+<div class="math notranslate nohighlight">
+\[
+p ( a \lt X \le b ) =\int_a^b f ( x ) dx ~~\tag {2.20}\label {eqn:2.20}
+\]</div>
+<p>如果该区间足够小，可以有：</p>
+<div class="math notranslate nohighlight">
+\[
+p ( x \le X \le x+dx ) \approx p ( x ) dx ~~\tag {2.21}\label {eqn:2.21}
+\]</div>
+<p>其中 <span class="math notranslate nohighlight">\(p ( x ) \ge 0\)</span> , 但对于任意给定的 <span class="math notranslate nohighlight">\(X\)</span> , <span class="math notranslate nohighlight">\(p ( x ) \gt 1\)</span> 是存在可能的，只要积分等于 1 即可。举例来说，考虑一个 <code class="docutils literal notranslate"><span class="pre">均匀分布(</span> <span class="pre">uniform</span> <span class="pre">distribution</span> <span class="pre">)</span></code> <span class="math notranslate nohighlight">\(Unif ( a,b )\)</span> :</p>
+<div class="math notranslate nohighlight">
+\[
+Unif ( x|a,b ) =\frac {1}{b-a}\mathbb {I} ( a \le x\le b ) ~~\tag {2.22}\label {eqn:2.22}
+\]</div>
+<p>如果令 <span class="math notranslate nohighlight">\(a=0,b=\frac {1}{2}\)</span> ，有 <span class="math notranslate nohighlight">\(\forall x\in [0,\frac {1}{2}], p ( x ) =2\)</span> 。</p>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210718225334_ce.webp" /></p>
+<p>图 2.3 (a) 标准正态分布 <span class="math notranslate nohighlight">\(N(0，1)\)</span> 的 cdf 曲线图。(b) 相应的 pdf。每一个阴影区域都包含 <span class="math notranslate nohighlight">\(α/2\)</span> 的概率质量。因此，非阴影区域包含 <span class="math notranslate nohighlight">\(1−α\)</span> 的概率质量。如果分布为高斯 <span class="math notranslate nohighlight">\(N(0，1)\)</span>，则最左边的截止点为 <span class="math notranslate nohighlight">\(\Phi^{−1}(α/2)\)</span> ，其中 <span class="math notranslate nohighlight">\(\Phi\)</span> 为高斯分布的 cdf。根据对称性，最右边的截止点是 <span class="math notranslate nohighlight">\(\Phi^{−1}(1−α/2)=−\Phi^{−1}(α/2)\)</span>。当 <span class="math notranslate nohighlight">\(α=0.05\)</span> 时，中心区间为 <span class="math notranslate nohighlight">\(95%\)</span> ，左界为 <span class="math notranslate nohighlight">\(-1.96\)</span>，右界为 <span class="math notranslate nohighlight">\(1.96\)</span>。</p>
+</div>
+<div class="section" id="id14">
+<h3>2.2.6 分位数<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<p>由于累积分布函数 <span class="math notranslate nohighlight">\(F\)</span> 是一个单调递增函数，其逆函数记作 <span class="math notranslate nohighlight">\(F^-\)</span>。如果 <span class="math notranslate nohighlight">\(F\)</span> 是 <span class="math notranslate nohighlight">\(X\)</span> 的累积分布函数，那么 <span class="math notranslate nohighlight">\(F^{-1}(\alpha)\)</span> 就是满足概率 <span class="math notranslate nohighlight">\(P (X\le x_\alpha )=\alpha \)</span>  的值；这也叫做 <span class="math notranslate nohighlight">\(F\)</span> 的 <span class="math notranslate nohighlight">\(\alpha\)</span> 分位数（quantile）。<span class="math notranslate nohighlight">\(F^{-1}(0.5)\)</span> 就是整个分布的中位数（median），左右两侧的概率各一半。而 <span class="math notranslate nohighlight">\(F^{-1}(0.25)\)</span> 和 <span class="math notranslate nohighlight">\(F^{-1}(0.75)\)</span> 则是另外两个分位数。</p>
+<p>利用累积分布函数（cdf）的逆函数还可以计算尾部概率。例如，如果有高斯分布 <span class="math notranslate nohighlight">\(N (0,1)\)</span>，<span class="math notranslate nohighlight">\(\Phi\)</span> 是这个高斯分布的累积分布函数（cdf），这样在 <span class="math notranslate nohighlight">\(\Phi^{-1}(\alpha/2)\)</span> 左边的点就包含了 <span class="math notranslate nohighlight">\(\alpha/2\)</span> 的概率质量，如图 2.3（b）所示。与之对称，在 <span class="math notranslate nohighlight">\(\Phi^{-1}(1-\alpha/2)\)</span> 右边的点也包含了 <span class="math notranslate nohighlight">\(\alpha /2\)</span> 的概率质量。所以，在区间 <span class="math notranslate nohighlight">\((\Phi^{-1}(\alpha/2),\Phi^{-1}(1-\alpha/2))\)</span> 就包含了 <span class="math notranslate nohighlight">\(1-\alpha\)</span> 的概率质量。如果设置 <span class="math notranslate nohighlight">\(\alpha =0.05\)</span>，那么中间 95% 的区间被以下范围覆盖:</p>
+<div class="math notranslate nohighlight">
+\[
+(\phi^{-1}(0.025),\phi^{-1}(0.975))=(-1.96，1.96) ~~\tag {2.23}\label {eqn:2.23}
+\]</div>
+<p>如果分布为 <span class="math notranslate nohighlight">\(N (\mu,\sigma^2)\)</span>，那么其 95% 区间就位于 <span class="math notranslate nohighlight">\((\mu-1.96\sigma，\mu+1.96\sigma)\)</span>。有时候简写成 <span class="math notranslate nohighlight">\(\mu \pm 2\sigma\)</span>。</p>
+</div>
+<div class="section" id="id15">
+<h3>2.2.7 均值和方差<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<p>对正态分布，最常用的性质就是均值（mean），或期望值（expected value），记作 <span class="math notranslate nohighlight">\(\mu\)</span>。对于离散型随机变量，可定义成 <span class="math notranslate nohighlight">\(\mathrm {E}[X] \overset\triangle {=} \sum_{x\in X} x p (x)\)</span>；对于连续型随机变量，可以定义为 <span class="math notranslate nohighlight">\(\mathrm {E}[X] \overset\triangle {=} \int_{X} xp (x) dx\)</span>。如果该积分是无穷的，则均值不能定义，更多例子后文会有。</p>
+<p>方差（variance）表征的是分布的 “散开程度（spread）”，记作 <span class="math notranslate nohighlight">\(\sigma^2\)</span>。定义如下：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin {align*}
+var [X]  &amp; \triangleq E [(X-\mu)^2]=\int (x-\mu)^2p (x) dx      ~~\tag {2.24}\label {eqn:2.24}\\
+&amp; =  \int x^2p (x) dx  +\mu^2 \int p (x) dx-2\mu\int xp (x) dx=E [X^2]-\mu^2         ~~\tag {2.25}\label {eqn:2.25}\\
+\end {align*}
+\end{split}\]</div>
+<p>从上面的式子就可以推导出：</p>
+<div class="math notranslate nohighlight">
+\[
+E [X^2]= \mu^2+\sigma^2 ~~\tag {2.26}\label {eqn:2.26}
+\]</div>
+<p>然后就可以定义标准差（standard deviation）了：</p>
+<div class="math notranslate nohighlight">
+\[
+std [X]\overset\triangle {=} \sqrt {var [X]} ~~\tag {2.27}\label {eqn:2.27}
+\]</div>
+<p>标准差与 <span class="math notranslate nohighlight">\(X\)</span> 单位一样。</p>
+</div>
+</div>
+<div class="section" id="id16">
+<h2>2.3 离散型随机变量的常见分布<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h2>
+<p>本节介绍一些定义在离散状态空间的常用概率分布，都是有限或者无限可列的。</p>
+<div class="section" id="id17">
+<h3>2.3.1 二项分布和伯努利分布<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<p>如果抛 <span class="math notranslate nohighlight">\(n\)</span> 次硬币，设 <span class="math notranslate nohighlight">\(X \in \{0,...,n\}\)</span> 是人头朝上的次数。若头朝上的概率是 <span class="math notranslate nohighlight">\(\theta\)</span>，就可以说 <span class="math notranslate nohighlight">\(X\)</span> 服从二项分布（binomial distribution），记作 <span class="math notranslate nohighlight">\(X \sim Bin (n,\theta)\)</span>。其 pmf（概率质量函数）可以写作：</p>
+<div class="math notranslate nohighlight">
+\[
+Bin (k|n,\theta)\overset\triangle {=} \binom {n}{k} \theta ^k  (1- \theta)^{n-k} ~~\tag {2.28}\label {eqn:2.28}
+\]</div>
+<p>上式中的</p>
+<div class="math notranslate nohighlight">
+\[
+ \binom {n}{k} \overset\triangle {=} \frac {n!}{(n-k)!k!} ~~\tag {2.29}\label {eqn:2.29}
+\]</div>
+<p>是组合数，相当于国内早期教材里面的 <span class="math notranslate nohighlight">\(C_n^k\)</span>，从 <span class="math notranslate nohighlight">\(n\)</span> 中取 <span class="math notranslate nohighlight">\(k\)</span> 个样的组合数，也是二项系数（binomial coefficient）。如图 2.4 所示就是一些二项分布。</p>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210718232042_f2.webp" /></p>
+<p>图 2.4 <span class="math notranslate nohighlight">\(n=10\)</span> 和 <span class="math notranslate nohighlight">\(θ∈\{0.25，0.9\}\)</span> 的二项分布图。</p>
+<p>该分布的均值和方差如下所示：</p>
+<div class="math notranslate nohighlight">
+\[
+mean=\theta, var =n\theta (1-\theta) ~~\tag {2.30}\label {eqn:2.30}
+\]</div>
+<p>换个思路，如果只抛硬币一次，那么 <span class="math notranslate nohighlight">\(X\in \{0,1 \}\)</span> 就是一个二值化的随机变量，人头朝上的概率就是 <span class="math notranslate nohighlight">\(\theta\)</span>。这时候就说 <span class="math notranslate nohighlight">\(X\)</span> 服从伯努利分布（Bernoulli distribution），记作 <span class="math notranslate nohighlight">\(X \sim Ber (\theta)\)</span>，其中概率质量函数 pmf 定义为（<span class="math notranslate nohighlight">\(\mathbb{I}\)</span> 为指示函数）：</p>
+<div class="math notranslate nohighlight">
+\[
+Ber (x|\theta)=\theta^{\mathbb{I} (x=1)}(1-\theta)^{\mathbb{I} (x=0)} ~~\tag {2.31}\label {eqn:2.31}
+\]</div>
+<p>也可以写成：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin {align*}
+Ber (x|\theta)=\begin {cases} \theta &amp;\text { if x =1} ~~\tag {2.32}\label {eqn:2.32}\\
+1-\theta &amp;\text { if x =0} \end {cases}  
+\end {align*}
+\end{split}\]</div>
+<p>很明显，伯努利分布只是二项分布中 <span class="math notranslate nohighlight">\(n=1\)</span> 的特例。</p>
+</div>
+<div class="section" id="id18">
+<h3>2.3.2 多项分布和多重伯努利分布<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
+<p><strong>（1） 多项分布</strong></p>
+<p>二项分布可以用于抛硬币这种情况的建模。要对有 <span class="math notranslate nohighlight">\(K\)</span> 个可能结果的事件进行建模，就要用到多项分布（multinomial distribution）。这个定义如下：设 <span class="math notranslate nohighlight">\(\mathbf{x} =(x_1,...,x_K)\)</span> 是一个随机向量，其中的 <span class="math notranslate nohighlight">\(x_j\)</span> 是第 <span class="math notranslate nohighlight">\(j\)</span> 面出现的次数。这样  <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>  的概率质量函数 pmf 就如下所示：</p>
+<div class="math notranslate nohighlight">
+\[
+Mu ( \mathbf{x} |n,\mathbf{\theta}) \triangleq \binom {n}{x_1,..,x_K}\prod^K_{j=1}\theta^{x_j}_j ~~~~\tag {2.33}\label {eqn:2.33}
+\]</div>
+<p>其中的 <span class="math notranslate nohighlight">\(\theta_j\)</span> 是第 <span class="math notranslate nohighlight">\(j\)</span> 面出现的概率，组合的计算如下所示：</p>
+<div class="math notranslate nohighlight">
+\[
+\binom {n}{x_1,...,x_K} \overset\triangle {=} \frac {n!}{x_1!x_2!...x_K!} ~~\tag {2.34}\label {eqn:2.34}
+\]</div>
+<p>这样得到的也就是多项式系数（multinomial coefficient），将一个规模为 <span class="math notranslate nohighlight">\(n=\sum^K_{k=1}\)</span> 的集合划分成规模从 <span class="math notranslate nohighlight">\(x_1\)</span> 到 <span class="math notranslate nohighlight">\(x_K\)</span> 个子集的方案数。</p>
+<p><strong>（2） 多重伯努利分布（或类别分布）</strong></p>
+<p>接下来设 <span class="math notranslate nohighlight">\(n=1\)</span>。这好比将一个 <span class="math notranslate nohighlight">\(K\)</span> 面的骰子投掷一次，所以 <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> 就是由 0 和 1 组成的向量。其中只有一个元素会是 1. 具体来说就是如果 <span class="math notranslate nohighlight">\(k\)</span> 面朝上，就说第 <span class="math notranslate nohighlight">\(k\)</span> 位为 1。这样就可以把 <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> 看做一个用标量分类的有 <span class="math notranslate nohighlight">\(K\)</span> 个状态的离散型随机变量，<span class="math notranslate nohighlight">\(\mathbf{x}\)</span> 就是它的虚拟编码（dummy encoding），即：<span class="math notranslate nohighlight">\(\mathbf{x} =[\mathbb{I} (x=1),...,\mathbb{I}(x=K)]\)</span> ， <span class="math notranslate nohighlight">\(\mathbb{I}\)</span> 为指示函数。例如，如果 <span class="math notranslate nohighlight">\(K=3\)</span>，那么状态 1、2、3 对应的虚拟编码分别是 <span class="math notranslate nohighlight">\((1,0,0),(0,1,0),(0,0,1)\)</span>。该编码也称作独热编码（one-hot encoding），因为只有一个位置是 1. 其对应的概率质量函数 pmf 就是：</p>
+<div class="math notranslate nohighlight">
+\[
+Mu (\mathbf{x}|1,\mathbf{\theta})=\prod^K_{j=1 }\theta_j ^{ \mathbb{I} (x_j=1)} ~~\tag {2.35}\label {eqn:2.35}
+\]</div>
+<p>可以参考图 2.1 的（b-c）作为一个例子。这是类别分布（categorical distribution）或者离散分布（discrete distribution）的典型案例，Gustavo Lacerda 建议大家称之为<code class="docutils literal notranslate"><span class="pre">多重伯努利分布（multinoulli</span> <span class="pre">distribution）</span></code>，这样与二项分布 / 伯努利分布的区别关系相仿。本书就采用了这个术语，使用下列记号表示这种情况：</p>
+<div class="math notranslate nohighlight">
+\[
+Cat (x|\mathbf{\theta})\overset\triangle {=} Mu (\mathbf{x}|1,\mathbf{\theta}) ~~\tag {2.36}\label {eqn:2.36}
+\]</div>
+<p>换句话说，如果 <span class="math notranslate nohighlight">\(x\sim Cat (\mathbb{\theta})\)</span>，则 <span class="math notranslate nohighlight">\(p (x=j|\mathbb{\theta})=\theta_j\)</span>。参考表 2.1。</p>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210719110407_8e.webp" /></p>
+<p>表2.1 多项分布及相关分布汇总。</p>
+<p><strong>（3） 应用：DNA 序列模体</strong></p>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210719111019_e3.webp" /></p>
+<p>图2.5 (a)一些经过对齐的DNA序列。(b)相应的序列标识。</p>
+<p>生物序列分析（biosequence analysis）是一个典型应用案例，设有一系列对齐的 DNA 序列，如图 2.5（a）所示，其中有 10 行（序列），15 列（沿着基因组的位置）。图中几个位置是进化的保留位，是基因编码区域的位置，所以对应的列都是 “纯的”，例如第 7 列就都是 g。</p>
+<p>如图 2.5（b）所示的可视化方法是序列标识图（sequence logo）。具体方法是把字母 A、C、G 和 T 投到对应位置上，字体大小与其经验概率（empirical probability）成正比，最大概率的字母放在最顶部。</p>
+<p>位置 <span class="math notranslate nohighlight">\(t,\hat \theta_t\)</span> 处的经验概率分布通过计数向量的归一化获得，可以参考本书公式 3.48：</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{N}_t=(\sum^N_{i=1} \mathbb{I}(X_{it}=1),\sum^N_{i=1}\mathbb{I} (X_{it}=2),\sum^N_{i=1}\mathbb{I} (X_{it}=3),\sum^N_{i=1}\mathbb{I} (X_{it}=4)) ~~\tag {2.37}\label {eqn:2.37}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\hat\theta_t =\mathbf{N}_t/N  ~~\tag {2.38}\label {eqn:2.38}
+\]</div>
+<p>该分布被称作一个模体（motif）。可以计算每个位置上最可能出现的字母，得到<code class="docutils literal notranslate"><span class="pre">共有序列（consensus</span> <span class="pre">sequence）</span></code>。</p>
+</div>
+<div class="section" id="id19">
+<h3>2.3.3 泊松分布<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
+<p>如果一个离散型随机变量 <span class="math notranslate nohighlight">\(X\in \{0,1,2,...\}\)</span> 服从泊松分布，即 <span class="math notranslate nohighlight">\(X\sim  Poi (\lambda)\)</span>，其参数 <span class="math notranslate nohighlight">\(\lambda &gt;0\)</span>，其概率质量函数 pmf 为：</p>
+<div class="math notranslate nohighlight">
+\[
+\text{Poi} (x|\lambda )=e^{-\lambda}\frac {\lambda ^x}{x!}  ~~\tag {2.39}\label {eqn:2.39}
+\]</div>
+<p>第一项是归一化常数（normalization constant），使用来保证概率密度函数的总和是 1.</p>
+<p>泊松分布经常用于对罕见事件的统计建模，比如放射性衰变和交通事故等等，可被视为 <span class="math notranslate nohighlight">\(\theta\)</span> 很小 但 <span class="math notranslate nohighlight">\(n\)</span> 很大的二项分布。图 2.6 是一些泊松分布的示意图。</p>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210719112922_be.webp" /></p>
+<p>图 2.6. <span class="math notranslate nohighlight">\(\lambda \in \{ 1，10 \}\)</span> 对应的泊松分布图。为清楚起见，将 <span class="math notranslate nohighlight">\(x\)</span> 轴截断为 <span class="math notranslate nohighlight">\(25\)</span> 。</p>
+</div>
+<div class="section" id="id20">
+<h3>2.3.4 经验分布<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
+<p>给定数据集 <span class="math notranslate nohighlight">\(D =\{x_1,...,x_N \}\)</span>，可以定义<code class="docutils literal notranslate"><span class="pre">经验分布（empirical</span> <span class="pre">distribution）</span></code>，也称<code class="docutils literal notranslate"><span class="pre">经验测度（empirical</span> <span class="pre">measure）</span></code>，形式如下：</p>
+<div class="math notranslate nohighlight">
+\[
+p_{emp}(A)\overset\triangle {=}\frac 1 N \sum^N_{i=1}\delta _{x_i}(A)  ~~\tag {2.40}\label {eqn:2.40}
+\]</div>
+<p>其中 <span class="math notranslate nohighlight">\(\delta_x (A)\)</span> 是<code class="docutils literal notranslate"><span class="pre">狄拉克测度（Dirac</span> <span class="pre">measure）</span></code>，定义为：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin {align*}
+\delta_x (A)= \begin {cases} 0 \qquad \text {if } x \notin A \\
+1 \qquad  \text {if } x \in A    ~~\tag {2.41}\label {eqn:2.41}
+\end {cases} 
+\end {align*}
+\end{split}\]</div>
+<p>一般来说可以给每个样本关联一个权重（weight）</p>
+<div class="math notranslate nohighlight">
+\[
+p (x)=\sum^N_{i=1} w_i\delta_{x_i}(x)    ~~\tag {2.42}\label {eqn:2.42}
+\]</div>
+<p>其中要满足 <span class="math notranslate nohighlight">\(0\le w_i \le 1\)</span> 以及 <span class="math notranslate nohighlight">\(\sum^N_{i=1} w_i=1\)</span>。可以将其想象成在数据点 <span class="math notranslate nohighlight">\(x_i\)</span> 处有峰（spike）的一个直方图，而 <span class="math notranslate nohighlight">\(w_i\)</span> 决定了 <span class="math notranslate nohighlight">\(i\)</span> 峰的高低。此分布中所有不在数据集中的点概率均为 0。</p>
+</div>
+</div>
+<div class="section" id="id21">
+<h2>2.4 连续性随机变量的常见分布<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h2>
+<p>接下来介绍一些常用的单变量一维连续概率分布。</p>
+<div class="section" id="id22">
+<h3>2.4.1 高斯（正态）分布<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h3>
+<p>不管统计学还是机器学习，最广泛使用的都是<code class="docutils literal notranslate"><span class="pre">高斯分布（Gaussian</span> <span class="pre">distribution）</span></code>，也称<code class="docutils literal notranslate"><span class="pre">正态分布（Normal</span> <span class="pre">distribution）</span></code>。其概率密度函数 pdf 为：</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{N} (x|\mu,\sigma^2) \overset\triangle {=} \frac {1}{\sqrt {2\pi \sigma^2}} e^ {-\frac {1}{2 \sigma^2}(x-\mu)^2}  ~~\tag {2.43}\label {eqn:2.43}
+\]</div>
+<p>上式中的 <span class="math notranslate nohighlight">\(\mu=\mathbb{E} [X]\)</span> 是均值（mean），<span class="math notranslate nohighlight">\(\sigma^2=var [X]\)</span> 是方差（variance）。<span class="math notranslate nohighlight">\(\sqrt {2\pi \sigma^2}\)</span> 是归一化常数，用于确保整个密度函数的积分为 1，具体可以参考练习 2.11。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>注：高斯分布的均值与众数（mode）相等。</p>
+</div>
+<p>可以用 <span class="math notranslate nohighlight">\(X \sim  \mathcal{N}(\mu,\sigma^2)\)</span> 来表示 <span class="math notranslate nohighlight">\(p (X=x)=\mathcal{N}(x|\mu,\sigma^2)\)</span>。</p>
+<p><span class="math notranslate nohighlight">\(X \sim  \mathcal{N} (0,1)\)</span> 是<code class="docutils literal notranslate"><span class="pre">标准正态分布（standard</span> <span class="pre">normal</span> <span class="pre">distribution）</span></code>。图 2.3（b）是标准正态分布的概率密度函数图，也被称作钟形曲线。</p>
+<p>有时用高斯分布的<code class="docutils literal notranslate"><span class="pre">精度（precision）</span></code>  <span class="math notranslate nohighlight">\(\lambda =1/\sigma^2\)</span> 来表达钟形的分散程度，即方差的倒数。精度高，则方差低，图形的大部分对称分布在以均值为中心的狭窄区域。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>注意连续型随机变量的概率密度函数（pdf）与离散型随机变量的概率质量函数（pmf）之间的区别：</p>
+<p>（1）pmf 定义域不连续且函数值不会大于 1，且所有可能取值的 pmf 总和为 1。</p>
+<p>（2） pdf 定义域连续，函数值可能大于 1，但是在整个定义域上 pdf 的积分为 1。 比如在中心位置，<span class="math notranslate nohighlight">\(x=\mu\)</span>, 有 <span class="math notranslate nohighlight">\(\mathcal{N} (\mu \mid \mu,\sigma^2)=(\sigma\sqrt {2\pi})^{-1} e^0\)</span>, 当标准差 <span class="math notranslate nohighlight">\(\sigma&lt; 1/\sqrt {2\pi}\)</span> 时, 就会出现 <span class="math notranslate nohighlight">\(p (x)&gt;1\)</span> 的情形。</p>
+<p>（3）pmf 求和得出事件的概率，而 pdf 求积分得出事件的概率。</p>
+</div>
+<p>高斯分布的累积分布函数 (cdf) 为：</p>
+<div class="math notranslate nohighlight">
+\[
+\Phi (x;\mu , \sigma^2)\overset\triangle {=} \int^x_{-\infty} \mathcal{N} (z|\mu,\sigma^2) dz   ~~\tag {2.44}\label {eqn:2.44}
+\]</div>
+<p>图 2.3 (a) 所示为 <span class="math notranslate nohighlight">\(\mu=0,\sigma^2=1\)</span> 时的 cdf 函数曲线。该积分没有闭合形式的表达式，但在多数软件包中都内置了。特别地，可以用<code class="docutils literal notranslate"><span class="pre">误差函数</span> <span class="pre">(error</span> <span class="pre">function,</span> <span class="pre">缩写为</span> <span class="pre">erf)</span></code> 来计算 cdf：</p>
+<div class="math notranslate nohighlight">
+\[
+\Phi (x;\mu , \sigma^)\overset\triangle {=} \frac 1 2 [1+ \text{erf} (z/\sqrt2)]    ~~\tag {2.45}\label {eqn:2.45}
+\]</div>
+<p>其中 <span class="math notranslate nohighlight">\(z=(x-\mu)/\sigma\)</span>， 误差函数为：</p>
+<div class="math notranslate nohighlight">
+\[
+\text{erf} (x)\overset\triangle {=} \frac {2}{\sqrt\pi}\int^x_0e^{-t^2} dt  ~~\tag {2.46}\label {eqn:2.46}
+\]</div>
+<p>高斯分布是统计学里使用最广的分布，有几个原因：</p>
+<p>（1）这两个参数很好解释，分别对应着分布中的两个基础特征，均值和方差。</p>
+<p>（2）中心极限定理 ( central limit theorem, 参考本书 2.6.3) 表明独立随机变量的和就近似为高斯分布，所以高斯分布很适合用来对残差或者噪音建模。</p>
+<p>（3）高斯分布有<code class="docutils literal notranslate"><span class="pre">最少假设</span> <span class="pre">(least</span> <span class="pre">number</span> <span class="pre">of</span> <span class="pre">assumptions)</span></code> 和<code class="docutils literal notranslate"><span class="pre">最大熵</span> <span class="pre">(maximum</span> <span class="pre">entropy)</span></code>, 适合对特定场景建立有特定均值和方差的约束和假设，如本书 9.2.6 所述，这使其成为很多情况下的默认选择。</p>
+<p>（4）高斯分布的数学形式很简单，容易实现，效率也很高。高斯分布更广泛应用参考（Jaynes, 2003）的第七章。</p>
+</div>
+<div class="section" id="id23">
+<h3>2.4.2 狄拉克函数（退化的高斯分布）<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h3>
+<p>如果让高斯分布的方差趋近于零，即 <span class="math notranslate nohighlight">\(\sigma^2 \rightarrow 0\)</span>，则高斯分布就变成高度无穷大而峰值宽度无穷窄的形状了，当然中心还是在 <span class="math notranslate nohighlight">\(\mu\)</span> 位置：</p>
+<div class="math notranslate nohighlight">
+\[
+\lim_{\sigma^2\rightarrow 0} N (x| \mu,\sigma^2) =\delta (x-\mu)   ~~\tag {2.47}\label {eqn:2.47}
+\]</div>
+<p>此函数 <span class="math notranslate nohighlight">\(\delta\)</span> 被称为<code class="docutils literal notranslate"><span class="pre">狄拉克函数</span> <span class="pre">(Dirac</span> <span class="pre">delta</span> <span class="pre">function)</span></code>。 其定义为：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\delta (x)=\begin {cases}\infty \qquad \text{if} x=0\\ 
+0  \qquad \text{if} x\ne 0   ~~\tag {2.48}\label {eqn:2.48}
+\end {cases}
+\end{align*}
+\end{split}\]</div>
+<p>狄拉克函数的积分满足：</p>
+<div class="math notranslate nohighlight">
+\[
+\int_{-\infty} ^\infty \delta (x) dx=1   ~~\tag {2.49}\label {eqn:2.49}
+\]</div>
+<p>狄拉克函数的特点就是筛选性 (sifting property), 可以从一系列求和或积分中筛选出某个单一元素项：</p>
+<div class="math notranslate nohighlight">
+\[
+\int_{-\infty} ^\infty f (x) \delta (x-\mu ) dx=f (\mu )  ~~\tag {2.50}\label {eqn:2.50}
+\]</div>
+<p>上式中只有当 <span class="math notranslate nohighlight">\(x-\mu=0\)</span> 的时候积分才非零。</p>
+</div>
+<div class="section" id="t">
+<h3>2.4.3 学生 <span class="math notranslate nohighlight">\(t\)</span> 分布<a class="headerlink" href="#t" title="Permalink to this headline">¶</a></h3>
+<p>高斯分布有个问题就是对异常值很敏感，因为从分布中心往外的对数概率衰减速度和距离成平方关系。有一个更健壮的分布，就是所谓的学生 <span class="math notranslate nohighlight">\(t\)</span> 分布 (student distribution), 其概率密度函数如下所示：</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{T} (x|\mu,\sigma^2,v)\propto \left [1+\frac 1v (\frac {x-\mu}{\sigma})^2 \right ]^ {-(\frac {v+1}{2})}  ~~\tag {2.51}\label {eqn:2.51}
+\]</div>
+<p>上式中的 <span class="math notranslate nohighlight">\(\mu\)</span> 是均值，<span class="math notranslate nohighlight">\(\sigma^2&gt;0\)</span> 是缩放参数 (scale parameter)，<span class="math notranslate nohighlight">\(\nu &gt; 0\)</span> 称为自由度 ( degrees of freedom)。 图 2.7 为该函数的曲线。为后文方便，这里介绍几个属性：</p>
+<div class="math notranslate nohighlight">
+\[
+mean=\mu, \qquad mode=\mu, \qquad var=\frac {\nu \sigma^2}{\nu -2}   ~~\tag {2.52}\label {eqn:2.52}
+\]</div>
+<p>该模型中，当自由度大于 <span class="math notranslate nohighlight">\(\nu &gt; 2\)</span> 时方差才有意义，自由度 <span class="math notranslate nohighlight">\(\nu &gt; 1\)</span> 均值才有意义。</p>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210719123943_bd.webp" /></p>
+<p>图 2.7 (a) <span class="math notranslate nohighlight">\(\mathcal{N}(0，1)\)</span>、<span class="math notranslate nohighlight">\(\mathcal{T}(0，1，1)\)</span> 和 <span class="math notranslate nohighlight">\(\text{Lap}(0，1/\sqrt{2})\)</span> 的 pdf。高斯和拉普拉斯的均值均为 <span class="math notranslate nohighlight">\(0\)</span> ，方差均为 <span class="math notranslate nohighlight">\(1\)</span> 。当 <span class="math notranslate nohighlight">\(\nu =1\)</span> 时，学生分布的均值和方差都未定义。(b) 上述 pdf 的对数。注意，学生分布对任何参数值都不是对数凹的，而拉普拉斯分布总是对数凹的(和对数凸的)。然而，两者都是单峰的。</p>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210719124002_96.webp" /></p>
+<p>图2.8 异常值对高斯分布、学生分布和拉普拉斯分布的影响。(a)无异常值的高斯曲线和学生分布曲线重叠。(b)有异常值时，与学生分布和拉普拉斯分布相比，高斯分布更易受异常值影响。根据(Bishop,2006a)的图 2 .16。</p>
+<p><span class="math notranslate nohighlight">\(\mathcal{T}\)</span> 分布的稳定性如图 2.8 所示，左侧是没有异常值的高斯分布和 <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> 分布，右侧是加入了异常值的。很明显异常值对于高斯分布干扰很大，而 <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> 分布则几乎看不出来有影响。因为 <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> 分布比高斯分布更重尾， 至少对于小自由度 <span class="math notranslate nohighlight">\(\nu\)</span> 的时候是这样，如图 2.7 所示。</p>
+<p>如果自由度 <span class="math notranslate nohighlight">\(\nu =1\)</span> , 则 <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> 分布就成了<code class="docutils literal notranslate"><span class="pre">柯西分布</span> <span class="pre">(Cauchy</span> <span class="pre">distribution)</span></code> 或者<code class="docutils literal notranslate"><span class="pre">洛伦兹分布</span> <span class="pre">(Lorentz</span> <span class="pre">distribution)</span></code>。 要注意这时候重尾会导致定义均值 (mean) 的积分不收敛。</p>
+<p>要确保有限范围的方差, 就需要自由度 <span class="math notranslate nohighlight">\(\nu &gt; 2\)</span>。 一般常用自由度是 <span class="math notranslate nohighlight">\(\nu =4\)</span>, 在一系列问题中性能表现不错 (Lange等， 1989)。 如果自由度远超过 5, 即 <span class="math notranslate nohighlight">\(\nu &gt;&gt; 5\)</span>， <span class="math notranslate nohighlight">\(\mathcal{T}\)</span> 分布很快近似到高斯分布，也就失去了对异常值的稳健性。</p>
+</div>
+<div class="section" id="id24">
+<h3>2.4.4 拉普拉斯分布<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h3>
+<p>另外一个常用的重尾分布就是<code class="docutils literal notranslate"><span class="pre">拉普拉斯分布(Laplace</span> <span class="pre">distribution)</span></code>，也被称为<code class="docutils literal notranslate"><span class="pre">双面指数分布</span> <span class="pre">(double</span> <span class="pre">sided</span> <span class="pre">exponential</span> <span class="pre">distribution)</span></code>, 其概率密度函数如下所示：</p>
+<div class="math notranslate nohighlight">
+\[
+\text{Lap} (x|\mu,b)\overset\triangle {=}\frac1 {2b}\exp (-\frac {|x-\mu|}{b})  ~~\tag {2.53}\label {eqn:2.53}
+\]</div>
+<p>上式中的 <span class="math notranslate nohighlight">\(\mu\)</span> 是位置参数, <span class="math notranslate nohighlight">\(b &gt; 0\)</span> 是缩放参数, 如图 2.7 所示就是其曲线。该分布的各属性如下所示：</p>
+<div class="math notranslate nohighlight">
+\[
+mean=\mu,\qquad  mode=\mu, \qquad var=2b^2   ~~\tag {2.54}\label {eqn:2.54}
+\]</div>
+<p>该分布的健壮性如图 2.8 中所示，从图中也可以发现拉普拉斯分布比高斯分布在 0 点有更高概率。此特性在 13.3 节要用到，很适合在模型中增强稀疏性。</p>
+</div>
+<div class="section" id="id25">
+<h3>2.4.5 伽马分布族<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h3>
+<p>此分布很灵活，适用于正实数值的随机变量 <span class="math notranslate nohighlight">\(x&gt;0\)</span> 。 该分布用两个参数定义，分别是<code class="docutils literal notranslate"><span class="pre">形状</span> <span class="pre">(shape)</span></code>  <span class="math notranslate nohighlight">\(a &gt; 0\)</span>  和 <code class="docutils literal notranslate"><span class="pre">速率</span> <span class="pre">(rate)</span></code>  <span class="math notranslate nohighlight">\(b &gt; 0\)</span>：</p>
+<div class="math notranslate nohighlight">
+\[
+ \text{Ga} (T|shape=a, rate=b)\overset\triangle {=}  \frac {b^a}{\Gamma (a) } T^{a-1} e^{-Tb}  ~~\tag {2.55}\label {eqn:2.55}
+\]</div>
+<p>上式中的 <span class="math notranslate nohighlight">\(\Gamma (a)\)</span> 指伽马函数：</p>
+<div class="math notranslate nohighlight">
+\[
+\Gamma (x) \overset\triangle {=} \int_0^{\infty} u^{x-1} e^{-u} du  ~~\tag {2.56}\label {eqn:2.56}
+\]</div>
+<p>图 2.9 是一些伽马分布的示例。该分布的各属性如下：</p>
+<div class="math notranslate nohighlight">
+\[
+mean=\frac {a}{b},\qquad  mode=\frac {a-1}{b},\qquad var=\frac {a}{b^2}  ~~\tag {2.57}\label {eqn:2.57}
+\]</div>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210719124018_c4.webp" /></p>
+<p>图 2.9 (a)一些 <span class="math notranslate nohighlight">\(Ga(a，b=1)\)</span> 分布。如果为 <span class="math notranslate nohighlight">\(a≤1\)</span> ，则众数为 <span class="math notranslate nohighlight">\(0\)</span> ，否则为 <span class="math notranslate nohighlight">\(a&gt;0\)</span>。我们增加速率 <span class="math notranslate nohighlight">\(b\)</span>，减小水平尺度，就把所有东西都往左往上挤了。(b)一些降雨量数据的经验 pdf，叠加了拟合的Gamma分布。</p>
+<p>有一些分布实际上是伽马分布的特例，比如下面这几个：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">指数分布</span> <span class="pre">(Exponential</span> <span class="pre">distribution)</span></code> 是形状参数 <span class="math notranslate nohighlight">\(a\)</span> 为 1 的伽马分布，定义为 <span class="math notranslate nohighlight">\(\text{Expon}(x|\lambda) \overset\triangle {=} \text{Ga}(x|1,\lambda)\)</span>, 其中的 <span class="math notranslate nohighlight">\(\lambda\)</span> 是速率参数 (rate)。 此分布用于建模<code class="docutils literal notranslate"><span class="pre">泊松过程</span> <span class="pre">(Poisson</span> <span class="pre">process)</span> </code>中各事件之间的时间间隔。例如，一个过程可能由一系列事件按照某个固定的平均速率 <span class="math notranslate nohighlight">\(\lambda\)</span> 连续独立发生。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">厄兰分布</span> <span class="pre">(Erlang</span> <span class="pre">Distribution)</span></code> 是形状参数 <span class="math notranslate nohighlight">\(a\)</span> 为整数的伽马分布。经常设置 <span class="math notranslate nohighlight">\(a=2\)</span> ， 产生一个单参数的厄兰分布，即 <span class="math notranslate nohighlight">\( \text{Erlang} (x|\lambda) = \text{Ga} (x|2, \lambda)\)</span>，<span class="math notranslate nohighlight">\(\lambda\)</span> 为速率参数（rate）。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">卡方分布</span> <span class="pre">(Chi-squared</span> <span class="pre">distribution)</span></code> 的定义为 <span class="math notranslate nohighlight">\(\chi^2 (x|\nu) \overset\triangle {=} \text{Ga} (x|\frac{\nu}{2},\frac{1}{2})\)</span>. 此分布是高斯分布随机变量平方和的分布。更确切地说，如果有 <span class="math notranslate nohighlight">\(Z_i \sim  \mathcal{N} (0, 1)\)</span>， 而且 <span class="math notranslate nohighlight">\(S=\sum_{i=1}^\nu Z_i^2\)</span>， 则 <span class="math notranslate nohighlight">\(S\)</span> 服从卡方分布: <span class="math notranslate nohighlight">\(S \sim  \chi_\nu^2\)</span>.</p></li>
+</ul>
+<p>另一个有用的结果是：如果一个随机变量服从伽马分布：<span class="math notranslate nohighlight">\(X \sim  \text{Ga} (a,b)\)</span> 那么这个随机变量的倒数就服从一个逆伽马分布, 即 <span class="math notranslate nohighlight">\(\frac{1}{X} \sim  \text{IG} (a,b)\)</span>, 这个在练习 2.10 里面有详细描述。逆伽马分布 (inverse gamma) 定义如下：</p>
+<div class="math notranslate nohighlight">
+\[
+\text{IG} (x|shape =a,scale =b)\overset\triangle {=} \frac {b^a}{\Gamma  (a)} x^{-(a+1)} e^{-\frac b x}  ~~\tag {2.58}\label {eqn:2.58}
+\]</div>
+<p>逆伽马分布的各属性如下：</p>
+<div class="math notranslate nohighlight">
+\[
+ mean= \frac {b}{a-1}, \qquad mode=\frac {b}{a+1}, \qquad var=\frac {b^2}{(a-1)^2 (a-2)}  ~~\tag {2.59}\label {eqn:2.59}
+\]</div>
+<p>均值只在 <span class="math notranslate nohighlight">\(a&gt;1\)</span> 的情况下才存在（收敛），而方差仅在 <span class="math notranslate nohighlight">\(a&gt;2\)</span> 的时候存在（收敛）。</p>
+</div>
+<div class="section" id="id26">
+<h3>2.4.6 贝塔分布<a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h3>
+<p>贝塔分布的定义域为区间 [0,1], 定义如下：</p>
+<div class="math notranslate nohighlight">
+\[
+\text{Beta} (x|a,b)=\frac {1}{B (a,b)} x^{a-1 }(1-x)^{b-1}  ~~\tag {2.60}\label {eqn:2.60}
+\]</div>
+<p>上式中 <span class="math notranslate nohighlight">\(B (a,b)\)</span> 是贝塔函数，定义如下：</p>
+<div class="math notranslate nohighlight">
+\[
+B (a,b)\overset\triangle {=}\frac {\Gamma (a)\Gamma (b)}{\Gamma (a+b)}   ~~\tag {2.61}\label {eqn:2.61}
+\]</div>
+<p>该分布见图 2.10 。 需要 <span class="math notranslate nohighlight">\(a\)</span> 和 <span class="math notranslate nohighlight">\(b\)</span> 都大于 0 来确保整个分布可积分，因为需要保证 <span class="math notranslate nohighlight">\(B (a,b)\)</span> 存在。如果 <span class="math notranslate nohighlight">\(a=b=1\)</span> ，得到的是<code class="docutils literal notranslate"><span class="pre">均匀分布</span> <span class="pre">(uniform</span> <span class="pre">distirbution)</span></code>， 如图 2.10 中红色虚线所示。如果 <span class="math notranslate nohighlight">\(a\)</span> 和 <span class="math notranslate nohighlight">\(b\)</span> 都小于 1 , 那么得到的就是一个<code class="docutils literal notranslate"><span class="pre">双峰分布</span> <span class="pre">(bimodal</span> <span class="pre">distribution)</span></code>, 两个峰值在 0 和 1 位置上，如图 2.10 中的蓝色实线所示。如果 <span class="math notranslate nohighlight">\(a\)</span> 和 <span class="math notranslate nohighlight">\(b\)</span> 都大于 1 了，得到的就是<code class="docutils literal notranslate"><span class="pre">单峰分布</span> <span class="pre">(unimodal</span> <span class="pre">distribution)</span></code> ，如图 2.10 中的另外两条虚线所示。</p>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210719153702_72.webp" /></p>
+<p>图 2.10 一些贝塔分布图。</p>
+<p>该分布的各属性如下，在练习 2.16 里会用到：</p>
+<div class="math notranslate nohighlight">
+\[
+ mean= \frac {a}{a+b},\qquad mode=\frac {a-1}{a+b-2},\qquad var=\frac {ab}{(a+b)^2 (a+b+1)}  ~~\tag {2.62}\label {eqn:2.62}
+\]</div>
+</div>
+<div class="section" id="id27">
+<h3>2.4.7 帕累托分布<a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">帕累托分布</span> <span class="pre">(Pareto</span> <span class="pre">distribution)</span></code>是用来对具有长尾（或重尾）特点的变量进行建模的，特别是符合“80/20”法则特征的随机变量。例如，英语中最常出现的词汇是冠词 <code class="docutils literal notranslate"><span class="pre">the</span></code>，其出现概率为第二位 <code class="docutils literal notranslate"><span class="pre">of</span></code> 的 2 倍多，而 <code class="docutils literal notranslate"><span class="pre">of</span></code> 的出现概率是第四位单词的 2 倍，诸如此类。如果将每个词汇词频和排名作图，得到的是一个<code class="docutils literal notranslate"><span class="pre">幂律</span> <span class="pre">(power</span> <span class="pre">law)</span></code>, 也称为<code class="docutils literal notranslate"><span class="pre">齐夫定律</span> <span class="pre">(Zipf's</span> <span class="pre">law)</span></code>。人类财富的分配也有类似特点，尤其是在资本主义国家。</p>
+<p>此分布的概率密度函数 (pdf) 如下：</p>
+<div class="math notranslate nohighlight">
+\[
+\text{Pareto} (x|k,m)=km^kx^{-(k+1)}\mathbb{I}(x\geq m)   ~~\tag {2.63}\label {eqn:2.63}
+\]</div>
+<p>通过定义可知，<span class="math notranslate nohighlight">\(x\)</span> 必须比某一个常数 <span class="math notranslate nohighlight">\(m\)</span> 大，但又不用大特别多，而其中 <span class="math notranslate nohighlight">\(k\)</span> 则控制这个的度，避免 <span class="math notranslate nohighlight">\(x\)</span> 太大。随着 <span class="math notranslate nohighlight">\(k \rightarrow \infty\)</span>, 该分布接近于<code class="docutils literal notranslate"><span class="pre">狄拉克分布</span></code> <span class="math notranslate nohighlight">\(\delta (x-m)\)</span> 。图 2.11 (a) 就是一些帕累托分布图，如果用对数坐标来制图，会形成一条直线，如图 2.11 (b) 所示（也叫幂律）。这个直线的方程形式为 <span class="math notranslate nohighlight">\(\log p (x)=a\log x+c\)</span>, 其中的 <span class="math notranslate nohighlight">\(a\)</span> 和 <span class="math notranslate nohighlight">\(c\)</span> 是某个常数。</p>
+<p>帕累托分布的属性如下：</p>
+<div class="math notranslate nohighlight">
+\[
+mean=\frac {km} {k-1} \text {if } k&gt;1, \qquad mode=m,  \qquad var =\frac {m^2k}{(k-1)^2 (k-2)} \text{if } k &gt; 2  ~~\tag {2.64}\label {eqn:2.64}
+\]</div>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210719155406_aa.webp" /></p>
+<p>图 2.11 (a) <span class="math notranslate nohighlight">\(m=1\)</span> 时的帕累托分布 <span class="math notranslate nohighlight">\(\text{Pareto}(x|m，k)\)</span> 。 (b) 对数-对数尺度上的概率密度函数（pdf）。</p>
+</div>
+</div>
+<div class="section" id="id28">
+<h2>2.5 联合概率分布<a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h2>
+<p>前面都是单变量的概率分布，接下来看更复杂的多变量概率分布，即<code class="docutils literal notranslate"><span class="pre">联合概率分布</span> <span class="pre">(</span> <span class="pre">joint</span> <span class="pre">probability</span> <span class="pre">distributions)</span></code>。 其中涉及到多个相关联的随机变量，也是本书核心内容。</p>
+<p>对于规模 <span class="math notranslate nohighlight">\(D&gt;1\)</span> 个的随机变量集合，其联合概率分布表示为 <span class="math notranslate nohighlight">\(p (x_1,...,x_D)\)</span>, 被用于对这些随机变量间的（随机）关系进行建模。</p>
+<p>如果所有变量都是离散型变量，则可以把联合概率分布表示成一个多维数组，每个维度对应一个变量。如果设每个变量的状态数目总共是 <span class="math notranslate nohighlight">\(K\)</span> , 则按照这种表示法，需要定义 <span class="math notranslate nohighlight">\(O(K^D)\)</span> 个参数。当然，通常可以通过条件独立假设，使用更少的参数来定义高维联合分布（第 10 章会做进一步解释）。</p>
+<p>对于连续型变量，为了减小复杂度，比较常用的做法是将概率密度函数（pdf ）限制为某些特定的形式（如：假设各变量相互独立且呈高斯分布）。</p>
+<div class="section" id="id29">
+<h3>2.5.1 协方差和相关系数<a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h3>
+<p>随机变量 <span class="math notranslate nohighlight">\(X\)</span> 和 <span class="math notranslate nohighlight">\(Y\)</span> 之间的<code class="docutils literal notranslate"><span class="pre">协方差</span> <span class="pre">(covariance)</span></code> 用来衡量两者之间的（线性）相关程度，定义如下：</p>
+<div class="math notranslate nohighlight">
+\[
+cov [X,Y]\overset\triangle {=} \mathbb{E} [(X-\mathbb{E}[X])(Y-\mathbb{E}[Y])] =\mathbb{E}[XY]-\mathbb{E}[X] \mathbb{E}[Y]   ~~\tag {2.65}\label {eqn:2.65}
+\]</div>
+<p>如果 <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> 是一个 <span class="math notranslate nohighlight">\(d\)</span> 维度的随机向量（每个维度对应一个随机变量），则其<code class="docutils literal notranslate"><span class="pre">协方差矩阵</span> <span class="pre">(covariance</span> <span class="pre">matrix)</span></code> 定义如下，是一个<code class="docutils literal notranslate"><span class="pre">对称正定矩阵</span> <span class="pre">(symmetric</span> <span class="pre">positive</span> <span class="pre">definite</span> <span class="pre">matrix)</span></code>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin {align*}
+cov [x] &amp;\triangleq E [(x-E [x])(x-E [x])^T]   ~~\tag {2.66}\label {eqn:2.66}\\
+        &amp;=  \begin {pmatrix}
+        var [X_1] &amp; cov [X_1,X_2] &amp;...&amp; cov [X_1,X_d]  \\
+        cov [X_2,X_1]  &amp; var [X_2]  &amp;...&amp;cov [X_2,X_d]  \\
+        ...&amp;...&amp;...&amp;...\\
+        cov [X_d,X_1]  &amp; cov [X_d,X_2] &amp;...&amp;var [X_d] \\
+        \end {pmatrix}   ~~\tag {2.67}\label {eqn:2.67}\\
+\end {align*}
+\end{split}\]</div>
+<p>协方差可以从 0 到 <span class="math notranslate nohighlight">\(\infty \)</span> 之间取值。但为使用方便，会将其标准化为有上限。</p>
+<p>其中比较常用的是<code class="docutils literal notranslate"><span class="pre">皮尔逊相关系数</span> <span class="pre">(correlation</span> <span class="pre">coefficient)</span></code>，变量 <span class="math notranslate nohighlight">\(X\)</span> 和 <span class="math notranslate nohighlight">\(Y\)</span> 之间的皮尔逊相关系数为：</p>
+<div class="math notranslate nohighlight">
+\[
+\text{corr} [X,Y]\overset\triangle {=} \frac {cov [X,Y]}{\sqrt {var [X] var [Y]}}  ~~\tag {2.68}\label {eqn:2.68}
+\]</div>
+<p>相应的，所有维度一起构成相关矩阵 (correlation matrix) ：</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+R= \begin {pmatrix}
+        \text{corr} [X_1,X_1] &amp; \text{corr}  [X_1,X_2] &amp;...&amp; \text{corr}  [X_1,X_d]  \\
+        ...&amp;...&amp;...&amp;...\\
+       \text{corr}  [X_d,X_1]  &amp; \text{corr}  [X_d,X_2] &amp;...&amp;\text{corr}  [X_d] \\
+    \end {pmatrix}       ~~\tag {2.69}\label {eqn:2.69}
+\end{align*}\]</div>
+<p>从练习 4.3 可知相关系数位于 [-1,1] 区间内。在相关矩阵中，每一个对角线元素值都是 1, 其他的值都在 [-1,1] 区间内。</p>
+<p>另外，当且仅当参数 <span class="math notranslate nohighlight">\(a\)</span> 和 <span class="math notranslate nohighlight">\(b\)</span> 满足 <span class="math notranslate nohighlight">\(Y = aX + b\)</span> 时，才有 <span class="math notranslate nohighlight">\(corr [X, Y] = 1\)</span>, 也就是说 <span class="math notranslate nohighlight">\(X\)</span> 和 <span class="math notranslate nohighlight">\(Y\)</span> 之间存在线性关系，参考练习 4.3.</p>
+<p>直觉可能让人觉得相关系数和线性回归的斜率有关，比如说像 <span class="math notranslate nohighlight">\(Y = aX + b\)</span> 这个表达式当中的系数 <span class="math notranslate nohighlight">\(a\)</span> 一样。然而并非如此，如公式 7.99 所示，回归系数公式中的 <span class="math notranslate nohighlight">\(a = cov [X, Y] /var[X]\)</span>，是回归线斜率的量化， 而相关系数则完全不同，可以看做是两个变量之间线性程度的衡量，参考图 2.12.</p>
+<p>回想本书 2.2.4 节, 如果 <span class="math notranslate nohighlight">\(X\)</span> 和 <span class="math notranslate nohighlight">\(Y\)</span> 相互独立，则有 <span class="math notranslate nohighlight">\(p(X, Y) = p(X) p(Y)\)</span>, 二者的协方差 <span class="math notranslate nohighlight">\(cov [X,Y] = 0\)</span>, 相关系数 <span class="math notranslate nohighlight">\(\text{corr}[X,Y] = 0\)</span>, 很好理解，相互独立就是不相关了。但反过来不成立，不相关并不能意味着相互独立。例如设 <span class="math notranslate nohighlight">\(X \sim  U (-1,1), Y=X^2\)</span> ， 很明显，<span class="math notranslate nohighlight">\(X\)</span> 与 <span class="math notranslate nohighlight">\(Y\)</span> 相关，甚至 <span class="math notranslate nohighlight">\(Y\)</span> 就是 <span class="math notranslate nohighlight">\(X\)</span> 唯一决定的，然而如练习 4.1 所示，这两个变量的相关系数等于零，即 <span class="math notranslate nohighlight">\(corr [X,Y]=0\)</span> 。 图 2.12 有更多直观的例子，都是两个变量 <span class="math notranslate nohighlight">\(X\)</span> 和 <span class="math notranslate nohighlight">\(Y\)</span> 具有明显的相关性，但计算出来的相关系数却都是 0 。 实际上更通用的用来衡量两组随机变量之间是否独立的工具是<code class="docutils literal notranslate"><span class="pre">互信息量</span> <span class="pre">(mutual</span> <span class="pre">information)</span></code>，这部分在 2.8.3 节中有涉及。如果两个变量真正不相关，互信息量才会等于 0.</p>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210719161512_66.webp" /></p>
+<p>图 2.12 几组 <span class="math notranslate nohighlight">\((x，y)\)</span> 点，每组的相关系数为 <span class="math notranslate nohighlight">\(x\)</span> 和 <span class="math notranslate nohighlight">\(y\)</span>。请注意，相关性反映了线性关系的噪声和方向(顶行)，但不是该关系的斜率(中间)，也不是非线性关系的许多方面(底部)。注：中间的数字斜率为 0 ，但在这种情况下，相关系数未定义，因为 <span class="math notranslate nohighlight">\(Y\)</span> 的方差为 0 。</p>
+<p>此处查看原书图 2.13</p>
+</div>
+<div class="section" id="id30">
+<h3>2.5.2 多元高斯分布<a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">多元高斯分布</span> <span class="pre">(multivariate</span> <span class="pre">Gaussian)</span></code> 或者 <code class="docutils literal notranslate"><span class="pre">多元正态分布</span> <span class="pre">(multivariate</span> <span class="pre">normal,</span> <span class="pre">缩写为</span> <span class="pre">MVN)</span></code>, 是连续型随机变量的联合概率分布中应用最广的分布。在第 4 章会对其进行详细说明，这里给出简单定义。</p>
+<p>在 <span class="math notranslate nohighlight">\(D\)</span> 维上的多元正态分布的定义如下所示：</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{N} (\mathbf{x}|\mu,\Sigma)\overset\triangle {=} \frac {1}{(2\pi )^{\frac D2} |\Sigma|^{\frac12}}\exp [-\frac12 (\mathbf{x}-\mu)^T\Sigma^{-1}(\mathbf{x}-\mu) ]  ~~\tag {2.70}\label {eqn:2.70}
+\]</div>
+<p>上式中 <span class="math notranslate nohighlight">\(\mu = \mathbb{E}[x] \in R^D\)</span> 是均值向量，而 <span class="math notranslate nohighlight">\(\Sigma= cov [\mathbf{x}]\)</span> 是一个 <span class="math notranslate nohighlight">\( D\times D\)</span> 的协方差矩阵。</p>
+<p>有时候会用到一个叫做<code class="docutils literal notranslate"><span class="pre">精度矩阵</span> <span class="pre">(precision/concentration</span> <span class="pre">matrix)</span></code>的东西, 其实就是协方差矩阵的逆矩阵，也就是 <span class="math notranslate nohighlight">\(\Lambda =\Sigma^{-1 }\)</span>. 前面分母为 <span class="math notranslate nohighlight">\((2\pi )^{\frac D2}|\Sigma|^{\frac12}\)</span> 的项为归一化常数，以保证概率密度函数的积分等于 1。</p>
+<p>图 2.13 展示了一些多元正态分布的密度图，其中有三个是不同协方差矩阵的下的二维投影，另外一个是立体的曲面图像。一个完整的协方差矩阵有 <span class="math notranslate nohighlight">\(D (D + 1)/2\)</span> 个参数，除以 2 是因为矩阵 <span class="math notranslate nohighlight">\(\Sigma\)</span> 是对称的。对角协方差矩阵的方向有 <span class="math notranslate nohighlight">\(D\)</span> 个参数，非对角线位置的元素的值都是 0。 球面 (spherical) 或者各向同性 (isotropic) 协方差矩阵 <span class="math notranslate nohighlight">\(\Sigma = \delta^2 I_D\)</span> 有一个自由参数。</p>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210719164541_81.webp" /></p>
+<p>图2.13 二维高斯的等值线图。(a) 完全协方差矩阵具有椭圆等值线。(b) 对角协方差矩阵是轴对齐的椭圆。(c) 球形协方差矩阵具有圆形形状。(d) c 中球形高斯的曲面图。</p>
+</div>
+<div class="section" id="id31">
+<h3>2.5.3 多元学生 <span class="math notranslate nohighlight">\(t\)</span> 分布<a class="headerlink" href="#id31" title="Permalink to this headline">¶</a></h3>
+<p>相比多元正态分布, 多元学生 <span class="math notranslate nohighlight">\(t\)</span> 分布更加健壮，其概率密度函数为：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin {align*}
+\mathcal{T} (\mathbf{x}|\mu,\Sigma,\nu)&amp;=\frac {\Gamma (\nu/2+D/2)}{\Gamma (\nu/2)}  \frac {|\Sigma|^{-1/2}}{\nu^{D/2}\pi^{D/2}}\times [1+\frac1\nu (\mathbf{x}-\mu )^T\Sigma^{-1}(\mathbf{x}-\mu)]^{-(\frac {\nu+D}{2})}
+  ~~\tag {2.71}\label {eqn:2.71}\\
+&amp;=\frac {\Gamma (\nu/2+D/2)}{\Gamma (\nu/2)} |\pi V|^{-1/2}\times [1+(\mathbf{x}-\mu)^TV^{-1}(\mathbf{x}-\mu)]^{-(\frac {\nu+D}{2})}
+   ~~\tag {2.72}\label {eqn:2.72}\\
+\end {align*}
+\end{split}\]</div>
+<p>其中的 <span class="math notranslate nohighlight">\(\Sigma\)</span> 叫做范围矩阵 (scale matrix), 而并不是真正的协方差矩阵，<span class="math notranslate nohighlight">\(V=\nu\Sigma\)</span>. 这个分布比高斯分布有更重的尾部 (fatter tails)。 参数 <span class="math notranslate nohighlight">\(\nu\)</span> 越小，越重尾；而当 <span class="math notranslate nohighlight">\(\nu \rightarrow \infty\)</span> ，这个分布趋向于高斯分布。</p>
+<p>该分布的属性如下：</p>
+<div class="math notranslate nohighlight">
+\[
+mean=\mu, \qquad mode=\mu, \qquad  Cov=\frac {\nu}{\nu-2}\Sigma  ~~\tag {2.73}\label {eqn:2.73}
+\]</div>
+</div>
+<div class="section" id="id32">
+<h3>2.5.4 狄利克雷分布<a class="headerlink" href="#id32" title="Permalink to this headline">¶</a></h3>
+<p>贝塔布扩展到多元就成了<code class="docutils literal notranslate"><span class="pre">狄利克雷分布</span> <span class="pre">(Dirichlet</span> <span class="pre">distribution)</span></code>, 支持<code class="docutils literal notranslate"><span class="pre">概率单纯形</span> <span class="pre">(probability</span> <span class="pre">simplex)</span></code>, 定义如下：</p>
+<div class="math notranslate nohighlight">
+\[
+S_K=\{x:0 \le x_k \le 1, \sum ^K_{k=1} x_k=1\}  ~~\tag {2.74}\label {eqn:2.74}
+\]</div>
+<p>其概率密度函数 pdf 如下所示：</p>
+<div class="math notranslate nohighlight">
+\[
+\text{Dir} (x|\alpha)\overset\triangle {=} \frac {1}{B (\alpha)} \prod^K_{k=1} x_k^{\alpha_k -1} \mathbb{I} (x\in S_K)  ~~\tag {2.75}\label {eqn:2.75}
+\]</div>
+<p>式中 <span class="math notranslate nohighlight">\(B (\alpha_1,...,\alpha_K)\)</span> 是贝塔函数在 <span class="math notranslate nohighlight">\(K\)</span> 个变量上的自然推广， 定义如下：</p>
+<div class="math notranslate nohighlight">
+\[
+B (\alpha)\overset\triangle {=} \frac {\prod^K_{k=1}\Gamma (\alpha_k)}{\Gamma (\alpha_0)}  ~~\tag {2.76}\label {eqn:2.76}
+\]</div>
+<p>其中的 <span class="math notranslate nohighlight">\(\alpha_0\overset\triangle {=} \sum^K_{k=1}\alpha_k\)</span>。</p>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210719170115_59.webp" /></p>
+<p>图2.14 (a) 当 <span class="math notranslate nohighlight">\(K = 3\)</span> 时的狄利克雷分布定义了单形上的分布，可以用三角曲面表示。该曲面上的点满足 <span class="math notranslate nohighlight">\(0 ≤ θ_k≤ 1\)</span> 和 <span class="math notranslate nohighlight">\(\sum_{k=1}^3θ_k= 1\)</span> 。(b) 当 <span class="math notranslate nohighlight">\(α = (2，2，2)\)</span> 时的狄利克雷密度图。 (c)  <span class="math notranslate nohighlight">\(α = (20，2，2)\)</span> 。 (d) <span class="math notranslate nohighlight">\(α = ( 0.1，0.1，0.1)\)</span> 。</p>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210719170355_45.webp" /></p>
+<p>图 2.15 不同参数值的 5 维对称狄利克雷分布样本。 (a) <span class="math notranslate nohighlight">\(α = ( 0.1，...,0.1)\)</span>，这导致分布非常稀疏，有许多 0 。(b) <span class="math notranslate nohighlight">\(α = ( 1，...,1)\)</span>，这导致更均匀和密集的分布。</p>
+<p>图 2.14 展示的是当 <span class="math notranslate nohighlight">\(K=3\)</span> 时的一些狄利克雷函数图，图 2.15 是一些概率向量样本。很明显其中 <span class="math notranslate nohighlight">\(\alpha_0\overset\triangle {=} \sum^K_{k=1}\alpha_k\)</span> 控制了分布强度，也就是峰值位置。例如 <span class="math notranslate nohighlight">\(\text{Dir} (1, 1, 1)\)</span> 是一个均匀分布，<span class="math notranslate nohighlight">\(\text{Dir} (2, 2, 2)\)</span> 是以 <span class="math notranslate nohighlight">\((1/3, 1/3, 1/3)\)</span> 为中心的宽分布 (broad distribution), 而 <span class="math notranslate nohighlight">\(\text{Dir} (20, 20, 20)\)</span> 是以 <span class="math notranslate nohighlight">\((1/3, 1/3, 1/3)\)</span> 为中心的窄分布 (narrow distribution)。如果对于所有的 <span class="math notranslate nohighlight">\(k\)</span>  都有 <span class="math notranslate nohighlight">\(\alpha_k &lt;1\)</span>, 那么峰值位于单纯形的角落。</p>
+<p>狄利克雷分布的属性如下：</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbb{E} [x_k]=\frac {\alpha_k}{\alpha_0},\qquad mode [x_k]=\frac {\alpha_k-1}{\alpha_0-K},\qquad var [x_k]=\frac {\alpha_k (\alpha_0-\alpha_k)}{\alpha_0^2 (\alpha_0+1)}  ~~\tag {2.77}\label {eqn:2.77}
+\]</div>
+<p>其中 <span class="math notranslate nohighlight">\(\alpha_0 = \sum_k \alpha_k\)</span>. 通常我们使用形式为 <span class="math notranslate nohighlight">\(\alpha_k=\alpha/K\)</span> 的对称狄利克雷先验，则有均值为 <span class="math notranslate nohighlight">\(1/K\)</span>， 方差为 <span class="math notranslate nohighlight">\(var [x_k]=\frac {K-1}{K^2 (\alpha+1)}\)</span>。 此时增大 <span class="math notranslate nohighlight">\(\alpha\)</span> 就能降低方差，提高了模型精度。</p>
+</div>
+</div>
+<div class="section" id="id33">
+<h2>2.6 随机变量变换<a class="headerlink" href="#id33" title="Permalink to this headline">¶</a></h2>
+<p>如果有一个随机变量 <span class="math notranslate nohighlight">\(\mathbf{x} \sim p ()\)</span>, 还有个函数 <span class="math notranslate nohighlight">\(\mathbf{y}=f (\mathbf{x})\)</span>, 那么 <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> 的分布是什么呢？这就是本节要讨论的内容。</p>
+<div class="section" id="id34">
+<h3>2.6.1 线性变换<a class="headerlink" href="#id34" title="Permalink to this headline">¶</a></h3>
+<p>设 <span class="math notranslate nohighlight">\(f()\)</span> 是一个线性函数：</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{y}=f (\mathbf{x})=A\mathbf{x}+b  ~~\tag {2.78}\label {eqn:2.78}
+\]</div>
+<p>这样就可以推导 <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> 的均值和协方差。</p>
+<p>均值如下：</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbb{E} [\mathbf{y}]=\mathbb{E} [A\mathbf{x}+b]=A\mu+b  ~~\tag {2.79}\label {eqn:2.79}
+\]</div>
+<p>上式中的 <span class="math notranslate nohighlight">\(\mu=\mathbb{E}[\mathbf{x}]\)</span>. 这就叫<code class="docutils literal notranslate"><span class="pre">线性期望</span> <span class="pre">(linearity</span> <span class="pre">of</span> <span class="pre">expectation)</span></code>。 如果 <span class="math notranslate nohighlight">\(f ()\)</span> 是一个标量值的函数 <span class="math notranslate nohighlight">\(f (\mathbf{x})=a^T\mathbf{x}+b \)</span>, 那么对应结果就是：</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbb{E} [a^T\mathbf{x}+b]=a^T\mu+b  ~~\tag {2.80}\label {eqn:2.80}
+\]</div>
+<p>对于协方差，得到的就是（证明略）：</p>
+<div class="math notranslate nohighlight">
+\[
+cov [\mathbf{y}]=cov [A\mathbf{x}+b]=A\Sigma A^T  ~~\tag {2.81}\label {eqn:2.81}
+\]</div>
+<p>其中的 <span class="math notranslate nohighlight">\(\Sigma =cov [\mathbf{x}]\)</span>。如果 <span class="math notranslate nohighlight">\(f ()\)</span> 的值为标量，则结果为：</p>
+<div class="math notranslate nohighlight">
+\[
+var [y]=var [a^T\mathbf{x}+b]=a\Sigma a^T  ~~\tag {2.82}\label {eqn:2.82}
+\]</div>
+<p>这些结果后面的章节都会多次用到。不过这里要注意，只有 <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> 服从高斯分布时，才能单凭借着均值和协方差来定义 <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> 的分布。通常必须使用一些技巧来对 <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> 的完整分布进行推导，而不能只靠两个属性就确定。</p>
+</div>
+<div class="section" id="id35">
+<h3>2.6.2 通用变换<a class="headerlink" href="#id35" title="Permalink to this headline">¶</a></h3>
+<p>如果 <span class="math notranslate nohighlight">\(X\)</span> 是一个离散型随机变量，而 <span class="math notranslate nohighlight">\(Y\)</span> 是 <span class="math notranslate nohighlight">\(X\)</span> 的变换 <span class="math notranslate nohighlight">\(f(x) = y\)</span>，可以简单通过将所有 <span class="math notranslate nohighlight">\(X\)</span> 的概率质量相加得出 <span class="math notranslate nohighlight">\(y\)</span> 的概率质量函数（pmf）：</p>
+<div class="math notranslate nohighlight">
+\[
+p_y (y)=\sum_{x:f (x)=y} p_x (x)  ~~\tag {2.83}\label {eqn:2.83}
+\]</div>
+<p>例如，若 <span class="math notranslate nohighlight">\(X\)</span> 是偶数则 <span class="math notranslate nohighlight">\(f(X)=1\)</span>, 奇数则 <span class="math notranslate nohighlight">\(f(X)=0\)</span>，<span class="math notranslate nohighlight">\(p_x(X)\)</span> 是在 <span class="math notranslate nohighlight">\(\{1, . . . , 10\}\)</span> 上的均匀分布，<span class="math notranslate nohighlight">\(p_y(1) = \sum_{x \in \{2,4,6,8,10\}} p_x(x) = 0.5\)</span> ，并且 <span class="math notranslate nohighlight">\(p_y(0) = 0.5\)</span>. 注意这个例子中函数 <span class="math notranslate nohighlight">\(f\)</span> 是多对一的函数。</p>
+<p>如果 <span class="math notranslate nohighlight">\(X\)</span> 是连续型随机变量，就可以利用公式 2.83。因为 <span class="math notranslate nohighlight">\(p_x(x)\)</span> 是一个概率密度，而不是概率质量，无法用密度累加方式计算，只能采用累积分布函数 <span class="math notranslate nohighlight">\(P\)</span> 来计算：</p>
+<div class="math notranslate nohighlight">
+\[
+P_y (y)\overset\triangle {=} P (Y\le y)=P (f (X)\le y)=P (X\in\{x|f (x)\le y\})  ~~\tag {2.84}\label {eqn:2.84}
+\]</div>
+<p>可以通过对累积分布函数的微分求导得到 <span class="math notranslate nohighlight">\(y\)</span> 的概率密度函数。</p>
+<p>如果 <span class="math notranslate nohighlight">\(f\)</span> 是单调函数和可逆函数，则可以改写为：</p>
+<div class="math notranslate nohighlight">
+\[
+P_y (y)\overset\triangle {=} P (Y\le y)=P (X\le f^{-1}(y))=P_x (f^{-1}(y))  ~~\tag {2.85}\label {eqn:2.85}
+\]</div>
+<p>求导可得：</p>
+<div class="math notranslate nohighlight">
+\[
+p_y (y)\overset\triangle {=} \frac {d}{dy} P_y (y)=\frac {d}{dy} P_x (f^{-1}(y)=\frac {dx}{dy}\frac {d}{dx} P_x(x)=\frac {dx}{dy} p_x (x)  ~~\tag {2.86}\label {eqn:2.86}
+\]</div>
+<p>其中 <span class="math notranslate nohighlight">\(x=f^{-1}(y)\)</span> , 可以把 <span class="math notranslate nohighlight">\(dx\)</span> 看作是 <span class="math notranslate nohighlight">\(x\)</span> -空间中的一种体积测度；类似的把 <span class="math notranslate nohighlight">\(dy\)</span> 当作对 <span class="math notranslate nohighlight">\(y\)</span> -空间的体积测度。则 <span class="math notranslate nohighlight">\(\frac {dx}{dy}\)</span> 测量了体积的变化。由于符号无关紧要，所以取绝对值来得到通用表达：</p>
+<div class="math notranslate nohighlight">
+\[
+p_y (y)=p_x (x)|\frac {dx}{dy}|  ~~\tag {2.87}\label {eqn:2.87}
+\]</div>
+<p>这也叫变量转换公式 (change of variables formula). 按照下面的思路来理解可能更容易。落在区间 <span class="math notranslate nohighlight">\((x, x+\delta x)\)</span> 的观测被变换到区间 <span class="math notranslate nohighlight">\((y, y+\delta y)\)</span> ， 其中 <span class="math notranslate nohighlight">\(p_x (x)\delta x \approx p_y (y)\delta  y\)</span>。 因此 <span class="math notranslate nohighlight">\(p_y (y) \approx p_x(x)|\frac {\delta x}{\delta y}|\)</span>. 例如，假如有个随机变量 <span class="math notranslate nohighlight">\(X \sim  U(-1,1)\)</span> , 且 <span class="math notranslate nohighlight">\(Y=X^2\)</span> ， 那么则有 <span class="math notranslate nohighlight">\(p_y (y)=\frac{1}{2}y^{-\frac{1}{2}\)</span>. 具体看练习 2.10.</p>
+<div class="section" id="id36">
+<h4>2.6.2.1 变量的多重变化<a class="headerlink" href="#id36" title="Permalink to this headline">¶</a></h4>
+<p>前面的结果可推广到多元分布上。设 <span class="math notranslate nohighlight">\(f\)</span> 是一个函数，从 <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span> 映射到 <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span>, 设 <span class="math notranslate nohighlight">\( \mathbf{y}=f (\mathbf{x})\)</span> 。则该函数的<code class="docutils literal notranslate"><span class="pre">雅可比矩阵(Jacobian</span> <span class="pre">matrix)</span></code>  <span class="math notranslate nohighlight">\(J\)</span> 为:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+J_{\mathbf{x}\rightarrow \mathbf{y} } \triangleq \frac {\partial (y_1,...,y_n)}{\partial (x_1,...,x_n)}\overset\triangle {=}
+\begin {pmatrix}
+        \frac {\partial y_1}{\partial x_1} &amp; ...&amp; \frac {\partial y_1}{\partial x_n}  \\
+        ...&amp;...&amp;...\\
+       \frac {\partial y_n}{\partial x_1}   &amp;...&amp;\frac {\partial y_n}{\partial x_n} \\
+\end {pmatrix}   ~~\tag {2.88}\label {eqn:2.88}
+\end{align*}
+\end{split}\]</div>
+<p>矩阵的行列式 <span class="math notranslate nohighlight">\(|\text{det}J|\)</span> 表示在运行函数 <span class="math notranslate nohighlight">\(f\)</span> 时一个单位的超立方体上的体积变化。</p>
+<p>如果 <span class="math notranslate nohighlight">\(f\)</span> 是一个可逆映射, 就可以用逆映射 <span class="math notranslate nohighlight">\(\mathbf{y}\rightarrow \mathbf{x}\)</span> 的雅可比矩阵来定义变换后随机变量的概率密度函数 (pdf)：</p>
+<div class="math notranslate nohighlight">
+\[
+p_y (\mathbf{y})=p_x (\mathbf{x})|det (\frac {\partial \mathbf{x}}{\partial \mathbf{y}})|=p_x (\mathbf{x})|detJ_{\mathbf{y}\rightarrow \mathbf{x}}|  ~~\tag {2.89}\label {eqn:2.89}
+\]</div>
+<p>在练习 4.5, 你就要用到上面这个公式来推导一个多元正态分布的归一化常数。</p>
+<p>举个简单例子，假如要把一个概率密度函数从笛卡尔坐标系的 <span class="math notranslate nohighlight">\(\mathbf{x}=(x_1,x_2)\)</span> 转换到一个极坐标系 <span class="math notranslate nohighlight">\(y=(r,\theta )\)</span>, 有对应关系：<span class="math notranslate nohighlight">\(x_1=r \cos \theta,x_2=r \sin \theta\)</span>. 这样则有雅可比矩阵如下：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+J_{\mathbf{y}\rightarrow \mathbf{x} }=
+\begin {pmatrix}
+        \frac {\partial x_1}{\partial r}  &amp;\frac {\partial x_1}{\partial \theta}  \\
+       \frac {\partial x_2}{\partial r} &amp;\frac {\partial x_2}{\partial \theta} \\
+\end {pmatrix} =
+\begin {pmatrix}
+        \cos \theta   &amp; -r \sin \theta \\
+        \sin \theta   &amp;   r\cos \theta\\
+\end {pmatrix}   ~~\tag {2.90}\label {eqn:2.90}
+\end{align*}
+\end{split}\]</div>
+<p>矩阵 <span class="math notranslate nohighlight">\(J\)</span> 的行列式为：</p>
+<div class="math notranslate nohighlight">
+\[
+|det J|=|r\cos^2\theta+r\sin^2\theta|=|r|   ~~\tag {2.91}\label {eqn:2.91}
+\]</div>
+<p>因此：</p>
+<div class="math notranslate nohighlight">
+\[
+p_y (y)=p_x (x)|det J|   ~~\tag {2.92}\label {eqn:2.92}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+p_{r,\theta}(r,\theta)=p_{x_1,x_2}(x_1,x_2) r=p_{x_1,x_2}(r\cos\theta,r\sin\theta) r   ~~\tag {2.93}\label {eqn:2.93}
+\]</div>
+<p>以几何角度来看，可以参考图 2.16, 其中的阴影部分面积可以用如下公式计算：</p>
+<div class="math notranslate nohighlight">
+\[
+P (r \le R \le  r + dr, \theta  \le  \Theta  \le  \theta  + d\theta ) = p_{r,\theta}  (r, \theta ) drd\theta    ~~\tag {2.94}\label {eqn:2.94}
+\]</div>
+<p>在这个限制范围内，这也就等于阴影中心部分的密度 <span class="math notranslate nohighlight">\(p (r,\theta)\)</span> 乘以阴影部分的面积 <span class="math notranslate nohighlight">\(rdrd\theta\)</span>。 因此则有：</p>
+<div class="math notranslate nohighlight">
+\[
+p_{r,\theta}  (r, \theta ) drd\theta= p_{x_1,x_2}(r\cos\theta,r\sin\theta) rdrd\theta   ~~\tag {2.95}\label {eqn:2.95}
+\]</div>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210719180057_69.webp" /></p>
+<p>图 2.16 变量从极坐标到笛卡尔坐标的变化。阴影块的面积是 <span class="math notranslate nohighlight">\(rdrdθ\)</span>。</p>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210719180112_2e.webp" /></p>
+<p>图 2.17 中心极限定理。 我们绘制了一个直方图 <span class="math notranslate nohighlight">\(\frac{1}{N}\sum^N_{i=1}x_{ij}\)</span> ， 其中 <span class="math notranslate nohighlight">\(x_{ij} \sim \text{Beta}(1，5)\)</span> ，对于 <span class="math notranslate nohighlight">\(j = 1 : 10000\)</span>。当 <span class="math notranslate nohighlight">\(N \to \infty\)</span>，分布趋于高斯分布。(a) <span class="math notranslate nohighlight">\(N = 1\)</span>。 (b) <span class="math notranslate nohighlight">\(N = 5\)</span>。</p>
+</div>
+</div>
+<div class="section" id="id37">
+<h3>2.6.3 中心极限定理<a class="headerlink" href="#id37" title="Permalink to this headline">¶</a></h3>
+<p>现在设想有 <span class="math notranslate nohighlight">\(N\)</span> 个概率密度函数为 <span class="math notranslate nohighlight">\(p(x_i)\)</span> （不一定是正态分布）的随机变量，所有随机变量的均值和方差都是 <span class="math notranslate nohighlight">\(\mu\)</span> 和 <span class="math notranslate nohighlight">\(\sigma^2\)</span>，再假设所有随机变量都是独立同分布的，令 <span class="math notranslate nohighlight">\(S_N =\sum^N_{i=1} X_i\)</span> 是所有随机变量的和。随着 <span class="math notranslate nohighlight">\(N\)</span> 的增大，这个和的分布会接近正态分布：</p>
+<div class="math notranslate nohighlight">
+\[
+p (S_N=s)=\frac {1}{\sqrt {2\pi N\sigma^2}}\exp (-\frac {(s-N\mu)^2}{2N\sigma^2})   ~~\tag {2.96}\label {eqn:2.96}
+\]</div>
+<p>也就是量 <span class="math notranslate nohighlight">\(Z_N\)</span> 的分布：</p>
+<div class="math notranslate nohighlight">
+\[
+ Z_N \overset\triangle {=} \frac {S_N-N_{\mu}}{\sigma\sqrt N} = \frac {\bar X-\mu}{\sigma/\sqrt N}    ~~\tag {2.97}\label {eqn:2.97}
+\]</div>
+<p>会收敛到标准正态分布了。其中 <span class="math notranslate nohighlight">\(\bar X=\frac{1}{N} \sum^N_{i=1} x_i\)</span> 为样本均值。</p>
+<p>上述即为中心极限定理，更多内容参考 (Jaynes 2003, p222) 或者 (Rice 1995, p169).</p>
+<p>图 2.17 即是一例，其中计算 <span class="math notranslate nohighlight">\(\beta\)</span> 分布变量均值，右图可见很快收敛到正态分布了。</p>
+</div>
+</div>
+<div class="section" id="id38">
+<h2>2.7 蒙特卡罗近似方法<a class="headerlink" href="#id38" title="Permalink to this headline">¶</a></h2>
+<p>要计算一个随机变量的函数的分布，靠公式变换 通常还挺难的。有另外一个办法，简单又好用。首先就是从分布中生成 S 个样本，就把它们标为 <span class="math notranslate nohighlight">\(x_1,...,x_S\)</span>. 生成样本有很多方法，对于高维度分布来说最流行的方法就是马尔科夫链蒙特卡罗方法 (Markov chain Monte Carlo, 缩写为 MCMC), 这部分内容在本书 24 章再行讲解。
+还说这个例子，对分布函数 <span class="math notranslate nohighlight">\(f (X)\)</span> 使用经验分布 (empirical distribution)<span class="math notranslate nohighlight">\(\{f (x_s )\}^S_{s=1}\)</span> 来进行近似。这就叫蒙特卡洛近似 (Monte Carlo approximation), 之所以用这个名字是因为欧洲的知名赌城。这种方法首先是在统计物理里面应用发展起来的，确切来说还是在原子弹研究过程中，不过现在已经广泛应用在统计和机器学习领域里面了。
+此处查看原书图 2.18</p>
+<p>应用蒙特卡罗方法，可以对任意的随机变量的函数进行近似估计。先简单取一些样本，然后计算这些样本的函数的算术平均值 (arithmetic mean). 这个过程如下所示：</p>
+<div class="math notranslate nohighlight">
+\[
+E [f (X)]=\int f (xp (x) dx\approx \frac1S\sum^S_{s=1} f (x_s)   ~~\tag {2.98}\label {eqn:2.98}
+\]</div>
+<p>上式中 <span class="math notranslate nohighlight">\(x_s \sim  p (X)\)</span>. 这就叫做蒙特卡罗积分 (Monte Carlo integration), 相比数值积分 (numerical integration) 的一个优势就是在蒙特卡罗积分中只在具有不可忽略概率的地方进行评估计算，而数值积分会对固定网格范围内的所有点的函数进行评估计算。
+通过调整函数 <span class="math notranslate nohighlight">\(f ()\)</span>, 就能对很多有用的变量进行估计，比如：</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\bar x =\frac 1S \sum^S_{s=1} x_s\rightarrow E [X]\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\frac 1 S\sum^S_{s=1}(x_s-\bar x)^2\rightarrow var [X]\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\frac 1 S \# \{x_s \le c\}\rightarrow P (X\le c)\)</span></p></li>
+<li><p>中位数 (median)<span class="math notranslate nohighlight">\(\{x_1,...,x_S\}\rightarrow median (X)\)</span></p></li>
+</ul>
+<p>下面是一些例子，后面一些章节有更详细介绍。</p>
+<div class="section" id="mc">
+<h3>2.7.1 样例：更改变量，使用 MC （蒙特卡罗）方法<a class="headerlink" href="#mc" title="Permalink to this headline">¶</a></h3>
+<p>在 2.6.2，我们讨论了如何分析计算随机变量函数的分布 <span class="math notranslate nohighlight">\(y = f (x)\)</span>. 更简单的方法是使用蒙特卡罗方法估计。例如，若 <span class="math notranslate nohighlight">\(x \sim  Unif (−1, 1) ,  y = x^2\)</span>. 就可以这样估计 <span class="math notranslate nohighlight">\(p (y)\)</span>: 从 <span class="math notranslate nohighlight">\(p (x)\)</span> 中去多次取样，取平方，计算得到的经验分布。如图 2.18 所示。后文中还要广泛应用这个方法。参考图 5.2.</p>
+<p>此处查看原书图 2.19</p>
+</div>
+<div class="section" id="pi">
+<h3>2.7.2 样例：估计圆周率 <span class="math notranslate nohighlight">\(\pi\)</span>, 使用蒙特卡罗积分<a class="headerlink" href="#pi" title="Permalink to this headline">¶</a></h3>
+<p>蒙特卡罗方法还可以有很多种用法，不仅仅是统计学领域。例如我们可以用这个方法来估计圆周率 <span class="math notranslate nohighlight">\(\pi\)</span>. 我们知道圆的面积公式可以利用圆周率和圆的半径 r 来计算，就是 <span class="math notranslate nohighlight">\(\pi r^2\)</span>, 另外这个面积也等于下面这个定积分 (deﬁnite integral):</p>
+<div class="math notranslate nohighlight">
+\[
+I=\int _{-r}^r\int _{-r}^r\prod (x^2+y^2\le r^2) dxdy   ~~\tag {2.99}\label {eqn:2.99}
+\]</div>
+<p>因此有 <span class="math notranslate nohighlight">\(\pi =I/(r^2)\)</span>. 然后就可以用蒙特卡罗积分来对此进行近似了。设 <span class="math notranslate nohighlight">\(f (x,y) =\prod (x^2+y^2\le r^2)\)</span> 是一个指示器函数 (indicator function), 只要点在圆内，则函数值为 1, 反之为 0, 然后设 <span class="math notranslate nohighlight">\(p (x),p (y)\)</span> 都是在闭区间 [-r,r] 上的均匀分布 (uniform distribution), 所以有 <span class="math notranslate nohighlight">\(p (x)=p (y)=\frac {1}{2r}\)</span> 这样则有：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin {align*}
+I &amp;= (2r)(2r)\int\int f (x,y) p (x) p (y) dxdy    ~~\tag {2.100}\label {eqn:2.100}\\
+&amp;= 4r^2 \int\int f (x,y) p (x) p (y) dxdy   ~~\tag {2.101}\label {eqn:2.101}\\
+&amp;=4r^2\frac1S\sum^S_{s=1} f (x_s,y_s)    ~~\tag {2.102}\label {eqn:2.102}\\
+\end {align*}
+\end{split}\]</div>
+<p>当标准差为 0.09 的时候，计算得到的圆周率为 <span class="math notranslate nohighlight">\(\hat \pi =3.1416\)</span>, 参考本书 2.7.3 就知道什么是标准差了。接受 / 拒绝的点如图 2.19 中所示。
+此处查看原书图 2.20</p>
+</div>
+<div class="section" id="id39">
+<h3>2.7.3 蒙特卡罗方法的精确度<a class="headerlink" href="#id39" title="Permalink to this headline">¶</a></h3>
+<p>随着取样规模的增加，蒙特卡罗方法的精度就会提高，如图 2.20 所示，在图上部是从一个高斯分布中取样的直方图，底下的两个图使用了核密度估计 (kernel density estimate, 参考本书 14.7.2) 得到的光滑曲线。这种光滑分布函数在密集网格点上进行评估和投图。这里要注意一点，光滑操作只是为了投图看而已，蒙特卡罗方法估计的过程根本用不着光滑。
+如果我们知道了均值的确切形式，即 <span class="math notranslate nohighlight">\(\mu =\mathbb{E}[f (X)]\)</span>, 然后蒙特卡罗方法近似得到的是 <span class="math notranslate nohighlight">\(\hat\mu\)</span>, 那么对于独立取样则有：</p>
+<div class="math notranslate nohighlight">
+\[
+(\hat\mu -\mu )\rightarrow N (0,\frac {\sigma^2 }{S})   ~~\tag {2.103}\label {eqn:2.103}
+\]</div>
+<p>其中：</p>
+<div class="math notranslate nohighlight">
+\[
+\sigma^2=var [f (X)]=E [f (X)^2]-E [f (X)]^2   ~~\tag {2.104}\label {eqn:2.104}
+\]</div>
+<p>这是由中心极限定理决定的。当然了，上式中的 <span class="math notranslate nohighlight">\(\sigma^2\)</span> 是位置的，但也可以用蒙特卡罗方法来估计出来：</p>
+<div class="math notranslate nohighlight">
+\[
+\hat\sigma^2= \frac1S \sum^S_{s=1}(f (x_s)-\hat\mu)^2   ~~\tag {2.105}\label {eqn:2.105}
+\]</div>
+<p>然后则有：</p>
+<div class="math notranslate nohighlight">
+\[
+P\{\mu-1.96\frac {\hat \sigma}{\sqrt S}\le \hat\mu \le \mu +1.96\frac {\hat \sigma}{\sqrt S}\}\approx 0.95    ~~\tag {2.106}\label {eqn:2.106}
+\]</div>
+<p>上式中的 <span class="math notranslate nohighlight">\(\frac {\hat \sigma}{\sqrt S} \)</span> 就叫做数值标准差或者经验标准差 (numerical or empirical standard error), 这个量是对我们对 <span class="math notranslate nohighlight">\(\mu\)</span> 估计精度的估计。具体信息查看本书 6.2 有更多讲解。
+如果我们希望得到的答案 <span class="math notranslate nohighlight">\(\pm \epsilon\)</span> 范围内的概率至少为 95%, 那就要保证取样数目 S 满足条件 <span class="math notranslate nohighlight">\(1.96\sqrt {\hat\sigma^2/S}\le \epsilon\)</span>, 这里的 1.96 可以粗略用 2 替代，这样就得到了 <span class="math notranslate nohighlight">\(S\geq \frac {4 \hat\sigma^2}{\epsilon^2}\)</span>.</p>
+</div>
+</div>
+<div class="section" id="id40">
+<h2>2.8 信息理论<a class="headerlink" href="#id40" title="Permalink to this headline">¶</a></h2>
+<p>信息理论 (information theory) 关注的是以紧凑形式进行数据呈现（这种紧凑形式也被称为数据压缩 (data compression) 或者源编码 (source coding)), 以及以能健壮应对错误的方式进行传输和存储（这个过程也叫做纠错 (error correction) 或者信道编码 (channel coding)). 第一眼看上去好像这和概率论以及机器学习没什么关系，不过实际是有联系的。首先，对数据进行紧凑表达需要给高概率的字符串赋予短编码字，而将长编码字留给低概率字符串。就好比自然语言中，特别常用的词汇都往往比少见的词汇短很多，比如冠词 a/the 明显比闪锌矿 sphalerite 短很多。另外，在噪音频道上进行信息解码也需要对人发送的不同信息建立一个良好的概率模型。这就都需要一个能够预测数据可能性的模型，这也是机器学习里面的一个核心问题，关于信息理论和机器学习之间关系的更多内容请参考 (MacKay 2003).</p>
+<p>显然这里不可能说太多太深关于信息理论的内容，有兴趣的话去看 (Cover and Thomas 2006). 这里也就是介绍本书中要用到的一些基础概念了。</p>
+<div class="section" id="id41">
+<h3>2.8.1 信息熵<a class="headerlink" href="#id41" title="Permalink to this headline">¶</a></h3>
+<p>随机变量 X 服从分布 p, 这个随机变量的熵 (entropy) 则表示为 <span class="math notranslate nohighlight">\(H (X)\)</span> 或者 <span class="math notranslate nohighlight">\(H (p)\)</span>, 这是对随机变量不确定性的一个衡量。对于一个有 K 个状态的离散型随机变量来说，其信息熵定义如下：</p>
+<div class="math notranslate nohighlight">
+\[
+H (X)\overset\triangle {=}-\sum^K_{k=1} p (X=k)\log_2p (X=k)   ~~\tag {2.107}\label {eqn:2.107}
+\]</div>
+<p>通常都用 2 作为对数底数，这样单位就是 bit （这个是 binary digits 的缩写）. 如果用自然底数 e, 单位就叫做 nats 了。
+举个例子，<span class="math notranslate nohighlight">\(X\in \{1,...,5\}\)</span>, 柱状分布 (histogram distribution), 概率 <span class="math notranslate nohighlight">\(p=[0.25,0.25,0.2,0.15,0.15]\)</span>, 利用上面的公式计算得到 <span class="math notranslate nohighlight">\(H =2.2855\)</span>.
+熵最大的离散分布就是均匀分布，可以参考本书 9.2.6. 因为对于一个 K 元 (K-ary) 随机变量，如果 <span class="math notranslate nohighlight">\(p (x = k) = 1/K\)</span>, 则信息熵最大，这时候的熵为 <span class="math notranslate nohighlight">\(H (X)=\log_2K\)</span>. 熵最小的分布就是所有概率质量都在单一状态的 <span class="math notranslate nohighlight">\(\delta\)</span> 分布，这时候熵为 0, 因为只有一个状态有概率，没有任何不确定性。
+在图 2.5 当中对 DNA 序列进行了投图，每一列的高度定义为 <span class="math notranslate nohighlight">\(2-H\)</span>, 其中的 H 就是这个分布的熵，2 是最大可能熵 (maximum possible entropy). 因此高度为 0 的就表示均匀分布，而高度为 2 就对应着确定性分布 (deterministic distribution).</p>
+<p>此处查看原书图 2.21</p>
+<p>对于二值化随机变量的特例，<span class="math notranslate nohighlight">\(X\in\{0,1\}\)</span>, 则有 <span class="math notranslate nohighlight">\(p (X=1)=\theta, p (X=0)=1-\theta\)</span>, 这样熵为：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin {align*}
+H (X)&amp;= -[p (X=1)\log_2p (X=1)+p (X=0)\log_2p (X=0)]    ~~\tag {2.108}\label {eqn:2.108}\\
+&amp;=-[\theta\log_2\theta+(1-\theta)\log_2 (1-\theta)]   ~~\tag {2.109}\label {eqn:2.109}
+\end {align*}
+\end{split}\]</div>
+<p>这也叫做二值熵函数 (binary entropy function), 也写作 <span class="math notranslate nohighlight">\(H (\theta)\)</span>, 如图 2.21 所示，可见当 <span class="math notranslate nohighlight">\(\theta=0.5\)</span> 的时候熵值最大为 1, 这时候是均匀分布了。</p>
+</div>
+<div class="section" id="kl">
+<h3>2.8.2 KL 散度<a class="headerlink" href="#kl" title="Permalink to this headline">¶</a></h3>
+<p>KL 散度 (Kullback-Leibler divergence), 也称相对熵 (relative entropy), 可以用来衡量 p 和 q 两个概率分布的差异性 (dissimilarity). 定义如下：</p>
+<div class="math notranslate nohighlight">
+\[
+KL (p||q)\overset\triangle {=}\sum^K_{k=1} p_k\log\frac {p_k}{q_k}   ~~\tag {2.110}\label {eqn:2.110}
+\]</div>
+<p>上式中的求和也可以用概率密度函数的积分来替代。就可以写成：</p>
+<div class="math notranslate nohighlight">
+\[
+KL (p||q)=\sum_kp_k\log p_k - \sum_kp_k\log q_k =-H (p)+H (p,q)  ~~\tag {2.111}\label {eqn:2.111}
+\]</div>
+<p>上式中的 <span class="math notranslate nohighlight">\(H (p,q)\)</span> 就叫做交叉熵 (cross entropy):</p>
+<div class="math notranslate nohighlight">
+\[
+H (p,q)\overset\triangle {=}-\sum_kp_k\log q_k   ~~\tag {2.112}\label {eqn:2.112}
+\]</div>
+<p>参考 (Cover and Thomas 2006) 可以证明，当使用模型 q 来定义编码本 (codebook) 的时候，来自分布 p 的待编码数据的平均比特数 (average number of bits) 就是交叉熵。正规熵 (regular entropy)<span class="math notranslate nohighlight">\(H (p)=H (p,p)\)</span>, 参考本书 2.8.1 的定义，也就是使用真实模型时候的比特数期望值，因此 KL 散度也就是不同概率分布之间的不同的量度。换个说法，KL 散度就是要对数据编码所需要的额外比特 (extra bits) 的平均数，因为这时候用分布 q 来对数据进行编码，而不是使用分布 p.</p>
+<p>既然是额外的比特数，这种表述就很明显说明这个 KL 散度应该是非负的，即 <span class="math notranslate nohighlight">\(KL (p||q)\ge 0\)</span>, 等于 0 则意味着两个分布相等，即 <span class="math notranslate nohighlight">\(p=q\)</span>. 接下来对此进行一下证明。</p>
+<div class="section" id="information-inequality">
+<h4>定理 2.8.1 信息不等式 (Information inequality)<a class="headerlink" href="#information-inequality" title="Permalink to this headline">¶</a></h4>
+<p><span class="math notranslate nohighlight">\(KL (p||q)\ge 0\)</span> 当且仅当 <span class="math notranslate nohighlight">\(p=q\)</span> 的时候，KL 散度为 0.</p>
+</div>
+<div class="section" id="id42">
+<h4>证明<a class="headerlink" href="#id42" title="Permalink to this headline">¶</a></h4>
+<p>要证明这个定理，需要用到詹森不等式 (Jensen’s inequality). 这个不等式是说，对于任意的凸函数 (convex function) f, 有以下关系：</p>
+<div class="math notranslate nohighlight">
+\[
+f (\sum^n_{i=1}\lambda_i (x_i)) \le \sum^n_{i=1}\lambda_i f (x_i)  ~~\tag {2.113}\label {eqn:2.113}
+\]</div>
+<p>其中 <span class="math notranslate nohighlight">\(\lambda_i \ge 0,\sum^n_{i=1}\lambda_i=1\)</span>. 由于凸函数的定义，对于 n=2 的时候很显然，对于 n&gt;2 的情况也可以归纳证明 (proved by induction).</p>
+<p>对定理的证明参考了 (Cover and Thomas 2006, p28). 设 <span class="math notranslate nohighlight">\(A=\{x:p (x)&gt;0\}\)</span> 是 <span class="math notranslate nohighlight">\( p (x)\)</span> 的支撑集合 (support, 译者注：纯白或许就当做定义域理解好了）. 则有：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin {align*}
+-KL (p||q)&amp; = -\sum_{x\in A} p (x)\log \frac {p (x)}{q (x)}  = \sum_{x\in A} p (x)\log \frac {q (x)}{p (x)}   ~~\tag {2.114}\label {eqn:2.114}\\
+&amp; \le \sum_{x\in A} p (x)\frac {q (x)}{p (x)} = \log \sum_{x\in A} q (x)   ~~\tag {2.115}\label {eqn:2.115}\\
+&amp; \le \log \sum_{x\in \chi} q (x) =\log1 =0  ~~\tag {2.116}\label {eqn:2.116}\\
+\end {align*}
+\end{split}\]</div>
+<p>当 上面第一个不等式是应用了詹森不等式。因为 <span class="math notranslate nohighlight">\(\log (x)\)</span> 是个严格凸函数，所以在等式 2.115 里面，当且仅当对于某些 c 使 <span class="math notranslate nohighlight">\(p (x)=cq (x)\)</span> 成立的时候，等量关系成立。等式 2.116 中的等量关系当且仅当 <span class="math notranslate nohighlight">\(\sum_{x \in A } q (x)=\sum_{x\in \chi } q (x)=1\)</span> 的时候成立，这时候 c=1. 所以对于所有的 x 来说，当且仅当 <span class="math notranslate nohighlight">\(p (x)=q (x),KL (p||q)=0\)</span>.</p>
+<p>证明完毕。
+这个结果的一个重要推论就是 * 具有最大熵的离散分布就是均匀分布 *. 更确切地说，<span class="math notranslate nohighlight">\(H (X)\le \log|\chi |\)</span>,<span class="math notranslate nohighlight">\(|\chi |\)</span> 是 X 的状态数，当且仅当 <span class="math notranslate nohighlight">\(p (x)\)</span> 是均匀分布的时候等号成立。设 <span class="math notranslate nohighlight">\(u (x)=1/|\chi |\)</span>, 则有：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin {align*}
+0&amp;\le KL (p||u)= \sum_xp (x)\log\frac {p (x)}{u (x)}  ~~\tag {2.117}\label {eqn:2.117}\\
+&amp;=\sum_xp (x)\log p (x)-\sum_xp (x)\log u (x)=-H (X)+\log|\chi|   ~~\tag {2.118}\label {eqn:2.118}\\
+\end {align*}
+\end{split}\]</div>
+<p>上面这个就是公式化的拉普拉斯不充分理由原则 (Laplace’s principle of insufficient reason), 说的是在没理由优先选择某个分布的时候，优先选择均匀分布 (uniform distribution). 关于如何建立满足特定约束条件 (certain constraints) 的分布可以阅读本书 9.2.6, 其他方面尽可能最小化 (as least-commital as possible).（正态分布满足一阶和二阶矩约束条件，但其他方面有最大熵。)</p>
+</div>
+</div>
+<div class="section" id="mutual-information">
+<h3>2.8.3 信息量 (Mutual information)<a class="headerlink" href="#mutual-information" title="Permalink to this headline">¶</a></h3>
+<p>设有两个随机变量 X 和 Y. 如果我们想知道一个变量告诉我们关于另一个变量的多少信息。就可以计算相关系数 (correlation coefficient) 了，可是相关系数只适用于实数值的随机变量。另外相关系数对不相关程度的衡量作用也很有限，如图 2.12 所示。所以更常用的方法是对比联合分布 (joint distribution)<span class="math notranslate nohighlight">\(p (X, Y)\)</span> 和因式分布 (factored distribution)<span class="math notranslate nohighlight">\(p (X) p (Y)\)</span> 的相关性。这就叫互信息量 (mutual information) 或者简写做 MI, 定义如下：</p>
+<div class="math notranslate nohighlight">
+\[
+I (X;Y)\overset\triangle {=} KL (p (X,Y)||p (X) p (Y))=\sum_x\sum_yp (x,y)\log\frac {p (x,y)}{p (x) p (y)}  ~~\tag {2.119}\label {eqn:2.119}
+\]</div>
+<p><span class="math notranslate nohighlight">\(I (X;Y)\ge0\)</span> 的等号当且仅当 <span class="math notranslate nohighlight">\(p (X,Y)=p (X) p (Y)\)</span> 的时候成立。也就是如果两个变量相互独立，则互信息量 MI 为 0. 为了深入理解 MI 这个量的含义，咱们用联合和条件熵的方式来重新表述一下。参考练习 2.12 可以得到上面的表达式等价于下列形式：</p>
+<div class="math notranslate nohighlight">
+\[
+I (X;Y)=H (X)-H (X|Y)=H (Y)-H (Y|X)  ~~\tag {2.120}\label {eqn:2.120}
+\]</div>
+<p>上式中的 <span class="math notranslate nohighlight">\(H (Y|X)\)</span> 就是条件熵 (conditional entropy) 定义为 <span class="math notranslate nohighlight">\(H (Y|X)=\sum_xp (x) H (Y|X=x)\)</span>. 这样就可以把 X 和 Y 之间的互信息量 MI 理解成在观测了 Y 之后对 X 的不确定性的降低，或者反过来就是观测了 X 后对 Y 不确定性的降低。本书后面一些内容中还会用到这个概念。参考 2.13 和 2.14 来阅读互信息量 MI 和相关系数之间的联系。
+另外一个和互信息量 MI 有很密切联系的量是点互信息量 (pointwise mutual information, 缩写为 PMI), 对于两个事件（而不是随机变量） x 和 y, 其点互信息量 PMI 定义如下：</p>
+<div class="math notranslate nohighlight">
+\[
+PMI (x,y)\overset\triangle {=} \log\frac {p (x,y)}{p (x) p (y)}= \log\frac {p (x|y)}{p (x)}= \log\frac {p (y|x)}{p (y)}  ~~\tag {2.121}\label {eqn:2.121}
+\]</div>
+<p>这个量衡量的是与偶发事件相比，这些事件之间的差异。很明显 X 和 Y 的互信息量 MI 就是点互信息量 PMI 的期望值。所以就可以把点互信息量 PMI 的表达式写为：</p>
+<div class="math notranslate nohighlight">
+\[
+PMI (x,y)= \log\frac {p (x|y)}{p (x)}= \log\frac {p (y|x)}{p (y)}  ~~\tag {2.122}\label {eqn:2.122}
+\]</div>
+<p>这个量是通过将先验 (prior) 的 <span class="math notranslate nohighlight">\(p (x)\)</span> 更新到后验 (posterior) 的 <span class="math notranslate nohighlight">\(p (x|y)\)</span> 得到的，也可以是将先验的 <span class="math notranslate nohighlight">\(p (y)\)</span> 更新到后验的 <span class="math notranslate nohighlight">\(p (y|x)\)</span> 得到。</p>
+<div class="section" id="id43">
+<h4>2.8.3.1 连续随机变量的互信息量<a class="headerlink" href="#id43" title="Permalink to this headline">¶</a></h4>
+<p>上一节中的互信息量 MI 定义是针对离散型随机变量的。对于连续随机变量，可以先对其进行离散化 (discretize) 或者量子化 (quantize), 具体方法可以使将每个随机变量归类到一个区间里面，将变量的变化范围划分出来，然后计算每一段的小区间中的分布数量 (Scott 1979). 然后就可以利用上文的方法公式来计算互信息量 MI 了（代码参考 PMTK3 的 mutualInfoAllPairsMixed, 样例可以参考 miMixedDemo).</p>
+<p>此处查看原书图 2.22</p>
+<p>然而很不幸，分成多少个小区间，以及小区间边界的位置，都可能对计算结果有很大影响。一种解决方法就是直接对互信息量 MI 进行估计，而不去先进行密度估计 (Learned-Miller 2004)). 另一种办法是尝试很多不同的小区间规模和位置，然后计算得到的最大互信息量 MI. 经过适当的标准化之后，这个统计量就被称为最大信息系数 (maximal information coefficient, 缩写为 MIC)(Reshed et al. 2011). 更确切来说定义如下所示：</p>
+<div class="math notranslate nohighlight">
+\[
+m (x,y)=\frac {\max_{G\in G (x,y)} $i$ (X (G);Y (G))}{\log\min (x,y)} ~~\tag {2.123}\label {eqn:2.123}
+\]</div>
+<p>上式中的 <span class="math notranslate nohighlight">\(G (x, y)\)</span> 是一个规模为 <span class="math notranslate nohighlight">\( x\times y\)</span> 的二维网状集合，而 <span class="math notranslate nohighlight">\(X (G),Y (G)\)</span> 表示的是将变量在这个网格上进行离散化得到的结果。在区间位置 (bin locations) 上最大化的过程可以通过使用动态编程 (dynamic programming) 来有效进行 (Reshed et al. 2011). 这样定义了连续型变量互信息量 MIC 如下：</p>
+<div class="math notranslate nohighlight">
+\[
+MIC\overset\triangle {=} \max_{x,y:xy&lt;B} m (x,y) ~~\tag {2.124}\label {eqn:2.124}
+\]</div>
+<p>上式中的 B 是一个与取样规模相关的约束条件，用于约束能使用且能可靠估计分布的区间个数。((Reshed et al. 2011) 建议的是 <span class="math notranslate nohighlight">\(B = N^{0.6}\)</span>. 显然 MIC 处于区间 [0, 1] 中，其中 - 表示两个变量没关系，而 1 表示二者有无噪音的相关性 (noise-free relationship), 这种相关性可以是任意形式的，不仅仅是线性相关。
+图 2.22 给出的是一个实例。其中的数据集包含了 357 个变量，衡量一系列的社会 / 经济 / 健康 / 政治指标，由世界健康组织 WHO 手机。左边的途中看到了对于 65,566 个变量对的相关系数 (CC) 与互信息量 (MIC) 的关系图。有图则投了一些特定变量对的散点图，其中包括了：</p>
+<ul class="simple">
+<li><p>C 图中的是 CC 和 MIC 都低，相应的散点图很明显表明了这两组变量之间没有关系：因伤致死比例和人群中牙医密度。</p></li>
+<li><p>D 图和 H 图中是 CC 和 MIC 都高，呈现近乎线性的相关性。</p></li>
+<li><p>E/F/G 这三个图都是低 CC 高 MIC. 这是因为这些变量之间的关系是非线性的，例如在 E 图和 F 图中，都是非函数对应关系，比如可能是一对多的对应关系。
+总的来说，MIC 这个统计量是基于互信息量的，可以用于发现变量之间的有意义的关系，而这些关系可能是那些简单的统计量，比如相关系数之类无法反应的。由于这个优势，MIC 也被称作是 21 世纪的相关性衡量变量 “a correlation for the 21st century” (Speed 2011).</p></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="id44">
+<h2>练习 2<a class="headerlink" href="#id44" title="Permalink to this headline">¶</a></h2>
+<p>略</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./MLAPP_BOOK"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="01.Introduction.html" title="previous page">01 引言</a>
+    <a class='right-next' id="next-link" href="03.GenerativeModelsForDiscreteData.html" title="next page">03 离散数据的生成式模型</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Kevin Murphy<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>

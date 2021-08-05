@@ -1,0 +1,876 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>15 高斯过程 &#8212; 机器学习：概率视角</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet" />
+  <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.e8e5499552300ddf5d7adccae7cc3b70.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="16 自适应基函数模型" href="16.AdaptiveBasisFunctionModel.html" />
+    <link rel="prev" title="14 核方法" href="14.KernelMethod.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+      <img src="../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">机器学习：概率视角</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../preface.html">
+   前言
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="01.Introduction.html">
+   01 引言
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="02.Probability.html">
+   02 概率论
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03.GenerativeModelsForDiscreteData.html">
+   03 离散数据的生成式模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="04.GaussianModels.html">
+   04 高斯模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="05.BayesianStatistics.html">
+   05 贝叶斯学派统计思想
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="06.FrequentistStatistics.html">
+   06 频率学派统计思想
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="07.LinearRegression.html">
+   07 线性回归
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="08.LogisticRegression.html">
+   08 逻辑回归
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="09.GeneralizedLinearModelsAndTheExponentialFamily.html">
+   09 广义线性模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="10.DirectedGraphicalModels%20%28BayesNets%29.html">
+   10 有向图模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="11.MixtureModelandEMAlgorithm.html">
+   11 混合模型与EM算法
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="12.LinearModelwithLatentVariable.html">
+   12 隐变量线性模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="13.SparseLinearModel.html">
+   13 稀疏线性模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="14.KernelMethod.html">
+   14 核方法
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   15 高斯过程
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="16.AdaptiveBasisFunctionModel.html">
+   16 自适应基函数模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="17.MarkovAndHiddenMarkovModel.html">
+   17 马尔科夫与隐马尔科夫模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="18.StateSpaceModels.html">
+   18 状态空间模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="19.UndirectedGraphicalModels%28MarkovRandomFields%29.html">
+   19 无向图模型（马尔科夫随机场）
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="20.ExactInferenceForGraphicalModels.html">
+   20 概率图的精确推断
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="21.VariationalInference.html">
+   21 变分推断
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="22.MoreVariationalInference.html">
+   22 更多变分推断方法
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="23.MonteCarloInference.html">
+   23 蒙特卡洛推断
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="24.MarkovChainMonteCarlo%28MCMC%29Inference.html">
+   24 马尔科夫链蒙特卡洛 MCMC
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="25.Clustering.html">
+   25 聚簇
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="26.GraphicalModelStructureLearning.html">
+   26 概率图的结构学习
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="27.LatentVariableModelsForDiscreteData.html">
+   27 离散数据的隐变量模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="28.DeepLearning.html">
+   28 深度学习
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Abbreviations.html">
+   本书常见缩写列表
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/MLAPP_BOOK/15.GaussianProcesses.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   15.1 简介
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   15.2 面向回归任务的高斯过程
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id4">
+     15.2.1 使用无噪声观测进行预测
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id5">
+     15.2.2 使用有噪声观测进行预测
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id6">
+     15.2.3 核参数的影响
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id7">
+     15.2.4 估计核参数
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id8">
+       15.2.4.1 案例
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id9">
+       15.2.4.2 超参数的贝叶斯推断
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id10">
+       15.2.4.3 多核学习
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id11">
+     15.2.5 计算问题和数值问题
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id12">
+     15.2.6 半参数高斯过程
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id13">
+   15.3 高斯过程与广义线性回归
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id14">
+     15.3.1 二分类
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id15">
+       15.3.1.1 计算后验
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id16">
+       15.3.1.2 计算后验预测
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id17">
+       15.3.1.3 计算边缘似然
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id18">
+       15.3.1.4 数值稳定计算
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id19">
+       15.3.1.5 示例
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id20">
+   15.4 高斯过程与其他方法
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id21">
+   15.5 高斯过程隐变量模型
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id22">
+   15.6 大数据集的逼近方法
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="id1">
+<h1>15 高斯过程<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<p>[原文] <a class="reference external" href="https://probml.github.io/pml-book/book0.html">https://probml.github.io/pml-book/book0.html</a></p>
+<p>[作者] <a class="reference external" href="https://www.cs.ubc.ca/~murphyk/">Kevin Patrick Murphy</a></p>
+<style>p{text-indent:2em;2}</style>
+<div class="section" id="id2">
+<h2>15.1 简介<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>在监督学习中，我们观测到输入 <span class="math notranslate nohighlight">\(\mathbf{x}_{i}\)</span> 和输出 <span class="math notranslate nohighlight">\(y_i\)</span>。如果 <span class="math notranslate nohighlight">\(y_i=f(\mathbf{x}_{i})\)</span> （函数 <span class="math notranslate nohighlight">\(f\)</span> 未知）可能被噪声干扰，则最佳方法是在给定数据时，推断出函数 <span class="math notranslate nohighlight">\(f\)</span> 的分布 <span class="math notranslate nohighlight">\(p(f|\mathbf{X}，y)\)</span> ，然后通过对该函数分布的边缘化，对新输入做出预测，即计算：</p>
+<div class="math notranslate nohighlight">
+\[
+p\left(y_{*} \mid \mathbf{x}_{*}, \mathbf{X}, \mathbf{y}\right)=\int p\left(y_{*} \mid f, \mathbf{x}_{*}\right) p(f \mid \mathbf{X}, \mathbf{y}) df \tag{15.1}
+\]</div>
+<p>到目前为止，我们的重点一直在求解函数 <span class="math notranslate nohighlight">\(f\)</span> 的参数 <span class="math notranslate nohighlight">\(\theta\)</span> 上，即推断 <span class="math notranslate nohighlight">\(p(\theta|D)\)</span> 而不是 <span class="math notranslate nohighlight">\(p(f|D)\)</span> ，本章将讨论一种对函数 <span class="math notranslate nohighlight">\(f\)</span> 本身进行贝叶斯推断的方法 – 高斯过程（<code class="docutils literal notranslate"><span class="pre">Gaussian</span> <span class="pre">Processes</span></code>，高斯过程）。</p>
+<p>高斯过程定义了函数上的先验分布（概率密度函数的横轴代表函数的取值），当看到一些数据时，根据贝叶斯定理，将其变换为函数上的后验分布。函数上的概率分布听起来很抽象、不好理解，但事实表明，只要能在有限任意点集 <span class="math notranslate nohighlight">\(\mathbf{x}_1,...,\mathbf{x}_N\)</span> 上定义一个函数值上的分布即可。</p>
+<p>一个高斯过程通常假设函数的概率分布 <span class="math notranslate nohighlight">\(p(f(\mathbf{x}_1),…,f(\mathbf{x}_N))\)</span> 为联合高斯分布，其均值 <span class="math notranslate nohighlight">\(μ(\mathbf{x})\)</span> 和协方差 <span class="math notranslate nohighlight">\(Σ(\mathbf{x})\)</span> 由 <span class="math notranslate nohighlight">\(Σ_{ij}=\kappa (\mathbf{x}_i，\mathbf{x}_j)\)</span> 给出，其中 <span class="math notranslate nohighlight">\(\kappa\)</span> 是正定核函数（参见第 14.2 节）。其核心理念是：如果核判定 <span class="math notranslate nohighlight">\(x_{i}\)</span> 和 <span class="math notranslate nohighlight">\(x_{j}\)</span>相似，则可以期望其函数的输出也相似。如图 15.1 所示。</p>
+<center>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210609143704_4a.webp" /></p>
+</center>
+<p>图 15.1 两个训练数据点和一个测试数据点构成的高斯过程，采用了有向和无向的混合图模型来表示，代表概率模型 <span class="math notranslate nohighlight">\(p(\mathbf{y},\mathbf{f}|\mathbf{x})= \mathcal{N}(\mathbf{f}|0,\mathbf{K} (\mathbf{x})) \prod_i p(y_i|f_i)\)</span> 。隐藏节点 <span class="math notranslate nohighlight">\(f_i=f(\mathbf{x}_i)\)</span> 表示每个数据点的函数值。这些隐藏节点之间由无向边的全互连，形成高斯图模型；边的强度表示协方差项 <span class="math notranslate nohighlight">\(Σ_{ij}=\kappa (\mathbf{x}_i,\mathbf{x}_j)\)</span>。如果测试数据点 <span class="math notranslate nohighlight">\(\mathbf{x}_∗\)</span> 与训练数据点 <span class="math notranslate nohighlight">\(\mathbf{x}_1\)</span> 和 <span class="math notranslate nohighlight">\(\mathbf{x}_2\)</span> 相似，则预测输出 <span class="math notranslate nohighlight">\(y_∗\)</span> 将与 <span class="math notranslate nohighlight">\(y_1\)</span> 和 <span class="math notranslate nohighlight">\(y_2\)</span> 相似。</p>
+<p>结果表明，当上图为回归任务设置时，可以在 <span class="math notranslate nohighlight">\(O(N^3)\)</span> 时间内以封闭形式完成计算（将在 15.6 节中讨论更快的近似计算方法）。而在分类任务设置时，需要使用高斯近似等近似方法。</p>
+<p>高斯过程可以被认为是<code class="docutils literal notranslate"><span class="pre">第</span> <span class="pre">14</span> <span class="pre">章</span> <span class="pre">核方法</span></code>的贝叶斯替代，包括 <code class="docutils literal notranslate"><span class="pre">L1VM</span></code>，<code class="docutils literal notranslate"><span class="pre">RVM</span></code> 和 <code class="docutils literal notranslate"><span class="pre">SVM</span></code>。虽然这些方法更稀疏，因此速度更快，但它们无法给出良好的概率输出（参见 <code class="docutils literal notranslate"><span class="pre">15.4.4</span> <span class="pre">节</span></code> 的深入讨论）。适当调整概率输出在某些应用中非常重要，例如视觉和机器人的在线跟踪（<code class="docutils literal notranslate"><span class="pre">Ko</span> <span class="pre">和</span> <span class="pre">Fox，2009</span></code>）、强化学习和最优控制（<code class="docutils literal notranslate"><span class="pre">Engel</span> <span class="pre">等，2005</span> <span class="pre">年</span></code>；<code class="docutils literal notranslate"><span class="pre">Deisenroth</span> <span class="pre">等，2009</span></code>），非凸函数的全局优化（<code class="docutils literal notranslate"><span class="pre">Mockus</span> <span class="pre">等，1996</span> <span class="pre">年</span></code>；<code class="docutils literal notranslate"><span class="pre">Lizotte,2008</span></code>；<code class="docutils literal notranslate"><span class="pre">Brochu</span> <span class="pre">等，2009</span></code>），实验设计（<code class="docutils literal notranslate"><span class="pre">Santner等，2003</span></code>）等。</p>
+<p>上述表示方法基于（<code class="docutils literal notranslate"><span class="pre">Rasmussen</span> <span class="pre">和</span> <span class="pre">Williams,2006</span></code>），另见（<code class="docutils literal notranslate"><span class="pre">Digger</span> <span class="pre">和</span> <span class="pre">Ribeiro,</span> <span class="pre">2007</span></code>），其中讨论了空间统计文献中广泛使用的克里格法（Kriging）。</p>
+</div>
+<div class="section" id="id3">
+<h2>15.2 面向回归任务的高斯过程<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>本节将讨论面向回归任务的高斯过程。设回归函数 <span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span> 的先验是一个高斯过程，表示为：</p>
+<div class="math notranslate nohighlight">
+\[
+f(\mathbf{x}) \sim G P\left(m(\mathbf{x}), \kappa\left(\mathbf{x}, \mathbf{x}^{\prime}\right)\right) \tag{15.2}
+\]</div>
+<p>其中 <span class="math notranslate nohighlight">\(m(\mathbf{x})\)</span> 是均值函数， <span class="math notranslate nohighlight">\(\kappa\left(\mathbf{x}, \mathbf{x}^{\prime}\right)\)</span> 为核函数或方差函数， 即：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+m(\mathbf{x}) &amp;=\mathbb{E}[f(\mathbf{x})] \tag{15.3}\\
+\kappa\left(\mathbf{x}, \mathbf{x}^{\prime}\right) &amp;=\mathbb{E}\left[(f(\mathbf{x})-m(\mathbf{x}))\left(f\left(\mathbf{x}^{\prime}\right)-m\left(\mathbf{x}^{\prime}\right)\right)^{T}\right] \tag{15.4}
+\end{align*}
+\end{split}\]</div>
+<p>我们显然要求 <span class="math notranslate nohighlight">\(\kappa()\)</span> 是正定核。对于任何有限点集，该过程定义了一个联合高斯分布：</p>
+<div class="math notranslate nohighlight">
+\[
+p(\mathbf{f} \mid \mathbf{X})=\mathcal{N}(\mathbf{f} \mid \boldsymbol{\mu}, \mathbf{K}) \tag{15.5}
+\]</div>
+<p>其中 <span class="math notranslate nohighlight">\(K_{i j}=\kappa\left(\mathbf{x}_{i}, \mathbf{x}_{j}\right)\)</span> 并且 <span class="math notranslate nohighlight">\(\boldsymbol{\mu}=\left(m\left(\mathbf{x}_{1}\right), \ldots, m\left(\mathbf{x}_{N}\right)\right)\)</span>。</p>
+<p>请注意，使用 <span class="math notranslate nohighlight">\(m(\mathbf{x})=0\)</span> 的均值函数是很常见的，因为高斯过程足够灵活，可以任意好地模拟平均值，正如下面即将看到的那样。然而，在 <code class="docutils literal notranslate"><span class="pre">15.2.6</span></code> 节中，我们将考虑均值函数的参数模型，因此高斯过程只需对残差进行建模。这种半参数方法结合了参数模型的可解释性和非参数模型的准确性。</p>
+<center>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210609151045_01.webp" /></p>
+</center>
+<p>图 15.2 左图为从带有 SE 核的高斯过程中采样的一些函数。右图为在 5 次无噪声观测后，取自高斯过程后验的样本。阴影区域表示 <span class="math notranslate nohighlight">\(\mathbb{E}[f(\mathbf{x})] \pm 2 \operatorname{std}(f(\mathbf{x})\)</span> 。基于图 2.2 （<code class="docutils literal notranslate"><span class="pre">Rasmussen</span> <span class="pre">和</span> <span class="pre">Williams,</span> <span class="pre">2006</span> <span class="pre">年</span></code>）。图形由 <code class="docutils literal notranslate"><span class="pre">gprDemoNoiseFree</span></code> 生成。</p>
+<div class="section" id="id4">
+<h3>15.2.1 使用无噪声观测进行预测<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>假设我们观测到一个训练集 <span class="math notranslate nohighlight">\(\mathcal{D}=\left\{\left(\mathbf{x}_{i}, f_{i}\right), i=1: N\right\}\)</span> 是在 <span class="math notranslate nohighlight">\(\mathbf{x}_{i}\)</span> 处求值的函数 <span class="math notranslate nohighlight">\(f_{i}=f\left(\mathbf{x}_{i}\right)\)</span> 的无噪声观测。给定一个大小为 <span class="math notranslate nohighlight">\(N_{*} \times D\)</span> 的测试集<span class="math notranslate nohighlight">\(\mathbf{X}_{*}\)</span> ，我们希望预测函数输出 <span class="math notranslate nohighlight">\(\mathbf{f}_{*}\)</span>。</p>
+<p>如果我们要求高斯过程预测它已经看到的值 <span class="math notranslate nohighlight">\(\mathrm{x} \)</span>的 <span class="math notranslate nohighlight">\( f(\mathbf{x})\)</span> ，我们希望高斯过程返回没有不确定性的答案 <span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span>。换句话说，它应该充当训练数据的内插器。这只有在我们假设观测是无声的情况下才会发生。我们将在下面考虑噪音观测的情况。</p>
+<p>现在我们回到预测问题上来。根据高斯过程的定义，联合分布具有以下形式：</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}{\tag{15.6}}
+\left(
+\begin{array}{c}
+\mathbf{f} \\
+\mathbf{f}_{*}
+\end{array}
+\right) \sim \mathcal{N} 
+\left(
+  \left(
+    \begin{array}{c}
+    \boldsymbol{\mu} \\
+    \boldsymbol{\mu}_{*}
+    \end{array}
+  \right),
+  \left(
+    \begin{array}{cc}
+    \mathbf{K} &amp; \mathbf{K}_{*} \\
+    \mathbf{K}_{*}^{T} &amp; \mathbf{K}_{* *}
+    \end{array}
+  \right)
+\right) 
+\end{equation*}\]</div>
+<p>其中： <span class="math notranslate nohighlight">\(\mathbf{K}=\kappa(\mathbf{X}, \mathbf{X})\)</span> 是 <span class="math notranslate nohighlight">\(N \times N\)</span> 的，<span class="math notranslate nohighlight">\(\mathbf{K}_{*}=\kappa\left(\mathbf{X}, \mathbf{X}_{*}\right)\)</span> 是 <span class="math notranslate nohighlight">\(N \times N_{*}\)</span> 的， <span class="math notranslate nohighlight">\(\mathbf{K}_{* *}=\kappa\left(\mathbf{X}_{*}, \mathbf{X}_{*}\right)\)</span> 是 <span class="math notranslate nohighlight">\(N_{*} \times N_{*}\)</span> 的。根据条件高斯法则（第 4.3 节），后验有以下形式：</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+p\left(\mathbf{f}_{*} \mid \mathbf{X}_{*}, \mathbf{X}, \mathbf{f}\right) &amp;=\mathcal{N}\left(\mathbf{f}_{*} \mid \boldsymbol{\mu}_{*}, \mathbf{\Sigma}_{*}\right) {\tag{15.7}}\\
+\boldsymbol{\mu}_{*} &amp;=\boldsymbol{\mu}\left(\mathbf{X}_{*}\right)+\mathbf{K}_{*}^{T} \mathbf{K}^{-1}(\mathbf{f}-\boldsymbol{\mu}(\mathbf{X})) {\tag{15.8}}\\
+\boldsymbol{\Sigma}_{*} &amp;=\mathbf{K}_{* *}-\mathbf{K}_{*}^{T} \mathbf{K}^{-1} \mathbf{K}_{*}{\tag{15.9}}
+\end{align*}\]</div>
+<p>此过程如图 15.2 所示。图左边展示了来自先验 <span class="math notranslate nohighlight">\(p(\mathbf{f} \mid \mathbf{X})\)</span> 的样本，其中使用平方指数核（也称为高斯核或 <code class="docutils literal notranslate"><span class="pre">RBF</span> <span class="pre">核</span></code>）。在一维场景中，由下式给出：</p>
+<div class="math notranslate nohighlight">
+\[
+\kappa\left(x, x^{\prime}\right)=\sigma_{f}^{2} \exp \left(-\frac{1}{2 \ell^{2}}\left(x-x^{\prime}\right)^{2}\right) {\tag{15.10}}
+\]</div>
+<p>在这里 <span class="math notranslate nohighlight">\(\ell\)</span> 控制函数的水平长度比例变化，<span class="math notranslate nohighlight">\(\sigma_{f}^{2}\)</span> 控制垂直变化，注意这种参数描述法与“均值/方差”描述方式稍有不同，后续内容会讨论如何估计这些核参数。图右是来自后验的样本 <span class="math notranslate nohighlight">\(p\left(\mathbf{f}_{*} \mid \mathbf{X}_{*}, \mathbf{X}, \mathbf{f}\right)\)</span>。该模型很好地内插了训练数据，并且预测的不确定性随着距离观测数据越远而增加。</p>
+<p>无噪声高斯过程回归的一个应用是作为复杂模拟器（如天气预报程序）的廉价计算代理。（如果模拟器是随机的，我们可以将 <span class="math notranslate nohighlight">\(f\)</span> 定义为其平均输出；请注意，此处仍然没有观测噪声）。然后，人们可以通过诊断高斯过程预测的效果，来估计模拟器参数调整带来的影响，而不用多次运行模拟器（可能会慢得令人望而却步）。此策略被称为 <code class="docutils literal notranslate"><span class="pre">DACE</span></code>，常用于计算机实验的设计和分析 （<code class="docutils literal notranslate"><span class="pre">Santner</span></code> 等，2003 年）。</p>
+</div>
+<div class="section" id="id5">
+<h3>15.2.2 使用有噪声观测进行预测<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>现在考虑这样一种情况，我们观测到的是函数的有噪声版本 <span class="math notranslate nohighlight">\(y=f(\mathbf{x})+\epsilon\)</span> ，其中 <span class="math notranslate nohighlight">\(\epsilon \sim \mathcal{N}\left(0, \sigma_{y}^{2}\right)\)</span> 。在此情况下，模型不需要对数据插值，但必须“接近”观测数据。观测噪声的响应的协方差为：</p>
+<div class="math notranslate nohighlight">
+\[
+\operatorname{cov}\left[y_{p}, y_{q}\right]=\kappa\left(\mathbf{x}_{p}, \mathbf{x}_{q}\right)+\sigma_{y}^{2} \delta_{p q} {\tag{15.11}}
+\]</div>
+<p>其中 <span class="math notranslate nohighlight">\(\delta_{p q}=\mathbb{I}(p=q)\)</span>，换言之：</p>
+<div class="math notranslate nohighlight">
+\[
+\operatorname{cov}[\mathbf{y} \mid \mathbf{X}]=\mathbf{K}+\sigma_{y}^{2} \mathbf{I}_{N} \triangleq \mathbf{K}_{y} {\tag{15.12}}
+\]</div>
+<p>第二个矩阵是对角线的，因为我们假设噪声项是独立地加到每个观测值上的。</p>
+<p>观测数据和测试数据上的无噪声隐函数的联合概率密度由下式给出：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\left(\begin{array}{c}
+\mathbf{y} \\
+\mathbf{f}_{*}
+\end{array}\right) \sim \mathcal{N}\left(\mathbf{0},\left(\begin{array}{cc}
+\mathbf{K}_{y} &amp; \mathbf{K}_{*} \\
+\mathbf{K}_{*}^{T} &amp; \mathbf{K}_{* *}
+\end{array}\right)\right) {\tag{15.13}}
+\end{split}\]</div>
+<p>其中为简单起见，假设平均值为零。因此，后验预测性密度为:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+p\left(\mathbf{f}_{*} \mid \mathbf{X}_{*}, \mathbf{X}, \mathbf{y}\right) &amp;=\mathcal{N}\left(\mathbf{f}_{*} \mid \boldsymbol{\mu}_{*}, \boldsymbol{\Sigma}_{*}\right) {\tag{15.14}}\\
+\boldsymbol{\mu}_{*} &amp;=\mathbf{K}_{*}^{T} \mathbf{K}_{y}^{-1} \mathbf{y} {\tag{15.15}}\\
+\boldsymbol{\Sigma}_{*} &amp;=\mathbf{K}_{* *}-\mathbf{K}_{*}^{T} \mathbf{K}_{y}^{-1} \mathbf{K}_{*} {\tag{15.16}}
+\end{aligned}
+\end{split}\]</div>
+<p>在单个测试输入的情况下，这可以简化如下：</p>
+<div class="math notranslate nohighlight">
+\[
+p\left(f_{*} \mid \mathbf{x}_{*}, \mathbf{X}, \mathbf{y}\right)=\mathcal{N}\left(f_{*} \mid \mathbf{k}_{*}^{T} \mathbf{K}_{y}^{-1} \mathbf{y}, k_{* *}-\mathbf{k}_{*}^{T} \mathbf{K}_{y}^{-1} \mathbf{k}_{*}\right) {\tag{15.17}}
+\]</div>
+<p>其中 <span class="math notranslate nohighlight">\(\mathbf{k}_{*}=\left[\kappa\left(\mathbf{x}_{*}, \mathbf{x}_{1}\right), \ldots, \kappa\left(\mathbf{x}_{*}, \mathbf{x}_{N}\right)\right]\)</span> 并且 <span class="math notranslate nohighlight">\(k_{* *}=\kappa\left(\mathbf{x}_{*}, \mathbf{x}_{*}\right)\)</span> 。后验平均值的另一种写法如下：</p>
+<div class="math notranslate nohighlight">
+\[
+\bar{f}_{*}=\mathbf{k}_{*}^{T} \mathbf{K}_{y}^{-1} \mathbf{y}=\sum_{i=1}^{N} \alpha_{i} \kappa\left(\mathbf{x}_{i}, \mathbf{x}_{*}\right) {\tag{15.18}}
+\]</div>
+<p>其中 <span class="math notranslate nohighlight">\(\boldsymbol{\alpha}=\mathbf{K}_{y}^{-1} \mathbf{y}\)</span>。我们在后面会使用该表达式。</p>
+<center>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210609153420_ab.webp" /></p>
+</center>
+<p>图15.3一些具有SE核但具有不同超参数的1D 高斯过程适合于20个噪声观测。核的形式如公式15.19所示。超参数 <span class="math notranslate nohighlight">\(\left(\ell, \sigma_{f}, \sigma_{y}\right)\)</span> 如下： (a) <span class="math notranslate nohighlight">\((1,1,0.1)\)</span> (b) <span class="math notranslate nohighlight">\((0.3, 0.108, 0.00005)\)</span>, (c) <span class="math notranslate nohighlight">\((3.0,1.16,0.89)\)</span>。基于（<code class="docutils literal notranslate"><span class="pre">Rasmussen</span> <span class="pre">和</span> <span class="pre">Williams</span></code>，2006年)的图 2.5 。由 <code class="docutils literal notranslate"><span class="pre">Carl</span> <span class="pre">Rasmussen</span></code> 编写的 <code class="docutils literal notranslate"><span class="pre">gprDemoChangeHparams</span></code> 绘制。</p>
+</div>
+<div class="section" id="id6">
+<h3>15.2.3 核参数的影响<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>高斯过程的预测性能完全取决于核的选择。假设我们为噪声观测选择以下平方指数(SE)核：</p>
+<div class="math notranslate nohighlight">
+\[
+\kappa_{y}\left(x_{p}, x_{q}\right)=\sigma_{f}^{2} \exp \left(-\frac{1}{2 \ell^{2}}\left(x_{p}-x_{q}\right)^{2}\right)+\sigma_{y}^{2} \delta_{p q} {\tag{15.19}}
+\]</div>
+<p>此处 <span class="math notranslate nohighlight">\(\ell\)</span> 是函数变化的水平比例，<span class="math notranslate nohighlight">\(\sigma_{f}^{2}\)</span> 控制函数的垂直比例，<span class="math notranslate nohighlight">\(\sigma_{y}^{2}\)</span> 是噪声方差。图 15.3 说明了调整上述参数的效果。我们从 <span class="math notranslate nohighlight">\(\left(\ell, \sigma_{f}, \sigma_{y}\right)=(1,1,0.1)\)</span> 的 SE 核中采样了20个含噪声数据点，然后根据这些数据对各种参数进行预测。在图 15.3(a) 中，我们使用 <span class="math notranslate nohighlight">\(\left(\ell, \sigma_{f}, \sigma_{y}\right)=(1,1,0.1)\)</span> ，结果拟合很好。在图 15.3(b) 中，我们将长度范围减少到 <span class="math notranslate nohighlight">\(\ell=0.3\)</span> （其他参数由最大边缘似然优化，将在后面讨论）；现在函数看起来更“摇摆”了。而且不确定性上升得更快，因为到训练数据点的有效距离增加得更快。在图 15.3(c) 中，我们将长度刻度增加到 <span class="math notranslate nohighlight">\(\ell=3\)</span>；现在函数看起来更平滑了。</p>
+<center>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210609154345_17.webp" /></p>
+</center>
+<p>图15.4 从具有SE核但超参数不同的高斯过程中采样的一些2D函数。核具有公式15.20中的形式，其中 (a) <span class="math notranslate nohighlight">\(\mathbf{M}=\mathbf{I}\)</span>, (b) <span class="math notranslate nohighlight">\(\mathbf{M}=\operatorname{diag}(1,3)^{-2}\)</span>, (c) <span class="math notranslate nohighlight">\(\mathbf{M}=(1,-1 ;-1,1)+\operatorname{diag}(6,6)^{-2}\)</span>。由 <code class="docutils literal notranslate"><span class="pre">Carl</span> <span class="pre">Rasmussen</span></code> 编写的 <code class="docutils literal notranslate"><span class="pre">gprDemoArd</span></code> 绘制。</p>
+<p>我们可以将SE核扩展到多个维度，如下所示：</p>
+<div class="math notranslate nohighlight">
+\[
+\kappa_{y}\left(\mathbf{x}_{p}, \mathbf{x}_{q}\right)=\sigma_{f}^{2} \exp \left(-\frac{1}{2}\left(\mathbf{x}_{p}-\mathbf{x}_{q}\right)^{T} \mathbf{M}\left(\mathbf{x}_{p}-\mathbf{x}_{q}\right)\right)+\sigma_{y}^{2} \delta_{p q} {\tag{15.20}}
+\]</div>
+<p>我们可以用几种方式定义矩阵 <span class="math notranslate nohighlight">\(\mathbf{M}\)</span> 。最简单的方法是使用各向同性矩阵 <span class="math notranslate nohighlight">\(\mathbf{M}_{1}=\ell^{-2} \mathbf{I}\)</span> 。示例见图 15.4(a)。我们还可以赋予每个维度其自身的特征长度尺度， <span class="math notranslate nohighlight">\(\mathbf{M}_{2}=\operatorname{diag}(\ell)^{-2}\)</span>。如果这些长度尺度中的任何一个变大，则相应的特征尺度被认为是“不相关的”，就像在 <code class="docutils literal notranslate"><span class="pre">ARD</span></code>（ <code class="docutils literal notranslate"><span class="pre">13.7节</span></code>）中一样。在图 15.4(b) 中，我们使用 <span class="math notranslate nohighlight">\(\mathbf{M}=\mathbf{M}_{2}\)</span> 和 <span class="math notranslate nohighlight">\(\ell=(1,3)\)</span> ，因此函数沿 <span class="math notranslate nohighlight">\(x_{1}\)</span> 方向的变化比沿 <span class="math notranslate nohighlight">\(x_{2}\)</span> 方向的变化更快。</p>
+<p>我们还可以创建形式为 <span class="math notranslate nohighlight">\(\mathbf{M}_{3}=\mathbf{\Lambda} \mathbf{\Lambda}^{T}+ \operatorname{diag}(\ell)^{-2}\)</span> 的矩阵，其中 <span class="math notranslate nohighlight">\(\mathbf{\Lambda}\)</span> 是 <span class="math notranslate nohighlight">\(D \times K\)</span> 矩阵，其中 <span class="math notranslate nohighlight">\(K&lt;D\)</span> 。<code class="docutils literal notranslate"><span class="pre">Rasmussen</span> <span class="pre">和</span> <span class="pre">Williams（2006）</span></code>将其称为因子分析距离函数。 <span class="math notranslate nohighlight">\(\Lambda\)</span> 列对应于输入空间中的相关方向。在图 15.4(c) 中，使用 <span class="math notranslate nohighlight">\(\ell=(6 ; 6)\)</span> 和 <span class="math notranslate nohighlight">\(\boldsymbol{\Lambda}=(1 ;-1)\)</span> ，因此函数在垂直于 <span class="math notranslate nohighlight">\((1,1)\)</span> 的方向变化最快。</p>
+</div>
+<div class="section" id="id7">
+<h3>15.2.4 估计核参数<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p>为了估计核参数，我们可以在离散的值网格上使用穷举搜索，以验证损失为目标，但这可能相当慢。(这是用来调优支持向量机使用的核的方法。)。这里我们考虑一种经验贝叶斯方法，它将允许我们使用速度快得多的连续优化方法。特别地，我们将最大化边缘似然：</p>
+<div class="math notranslate nohighlight">
+\[
+p(\mathbf{y} \mid \mathbf{X})=\int p(\mathbf{y} \mid \mathbf{f}, \mathbf{X}) p(\mathbf{f} \mid \mathbf{X}) d \mathbf{f} {\tag{15.21}}
+\]</div>
+<p>由于 <span class="math notranslate nohighlight">\(p(\mathbf{f} \mid \mathbf{X})=\mathcal{N}(\mathbf{f} \mid \mathbf{0}, \mathbf{K})\)</span>, 并且 <span class="math notranslate nohighlight">\(p(\mathbf{y} \mid \mathbf{f})=\prod_{i} \mathcal{N}\left(y_{i} \mid f_{i}, \sigma_{y}^{2}\right)\)</span>, 边缘似然由下式给出：</p>
+<div class="math notranslate nohighlight">
+\[
+\log p(\mathbf{y} \mid \mathbf{X})=\log \mathcal{N}\left(\mathbf{y} \mid \mathbf{0}, \mathbf{K}_{y}\right)=-\frac{1}{2} \mathbf{y} \mathbf{K}_{y}^{-1} \mathbf{y}-\frac{1}{2} \log \left|\mathbf{K}_{y}\right|-\frac{N}{2} \log (2 \pi) {\tag{15.22}}
+\]</div>
+<p>第一项是数据拟合项，第二项是模型复杂性项，第三项是常量。为了理解前两个术语之间的权衡，考虑一下 <span class="math notranslate nohighlight">\(1 \mathrm{D}\)</span> 中的SE核，因为我们改变了长度尺度 <span class="math notranslate nohighlight">\(\ell\)</span> 并固定 <span class="math notranslate nohighlight">\(\sigma_{y}^{2}\)</span> 。设 <span class="math notranslate nohighlight">\(J(\ell)=-\log p(\mathbf{y} \mid \mathbf{X}, \ell)\)</span>，对于较短的长度比例，拟合度会很好，所以 <span class="math notranslate nohighlight">\(\mathbf{y}^{T} \mathbf{K}_{y}^{-1} \mathbf{y}\)</span> 会比较小。然而，模型的复杂性会很高： <span class="math notranslate nohighlight">\(\mathbf{K}\)</span> 几乎是对角线（如右上角的图14.3所示），因为大多数点不会被视为“靠近”任何其他点，因此 <span class="math notranslate nohighlight">\(\log \left|\mathbf{K}_{y}\right|\)</span> 将会很大。对于较长的比例，拟合程度较差，但模型复杂度较低：<span class="math notranslate nohighlight">\(\mathbf{K}\)</span> 几乎都是1(如右下角的图14.3所示)，因此 <span class="math notranslate nohighlight">\(\log \left|\mathbf{K}_{y}\right|\)</span> 将很小。</p>
+<p>我们现在讨论如何最大化边缘似然。让核参数(也称为超参数)用 <span class="math notranslate nohighlight">\(θ\)</span> 表示。我们可以证明：</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+\frac{\partial}{\partial \theta_{j}} \log p(\mathbf{y} \mid \mathbf{X}) &amp;=\frac{1}{2} \mathbf{y}^{T} \mathbf{K}_{y}^{-1} \frac{\partial \mathbf{K}_{y}}{\partial \theta_{j}} \mathbf{K}_{y}^{-1} \mathbf{y}-\frac{1}{2} \operatorname{tr}\left(\mathbf{K}_{y}^{-1} \frac{\partial \mathbf{K}_{y}}{\partial \theta_{j}}\right) {\tag{15.23}}\\
+&amp;=\frac{1}{2} \operatorname{tr}\left(\left(\boldsymbol{\alpha} \boldsymbol{\alpha}^{T}-\mathbf{K}_{y}^{-1}\right) \frac{\partial \mathbf{K}_{y}}{\partial \theta_{j}}\right) {\tag{15.24}}
+\end{align*}\]</div>
+<p>其中 <span class="math notranslate nohighlight">\(\boldsymbol{\alpha}=\mathbf{K}_{u}^{-1} \mathbf{y}\)</span> 。其使用 <span class="math notranslate nohighlight">\(O\left(N^{3}\right)\)</span> 时间计算 <span class="math notranslate nohighlight">\(\mathbf{K}_{v}^{-1}\)</span>，并且每个超参数梯度的计算时间为 <span class="math notranslate nohighlight">\(O\left(N^{2}\right)\)</span> 。</p>
+<p><span class="math notranslate nohighlight">\(\frac{\partial \mathbf{K}_{y}}{\partial \theta_{j}}\)</span> 的形式取决于核的形式，以及我们对哪个参数求导。通常我们对超参数有约束，例如 <span class="math notranslate nohighlight">\(\sigma_{y}^{2} \geq 0\)</span> 。在这种情况下，我们可以定义 <span class="math notranslate nohighlight">\(\theta=\log \left(\sigma_{u}^{2}\right)\)</span> ，然后使用链式法则。</p>
+<p>给定对数边缘似然及其导数的表达式，我们可以使用任何标准的基于梯度的优化器来估计核参数。然而，由于目标不是凸的，局部极小值可能是一个问题，如下所示。</p>
+<div class="section" id="id8">
+<h4>15.2.4.1 案例<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
+</div>
+<div class="section" id="id9">
+<h4>15.2.4.2 超参数的贝叶斯推断<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
+</div>
+<div class="section" id="id10">
+<h4>15.2.4.3 多核学习<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h4>
+</div>
+</div>
+<div class="section" id="id11">
+<h3>15.2.5 计算问题和数值问题<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<p>预测平均值为 <span class="math notranslate nohighlight">\(\overline{f_{*}}=\mathbf{k}_{*}^{T} \mathbf{K}_{y}^{-1} \mathbf{y}\)</span>。出于数值稳定性的原因，直接反演 <span class="math notranslate nohighlight">\(\mathbf{K}_{y}\)</span> 是不明智的。一种更健壮的替代方法是计算 <code class="docutils literal notranslate"><span class="pre">Cholesky分解</span></code> ，<span class="math notranslate nohighlight">\(\mathbf{K}_{y}=\mathbf{L} \mathbf{L}^{T}\)</span> 。然后，我们可以计算预测均值和方差，以及对数边际似然，如算法 6 中的伪代码所示（<code class="docutils literal notranslate"><span class="pre">Rasmussen</span> <span class="pre">and</span> <span class="pre">Williams</span> <span class="pre">2006，第19页</span></code>）。计算 <code class="docutils literal notranslate"><span class="pre">Cholesky分解</span></code> 所需时间为 <span class="math notranslate nohighlight">\(O\left(N^{3}\right)\)</span> ，求解 <span class="math notranslate nohighlight">\(\boldsymbol{\alpha}=\mathbf{K}_{y}^{-1} \mathbf{y}=\mathbf{L}^{-T} \mathbf{L}^{-1} \mathbf{y}\)</span> 所需时间为 <span class="math notranslate nohighlight">\(O\left(N^{2}\right)\)</span>。然后，我们可以使用 <span class="math notranslate nohighlight">\(\mathbf{k}_{*}^{T} \boldsymbol{\alpha}\)</span> 在 <span class="math notranslate nohighlight">\(O(N)\)</span> 时间内计算平均值，使用 <span class="math notranslate nohighlight">\(k_{* *}-\mathbf{k}_{*}^{T} \mathbf{L}^{-T} \mathbf{L}^{-1} \mathbf{k}_{*}\)</span> 在 <span class="math notranslate nohighlight">\(O\left(N^{2}\right)\)</span> 时间内计算每个测试用例的方差。</p>
+<p><code class="docutils literal notranslate"><span class="pre">Cholesky分解</span></code> 的另一种选择是使用共轭梯度(CG)求解线性系统 <span class="math notranslate nohighlight">\(\mathbf{K}_{y} \boldsymbol{\alpha}=\mathbf{y}\)</span> 。如果我们在 <span class="math notranslate nohighlight">\(k\)</span> 次迭代后终止该算法，则需要 <span class="math notranslate nohighlight">\(\left(k N^{2}\right)\)</span> 时间。如果我们运行 <span class="math notranslate nohighlight">\(k=N\)</span> ，它在 <span class="math notranslate nohighlight">\(O\left(N^{3}\right)\)</span> 时间内给出精确解。另一种方法是使用快速高斯变换近似共轭梯度所需的矩阵-向量乘法（<code class="docutils literal notranslate"><span class="pre">Yang等，2005</span></code>）；然而，这并不适用于高维输入。有关其他加速技术的讨论，请参见 15.6 节。</p>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210609161339_d0.webp" /></p>
+</div>
+<div class="section" id="id12">
+<h3>15.2.6 半参数高斯过程<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<p>有时使用线性模型表示过程的平均值很有用，如下所示：</p>
+<div class="math notranslate nohighlight">
+\[
+f(\mathbf{x})=\boldsymbol{\beta}^{T} \boldsymbol{\phi}(\mathbf{x})+r(\mathbf{x}) {\tag{15.26}}
+\]</div>
+<p>其中 <span class="math notranslate nohighlight">\(r(\mathbf{x}) \sim \operatorname{高斯过程}\left(0, \kappa\left(\mathbf{x}, \mathbf{x}^{\prime}\right)\right)\)</span> 对残差进行建模。这结合了参数模型和非参数模型，称为半参数模型。</p>
+<p>如果我们假设 <span class="math notranslate nohighlight">\(\boldsymbol{\beta} \sim \mathcal{N}(\mathbf{b}, \mathbf{B})\)</span> ，我们可以将这些参数积分出来，得到一个新的高斯过程（ <code class="docutils literal notranslate"><span class="pre">O‘Hagan</span> <span class="pre">1978</span></code>）：</p>
+<div class="math notranslate nohighlight">
+\[
+f(\mathbf{x}) \sim \mathrm{高斯过程}\left(\phi(\mathbf{x})^{T} \mathbf{b}, \kappa\left(\mathbf{x}, \mathbf{x}^{\prime}\right)+\phi(\mathbf{x})^{T} \mathbf{B} \phi\left(\mathbf{x}^{\prime}\right)\right) {\tag{15.27}}
+\]</div>
+<center>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210609161614_84.webp" /></p>
+</center>
+<p>表15.1二元Logistic/Probit 高斯过程回归的似然、梯度和黑森回归。我们假设 <span class="math notranslate nohighlight">\(y_{i} \in \{-1,+1\}\)</span> ，定义 <span class="math notranslate nohighlight">\(t_{i}=\left(y_{i}+1\right) / 2 \in\{0,1\}\)</span> 和 <span class="math notranslate nohighlight">\(\pi_{i}=\operatorname{sigm}\left(f_{i}\right)\)</span> 用于Logistic回归，定义 <span class="math notranslate nohighlight">\(\pi_{i}=\Phi\left(f_{i}\right)\)</span> 用于概率回归。此外 <span class="math notranslate nohighlight">\(\phi\)</span> 和 <span class="math notranslate nohighlight">\(\Phi\)</span> 是 <span class="math notranslate nohighlight">\(\mathcal{N}(0,1)\)</span> 的 pdf 和 cdf 。摘自（<code class="docutils literal notranslate"><span class="pre">Rasmussen</span> <span class="pre">and</span> <span class="pre">Williams</span> <span class="pre">2006</span></code> , p43）。</p>
+<p>综合出 <span class="math notranslate nohighlight">\(\boldsymbol{\beta}\)</span> ，测试输入 <span class="math notranslate nohighlight">\(\mathbf{X}_{*}\)</span> 的相应预测分布具有以下形式（<code class="docutils literal notranslate"><span class="pre">Rasmussen</span> <span class="pre">and</span> <span class="pre">Williams</span> <span class="pre">2006</span></code>, p28）：</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+p\left(\mathbf{f}_{*} \mid \mathbf{X}_{*}, \mathbf{X}, \mathbf{y}\right) &amp;=\mathcal{N}\left(\overline{\mathbf{f}}_{*}, \operatorname{cov}\left[f_{*}\right]\right) {\tag{15.28}}\\
+\overline{\mathbf{f}_{*}} &amp;=\mathbf{\Phi}_{*}^{T} \overline{\boldsymbol{\beta}}+\mathbf{K}_{*}^{T} \mathbf{K}_{y}^{-1}(\mathbf{y}-\mathbf{\Phi} \overline{\boldsymbol{\beta}}) {\tag{15.29}}\\
+\overline{\boldsymbol{\beta}} &amp;=\left(\boldsymbol{\Phi}^{T} \mathbf{K}_{y}^{-1} \boldsymbol{\Phi}+\mathbf{B}^{-1}\right)^{-1}\left(\mathbf{\Phi} \mathbf{K}_{y}^{-1} \mathbf{y}+\mathbf{B}^{-1} \mathbf{b}\right) {\tag{15.30}}\\
+\operatorname{cov}\left[\mathbf{f}_{*}\right] &amp;=\mathbf{K}_{* *}-\mathbf{K}_{*}^{T} \mathbf{K}_{y}^{-1} \mathbf{K}_{*}+\mathbf{R}^{T}\left(\mathbf{B}^{-1}+\mathbf{\Phi} \mathbf{K}_{y}^{-1} \mathbf{\Phi}^{T}\right)^{-1} \mathbf{R} {\tag{15.31}}\\
+\mathbf{R} &amp;=\mathbf{\Phi}_{*}-\mathbf{\Phi} \mathbf{K}_{y}^{-1} \mathbf{\Phi}_{*} {\tag{15.32}}
+\end{align*}\]</div>
+<p>预测均值是线性模型的输出加上由于高斯过程引起的校正项，而预测协方差是通常的高斯过程协方差加上由于 <span class="math notranslate nohighlight">\(\boldsymbol{\beta}\)</span> 中的不确定性而产生的额外项。</p>
+</div>
+</div>
+<div class="section" id="id13">
+<h2>15.3 高斯过程与广义线性回归<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h2>
+<p>在本节中，我们将GP扩展到GLM设置，重点放在分类案例上。与贝叶斯Logistic回归一样，主要困难在于高斯先验与伯努利/多卢利似然不是共轭的。有几种近似可以采用：高斯近似(第8.4.3节)、期望传播(Kuss和Rasmussen 2005；Nickisch和Rasmussen 2008)、变分(Girolami和Rogers 2006；Opper和ArChambeau 2009)、MCMC(Neal 1997；Christensen等人)。这里我们重点介绍高斯近似，因为它是最简单和最快的。</p>
+<div class="section" id="id14">
+<h3>15.3.1 二分类<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<p>在二元情形下，我们将模型定义为 <span class="math notranslate nohighlight">\(p\left(y_{i} \mid \mathbf{x}_{i}\right)=\sigma\left(y_{i} f\left(\mathbf{x}_{i}\right)\right)\)</span>，其中，在（<code class="docutils literal notranslate"><span class="pre">Rasmussen</span> <span class="pre">and</span> <span class="pre">Williams</span> <span class="pre">2006</span></code>）之后，我们假设 <span class="math notranslate nohighlight">\(y_{i} \in\{-1,+1\}\)</span> ，并且我们设  <span class="math notranslate nohighlight">\(\sigma(z)=\operatorname{sigm}(z)\)</span> （Logistic回归）或  <span class="math notranslate nohighlight">\(\sigma(z)=\Phi(z)\)</span> （概率回归）。对于GP回归，我们假设 <span class="math notranslate nohighlight">\(f \sim \operatorname{GP}(0, \kappa)\)</span>。</p>
+<div class="section" id="id15">
+<h4>15.3.1.1 计算后验<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h4>
+<p>定义非归一化后验的对数如下：</p>
+<div class="math notranslate nohighlight">
+\[
+\ell(\mathbf{f})=\log p(\mathbf{y} \mid \mathbf{f})+\log p(\mathbf{f} \mid \mathbf{X})=\log p(\mathbf{y} \mid \mathbf{f})-\frac{1}{2} \mathbf{f}^{T} \mathbf{K}^{-1} \mathbf{f}-\frac{1}{2} \log |\mathbf{K}|-\frac{N}{2} \log 2 \pi  {\tag{15.33}}
+\]</div>
+<p>设 <span class="math notranslate nohighlight">\( J(f) \triangleq-\ell(f) \)</span>  是我们要最小化的函数。它的梯度和Hessian由下式给出</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+\mathbf{g} &amp;=-\nabla \log p(\mathbf{y} \mid \mathbf{f})+\mathbf{K}^{-1} \mathbf{f} {\tag{15.34}}\\
+\mathbf{H} &amp;=-\nabla \nabla \log p(\mathbf{y} \mid \mathbf{f})+\mathbf{K}^{-1}=\mathbf{W}+\mathbf{K}^{-1} {\tag{15.35}}
+\end{align*}\]</div>
+<p>请注意， <span class="math notranslate nohighlight">\(\mathbf{W} \triangleq-\nabla \nabla \log p(\mathbf{y} \mid \mathbf{f})\)</span> 是对角线矩阵，因为数据是IID(以 <span class="math notranslate nohighlight">\(f\)</span> 为条件)。在 <code class="docutils literal notranslate"><span class="pre">第8.3.1节</span></code> 和 <code class="docutils literal notranslate"><span class="pre">9.4.1节</span></code> 中给出了<code class="docutils literal notranslate"><span class="pre">logit</span></code> 和 <code class="docutils literal notranslate"><span class="pre">probit</span></code> 情况下对数似然率的梯度和Hessian表达式，并在 <code class="docutils literal notranslate"><span class="pre">表</span> <span class="pre">15.1</span></code> 中进行了总结。</p>
+<p>我们可以使用IRLS来找出MAP估计值。更新的形式如下所示:</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+\mathbf{f}^{\text {new }} &amp;=\mathbf{f}-\mathbf{H}^{-1} \mathbf{g}=\mathbf{f}+\left(\mathbf{K}^{-1}+\mathbf{W}\right)^{-1}\left(\nabla \log p(\mathbf{y} \mid \mathbf{f})-\mathbf{K}^{-1} \mathbf{f}\right) {\tag{15.36}}\\
+&amp;=\left(\mathbf{K}^{-1}+\mathbf{W}\right)^{-1}(\mathbf{W} \mathbf{f}+\nabla \log p(\mathbf{y} \mid \mathbf{f})) {\tag{15.37}}
+\end{align*}\]</div>
+<p>收敛时，后方的高斯近似采用以下形式：</p>
+<div class="math notranslate nohighlight">
+\[
+p(\mathbf{f} \mid \mathbf{X}, \mathbf{y}) \approx \mathcal{N}\left(\hat{\mathbf{f}},\left(\mathbf{K}^{-1}+\mathbf{W}\right)^{-1}\right) {\tag{15.38}}
+\]</div>
+</div>
+<div class="section" id="id16">
+<h4>15.3.1.2 计算后验预测<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h4>
+<p>我们现在计算后验预测值。首先，我们预测测试用例 <span class="math notranslate nohighlight">\(\mathbf{x}_{*}\)</span> 处的潜在函数。对于我们所拥有的</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+\mathbb{E}\left[f_{*} \mid \mathbf{x}_{*}, \mathbf{X}, \mathbf{y}\right] &amp;=\int \mathbb{E}\left[f_{*} \mid \mathbf{f}, \mathbf{x}_{*}, \mathbf{X}, \mathbf{y}\right] p(\mathbf{f} \mid \mathbf{X}, \mathbf{y}) d \mathbf{f} {\tag{15.39}}\\
+&amp;=\int \mathbf{k}_{*}^{T} \mathbf{K}^{-1} \mathbf{f} p(\mathbf{f} \mid \mathbf{X}, \mathbf{y}) d \mathbf{f} {\tag{15.40}}\\
+&amp;=\mathbf{k}_{*}^{T} \mathbf{K}^{-1} \mathbb{E}[\mathbf{f} \mid \mathbf{X}, \mathbf{y}] \approx \mathbf{k}_{*}^{T} \mathbf{K}^{-1} \hat{\mathbf{f}} {\tag{15.41}}
+\end{align*}\]</div>
+<p>在这里，我们使用<code class="docutils literal notranslate"><span class="pre">公式</span> <span class="pre">15.8</span></code>来得到 <span class="math notranslate nohighlight">\(f_{*}\)</span>  的平均值，给定的是无噪声的 <span class="math notranslate nohighlight">\(\mathbf{f}\)</span>。</p>
+<p>为了计算预测方差，我们使用迭代方差规则：</p>
+<div class="math notranslate nohighlight">
+\[
+\operatorname{var}\left[f_{*}\right]=\mathbb{E}\left[\operatorname{var}\left[f_{*} \mid \mathbf{f}\right]\right]+\operatorname{var}\left[\mathbb{E}\left[f_{*} \mid \mathbf{f}\right]\right] {\tag{15.42}}
+\]</div>
+<p>其中所有概率都以 <span class="math notranslate nohighlight">\(\mathbf{x}_{*}, \mathbf{X}, \mathbf{y}\)</span> 为条件。从 <code class="docutils literal notranslate"><span class="pre">式</span> <span class="pre">15.9</span></code> 中我们可以得到：</p>
+<div class="math notranslate nohighlight">
+\[
+ \mathbb{E}\left[\operatorname{var}\left[f_{*} \mid \mathbf{f}\right]\right]=\mathbb{E}\left[k_{* *}-\mathbf{k}_{*}^{T} \mathbf{K}^{-1} \mathbf{k}_{*}\right]=k_{* *}-\mathbf{k}_{*}^{T} \mathbf{K}^{-1} \mathbf{k}_{*} {\tag{15.43}}
+ \]</div>
+<p>从 <code class="docutils literal notranslate"><span class="pre">式</span> <span class="pre">15.9</span></code> 中我们可以得到：</p>
+<div class="math notranslate nohighlight">
+\[
+\operatorname{var}\left[\mathbb{E}\left[f_{*} \mid \mathbf{f}\right]\right]=\operatorname{var}\left[\mathbf{k}_{*} \mathbf{K}^{-1} \mathbf{f}\right]=\mathbf{k}_{*}^{T} \mathbf{K}^{-1} \operatorname{cov}[\mathbf{f}] \mathbf{K}^{-1} \mathbf{k}_{*} {\tag{15.44}}
+\]</div>
+<p>把这些结合起来，我们就得到：</p>
+<div class="math notranslate nohighlight">
+\[
+\operatorname{var}\left[f_{*}\right]=k_{* *}-\mathbf{k}_{*}^{T}\left(\mathbf{K}^{-1}-\mathbf{K}^{-1} \operatorname{cov}[\mathbf{f}] \mathbf{K}^{-1}\right) \mathbf{k}_{*} {\tag{15.45}}
+\]</div>
+<p>通过 <code class="docutils literal notranslate"><span class="pre">式</span> <span class="pre">15.38</span></code>，我们有 <span class="math notranslate nohighlight">\(\operatorname{cov}[f] \approx\left(\mathbf{K}^{-1}+\mathbf{W}\right)^{-1}\)</span>。 利用矩阵求逆引理，我们得到：</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+\operatorname{var}\left[f_{*}\right] &amp; \approx k_{* *}-\mathbf{k}_{*}^{T} \mathbf{K}^{-1} \mathbf{k}_{*}+\mathbf{k}_{*}^{T} \mathbf{K}^{-1}\left(\mathbf{K}^{-1}+\mathbf{W}\right)^{-1} \mathbf{K}^{-1} \mathbf{k}_{*}  {\tag{15.46}}\\
+&amp;=k_{* *}-\mathbf{k}_{*}^{T}\left(\mathbf{K}+\mathbf{W}^{-1}\right)^{-1} \mathbf{k}_{*} {\tag{15.47}}
+\end{align*}\]</div>
+<p>所以总而言之，我们有</p>
+<div class="math notranslate nohighlight">
+\[
+p\left(f_{*} \mid \mathbf{x}_{*}, \mathbf{X}, \mathbf{y}\right)=\mathcal{N}\left(\mathbb{E}\left[f_{*}\right], \operatorname{var}\left[f_{*}\right]\right)
+\]</div>
+<p>为了将其转换为二元响应的预测分布，我们使用</p>
+<div class="math notranslate nohighlight">
+\[
+\pi_{*}=p\left(y_{*}=1 \mid \mathbf{x}_{*}, \mathbf{X}, \mathbf{y}\right) \approx \int \sigma\left(f_{*}\right) p\left(f_{*} \mid \mathbf{x}_{*}, \mathbf{X}, \mathbf{y}\right) d f_{*}
+\]</div>
+<p>这可以使用8.4.4节中讨论的任何方法来近似，在8.4.4节中我们讨论了贝叶斯Logistic回归。例如，使用 <code class="docutils literal notranslate"><span class="pre">8.4.4.2节</span></code> 的概率近似，我们有 <span class="math notranslate nohighlight">\(\pi_{*} \approx \operatorname{sigm}\left(\kappa(v) \mathbb{E}\left[f_{*}\right]\right)\)</span> ，其中， <span class="math notranslate nohighlight">\(v=\operatorname{var}\left[f_{*}\right]\)</span> 和 <span class="math notranslate nohighlight">\(\kappa^{2}(v)=(1+\pi v / 8)^{-1}\)</span> 。</p>
+</div>
+<div class="section" id="id17">
+<h4>15.3.1.3 计算边缘似然<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h4>
+<p>我们需要边缘似然来优化核参数。使用方程8.54中的拉普拉斯近似，我们有：</p>
+<div class="math notranslate nohighlight">
+\[
+\log p(\mathbf{y} \mid \mathbf{X}) \approx \ell(\hat{\mathbf{f}})-\frac{1}{2} \log |\mathbf{H}|+\operatorname{const}
+\]</div>
+<p>因此，</p>
+<div class="math notranslate nohighlight">
+\[
+\log p(\mathbf{y} \mid \mathbf{X}) \approx \log p(\mathbf{y} \mid \hat{\mathbf{f}})-\frac{1}{2} \hat{\mathbf{f}}^{T} \mathbf{K}^{-1} \hat{\mathbf{f}}-\frac{1}{2} \log |\mathbf{K}|-\frac{1}{2} \log \left|\mathbf{K}^{-1}+\mathbf{W}\right|
+\]</div>
+<p>计算导数 <span class="math notranslate nohighlight">\(\frac{\partial \log p(\mathbf{y} \mid \mathbf{X}, \boldsymbol{\theta})}{\partial \theta_{i}}\)</span> 比回归情况更复杂，因为 <span class="math notranslate nohighlight">\(\hat{\mathbf{f}}\)</span> 和 <span class="math notranslate nohighlight">\(\mathbf{W}\)</span> 以及 <span class="math notranslate nohighlight">\(\mathbf{K}\)</span> 依赖于 <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span>。详情可以在(<code class="docutils literal notranslate"><span class="pre">Rasmussen</span> <span class="pre">and</span> <span class="pre">Williams</span> <span class="pre">2006</span></code>，第125页)中找到。</p>
+</div>
+<div class="section" id="id18">
+<h4>15.3.1.4 数值稳定计算<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h4>
+<p>要以数值稳定的方式实现上述方程，最好避免交换 <span class="math notranslate nohighlight">\(\mathbf{K}\)</span>  或 <span class="math notranslate nohighlight">\(\mathbf{W}\)</span> 。 (<code class="docutils literal notranslate"><span class="pre">Rasmussen和Williams</span> <span class="pre">2006</span></code>，P45)建议定义：</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{B}=\mathbf{I}_{N}+\mathbf{W}^{\frac{1}{2}} \mathbf{K} \mathbf{W}^{\frac{1}{2}}
+\]</div>
+<p>其特征值界于 1 (因为I) 和大于 <span class="math notranslate nohighlight">\(1+\frac{N}{4} \max _{i j} K_{i j}\)</span> (因为 <span class="math notranslate nohighlight">\(w_{i i}=\pi_{i}(1-\pi) \leq 0.25\)</span> )，因此可以安全地求逆。</p>
+<p>我们可以用矩阵求逆引理来证明</p>
+<div class="math notranslate nohighlight">
+\[
+\left(\mathbf{K}^{-1}+\mathbf{W}\right)^{-1}=\mathbf{K}-\mathbf{K} \mathbf{W}^{\frac{1}{2}} \mathbf{B}^{-1} \mathbf{W}^{\frac{1}{2}} \mathbf{K}
+\]</div>
+<p>因此 IRLS 更新成为：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+\mathbf{f}^{\text {new }} &amp;=\left(\mathbf{K}^{-1}+\mathbf{W}\right)^{-1} \underbrace{(\mathbf{W} \mathbf{f}+\nabla \log p(\mathbf{y} \mid \mathbf{f}))}_{\mathbf{b}} \\
+&amp;=\mathbf{K}\left(\mathbf{I}-\mathbf{W}^{\frac{1}{2}} \mathbf{B}^{-1} \mathbf{W}^{\frac{1}{2}} \mathbf{K}\right) \mathbf{b} \\
+&amp;=\mathbf{K} \underbrace{\left(\mathbf{b}-\mathbf{W}^{\frac{1}{2}} \mathbf{L}^{T} \backslash\left(\mathbf{L} \backslash\left(\mathbf{W}^{\frac{1}{2}} \mathbf{K b}\right)\right)\right)}_{\mathbf{a}}
+\end{aligned}
+\end{split}\]</div>
+<p>其中 <span class="math notranslate nohighlight">\(\mathbf{B}=\mathbf{L} \mathbf{L}^{T}\)</span> 是 <span class="math notranslate nohighlight">\(\mathbf{B}\)</span> 的 <code class="docutils literal notranslate"><span class="pre">Cholesky分解</span></code>。拟合算法耗费 <span class="math notranslate nohighlight">\(O\left(T N^{3}\right)\)</span> 时间和 <span class="math notranslate nohighlight">\(O\left(N^{2}\right)\)</span> 空间，其中 <span class="math notranslate nohighlight">\(T\)</span> 是牛顿迭代的次数。</p>
+<p>在收敛时，我们有 <span class="math notranslate nohighlight">\(\mathbf{a}=\mathbf{K}^{-1} \hat{\mathbf{f}}\)</span>，因此我们可以使用以下公式计算对数边际似然(公式15.51</p>
+<div class="math notranslate nohighlight">
+\[
+\log p(\mathbf{y} \mid \mathbf{X})=\log p(\mathbf{y} \mid \hat{\mathbf{f}})-\frac{1}{2} \mathbf{a}^{T} \hat{\mathbf{f}}-\sum_{i} \log L_{i i}
+\]</div>
+<p>其中利用了这样一个事实：</p>
+<div class="math notranslate nohighlight">
+\[
+|\mathbf{B}|=|\mathbf{K}|\left|\mathbf{K}^{-1}+\mathbf{W}\right|=\left|\mathbf{I}_{N}+\mathbf{W}^{\frac{1}{2}} \mathbf{K} \mathbf{W}^{\frac{1}{2}}\right|
+\]</div>
+<p>现在我们计算预测分布。与使用 <span class="math notranslate nohighlight">\(\mathbb{E}\left[f_{*}\right]=\mathbf{k}_{*}^{T} \mathbf{K}^{-1} \hat{\mathbf{f}}\)</span> 不同，我们利用了这样的事实：在模式下，<span class="math notranslate nohighlight">\( \nabla \ell=0 \)</span>，所以 <span class="math notranslate nohighlight">\(\hat{\mathbf{f}}=\mathbf{K}(\nabla \log p(\mathbf{y} \mid \hat{\mathbf{f}}))\)</span>。因此，我们可以重写预测平均值，如下所示：</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbb{E}\left[f_{*}\right]=\mathbf{k}_{*}^{T} \nabla \log p(\mathbf{y} \mid \hat{\mathbf{f}})
+\]</div>
+<p>为了计算预测方差，我们利用以下事实</p>
+<div class="math notranslate nohighlight">
+\[
+\left(\mathbf{K}+\mathbf{W}^{-1}\right)^{-1}=\mathbf{W}^{\frac{1}{2}} \mathbf{W}^{-\frac{1}{2}}\left(\mathbf{K}+\mathbf{W}^{-1}\right)^{-1} \mathbf{W}^{-\frac{1}{2}} \mathbf{W}^{\frac{1}{2}}=\mathbf{W}^{\frac{1}{2}} \mathbf{B}^{-1} \mathbf{W}^{\frac{1}{2}}
+\]</div>
+<p>以得到：</p>
+<div class="math notranslate nohighlight">
+\[
+\operatorname{var}\left[f_{*}\right]=k_{* *}-\mathbf{k}_{*}^{T} \mathbf{W}^{\frac{1}{2}}\left(\mathbf{L} \mathbf{L}^{T}\right)^{-1} \mathbf{W}^{\frac{1}{2}} \mathbf{k}_{*}=k_{* *}-\mathbf{v}^{T} \mathbf{v}
+\]</div>
+<p>式中 <span class="math notranslate nohighlight">\(\mathbf{v}=\mathbf{L} \backslash\left(\mathbf{W}^{\frac{1}{2}} \mathbf{k}_{*}\right)\)</span>。然后我们就可以计算 <span class="math notranslate nohighlight">\(\pi_{*}\)</span> 了。</p>
+<p>在算法16中总结了整个算法，该算法基于(<code class="docutils literal notranslate"><span class="pre">Rasmussen和Williams</span> <span class="pre">2006</span></code>，46页)。拟合花费 <span class="math notranslate nohighlight">\(O\left(N^{3}\right)\)</span>  时间，预测花费 <span class="math notranslate nohighlight">\(O\left(N^{2} N_{*}\right)\)</span>  时间，其中 <span class="math notranslate nohighlight">\(N_{*}\)</span> 是测试用例的数量。</p>
+</div>
+<div class="section" id="id19">
+<h4>15.3.1.5 示例<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h4>
+</div>
+</div>
+</div>
+<div class="section" id="id20">
+<h2>15.4 高斯过程与其他方法<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="id21">
+<h2>15.5 高斯过程隐变量模型<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="id22">
+<h2>15.6 大数据集的逼近方法<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./MLAPP_BOOK"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="14.KernelMethod.html" title="previous page">14 核方法</a>
+    <a class='right-next' id="next-link" href="16.AdaptiveBasisFunctionModel.html" title="next page">16 自适应基函数模型</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Kevin Murphy<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>

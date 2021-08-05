@@ -1,0 +1,953 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>07 线性回归 &#8212; 机器学习：概率视角</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet" />
+  <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.e8e5499552300ddf5d7adccae7cc3b70.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="08 逻辑回归" href="08.LogisticRegression.html" />
+    <link rel="prev" title="06 频率学派统计思想" href="06.FrequentistStatistics.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+      <img src="../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">机器学习：概率视角</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../preface.html">
+   前言
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="01.Introduction.html">
+   01 引言
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="02.Probability.html">
+   02 概率论
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03.GenerativeModelsForDiscreteData.html">
+   03 离散数据的生成式模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="04.GaussianModels.html">
+   04 高斯模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="05.BayesianStatistics.html">
+   05 贝叶斯学派统计思想
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="06.FrequentistStatistics.html">
+   06 频率学派统计思想
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   07 线性回归
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="08.LogisticRegression.html">
+   08 逻辑回归
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="09.GeneralizedLinearModelsAndTheExponentialFamily.html">
+   09 广义线性模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="10.DirectedGraphicalModels%20%28BayesNets%29.html">
+   10 有向图模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="11.MixtureModelandEMAlgorithm.html">
+   11 混合模型与EM算法
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="12.LinearModelwithLatentVariable.html">
+   12 隐变量线性模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="13.SparseLinearModel.html">
+   13 稀疏线性模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="14.KernelMethod.html">
+   14 核方法
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="15.GaussianProcesses.html">
+   15 高斯过程
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="16.AdaptiveBasisFunctionModel.html">
+   16 自适应基函数模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="17.MarkovAndHiddenMarkovModel.html">
+   17 马尔科夫与隐马尔科夫模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="18.StateSpaceModels.html">
+   18 状态空间模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="19.UndirectedGraphicalModels%28MarkovRandomFields%29.html">
+   19 无向图模型（马尔科夫随机场）
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="20.ExactInferenceForGraphicalModels.html">
+   20 概率图的精确推断
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="21.VariationalInference.html">
+   21 变分推断
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="22.MoreVariationalInference.html">
+   22 更多变分推断方法
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="23.MonteCarloInference.html">
+   23 蒙特卡洛推断
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="24.MarkovChainMonteCarlo%28MCMC%29Inference.html">
+   24 马尔科夫链蒙特卡洛 MCMC
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="25.Clustering.html">
+   25 聚簇
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="26.GraphicalModelStructureLearning.html">
+   26 概率图的结构学习
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="27.LatentVariableModelsForDiscreteData.html">
+   27 离散数据的隐变量模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="28.DeepLearning.html">
+   28 深度学习
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Abbreviations.html">
+   本书常见缩写列表
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/MLAPP_BOOK/07.LinearRegression.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   7.1 概论
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   7.2 模型选择
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id4">
+   7.3 最大似然估计(最小二乘法)
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mle">
+     7.3.1 最大似然估计(MLE)的推导
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id5">
+     7.3.2 几何解释
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id6">
+     7.3.3 凸性质
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id7">
+   7.4 健壮线性回归*
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id8">
+   7.5 岭回归
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id9">
+     7.5.1 基本思想
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id10">
+     7.5.2 数值稳定计算*
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#pca">
+     7.5.3 和主成分分析(PCA)的联系*
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id11">
+     7.5.4 大规模数据的规范化效应
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id12">
+   7.6 贝叶斯线性回归
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id13">
+     7.6.1 计算后验
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id14">
+     7.6.2 计算后验预测
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#sigma-2">
+     7.6.3
+     <span class="math notranslate nohighlight">
+      \(\sigma^2\)
+     </span>
+     未知的情况下用贝叶斯推断*
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id15">
+       7.6.3.1 共轭先验
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id16">
+       7.6.3.2 无信息先验
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id17">
+       7.6.3.3 贝叶斯和频率论相一致的样例*
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id18">
+     7.6.4 线性回归的经验贝叶斯方法(证据程序)
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="id1">
+<h1>07 线性回归<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<p>[原文] <a class="reference external" href="https://probml.github.io/pml-book/book0.html">https://probml.github.io/pml-book/book0.html</a></p>
+<p>[作者] <a class="reference external" href="https://www.cs.ubc.ca/~murphyk/">Kevin Patrick Murphy</a></p>
+<style>p{text-indent:2em;2}</style>
+<div class="section" id="id2">
+<h2>7.1 概论<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>线性回归是统计学和(监督)机器学习里面的基本主力.使用核函数或者其他形式基函数来扩展之后,还可以用来对非线性关系进行建模.把高斯输出换成伯努利或者多元伯努利分部,就还可以用到分类上面,这些后文都会讲到.所以这个模型很值得详细学习一下.</p>
+</div>
+<div class="section" id="id3">
+<h2>7.2 模型选择<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>在本书1.4.5已经看到过线性回归了,其形式为:</p>
+<p><span class="math notranslate nohighlight">\(p(y|x\theta)=N(y|w^Tx\sigma^2)\)</span>(7.1)</p>
+<p>线性回归也可以通过将x替换成为输入特征的非线性函数比如<span class="math notranslate nohighlight">\(\phi(x)\)</span>来对非线性关系进行建模.也就是将形式变成了:</p>
+<p><span class="math notranslate nohighlight">\(p(y|x\theta)=N(y|w^T\phi (x)\sigma^2)\)</span>(7.2)</p>
+<p>这就叫基函数扩展(basis function expansion).(要注意这时候模型依然是以w为参数,依然还是线性模型;这一点后面会有很大用处.)简单的例子就是多项式基函数,模型中函数形式为:</p>
+<p><span class="math notranslate nohighlight">\(\phi(x)=[1,x,x^2,...,x^d]\)</span>(7.3)</p>
+<p>图1.18展示了改变d的效果,增加d就可以建立更复杂的函数.</p>
+<p>对于多输入的模型,也可以使用线性回归.比如将温度作为地理位置的函数来建模.图7.1(a)所示为:<span class="math notranslate nohighlight">\(\mathrm{E}[y|x]=w_0+w_1x_1+w_2x_2\)</span>,图7.1(b)所示为:<span class="math notranslate nohighlight">\(\mathrm{E}[y|x]=w_0+w_1x_1+w_2x_2+w_3x_1^2+w_4x_2^2\)</span>.</p>
+</div>
+<div class="section" id="id4">
+<h2>7.3 最大似然估计(最小二乘法)<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>最大似然估计(MLE)是估计统计模型参数的常用方法了,定义如下:</p>
+<p><span class="math notranslate nohighlight">\( \hat\theta \overset{\triangle}{=} \arg\max_\theta \log p(D|\theta)\)</span>(7.4)</p>
+<p>此处参考原书图7.1</p>
+<p>通常假设训练样本都是独立同分布的(independent and identically distributed,缩写为iid).这就意味着可以写出下面的对数似然函数(log likelihood):</p>
+<p><span class="math notranslate nohighlight">\(l(\theta) \overset{\triangle}{=} \sum^N_{i=1}\log p(y_i|x_i,\theta)\)</span>(7.5)</p>
+<p>我们可以去最大化对数似然函数,或者也可以等价的最小化负数对数似然函数(the negative log likelihood,缩写为NLL):</p>
+<p><span class="math notranslate nohighlight">\(NLL(\theta)\overset{\triangle}{=} -\sum^N_{i=1}\log p(y_i|x_i,\theta)\)</span>(7.6)</p>
+<p>负对数似然函数(NLL)有时候更方便,因为很多软件都有专门设计找最小值的函数,所以比最大化容易.</p>
+<p>接下来设我们对这个线性回归模型使用最大似然估计(MLE)方法.在上面的公式中加入高斯分布的定义,就得到了下面形式的对数似然函数:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+l(\theta)&amp;=  \sum^N_{i=1}\log[(\frac{1}{2\pi\sigma^2})^{\frac{1}{2}} \exp (-\frac{1}{2\sigma^2}(y_i-w^Tx_i)^2)   ]&amp;\text{(7.7)}\\
+&amp;= \frac{-1}{2\sigma^2}RSS(w)-\frac{N}{2}\log(2\pi\sigma^2) &amp;\text{(7.8)}\\
+\end{aligned}
+\end{split}\]</div>
+<p>上式中的RSS是residual sum of squares的缩写,意思是残差平方定义为:
+<span class="math notranslate nohighlight">\(RSS(w)\overset{\triangle}{=} \sum^N_{i=1}(y_i-w^Tx_i)^2\)</span>    (7.9)</p>
+<p>此处参考原书图7.2</p>
+<p>RSS也叫做平方误差总和(sum of squared errors),这样也可以缩写成SSE,这样就有SSE/N,表示的是均方误差MSE(mean squared erro).也可以写成残差(residual errors)向量的二阶范数(l2 norm)的平方和:</p>
+<p><span class="math notranslate nohighlight">\(RSS(w)=||\epsilon||^2_2=\sum^N_{i=1}\epsilon_i^2\)</span>     (7.10)</p>
+<p>上式中的<span class="math notranslate nohighlight">\(\epsilon_i=(y_i-w^Tx_i)^2\)</span>.</p>
+<p>这样就能发现w的最大似然估计(MLE)就是能让残差平方和(RSS)最小的w,所以这个方法也叫作小二乘法(least squares).这个方法如图7.2所示.图中红色圆点是训练数据<span class="math notranslate nohighlight">\(x_i,y_i\)</span>,蓝色的十字点是估计数据<span class="math notranslate nohighlight">\(x_i,\hat y_i\)</span>,竖直的蓝色线段标识的就是残差<span class="math notranslate nohighlight">\(\epsilon_i=y_i-\hat y_i\)</span>.目标就是要寻找能够使平方残差总和(图中蓝色线段长度)最小的图中所示红色直线的参数(斜率<span class="math notranslate nohighlight">\(w_1\)</span>和截距<span class="math notranslate nohighlight">\(w_0\)</span>).</p>
+<p>在图7.2(b)中是线性回归样例的负对数似然函数(NLL)曲面.可见其形态类似于一个单底最小值的二次型碗,接下来就要进行以下推导.(即便使用了基函数扩展,比如多项式之类的,这也是成立的,因为虽然输入特征可以不是线性的,单负对数似然函数依然还是以w为参数的线性函数.)</p>
+<div class="section" id="mle">
+<h3>7.3.1 最大似然估计(MLE)的推导<a class="headerlink" href="#mle" title="Permalink to this headline">¶</a></h3>
+<p>首先以更好区分的形式重写目标函数(负对数似然函数):</p>
+<p><span class="math notranslate nohighlight">\(NLL(w)=\frac{1}{2}(y-Xw)^T(y-Xw)=\frac{1}{2}w^T(X^TX)w-w^T(X^Ty)\)</span>   (7.11)</p>
+<p>上式中
+<span class="math notranslate nohighlight">\(X^TX=\sum^N_{i=1}x_ix_u^T=\sum^N_{i=1}\begin{pmatrix} x_{i,1}^2&amp;... x_{i,1}x_{i,D}\\&amp;&amp; ...&amp;\\  x_{i,D}x_{i,1} &amp;... &amp; x_{i,D}^2 \end{pmatrix}\)</span>   (7.12)</p>
+<p>是矩阵平方和（sum of squares matrix）,另外的一项为：</p>
+<p><span class="math notranslate nohighlight">\(X^Ty=\sum^N_{i=1}x_iy_i\)</span>   (7.13)</p>
+<p>使用等式4.10中的结论,就得到了梯度函数（gradient）,如下所示：</p>
+<p><span class="math notranslate nohighlight">\(g(w)=[X^TXw-X^Ty]=\sum^N_{i=1} x_i(w^Tx_i-y_i)\)</span>   (7.14)</p>
+<p>使梯度为零,则得到了：</p>
+<p><span class="math notranslate nohighlight">\(X^TXw=X^Ty\)</span>   (7.15)</p>
+<p>这就是正规方程(normal equation).这个线性方程组对应的解<span class="math notranslate nohighlight">\(\hat w\)</span>就叫做常规最小二乘解（ordinary least squares solution,缩写为 OLS solution）：</p>
+<p><span class="math notranslate nohighlight">\(\hat w_{OLS}=(X^TX)^{-1}X^Ty\)</span>   (7.16)重要公式</p>
+</div>
+<div class="section" id="id5">
+<h3>7.3.2 几何解释<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>这个方程有很优雅的几何解释.假设N&gt;D,也就意味样本比特征数目多.X列向量（columns）定义的是在N维度内的一个D维度的子空间.设第j列为<span class="math notranslate nohighlight">\(\tilde x_j\)</span>,是在<span class="math notranslate nohighlight">\(R^N\)</span>上的一个向量.(应该不难理解,<span class="math notranslate nohighlight">\(x_i\in R^D\)</span>表示的就是数据情况中的第i个.)类似的y也是一个<span class="math notranslate nohighlight">\(R^N\)</span>中的向量.例如,如果社N=3个样本,二D=2的子空间:</p>
+<p><span class="math notranslate nohighlight">\(X=\begin{pmatrix}1&amp;2 \\ 1 &amp;-2\\1 &amp;2 \end{pmatrix},y=\begin{pmatrix}8.8957\\0.6130\\1.7761\end{pmatrix}\)</span>   (7.17)</p>
+<p>这两个向量如图7.3所示.</p>
+<p>然后我们就要在这个线性子空间中找一个尽可能靠近y的向量<span class="math notranslate nohighlight">\(\hat y\in R^N\)</span>,也就是要找到:</p>
+<p><span class="math notranslate nohighlight">\(\arg\min_{\hat\in span(\{ \tilde x_1,...,\tilde x_D \})} ||y-\hat y||_2\)</span>   (7.18)</p>
+<p>由于<span class="math notranslate nohighlight">\(\hat y \in span(X)\)</span>,所以就会存在某个权重向量(weight vector)w使得:</p>
+<p><span class="math notranslate nohighlight">\(\hat y= w_1\tilde x_1+...+w_D\tilde x_D=Xw\)</span>   (7.19)</p>
+<p>此处参考原书图7.3</p>
+<p>要最小化残差的范数(norm of the residual)<span class="math notranslate nohighlight">\(y-\hat y\)</span>,就需要让残差向量(residual vector)和X的每一列相正交(orthogonal),也就是对于<span class="math notranslate nohighlight">\(j=1:D\)</span>有<span class="math notranslate nohighlight">\(\tilde x ^T_j (y-\hat y) =0\)</span>.因此有:</p>
+<p><span class="math notranslate nohighlight">\(\tilde x_j^T(y-\hat y)=0  \implies X^T(y-Xw)=0\implies w=(X^TX)^{-1}X^Ty\)</span> (7.20)</p>
+<p>这样y的投影值就是:</p>
+<p><span class="math notranslate nohighlight">\(\hat y=X\hat w= X(X^TX)^{-1}X^Ty\)</span>(7.21)</p>
+<p>这对应着在X的列空间(column space)中的y的正交投影(orthogonal projection).投影矩阵<span class="math notranslate nohighlight">\(P\overset{\triangle}{=} X(X^TX)^{-1}X^T\)</span>就叫做帽子矩阵(hat matrix),因为在y上面盖了个帽子成了<span class="math notranslate nohighlight">\(\hat y\)</span>.</p>
+</div>
+<div class="section" id="id6">
+<h3>7.3.3 凸性质<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>在讲到最小二乘法的时候,我们注意到负对数似然函数(NLL)形状像是一个碗,有单一的最小值.这样的函数用专业术语来说是凸(convex)的函数.凸函数在机器学习里面非常重要.</p>
+<p>然后咱们对这个概念进行一下更确切定义.设一个集合S,如果对于任意的<span class="math notranslate nohighlight">\(\theta,\theta'\in S\)</span>,如果有下面的性质,则S是凸的集合:</p>
+<p><span class="math notranslate nohighlight">\(\lambda\theta+(1-\lambda)\theta'\in S, \forall  \lambda\in[0,1]\)</span>(7.22)</p>
+<p>此处参考原书图7.4
+此处参考原书图7.5</p>
+<p>也就是说在<span class="math notranslate nohighlight">\(\theta\)</span>和<span class="math notranslate nohighlight">\(\theta'\)</span>之间连一条线,线上所有的点都处在这个集合之内.如图7.4(a)所示就是一个凸集合,而图7.4(b)当中的就是一个非凸集合.</p>
+<p>一个函数的上图(epigraph,也就是一个函数上方的全部点的集合)定义了一个凸集合,则称这个函数<span class="math notranslate nohighlight">\(f(\theta)\)</span>就是凸函数.反过来说,如果定义在一个凸集合上的函数<span class="math notranslate nohighlight">\(f(\theta)\)</span>满足对任意的<span class="math notranslate nohighlight">\(\theta,\theta'\in S\)</span>,以及任意的<span class="math notranslate nohighlight">\(0\le\lambda\le1\)</span>,都有下面的性质,也说明这个函数是凸函数:</p>
+<p><span class="math notranslate nohighlight">\(f(\lambda \theta +(1-\lambda)\theta')\le \lambda f(\theta) +(1-\lambda)f(\theta ')\)</span> (7.23)</p>
+<p>图7.5(b)是一个一维样本.如果不等式严格成立,就说这个函数是严格凸函数(strictly convex).如果其反函数<span class="math notranslate nohighlight">\(-f(\theta)\)</span>是凸函数,则这个函数<span class="math notranslate nohighlight">\(f(\theta\)</span>是凹函数(concave).标量凸函数(scalar convex function)包括<span class="math notranslate nohighlight">\(\theta^2,e^\theta,\theta\log\theta (\theta&gt;0)\)</span>.标量凹函数(scalar concave function)包括<span class="math notranslate nohighlight">\(\log(\theta),\sqrt\theta\)</span>.</p>
+<p>直观来看,(严格)凸函数就像是个碗的形状,所以对应在碗底位置有全局的唯一最小值<span class="math notranslate nohighlight">\(\theta^*\)</span>.因此其二阶导数必须是全局为正,即<span class="math notranslate nohighlight">\(\frac{d}{d\theta}f(\theta)&gt;0\)</span>.当且仅当一个二阶连续可微(twice-continuously differentiable)多元函数f的海森矩阵(Hessian)对于所有的<span class="math notranslate nohighlight">\(\theta\)</span>都是正定的(positive definite),这个函数才是凸函数.在机器学习语境中,这个函数f通常对应的都是负对数似然函数(NLL).</p>
+<p>此处参考原书图7.6</p>
+<p>负对数似然函数(NLL)是凸函数的模型是比较理想的.因为这就意味着能够找到全局最优的最大似然估计(MLE).本书后面还会看到很多这类例子.不过很多模型还并不一定就能有凹的似然函数.这时候就要推一些方法来求局部最优参数估计了.</p>
+</div>
+</div>
+<div class="section" id="id7">
+<h2>7.4 健壮线性回归*<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<p>通常我们用均值为零且方差固定的正态分布<span class="math notranslate nohighlight">\(\epsilon_i\sim N(0,\sigma^2)\)</span>来对回归模型的噪音建模,<span class="math notranslate nohighlight">\(\epsilon_i=y_i-w^Tx_i\)</span>.这时候对似然函数最大化就等价于使平方残差总和(sum of squared residuals)最小,这部分之前刚才已经讲过了.不过如果在数据里面有异常值/离群点(outliers),就容易影响你和质量,如图7.6(a)所示,图底部的几个点就是异常值.这是因为平方差(squared error)以二次形式惩罚偏差,所以远离拟合曲线的点会比临近曲线的点对拟合有更大的影响.</p>
+<p>有一种方法可以实现对异常值的健壮性,就是把对响应变量的正态分布替换成更重尾(heavy tails)的分布.这样的分布赋予异常值更高似然性,而不用改变直线去特地解释这些异常值.</p>
+<p>拉普拉斯分布(Laplace distribution)就是一个选择,如本书2.4.3所示.如果用拉普拉斯分布来对回归的观测模型建模,就得到了下面的似然函数:</p>
+<p><span class="math notranslate nohighlight">\(p(y|x,w,b)=Lap(y|w^Tx,b)\propto \exp (-\frac{1}{b}|y-w^Tx|)\)</span>(7.24)</p>
+<p>为了健壮性,将平方项替换成绝对值,即用<span class="math notranslate nohighlight">\(|y-w^Tx|\)</span>替换<span class="math notranslate nohighlight">\((y-w^Tx)^2\)</span>.为了简单起见,这里就设b是一个固定值.然后设第i个残差为<span class="math notranslate nohighlight">\(r_i \overset{\triangle}{=} y_i-w^Tx_i\)</span>.这样负对数似然函数(NLL)就成了:</p>
+<p><span class="math notranslate nohighlight">\(l(w)=\sum_i|r_i(w)|\)</span>(7.25)</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>似然函数</p></th>
+<th class="head"><p>先验</p></th>
+<th class="head"><p>名称</p></th>
+<th class="head"><p>章节</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>正态分布</p></td>
+<td><p>均匀先验</p></td>
+<td><p>最小二乘法</p></td>
+<td><p>7.3</p></td>
+</tr>
+<tr class="row-odd"><td><p>正态分布</p></td>
+<td><p>正态分布</p></td>
+<td><p>岭回归</p></td>
+<td><p>7.5</p></td>
+</tr>
+<tr class="row-even"><td><p>正态分布</p></td>
+<td><p>拉普拉斯</p></td>
+<td><p>套索回归(Lasso)</p></td>
+<td><p>13.3</p></td>
+</tr>
+<tr class="row-odd"><td><p>拉普拉斯</p></td>
+<td><p>均匀先验</p></td>
+<td><p>健壮回归</p></td>
+<td><p>7.4</p></td>
+</tr>
+<tr class="row-even"><td><p>学生分布</p></td>
+<td><p>均匀先验</p></td>
+<td><p>健壮回归</p></td>
+<td><p>练习11.12</p></td>
+</tr>
+</tbody>
+</table>
+<p>表 7.1 对线性回归中各种似然函数和先验的总结.似然函数指的是<span class="math notranslate nohighlight">\(p(y|x,w,\sigma^2)\)</span>的分布,先验指的是<span class="math notranslate nohighlight">\(p(w)\)</span>的分布.均匀分布的最大后验估计(MAP)对应的就是最大似然估计(MLE).</p>
+<p>然而很不幸,等式7.25是一个非线性的目标函数,很难去优化.还好我没可以将负对数似然函数(NLL)转化成一个线性目标函数,受线性约束的限制,这需要用到分割变量(split variable)的技巧.首先定义:</p>
+<p><span class="math notranslate nohighlight">\(r_i \overset{\triangle}{=} r_i^+-r_i^-\)</span>(7.26)</p>
+<p>然后将线性不等式约束带入,即<span class="math notranslate nohighlight">\(r_i^+\ge 0,r_o^-\le 0\)</span>.这样受约束的目标函数就成了:</p>
+<p><span class="math notranslate nohighlight">\(\min_{w,r^+,r^-}\sum_i(r^+-r_i^-)  s.t. r_i^+\ge 0,r_i^-\ge 0,w^Tx_i+r_i^++r_i^-=y_i\)</span>(7.27)</p>
+<p>这就是一个线性规划(linear program),有D+2N未知和3N约束.(This is an example of a linear program with D + 2N unknowns and 3N constraints.)</p>
+<p>因为这是一个凸优化问题,所以有唯一解.要解线性规划(LP),必须首先将其写成标准型:</p>
+<p><span class="math notranslate nohighlight">\(\min_{\theta}f^T\theta  s.t. A\theta \le b,A_{ep}\theta=b_{eq},1\le\theta\le u\)</span>(7.28)</p>
+<p>目前在咱们的例子中,<span class="math notranslate nohighlight">\(\theta=(w,r^+,r^-),f=[0,1,1],A=[],b=[],A_{eq}=[X,I,-I],b_{eq}=y,I=[-\infty1,0,0],u=[]\)</span>.这可以通过线性规划求解器(LP solver)(参考Boyd and Vandenberghe 2004).图7.6(b)所示为具体方法的一个例子.</p>
+<p>除了拉普拉斯似然函数下使用负对数似然函数,另一种方法是最小化胡贝尔损失函数(Huber loss function,出自 Huber 1964),定义如下:</p>
+<p><span class="math notranslate nohighlight">\(L_H(r,\delta)=\begin{cases} r^2/2 &amp;\text{  if  } |r|\le \delta\\\delta|r|-\delta^2/2&amp;\text{  if  }|r|&gt;\delta \end{cases}\)</span>(7.29)</p>
+<p>这个定义等价于对小于<span class="math notranslate nohighlight">\(\delta\)</span>的误差使用二次损失函数<span class="math notranslate nohighlight">\(l_2\)</span>,对大于<span class="math notranslate nohighlight">\(\delta\)</span>的误差使用一次损失函数<span class="math notranslate nohighlight">\(l_1\)</span>.如图7.6(b)所示.这个损失函数的优势就是全局可微(everywhere differentiable),这是利用了当<span class="math notranslate nohighlight">\(r\ne 0\)</span>时候<span class="math notranslate nohighlight">\(\frac{d}{dr}|r|=sign(r)\)</span>.还可以验证这个函数是<span class="math notranslate nohighlight">\(C_1\)</span>连续的,因为两部分函数的梯度都符合<span class="math notranslate nohighlight">\(r=\pm \delta\)</span>,名义上就是<span class="math notranslate nohighlight">\(\frac{d}{dr}L_H(r,\delta)|_{r=\delta}=\delta\)</span>.结果就是胡贝尔损失函数油画起来比拉普拉斯似然函数容易多了,因为可以使用标准光滑优化方法(比如拟牛顿法,quasi-Newton),而不用使用线性规划了.</p>
+<p>图7.6(a)所示的就是胡贝尔损失函数.结果和概率方法的结果很相似.实际上胡贝尔方法确实也有一种概率角度的解释,不过就是不太自然 (Pontil et al).</p>
+<p>此处参考原书图7.7</p>
+</div>
+<div class="section" id="id8">
+<h2>7.5 岭回归<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<p>最大似然估计中一大问题就是过拟合.在本节要讲的就是使用高斯先验的最大后验估计来改善这个问题.为了简单起见,本节用高斯似然函数,而不用健壮似然函数了.</p>
+<div class="section" id="id9">
+<h3>7.5.1 基本思想<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<p>最大似然估计过拟合的原因就是它选的参数都是最适合对训练数据建模的;但如果训练数据有噪音,这些参数就经常会形成非常复杂的函数.举个简单的例子,对一个N=21个点的数据使用最小二乘法拟合一个14次多项式曲线.得到的函数就可能是非常七扭八歪,如图7.7(a)所示.对应的除了<span class="math notranslate nohighlight">\(w_0\)</span>之外的最小二乘系数为:</p>
+<p>6.560, -36.934, -109.255, 543.452, 1022.561, -3046.224, -3768.013,
+8524.540, 6607.897, -12640.058, -5530.188, 9479.730, 1774.639, -2821.526</p>
+<p>可见其中有很多特别大的正数和负数.这些系数让曲线七扭八歪,完美地插入所有数据.但这就很不稳定:如果我们稍微改变一下数据,系数就会发生巨大变化.</p>
+<p>可以让系数小一点,这样得到的就是更光滑的曲线,使用一个零均值高斯先验就可以了:</p>
+<p><span class="math notranslate nohighlight">\(p(w)=\prod_j N(w_j|0,\tau^2\)</span>(7.30)</p>
+<p>其中的<span class="math notranslate nohighlight">\(1/\tau^2\)</span>控制了先验强度.对应的最大后验估计(MAP)问题就是:</p>
+<p><span class="math notranslate nohighlight">\(\arg\max_w\sum^N_{i=1}\log N(y_i|w_0+w^Tx_i,\sigma^2)+\sum^D_{j=1}\log(w_j|0,\tau^2)\)</span>(7.31)</p>
+<p>此处参考原书图7.8</p>
+<p>很容易证明上面这个问题等价于对下面这个项目求最小值:</p>
+<p><span class="math notranslate nohighlight">\(J(w)=\frac{1}{N}\sum^N_[i=1}(y_i-(w_0+w^Tx_i))^2+\lambda||w||^2_2\)</span>(7.32)</p>
+<p>其中的<span class="math notranslate nohighlight">\(\lambda\overset{\triangle}{=} \sigma^2/\tau^2\)</span>,而<span class="math notranslate nohighlight">\(||w||^2_2=\sum_j w^Tw\)</span>是平方二范数(squared two-norm).这样第一项就依然还是均方误差比负对数似然函数(MSE/NLL),第二项<span class="math notranslate nohighlight">\(\lambda\ge 0\)</span>就是符合惩罚项.对应的解为:</p>
+<p><span class="math notranslate nohighlight">\(\hat w_{ridge}=(\lambda I_D+X^TX)^{-}X^Ty\)</span>(7.33)重要公式</p>
+<p>这个方法就叫做岭回归(ridge regression),也叫惩罚最小二乘法(penalized least squares).通常,将用高斯先验来使参数变小的方法叫做<span class="math notranslate nohighlight">\(l_2\)</span>规范化(<span class="math notranslate nohighlight">\(l_2\)</span> regularization),或者叫做权重衰减(weight decay).要注意,偏移项<span class="math notranslate nohighlight">\(w_0\)</span>并不是规范化的,因为这只影响函数的高度,而不影响其复杂性.通过对权重烈度综合(sum of the magnitudes of the weights)进行惩罚,能确保函数尽量简单(比如w=0对应的就是一条直线,也就是最简单的函数了,对应是常数.)</p>
+<p>图7.7所示为此方法的思想,图中表明增加<span class="math notranslate nohighlight">\(\lambda\)</span>就会导致函数曲线更加光滑.得到的系数也更小.例如使用<span class="math notranslate nohighlight">\(\lambda=10^{-3}\)</span>,就得到了下面的系数:</p>
+<p>2.128, 0.807, 16.457, 3.704, -24.948, -10.472, -2.625, 4.360, 13.711,
+10.063, 8.716, 3.966, -9.349, -9.232</p>
+<p>在图7.8(a)中,对训练集上的均方误差(MSE)和<span class="math notranslate nohighlight">\(\log(\lambda)\)</span>的函数关系进行头图.可见随着增长<span class="math notranslate nohighlight">\(\lambda\)</span>,也就是让模型受约束程度增加,训练集上的误差也增加了.对于测试集,就呈现了U形曲线的,也就是模型先是过拟合,然后又欠拟合.通常都用交叉验证来选择<span class="math notranslate nohighlight">\(\lambda\)</span>,如图7.8(b)所示.在本书14.8,会用更加概率论的方法来对此进行讲解.</p>
+<p>本书中会考虑到使用不同先验的效果.每一种都对应着不同形式的规范化(regularization).这个方法广泛用于防止过拟合.</p>
+</div>
+<div class="section" id="id10">
+<h3>7.5.2 数值稳定计算*<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<p>有意思的是,岭回归不仅在统计学上效果更好,也更容易进行数值拟合,因为<span class="math notranslate nohighlight">\((\lambda I_D+X^TX)\)</span>比<span class="math notranslate nohighlight">\(X^TX\)</span>有更好条件(更容易可逆),至少对于适当的大的<span class="math notranslate nohighlight">\(\lambda\)</span>.</p>
+<p>尽管如此,出于数值计算稳定性考虑,矩阵求逆还是尽量要避免的.(比如如果你在MATLAB里面写了<span class="math notranslate nohighlight">\(w=inv(X;*X)*X'y\)</span>,都会遇到警告.)接下来咱们讲一个拟合岭回归模型的有用技巧(另外通过扩展也可以用于计算Vanilla普通最小二乘估计(Ordinary least squares,OLS)),使数值计算健壮性提高.假设先验形式为<span class="math notranslate nohighlight">\(p(w)=N(0,\Lambda ^2)\)</span>,其中的<span class="math notranslate nohighlight">\(\Lambda\)</span>是精度矩阵(precision matrix).在岭回归的情况下,<span class="math notranslate nohighlight">\(\Lambda=(1/\tau^2)I\)</span>.为了避免惩罚<span class="math notranslate nohighlight">\(w_0\)</span>项,应该先将数据中心化,如练习7.5所讲.</p>
+<p>首先从先验中哪来一些虚拟数据来对原始数据进行扩充:</p>
+<p><span class="math notranslate nohighlight">\(\tilde X= \begin{pmatrix} X/\sigma\\ \sqrt\Lambda \end{pmatrix}, \tilde y =\begin{pmatrix} y/\sigma \\ 0_{D\times 1} \end{pmatrix}\)</span>(7.34)</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+f(w)&amp;=  (\tilde y- \tilde X w)^T(\tilde y-\tilde X m)                &amp;\text{(7.35)}\\
+&amp;=  (\begin{pmatrix} y/\sigma \\ 0 \end{pmatrix} -\begin{pmatrix} X/\sigma\\ \sqrt\Lambda \end{pmatrix} w)^T  (\begin{pmatrix} y/\sigma \\ 0 \end{pmatrix} -\begin{pmatrix} X/\sigma\\ \sqrt\Lambda \end{pmatrix} w)              &amp;\text{(7.36)}\\
+&amp;=  (\begin{pmatrix} \frac{1}{\sigma}(y-XW)\\ \sqrt\Lambda w \end{pmatrix})^T   (\begin{pmatrix} \frac{1}{\sigma}(y-XW)\\ \sqrt\Lambda w \end{pmatrix})              &amp;\text{(7.37)}\\
+&amp;=  \frac{1}{\sigma^2}(y-Xw)^T(y-Xw)+(\sqrt\Lambda)^T(\sqrt\Lambda)              &amp;\text{(7.38)}\\
+&amp;= \frac{1}{\sigma^2}(y-Xw)^T(y-Xw)+ w^T\Lambda w                   &amp;\text{(7.39)}\\
+\end{aligned}
+\end{split}\]</div>
+<p>因此最大后验估计就是:</p>
+<p><span class="math notranslate nohighlight">\(\hat w_{ridge}= (\tilde X^T \tilde X )^{-1} \tilde X^T \tilde y\)</span>(7.40)</p>
+<p>然后设:
+<span class="math notranslate nohighlight">\(\tilde X=QR\)</span>(7.41)
+是X的QR分解(QR decomposition),其中的Q是正交的(即<span class="math notranslate nohighlight">\(Q^TQ=QQ^T=I\)</span>),而R是上三角矩阵(upper triangular).因此有:</p>
+<p><span class="math notranslate nohighlight">\((\tilde X^T\tilde X)^{-1}=(R^TQ^TQR)^{-1}=(R^TR)^{-1}=R^{-1}R^{-T}\)</span>(7.42)</p>
+<p>因此有:</p>
+<p><span class="math notranslate nohighlight">\(\hat w_{ridge}= R^{-1}R^{-T}R^TQ^T\tilde y=R^{-1}Q \tilde y\)</span>(7.43)</p>
+<p>由于R是上三角矩阵,所以求逆很容易.这就可以避免去对<span class="math notranslate nohighlight">\(\Lambda+X^TX\)</span>求逆就可以计算岭估计了.</p>
+<p>这样,只要简单地计算未扩展矩阵X的QR分解,再利用原始的y,就可以计算最大似然估计(MLE)了.对于解最小二乘问题来说,这是首选方法.(实际上这个特别常用,在MATLAB里面只要一行代码就可以了,使用的是反斜杠运算符(backslash operator): w=X\y.)计算一个<span class="math notranslate nohighlight">\(N\times D\)</span>规模矩阵的QR分解只需要<span class="math notranslate nohighlight">\(O(ND^2)\)</span>的时间复杂度,所以在数值计算上很稳定.</p>
+<p>如果D远大于N,即<span class="math notranslate nohighlight">\(D\gg N\)</span>,就要先进行SVD分解.具体来说就是设<span class="math notranslate nohighlight">\(X=USV^T\)</span>为X的SVD分解,其中的<span class="math notranslate nohighlight">\(V^TV=I_N,UU^T=U^TU=I_N\)</span>,S是一个<span class="math notranslate nohighlight">\(N\times N\)</span>的对角矩阵.然后设<span class="math notranslate nohighlight">\(Z=UD\)</span>是一个<span class="math notranslate nohighlight">\(N\times N\)</span>矩阵.然后可以将岭估计写成下面的形式:</p>
+<p><span class="math notranslate nohighlight">\(\hat w_{ridge} =V(Z^TZ+\lambda I_N)^{-1}Z^Ty\)</span>(7.44)</p>
+<p>也就是说可以把D维度向量<span class="math notranslate nohighlight">\(x_i\)</span>替换成N维的向量<span class="math notranslate nohighlight">\(z_i\)</span>,然后跟之前一样进行惩罚拟合.接下来通过乘以一个V再把得到的N维的解转换成D维的解.几何角度来说,就旋转到一个新的坐标系统中,其中除了前面的N个参数之外其他参数都是0.这不会影响解的有效性,因为球面高斯先验(spherical Gaussian prior)具有旋转不变性(rotationally invariant).这个方法总体需要<span class="math notranslate nohighlight">\(O(DN^2)\)</span>的运算时间.</p>
+</div>
+<div class="section" id="pca">
+<h3>7.5.3 和主成分分析(PCA)的联系*<a class="headerlink" href="#pca" title="Permalink to this headline">¶</a></h3>
+<p>在本节要说岭回归和主成分分析(PCA,本书12.2)之间的联系,这一联系也会让我们明白为啥岭回归性能如此好.这部分的讨论基于(Hastie et al. 2009, p66).</p>
+<p>设<span class="math notranslate nohighlight">\(X=USV^T\)</span>是X的SVD分解.通过等式7.44,可以得到:
+<span class="math notranslate nohighlight">\(\hat w_{ridge} = V(S^2+\lambda I)^{-1}SU^Ty\)</span>(7.45)</p>
+<p>这样就得到岭回归对训练集的预测:
+$<span class="math notranslate nohighlight">\(
+\begin{aligned}
+\hat y &amp;=   X\hat w_{ridge}=USV^TV(S^2+\lambda I)^{-1}SU^Ty             &amp;\text{(7.46)}\\
+&amp;=  U\tilde SU^Ty=\sum^D_{j=1}u_j\tilde S_{jj}u_j^Ty   &amp;\text{(7.47)}\\
+\end{aligned}
+\)</span>$</p>
+<p>此处参考原书图7.9</p>
+<p>其中的
+<span class="math notranslate nohighlight">\(\tilde S_{jj} \overset{\triangle}{=} [S(S^2+\lambda I)^{-1}S]_{jj}=\frac{\sigma_j^2}{\sigma^2_j+\lambda }\)</span>(7.48)</p>
+<p><span class="math notranslate nohighlight">\(\sigma_j\)</span>是X的奇异值(singular values).因此有:</p>
+<p><span class="math notranslate nohighlight">\(\hat y= X\hat w_{ridge}=\sum^D_{j=1}u_j\frac{\sigma^2_j}{\sigma^2_j+\lambda}u_j^Ty\)</span>(7.49)</p>
+<p>与之对比的最小二乘法预测为:</p>
+<p><span class="math notranslate nohighlight">\(\hat y = X\hat w_{ls}=(USV^T))VS^{-1}U^Ty)=UU^Ty=\sum^D_{j=1}u_ju_j^Ty\)</span>(7.50)</p>
+<p>如果和<span class="math notranslate nohighlight">\(\lambda\)</span>相比<span class="math notranslate nohighlight">\(\sigma^2_j\)</span>很小,那么方向(direction)<span class="math notranslate nohighlight">\(u_j\)</span>就不会对预测有太大影响.从这个角度来看,可以定义一个模型自由度(degrees of freedom)的有效数字,如下所示:</p>
+<p><span class="math notranslate nohighlight">\(dof(\lambda)= \sum^D_{j=1}\frac{\sigma^2_j}{\sigma^2_j+\lambda}\)</span>(7.51)
+当<span class="math notranslate nohighlight">\(\lambda =0,dof(\lambda)=D\)</span>,而随着<span class="math notranslate nohighlight">\(\lambda \rightarrow \infty,dof(\lambda)\rightarrow 0\)</span>.</p>
+<p>接下来说说为啥这个性质很理想.在7.6中,我们会看到如果对w使用一个均匀先验,就有<span class="math notranslate nohighlight">\(cov[w|D]=\sigma^2(X^TX)^{-1}\)</span>.因此那些我们不确定w的的方向(direction)是由由最小特征值的矩阵的特征向量决定的,如图4.1所示.更进一步,在本书12.2.3中,我们会发现平方奇异值(squared singular values)<span class="math notranslate nohighlight">\(\sigma_j^2\)</span>等于<span class="math notranslate nohighlight">\(X^TX\)</span>的特征值.因此小的奇异值<span class="math notranslate nohighlight">\(\sigma_j\)</span>对应的就是高后验方差(high posterior variance)的方向.这些方向也是岭回归收缩最大的方向.</p>
+<p>这个过程如图7.9所示.横向的<span class="math notranslate nohighlight">\(w_1\)</span>参数没能由数据确定(有高后验方差),而竖直方向上的<span class="math notranslate nohighlight">\(w_2\)</span>参数相当确定.因此<span class="math notranslate nohighlight">\(w_2^{map}\)</span>很接近<span class="math notranslate nohighlight">\(\hat w_2 ^{mle}\)</span>,但<span class="math notranslate nohighlight">\(w_1^{map}\)</span>严重朝向先验均值(这个例子中是0)偏移.(可以和图4.14(c)比对来看,图4.14(c)所示的是不同可靠性传感器的传感器融合.)</p>
+<p>还有一个与之相关但不太一样的方法,叫做主成分回归(principal components regression).这个方法的思路是:首先使用主成分分析(PCA)来降低数据维度到K维度,然后利用低维度特征作为输入特征进行回归.不过,这个方法的预测精确性上并不如岭回归这样好(Hastie et al. 2001, p70).原因是在主成分回归中,只有前K个(推导出来的)维度还保留着,而剩下的D-K个维度的信息都全被忽略了.而相比之下,岭回归是对所有维度进行了软加权(soft weighting).</p>
+</div>
+<div class="section" id="id11">
+<h3>7.5.4 大规模数据的规范化效应<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<p>规范化(regularization)是避免过拟合的最常用方法.不过还有另外一种有效的方法,就是使用大规模数据,当然了,这个不一定总能实现.直观来看就是训练用的数据规模更多,进行学习的效果就能越好.所以我们期望随着数据规模N增大,测试误差就逐渐降低到某个定值.</p>
+<p>这个如图7.10所示,图中为不同次数多项式回归和样本规模N下的均方误差(mean squared error)(误差和训练集样本规模的曲线也叫作学习曲线(learning curve)).测试集上误差的形态有两方面决定:生成过程中的内在变异性导致的对于所有模型都会出现的无法降低的部分(也叫作噪音本底);另一个依赖于生成过程(真实情况)和模型之间差异导致的部分(也叫作结构误差,structural error).</p>
+<p>图7.10中所示,真实情况应该是一个二次多项式,而我们分别用1次/2次/25次多项式对这个数据进行拟合.得到的三种模型对应就称之为<span class="math notranslate nohighlight">\(M_1,M_2,M_{25}\)</span>.从图中可以发现,<span class="math notranslate nohighlight">\(M_2,M_{25}\)</span>的结构误差都是0,因为都能够捕获真实生成过程.不过<span class="math notranslate nohighlight">\(M_1\)</span>的结构误差就特别大,这就证明了其远高于误差本底.</p>
+<p>对于任何足以捕获真实情况的模型(也就是说有最小结构误差),测试误差都会随着样本规模增大即<span class="math notranslate nohighlight">\(N\rightarrow \infty\)</span>而趋向噪音本底.不过对于简单模型来说通常会更快趋向于0,因为要估计的参数更少.具体来说就是对于有限规模的训练集来说,我们估计得参数和给定模型类别能进行估计的最佳参数之间总是会有一些差异.这就叫做近似误差(approxmation error),会随着训练集样本规模增大,即<span class="math notranslate nohighlight">\(N\rightarrow \infty\)</span>而趋向于0,但对于简单模型来说趋向于0的速度更快.这个如图7.10所示,另外也可以参考练习7.1.</p>
+<p>在大数据领域,简单模型效果出乎意料地好(Halevy et al. 2009).不过还是有必要学习一些更复杂的学习方法的,因为总会有一些问题中咱们没办法获得特别多的数据.甚至即便在一些数据丰富的情境下,比如网络搜索中,只要我们想要根据用户进行个性化结果生成,对任意用户的可用数据规模也都会变小(相比问题复杂程度而言).</p>
+<p>此处参考原书图7.10</p>
+<p>在这样的情况下,就可能需要同时学习多种相关模型,也就是所谓的多任务学习(multi-task learning).这个过程可以从有大量数据的任务中”借用统计强度”给数据规模小的任务.相关方法在本书后文中还会讲到.</p>
+</div>
+</div>
+<div class="section" id="id12">
+<h2>7.6 贝叶斯线性回归<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
+<p>虽然岭回归是计算点估计的有效方法,有时候还可能要对w和<span class="math notranslate nohighlight">\(\sigma^2\)</span>的全后验进行计算.为了简单起见,就假设噪音方差<span class="math notranslate nohighlight">\(\sigma^2\)</span>已知,就只要关注与计算<span class="math notranslate nohighlight">\(p(w|D,\sigma^2)\)</span>.然后在本书7.6.3考虑更通用的情况,计算<span class="math notranslate nohighlight">\(p(w,\sigma^2|D)\)</span>.假设使用整个高斯释然模型(throughout a Gaussian likelihood model).使用一个健壮似然函数进行贝叶斯推断也是可行的,不过需要更复杂技巧(参考练习24.5).</p>
+<div class="section" id="id13">
+<h3>7.6.1 计算后验<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<p>在线性回归中,似然函数为:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+p(y|X,w,\mu,\sigma^2)&amp; =N(y|\mu+Xw,\sigma^2I_N)             &amp;\text{(7.52)}\\
+&amp; \propto \exp(-\frac{1}{2\sigma^2}(y-\mu1_N-Xw)^T(y-\mu1_N-Xw))           &amp;\text{(7.53)}\\
+\end{aligned}
+\end{split}\]</div>
+<p>其中的<span class="math notranslate nohighlight">\(\mu\)</span>是偏移项.如果输入值是中心化的,则对于每个j都有<span class="math notranslate nohighlight">\(\sum_ix_{ij}=0\)</span>,输出均值正负概率相等.所以假设一个不适当先验(improper prior)给<span class="math notranslate nohighlight">\(\mu\)</span>,形式为<span class="math notranslate nohighlight">\(p(\mu)\propto 1\)</span>,然后整合起来就得到了:</p>
+<p><span class="math notranslate nohighlight">\(p(y|X,w,\sigma^2)\propto \exp( -\frac{1}{2\sigma^2}||  y-\bar y1_N-Xw  ||^2_2 )\)</span>(7.54)</p>
+<p>其中的<span class="math notranslate nohighlight">\(\bar y =\frac{1}{N} \sum^N_{i=1} y_i\)</span> 是输出的经验均值.为了表达简洁,假设输出已经中心化了,然后将<span class="math notranslate nohighlight">\(y-\bar y1_N\)</span>写作为y.</p>
+<p>上面这个高斯似然函数的共轭先验也还是高斯分布,可以表示做<span class="math notranslate nohighlight">\(p(w)= N(w|w_0,V_0)\)</span>.利用高斯分布的贝叶斯规则(灯饰4.125),就得到了下面的后验:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+p(w|X,y,\sigma^2)&amp; \propto N(w|w)0,V_0)N(y|Xw,\sigma^2I_N)=N(w|w_N,V_N) &amp;\text{(7.55)}\\
+W_N&amp; = V_NV_0^{-1}w_0+\frac{1}{\sigma^2}V_NX^Ty &amp;\text{(7.56)}\\
+V_N^{-1}&amp; = V_0^{-1}+\frac{1}{\sigma^2}X^TX  &amp;\text{(7.57)}\\
+V_N&amp; = \sigma^2(\sigma^2V_0^{-1}+X^TX)^{-1} &amp;\text{(7.58)}\\
+\end{aligned}
+\end{split}\]</div>
+<p>如果<span class="math notranslate nohighlight">\(w_0=0,V_0=\tau ^2I\)</span>,且定义<span class="math notranslate nohighlight">\(\lambda=\frac{\sigma^2}{\tau^2}\)</span>那么后验均值就降低到了岭估计.这是因为高斯分布的均值和众数相等.</p>
+<p>要对后验分布获得更深入了解(而不是只知道众数),可以考虑一个1维例子:</p>
+<p><span class="math notranslate nohighlight">\(y(x,w)=w_0+w_1x+\epsilon\)</span>(7.59)
+其中的真实参数为<span class="math notranslate nohighlight">\(w_0=-0.3,w_1=0.5\)</span>.如图7.11所示是先验/似然函数/后验以及一些后验预测样本.具体来说最右边一列是函数<span class="math notranslate nohighlight">\(y(x,w^{(s)})\)</span>,其中的x取值范围在区间[-1,1],而<span class="math notranslate nohighlight">\(w^{(s)}\sim N(w|w_N,V_N)\)</span>是从参数后验重取样的一个样本.开始的时候从先验中取样(第一行),预测就是遍布整个空间,因为先验是均匀的.随着看到了数据点之后(第二行),后验就开始收到对应的似然函数的约束了,预测也更接近观测数据了.不过我们会发现后验还是有岭状形态,反映了多解性的存在,有不同的斜率/截距.这很好理解,因为我们不能从一次观测中推出两个参数来.在看到两个点之后(第三行),后验就更窄了,预测也有更相似的斜率截距了.在观测了20个数据点之后(最后一行)后验就成了一个以真实值为中心的<span class="math notranslate nohighlight">\(\delta\)</span>函数的形状了,真实值用白色十字表示.(这个估计会收敛到真实值是因为数据是从这个模型生成的,还因为贝叶斯估计其是连续估计器,更多细节参考本书6.4.1的讲解.)</p>
+<p>此处参考原书图7.11</p>
+</div>
+<div class="section" id="id14">
+<h3>7.6.2 计算后验预测<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<p>作预测总是很难,尤其是预测未来.—Yogi Berra</p>
+<p>在机器学习我们都更关注预测,而不是对参数的解析.利用等式4.126,可以很明显发现对于测试点x的后验预测分布也是一个高斯分布:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+p(y|x,D,\sigma^2)&amp; = \int N(y|x^Tw,\sigma^2)N(w|w_N,V_N)d w  &amp;\text{(7.60)}\\
+&amp;= N(y|w^T_Nx,\sigma^2_N(x))  &amp;\text{(7.61)} \\
+\sigma^2_N(x)&amp;= \sigma^2+x^TV_Nx  &amp;\text{(7.62)} \\
+\end{aligned}
+\end{split}\]</div>
+<p>上面这个预测分布中的方差<span class="math notranslate nohighlight">\(\sigma^2_N(x)\)</span>取决于两个项:观测噪音的方差<span class="math notranslate nohighlight">\(\sigma^2\)</span>,参数方差<span class="math notranslate nohighlight">\(V_N\)</span>.后面这一项表示为观测方差,取决于测试点x和训练数据集D之间的距离关系.这如图7.12所示,其中误差范围随着远离训练样本中的点而增大,表示着不确定性的增加.这对于主动学习等领域来说很重要,在这些领域中我们要建模的对象是我们了解程度远不如已知数据的点.对比之下,这个插值估计就有固定的误差范围,因为:</p>
+<p><span class="math notranslate nohighlight">\(p(y|x,D,\sigma^2)\approx \int N(y|x^Tw,\sigma^2)\delta_{\hat w}(w)d w=p(y|x,\hat w,\sigma^2 )\)</span>(7.63)</p>
+<p>如图7.12(a)所示.</p>
+</div>
+<div class="section" id="sigma-2">
+<h3>7.6.3 <span class="math notranslate nohighlight">\(\sigma^2\)</span>未知的情况下用贝叶斯推断*<a class="headerlink" href="#sigma-2" title="Permalink to this headline">¶</a></h3>
+<p>在这一部分利用本书4.6.3的结论,解决在线性回归模型中计算<span class="math notranslate nohighlight">\(p(w,\sigma^2,D)\)</span>的问题.这就能推出本书7.6.1当中的结论,当时是假设<span class="math notranslate nohighlight">\(\sigma^2\)</span>是已知的.如果使用无信息先验,就会发现这和频率论统计学有一些有趣的联系.</p>
+<div class="section" id="id15">
+<h4>7.6.3.1 共轭先验<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h4>
+<p>一如既往,先写出似然函数:
+<span class="math notranslate nohighlight">\(p(y|X,w,\sigma^2)=N(y|Xw,\sigma^2I_N)\)</span>(7.64)</p>
+<p>类似本书4.6.3,很明显自然共轭先验形式如下所示:
+$<span class="math notranslate nohighlight">\(
+\begin{aligned}
+&amp; p(w,\sigma^2)= NIG(w,\sigma^2|w_0,V_0,a_0,b_0 &amp;\text{(7.65)}\\
+&amp; \overset{\triangle}{=} N(w|w_0,\sigma^2V_0)IG(\sigma^2|a_0,b_0) &amp;\text{(7.66)}\\
+&amp; = \frac{b_0^{a_0}}{(2\pi)^{D/2}|V_0|^{\frac 12} \Gamma (a_0)} (\sigma^2)^{-(a_0+(D/2)+1)} &amp;\text{(7.67)}\\
+&amp; \times \exp[-\frac{(w-w_0)^TV_0^{-1}(w-w_0)+2b_0}{2\sigma^2}] &amp;\text{(7.68)}\\
+\end{aligned}
+\)</span>$</p>
+<p>此处参考原书图7.12</p>
+<p>有了先验和似然函数,就可以得到后验如下所示:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+p(w,\sigma^2|D)&amp; =  NIG(w,\sigma^2|w_N,V_N,a_N,b_N)  &amp;\text{(7.69)}\\
+w_N&amp; = V_N(V_0^{-1}w_0+X^Ty)   &amp;\text{(7.70)}\\
+V_N&amp; =  (V_0^{-1} +X^TX)^{-1} &amp;\text{(7.71)}\\
+a_N&amp; = a_0 +n/2   &amp;\text{(7.72)}\\
+b_N&amp; = b_0+\frac{1}{2}(w_0^TV_0^{-1}w_0+y^Ty-w_N^TV^{-1}_Nw_N)   &amp;\text{(7.73)}\\
+\end{aligned}
+\end{split}\]</div>
+<p><span class="math notranslate nohighlight">\(w_N\)</span>和<span class="math notranslate nohighlight">\(V_N\)</span>就和<span class="math notranslate nohighlight">\(\sigma^2\)</span>已知的情况类似了.<span class="math notranslate nohighlight">\(a_N\)</span>的表达时也很直观很好理解,就是用来对计数进行更新的.<span class="math notranslate nohighlight">\(b_N\)</span>的表达式可以按照下面方式理解:先验平方和<span class="math notranslate nohighlight">\(b_0\)</span>加上经验平方和<span class="math notranslate nohighlight">\(y^Ty\)</span>,另外加一个w的先验误差项.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+p(\sigma^2|D)&amp;= IG(a_N,b_N) &amp;\text{(7.74)}\\
+p(w|D)&amp;= T(w_N,\frac{b_N}{a_N}V_N,2a_N) &amp;\text{(7.75)}\\
+\end{aligned}
+\end{split}\]</div>
+<p>接下来给一个利用7.6.3.3当中等式的应用样例.</p>
+<p>类似本书4.6.3.6,这个后验预测分布也是一个学生T分布.
+具体来说给定了m次新测试特征<span class="math notranslate nohighlight">\(\tilde X\)</span>,就有:</p>
+<p><span class="math notranslate nohighlight">\(p(\tilde y|\tilde X,D) =T(\tilde y|\tilde Xw_N,\frac{b_N}{a_N}(I_m+\tilde XV_N\tilde X^T) ,2a_N )\)</span>(7.76)</p>
+<p>预测方差有两个部分:首先是由于测量噪音导致的<span class="math notranslate nohighlight">\((b_N/a_N)I_m\)</span>,另一个是由于对w不确定性的<span class="math notranslate nohighlight">\((b_N/a_N)\tilde X V_N \tilde X^T\)</span>.后面这一项取决于测试输入和训练集的距离.</p>
+<p>通常都设置<span class="math notranslate nohighlight">\(a_0=b_0=0\)</span>,对应的就是对<span class="math notranslate nohighlight">\(\sigma^2\)</span>的无信息先验,然后设置<span class="math notranslate nohighlight">\(w_0=0,V_0=g(X^TX)^{-1}\)</span>,对应的任意正值g.这也叫做Zellner’s g-prior(Zellner 1986).这里的g扮演的角色类似岭回归里面的<span class="math notranslate nohighlight">\(1/\lambda\)</span>.不过,区别是先验协方差正比于<span class="math notranslate nohighlight">\((X^TX)^{-1}\)</span>而不是岭回归里面的I.这就保证了后验和输入范围无关(Minka 2000b).这也可以参考7.10.</p>
+<p>接下来看个例子,如果我们使用一个无信息先验,给定N次测量的后验预测分布就是<span class="math notranslate nohighlight">\(V^{-1}_N=X^TX\)</span>.单位信息先验(unit information prior)定义为单样本包含尽量多信息的先验(Kass and Wasserman 1995).要对线性回归建立单位信息先验,需要使用<span class="math notranslate nohighlight">\(V^{-1}_0=\frac{1}{N}X^TX\)</span>就等价于g=N的g先验.</p>
+</div>
+<div class="section" id="id16">
+<h4>7.6.3.2 无信息先验<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h4>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+p(w,\sigma^2|D)&amp;= NIG(w,\sigma^2|w_N,V_N,a_N,b_N)  &amp;\text{(7.77)}\\
+w_N&amp;=\hat w _{mle}=(X^TX)^{-1}X^Ty  &amp;\text{(7.78)}\\
+V_N&amp;= (X^TX)^{-1} &amp;\text{(7.79)}\\
+a_N&amp;= \frac{N-D}{2} &amp;\text{(7.80)}\\
+b_N&amp;= \frac{2^2}{2} &amp;\text{(7.81)}\\
+s^2&amp;= (y-X\hat w_{mle})^T(y-X\hat w_{mle}) &amp;\text{(7.82)}\\
+\end{aligned}
+\end{split}\]</div>
+<p>|—|—|—|—|—|
+|<span class="math notranslate nohighlight">\(w_j\)</span>|<span class="math notranslate nohighlight">\(\mathrm{E}[w_j|D ]\)</span>|<span class="math notranslate nohighlight">\(\sqrt{var [w_j|D]}\)</span>|95%CI|sig|</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p><span class="math notranslate nohighlight">\(w_j\)</span></p></th>
+<th class="head"><p>期望</p></th>
+<th class="head"><p>标准差</p></th>
+<th class="head"><p>95%置信区间</p></th>
+<th class="head"><p>显著性</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>w0</p></td>
+<td><p>10.998</p></td>
+<td><p>3.06027</p></td>
+<td><p>[4.652,17.345]</p></td>
+<td><p>*</p></td>
+</tr>
+<tr class="row-odd"><td><p>w1</p></td>
+<td><p>-0.004</p></td>
+<td><p>0.00156</p></td>
+<td><p>[-0.008,-0.001]</p></td>
+<td><p>*</p></td>
+</tr>
+<tr class="row-even"><td><p>w2</p></td>
+<td><p>-0.054</p></td>
+<td><p>0.02190</p></td>
+<td><p>[-0.099,.0.008]</p></td>
+<td><p>*</p></td>
+</tr>
+<tr class="row-odd"><td><p>w3</p></td>
+<td><p>0.068</p></td>
+<td><p>0.09947</p></td>
+<td><p>[-0.138,0.274]</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>w4</p></td>
+<td><p>-1.294</p></td>
+<td><p>0.56381</p></td>
+<td><p>[-2.463,-0.124]</p></td>
+<td><p>*</p></td>
+</tr>
+<tr class="row-odd"><td><p>w5</p></td>
+<td><p>0.232</p></td>
+<td><p>0.10438</p></td>
+<td><p>[0.015,0.448]</p></td>
+<td><p>*</p></td>
+</tr>
+<tr class="row-even"><td><p>w6</p></td>
+<td><p>-0.357</p></td>
+<td><p>1.56646</p></td>
+<td><p>[-3.605,2.892]</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>w7</p></td>
+<td><p>-0.237</p></td>
+<td><p>1.00601</p></td>
+<td><p>[-2.324,1.849]</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>w8</p></td>
+<td><p>0.181</p></td>
+<td><p>0.23672</p></td>
+<td><p>[-0.310,0.672]</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>w9</p></td>
+<td><p>-1.285</p></td>
+<td><p>0.86485</p></td>
+<td><p>[-3.079,0.508]</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>w10</p></td>
+<td><p>-0.433</p></td>
+<td><p>0.73487</p></td>
+<td><p>[-1.957,1.091]</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<p>表7.2 对卡特彼勒数据(caterpillar data)使用无信息先验的线性回归模型的后验均值,标准偏差,置信区间.由本书配套PMTK3的linregBayesCaterpillar生成.</p>
+<p>权重的边缘分布为:
+<span class="math notranslate nohighlight">\(p(w|D)=T(w|\hat w,\frac{s^2}{N-D}C,N-D)\)</span>(7.83)
+上式中的<span class="math notranslate nohighlight">\(C=(X^TX)^{-1}\)</span>,<span class="math notranslate nohighlight">\(\hat w\)</span>是最大似然估计(MLE).这些等式的含义后面会讲.</p>
+</div>
+<div class="section" id="id17">
+<h4>7.6.3.3 贝叶斯和频率论相一致的样例*<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h4>
+<p>(半共轭)的无信息先验很有意思,因为得到的后验等价于从频率论统计学推出来的结果(参考本书4.6.3.9).比如从等式7.83可以得到:</p>
+<p><span class="math notranslate nohighlight">\(p(w_j|D)=T(w_j|\hat w_j,\frac{C_{jj}s^2}{N-D},N-D)\)</span>(7.84)</p>
+<p>这就等价于对最大似然估计(MLE)的抽样分布,其形式如下所示(Rice 1995, p542), (Casella and Berger 2002, p554):</p>
+<p><span class="math notranslate nohighlight">\(\frac{w_j-\hat w_j}{s_j}\sim t_{N-D}\)</span>(7.85)</p>
+<p>其中的:</p>
+<p><span class="math notranslate nohighlight">\(s_j=\sqrt{\frac{s^2C_{jj}}{N-D}}\)</span>(7.86)</p>
+<p>是估计参数的标准差.(本书6.2有讲到取样分布.)结果就是对参数的频率论的置信区间和贝叶斯边缘置信区间在这个样本中是一样的.</p>
+<p>还拿卡特彼勒数据集为例(Marin and Robert 2007).(这个数据集的细节含义并不重要.)可以使用等式7.84来计算回归系数的后验均值/标准差/95%置信区间.结果如表7.2所示.很明显这些95%置信区间等价于使用标准频率论方法计算得到的95%置信区间(这部分代码参考本书配套PMTK3的linregBayesCaterpillar).
+还可以使用边缘后验来计算回归参数是否显著(significantly)远离0.一个不太正规(根本不用到决策规则)的方法就是检查其95%置信区间是否排除了0.从表7.2可以得知通过这个可以衡量得到系数0,1,2,4,5都是显著的,所以加了个小星星.很容易验证这些结果和标准频率论软件得到的p值为5%的结果一样.</p>
+<p>对于某些读者而言,可能贝叶斯方法和频率论得到结果的对应关系很让人惊讶,本书6.6当中还提到过频率论方法中的各种问题.另外还要注意到当N&lt;D的时候,最大似然估计(MLE)根本不存在,所以标准频率论方法这时候就不能用了.不过贝叶斯推断的方法还是可以用的,虽然需要使用适当的先验.(参考(Maruyama and George 2008) 有讲到对g先验扩展以用于D&gt;N的情况.)</p>
+</div>
+</div>
+<div class="section" id="id18">
+<h3>7.6.4 线性回归的经验贝叶斯方法(证据程序)<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
+<p>目前为止都是假设先验为已知的.本节要说的经验贝叶斯过程是用来挑选超参数的.也就是说要挑选能够将边缘似然函数最大化的<span class="math notranslate nohighlight">\(\eta=(\alpha,\lambda)\)</span>,其中<span class="math notranslate nohighlight">\(\lambda=1/\sigma^2\)</span>是观测噪音的精度,而<span class="math notranslate nohighlight">\(\alpha\)</span>是先验精度,先验是<span class="math notranslate nohighlight">\(p(w)=N(w|0,\alpha^{-1}I)\)</span>.这也叫做证据程序(evidence procedure)(MacKay 1995b). 算法上的细节参考本书13.7.4.</p>
+<p>证据程序可以作为交叉验证的一个替代方法.比如在图7.13(b)中所示的不同值<span class="math notranslate nohighlight">\(\alpha\)</span>对应的对数边缘似然函数,以及通过优化器找到的最大值.可见在这个例子中,得到的和5叠交叉验证中的结果(如图7.12(a)中所示)一样.(在两种方法的样例中都使用了固定的<span class="math notranslate nohighlight">\(\lambda= 1/\sigma^2\)</span>,以保证可对比性.)</p>
+<p>证据程序相比交叉验证的主要的实践优势,在本书13.7当中才更明显,到时候回对每个特征使用不同的<span class="math notranslate nohighlight">\(\alpha_j\)</span>来将先验泛化扩展.这可以用于进行特征选择,使用一种叫做自动相关性判别(automatic relevancy determination,缩写为ARD)的方法来实现.作为对比,用交叉验证是没办法调节不同的D个超参数的.</p>
+<p>对比不同类别模型的时候,证据程序也很有用,因为提供了对证据(evidence)的一个很好的估计:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+p(D|m)&amp;= \int \int p(D|w,m)p(w|m,\eta)p(\eta|m)dw d\eta &amp;\text{(7.87)}\\
+&amp;\approx \max_\eta \int p(D|w,m)p(w|m,\eta)p(\eta|m)dw &amp;\text{(7.88)}\\
+\end{aligned}
+\end{split}\]</div>
+<p>很重要的一点是在<span class="math notranslate nohighlight">\(\eta\)</span>上进行积分,而不是任意设置,具体原因如本书5.3.2.5所示.实际上这也是我们在图5.7和5.8当中的多项回归模型中估计边缘似然函数所用的方法.本书21.5.2讲了更贝叶斯风格的方法,其中是要对<span class="math notranslate nohighlight">\(\eta\)</span>的不确定性建模,而不是计算点估计.</p>
+<p>练习略</p>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./MLAPP_BOOK"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="06.FrequentistStatistics.html" title="previous page">06 频率学派统计思想</a>
+    <a class='right-next' id="next-link" href="08.LogisticRegression.html" title="next page">08 逻辑回归</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Kevin Murphy<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>
