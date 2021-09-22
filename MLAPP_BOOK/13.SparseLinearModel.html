@@ -23,7 +23,7 @@
 
     
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/sphinx-book-theme.e8e5499552300ddf5d7adccae7cc3b70.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.e2363ea40746bee74734a24ffefccd78.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
@@ -42,15 +42,15 @@
     <script src="../_static/copybutton.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
-    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
         const thebe_selector_input = "pre"
         const thebe_selector_output = ".output"
     </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="14 核方法" href="14.KernelMethod.html" />
@@ -73,6 +73,10 @@
         <div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="../index.html">
       
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
       <img src="../_static/logo.png" class="logo" alt="logo">
       
       
@@ -82,7 +86,7 @@
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
         <ul class="nav bd-sidenav">
  <li class="toctree-l1">
@@ -306,7 +310,7 @@
             <div class="tocsection onthispage pt-5 pb-3">
                 <i class="fas fa-list"></i> Contents
             </div>
-            <nav id="bd-toc-nav">
+            <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id2">
@@ -441,8 +445,8 @@ p(\mathbf{\gamma})=\prod_{j=1}^D{\rm{Ber}}(\gamma_j|\pi_0)=\pi_0^{\parallel\math
 \)</span><span class="math notranslate nohighlight">\(
 其中\)</span>\pi_0<span class="math notranslate nohighlight">\(表示一个特征是相关联的概率，\)</span>\parallel\mathbf{\gamma}\parallel_0=\sum_{j=1}^D\gamma_j<span class="math notranslate nohighlight">\(为\)</span>\mathcal{l}_0<span class="math notranslate nohighlight">\(**伪范数(pseudo-norm)**，即向量中非零元素的数量。为了方便与后面模型进行比较，对上式取对数形式是十分有用的：
 \)</span>$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c4d495c3-5d0e-49c7-9856-437ed470ef3b">
-<span class="eqno">(14)<a class="headerlink" href="#equation-c4d495c3-5d0e-49c7-9856-437ed470ef3b" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-be077e74-ab98-4ab1-b291-f1f0cfcf8cae">
+<span class="eqno">(14)<a class="headerlink" href="#equation-be077e74-ab98-4ab1-b291-f1f0cfcf8cae" title="Permalink to this equation">¶</a></span>\[\begin{align}
 \log p(\mathbf{\gamma}|\pi_0) &amp; = \parallel\mathbf{\gamma}\parallel_0 \log \pi_0+(D-\parallel\mathbf{\gamma}\parallel_0)\log(1-\pi_0) \tag{13.7} \\
 &amp; =\parallel\mathbf{\gamma}\parallel_0 (\log \pi_0-\log(1-\pi_0))+{\rm{const}} \tag{13.8}\\
 &amp; = - \lambda \parallel\mathbf{\gamma}\parallel_0 + {\rm{const}} \tag{13.9}
@@ -471,8 +475,8 @@ p(\mathcal{D}|\mathbf{\gamma})=\iint \mathcal{N}(\mathbf{y}|\mathbf{X}_\gamma\ma
 其中\)</span>\mathbf{X}<em>\gamma<span class="math notranslate nohighlight">\(为新的设计矩阵，其中我们只选择了那些\)</span>\gamma_j=1<span class="math notranslate nohighlight">\(的列的值，\)</span>\mathbf{0}</em>\gamma=\mathbf{0}<em>{\parallel\gamma\parallel_0},\mathbf{I}</em>\gamma=\mathbf{I}<em>{\parallel\gamma\parallel_0}<span class="math notranslate nohighlight">\(。类似地，我们通过符号\)</span>\mathbf{w}</em>\gamma<span class="math notranslate nohighlight">\(来提醒读者该系数只表示那些\)</span>\gamma_j=1<span class="math notranslate nohighlight">\(的情况。在后面的内容中，我们定义一种更具一般性的先验分布\)</span>p(\mathbf{w}|\gamma,\sigma^2)=\mathcal{N}(\mathbf{w}|\mathbf{0}<em>\gamma,\sigma^2\mathbf{\Sigma}</em>\gamma)<span class="math notranslate nohighlight">\(，其中\)</span>\mathbf{\Sigma}<em>\gamma<span class="math notranslate nohighlight">\(表示任意的正定矩阵，而无需要求它满足\)</span>\mathbf{\Sigma}</em>\gamma=\sigma_w^2\mathbf{I}_\mathbf{\gamma}$.</p>
 <p>基于上述的先验分布，我们现在可以计算边缘似然。如果噪声的方差已知，我们可以计算出（使用公式13.151）如下的边缘似然：
 $$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8db1d6dd-5c6b-496a-b6ca-fdce0690aa24">
-<span class="eqno">(15)<a class="headerlink" href="#equation-8db1d6dd-5c6b-496a-b6ca-fdce0690aa24" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-13049894-76b4-4158-8400-1266ccdcee45">
+<span class="eqno">(15)<a class="headerlink" href="#equation-13049894-76b4-4158-8400-1266ccdcee45" title="Permalink to this equation">¶</a></span>\[\begin{align}
 p(\mathcal{D}|\gamma,\sigma^2) &amp; = \int\mathcal{N}(\mathbf{y}|\mathbf{X}_\gamma\mathbf{w}_\gamma,\sigma^2\mathbf{I})\mathcal{N}(\mathbf{0},\sigma^2\mathbf{\Sigma}_\gamma)d\mathbf{w}_\gamma=\mathcal{N}(\mathbf{y}|\mathbf{0},\mathbf{C}_\gamma) \tag{13.13}\\
 \mathbf{C}_\gamma &amp; \triangleq \sigma^2\mathbf{X}_\gamma\mathbf{\Sigma}_\gamma\mathbf{X}_\gamma^T+\sigma^2\mathbf{I}_N \tag{13.14}
 \end{align}\]</div>
@@ -495,8 +499,8 @@ f(\mathbf{w})=-\log p(\mathcal{D}|\mathbf{w})-\log p(\mathbf{w}|\lambda)={\rm{NL
 \)</span><span class="math notranslate nohighlight">\(
 在线性回归中，\)</span>\mathcal{l_1}<span class="math notranslate nohighlight">\(目标函数为：
 \)</span>$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-281039ea-0b6d-42ce-9523-26ffee12957d">
-<span class="eqno">(16)<a class="headerlink" href="#equation-281039ea-0b6d-42ce-9523-26ffee12957d" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-4ca689c0-360b-4378-908f-5a141e8f0f96">
+<span class="eqno">(16)<a class="headerlink" href="#equation-4ca689c0-360b-4378-908f-5a141e8f0f96" title="Permalink to this equation">¶</a></span>\[\begin{align}
 f(\mathbf{w}) &amp; = \sum_{i=1}^N -\frac{1}{2\sigma^2}(y_i-(w_0+\mathbf{w}^T\mathbf{x}_i))^2+\lambda||\mathbf{w}||_1 \tag{13.35} \\
 &amp; = {\rm{RSS}}(\mathbf{w})+\lambda^\prime||\mathbf{w}||_1 \tag{13.36}
 \end{align}\]</div>
@@ -561,8 +565,8 @@ a=\mathop{\lim}_{\theta\rightarrow\theta_0^-}\frac{f(\theta)-f(\theta_0)}{\theta
 如果函数在每个点都可微，则\)</span>\partial f(\theta)={\frac{df(\theta)}{d\theta}}<span class="math notranslate nohighlight">\(。类别于标准的计算结果，函数\)</span>f<span class="math notranslate nohighlight">\(局部最小值所在的点\)</span>\hat{\theta}<span class="math notranslate nohighlight">\(满足充要条件\)</span>0\in\partial f(\theta)|</em>\hat{\theta}$。</p>
 <p>接下来我们将上述概念应用在lasso问题中。首先忽略非平滑的惩罚项。结果表明：
 $$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c363b7cd-09f2-40fd-bf3b-b650fc1dc285">
-<span class="eqno">(17)<a class="headerlink" href="#equation-c363b7cd-09f2-40fd-bf3b-b650fc1dc285" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-777af335-4a79-45e2-906e-c21fca7397ef">
+<span class="eqno">(17)<a class="headerlink" href="#equation-777af335-4a79-45e2-906e-c21fca7397ef" title="Permalink to this equation">¶</a></span>\[\begin{align}
 \frac{\partial}{\partial w_j} &amp;=a_jw_j-c_j \tag{13.48} \\
 a_j &amp; = 2\sum_{i=1}^{n}x_{ij}^2 \tag{13.49} \\
 c_j &amp; = 2\sum_{i=1}^{n}x_{ij}(y_i-\mathbf{w}_{-j}^T\mathbf{x}_{i,-j}) \tag{13.50}
@@ -571,8 +575,8 @@ c_j &amp; = 2\sum_{i=1}^{n}x_{ij}(y_i-\mathbf{w}_{-j}^T\mathbf{x}_{i,-j}) \tag{1
 \[ \begin{align}\begin{aligned}
 其中$\mathbf{w}_{-j}$表示除了分量$j$以外的元素，$\mathbf{x}_{i,-j}$表示相同的意思。我们发现$c_j$是（正比于）第$j$个特征$\mathbf{x}_{:,j}$与因为其他特征所导致的残差项$\mathbf{r}_{-j}=\mathbf{y}-\mathbf{X}_{:,-j}\mathbf{w}_{-j}$之间的相关系数。所以$c_j$的幅值表征了特征$j$对于预测$\mathbf{y}$的重要性（相对于其他特征和当前参数）。\\在增加了惩罚项之后，我们发现次导数由下式给定：
 \end{aligned}\end{align} \]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-fb331644-e706-4c27-869b-4f20641c8ace">
-<span class="eqno">(18)<a class="headerlink" href="#equation-fb331644-e706-4c27-869b-4f20641c8ace" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d6544d5e-8dd9-46d7-a9b1-de1aedb29464">
+<span class="eqno">(18)<a class="headerlink" href="#equation-d6544d5e-8dd9-46d7-a9b1-de1aedb29464" title="Permalink to this equation">¶</a></span>\[\begin{align}
 \partial_{w_j}f(\mathbf{w}) &amp; = (a_jw_j-c_j)+\lambda\partial_{w_j}||\mathbf{w}||_1 \tag{13.51} \\
 &amp; =
 \begin{cases}
@@ -635,8 +639,8 @@ $<span class="math notranslate nohighlight">\(
 <h3>13.3.3 最小二乘，lasso,ridge和子集选择的比较<a class="headerlink" href="#lasso-ridge" title="Permalink to this headline">¶</a></h3>
 <p>通过对比lasso与最小二乘,含<span class="math notranslate nohighlight">\(\mathcal{l}_2\)</span>正则和<span class="math notranslate nohighlight">\(\mathcal{l}_0\)</span>正则的最小二乘的区别，我们可以更加深入地理解<span class="math notranslate nohighlight">\(\mathcal{l}_1\)</span>正则。为了简单起见，假设<span class="math notranslate nohighlight">\(\mathbf{X}\)</span>所有的特征都已经被正交化，即<span class="math notranslate nohighlight">\(\mathbf{X}^T\mathbf{X}=\mathbf{I}\)</span>。在这种情况下，<span class="math notranslate nohighlight">\(RSS\)</span>由下式给定:
 $$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-71a5781f-6761-4e8d-902b-128e61e697a1">
-<span class="eqno">(19)<a class="headerlink" href="#equation-71a5781f-6761-4e8d-902b-128e61e697a1" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-033ea268-3506-434b-9990-9f375b01deb4">
+<span class="eqno">(19)<a class="headerlink" href="#equation-033ea268-3506-434b-9990-9f375b01deb4" title="Permalink to this equation">¶</a></span>\[\begin{align}
 {\rm{RSS}}(\mathbf{w}) &amp; = ||\mathbf{y}-\mathbf{Xw}||^2=\mathbf{y}^T\mathbf{y}+\mathbf{w}^T\mathbf{X}^T\mathbf{X}\mathbf{w}-2\mathbf{w}^T\mathbf{X}^T\mathbf{y} \tag{13.59} \\
 &amp; = {\rm{const}} + \sum_kw_k^2 -2 \sum_k\sum_iw_kx_{ik}y_i \tag{13.60}
 \end{align}\]</div>
@@ -673,16 +677,36 @@ $$</p>
               </div>
               
         
-        <div class='prev-next-bottom'>
             
-    <a class='left-prev' id="prev-link" href="12.LinearModelwithLatentVariable.html" title="previous page">12 隐变量线性模型</a>
-    <a class='right-next' id="next-link" href="14.KernelMethod.html" title="next page">14 核方法</a>
 
-        </div>
+
+
+<div class='prev-next-bottom'>
+    
+    <div id="prev">
+        <a class="left-prev" href="12.LinearModelwithLatentVariable.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">12 隐变量线性模型</p>
+            </div>
+        </a>
+    </div>
+     <div id="next">
+        <a class="right-next" href="14.KernelMethod.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title">14 核方法</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
+
+</div>
         
         </div>
     </div>
-    <footer class="footer mt-5 mt-md-0">
+    <footer class="footer">
     <div class="container">
       <p>
         

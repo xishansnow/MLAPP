@@ -23,7 +23,7 @@
 
     
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/sphinx-book-theme.e8e5499552300ddf5d7adccae7cc3b70.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.e2363ea40746bee74734a24ffefccd78.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
@@ -42,15 +42,15 @@
     <script src="../_static/copybutton.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
-    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
         const thebe_selector_input = "pre"
         const thebe_selector_output = ".output"
     </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="12 隐变量线性模型" href="12.LinearModelwithLatentVariable.html" />
@@ -73,6 +73,10 @@
         <div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="../index.html">
       
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
       <img src="../_static/logo.png" class="logo" alt="logo">
       
       
@@ -82,7 +86,7 @@
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
         <ul class="nav bd-sidenav">
  <li class="toctree-l1">
@@ -306,7 +310,7 @@
             <div class="tocsection onthispage pt-5 pb-3">
                 <i class="fas fa-list"></i> Contents
             </div>
-            <nav id="bd-toc-nav">
+            <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id1">
@@ -592,8 +596,8 @@ p(\mathbf{x}_i|z_i=k,\mathbf{\theta})=\prod_{j=1}^D {\rm{Ber}}(x_{ij}|\mu_{jk}) 
 其中\)</span>\mu_{jk}<span class="math notranslate nohighlight">\(为在簇\)</span>k<span class="math notranslate nohighlight">\(中第\)</span>j$个属性为真的概率。</p>
 <p>隐变量本身没有任何意义，我们引入隐变量的目的可能仅仅是为了使模型更具有表达力。举例来说，我们可以发现混合分布的期望和协方差由下式给定
 $$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-76ee4d20-10bf-4c17-ada5-5f2b8af2f57e">
-<span class="eqno">(1)<a class="headerlink" href="#equation-76ee4d20-10bf-4c17-ada5-5f2b8af2f57e" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d0d18519-eb34-4e61-be2e-1488a8c09d56">
+<span class="eqno">(1)<a class="headerlink" href="#equation-d0d18519-eb34-4e61-be2e-1488a8c09d56" title="Permalink to this equation">¶</a></span>\[\begin{align}
 \mathbb{E}[\mathbf{x}] &amp;=\sum_k\pi_k\mathbf{\mu}_k \tag{11.4} \\
 \rm{cov}[\mathbf{x}] &amp;= \sum_k\pi_k[\mathbf{\Sigma}_k+\mathbf{\mu}_k\mathbf{\mu}_k^T] - \mathbb{E}[\mathbf{x}]\mathbb{E}[\mathbf{x}]^T \tag{11.5}\\ 
 \end{align}\]</div>
@@ -605,8 +609,8 @@ $$</p>
 $<span class="math notranslate nohighlight">\(
 我们可以证明：
 \)</span>$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c7d05070-7ac7-4989-8ab8-b406f8a62cb4">
-<span class="eqno">(2)<a class="headerlink" href="#equation-c7d05070-7ac7-4989-8ab8-b406f8a62cb4" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f0ae3fa0-5d20-408e-9a2b-3c8ab09fd440">
+<span class="eqno">(2)<a class="headerlink" href="#equation-f0ae3fa0-5d20-408e-9a2b-3c8ab09fd440" title="Permalink to this equation">¶</a></span>\[\begin{align}
 \mathbb{E}[\mathbf{x}] &amp; = \int\mathbf{x}p(\mathbf{x})d\mathbf{x} \\
 &amp; = \int \mathbf{x}\sum_{k=1}^{K}\pi_k\mathcal{N}(\mathbf{x}|\mathbf{\mu}_k,\Sigma_k)d\mathbf{x} \\
 &amp; = \sum_{k=1}^K\pi_k\int\mathbf{x}\mathcal{N}(\mathbf{x}|\mathbf{\mu}_k,\Sigma_k)d\mathbf{x} \\
@@ -614,8 +618,8 @@ $<span class="math notranslate nohighlight">\(
 \end{align}\]</div>
 <div class="math notranslate nohighlight">
 \[\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-ff26c1f6-824f-4bf9-be18-ff56ad202f0f">
-<span class="eqno">(3)<a class="headerlink" href="#equation-ff26c1f6-824f-4bf9-be18-ff56ad202f0f" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c130f693-0080-4b91-8c16-bccc66a8052b">
+<span class="eqno">(3)<a class="headerlink" href="#equation-c130f693-0080-4b91-8c16-bccc66a8052b" title="Permalink to this equation">¶</a></span>\[\begin{align}
 {\rm{cov}}[\mathbf{x}] &amp; = \mathbb{E}[\mathbf{x}\mathbf{x}^T]-\mathbb{E}[\mathbf{x}]\mathbb{E}[\mathbf{x}]^T \\
 &amp; = \int \mathbf{x}\mathbf{x}^T \sum_{k=1}^{K}\pi_k\mathcal{N}(\mathbf{x}|\mathbf{\mu}_k,\Sigma_k)d\mathbf{x} - \mathbb{E}[\mathbf{x}]\mathbb{E}[\mathbf{x}]^T \\
 &amp; = \sum_{k=1}^{K}\pi_k  \int \mathbf{x}\mathbf{x}^T\mathcal{N}(\mathbf{x}|\mathbf{\mu}_k,\Sigma_k)d\mathbf{x} - \mathbb{E}[\mathbf{x}]\mathbb{E}[\mathbf{x}]^T \\
@@ -772,8 +776,8 @@ Q(\mathbf{\theta},\mathbf{\theta}^{t-1})=\mathbb{E}[l_c(\mathbf{\theta})|\mathca
 <h4>11.4.2.1 辅助函数<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h4>
 <p>完整数据的对数似然期望由下式给定：
 $$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-28c29a7a-9061-4211-bb83-588855c28d32">
-<span class="eqno">(4)<a class="headerlink" href="#equation-28c29a7a-9061-4211-bb83-588855c28d32" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-06789068-7a2a-46c8-a227-a9abe73e7682">
+<span class="eqno">(4)<a class="headerlink" href="#equation-06789068-7a2a-46c8-a227-a9abe73e7682" title="Permalink to this equation">¶</a></span>\[\begin{align}
 Q(\mathbf{\theta},\mathbf{\theta}^{(t-1)}) &amp; \triangleq \mathbb{E}\left[\sum_{i}\log p(\mathbf{x}_i,z_i|\mathbf{\theta})\right] \tag{11.22} \\
 &amp; = \sum_i \mathbb{E}\left[\log\left[\prod_{k=1}^K(\pi_kp(\mathbf{x}_i|\mathbf{\theta}_k))^{\mathbb{I}(z_i=k)}\right]\right] \tag{11.23} \\
 &amp; = \sum_i\sum_k \mathbb{E}[\mathbb{I}(z_i=k)]\log[\pi_kp(\mathbf{x}_i|\mathbf{\theta}_k)] \tag{11.24} \\
@@ -796,8 +800,8 @@ $<span class="math notranslate nohighlight">\(
 其中\)</span>r_k \triangleq \sum_ir_{ik}<span class="math notranslate nohighlight">\(为所有属于簇\)</span>k$的数据点的加权数量。</p>
 <p>为了推导出在步骤<span class="math notranslate nohighlight">\(\rm{M}\)</span>中的<span class="math notranslate nohighlight">\(\mathbf{\mu}_k\)</span>和<span class="math notranslate nohighlight">\(\mathbf{\Sigma}_k\)</span>，我们观察在辅助函数<span class="math notranslate nohighlight">\(Q\)</span>中与<span class="math notranslate nohighlight">\(\mathbf{\mu}_k\)</span>和<span class="math notranslate nohighlight">\(\mathbf{\Sigma}_k\)</span>有关的部分。我们发现结果为：
 $$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c99492d8-b69e-4689-896a-b4a27bbd115c">
-<span class="eqno">(5)<a class="headerlink" href="#equation-c99492d8-b69e-4689-896a-b4a27bbd115c" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-b16a8241-d61b-422c-970d-ccc6426912fa">
+<span class="eqno">(5)<a class="headerlink" href="#equation-b16a8241-d61b-422c-970d-ccc6426912fa" title="Permalink to this equation">¶</a></span>\[\begin{align}
 l(\mathbf{\mu}_k,\mathbf{\Sigma}_k) &amp; = \sum_k\sum_ir_{ik}\log p(\mathbf{x}_i|\mathbf{\theta}_k) \tag{11.29} \\
 &amp; = -\frac{1}{2}\sum_ir_{ik}[\log\left|\mathbf{\Sigma}_k\right|+(\mathbf{x}_i-\mathbf{\mu}_k)^T\mathbf{\mathbf{\Sigma}}_k^{-1}(\mathbf{x}_i-\mathbf{\mu}_k)] \tag{11.30}
 \end{align}\]</div>
@@ -805,8 +809,8 @@ l(\mathbf{\mu}_k,\mathbf{\Sigma}_k) &amp; = \sum_k\sum_ir_{ik}\log p(\mathbf{x}_
 \[
 这只是计算MVN的MLEs的标准问题（见4.1.3节）的加权版本。结果表明，新的参数估计由下式给定：
 \]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-7573fcf7-a8e9-4ff2-8543-12b7c0db0a61">
-<span class="eqno">(6)<a class="headerlink" href="#equation-7573fcf7-a8e9-4ff2-8543-12b7c0db0a61" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-04269558-462a-47c4-87a3-cab1d8b0303d">
+<span class="eqno">(6)<a class="headerlink" href="#equation-04269558-462a-47c4-87a3-cab1d8b0303d" title="Permalink to this equation">¶</a></span>\[\begin{align}
 \mathbf{\mu}_k &amp; = \frac{\sum_ir_{ik}\mathbf{x}_i}{r_k} \tag{11.31} \\
 \mathbf{\Sigma}_k &amp;= \frac{\sum_ir_{ik}(\mathbf{x}_i-\mathbf{\mu}_k)(\mathbf{x}_i-\mathbf{\mu}_k)^T}{r_k}=\frac{\sum_ir_{ik}\mathbf{x}_i\mathbf{x}_i^T}{r_{ik}}-\mathbf{\mu}_k\mathbf{\mu}_k^T \tag{11.32}
 \end{align}\]</div>
@@ -987,8 +991,8 @@ Q(\mathbf{\theta},q) \triangleq \sum_i\mathbb{E}_{q_i}[\log p(\mathbf{x}_i,\math
 其中\)</span>\mathbb{H}(q_i)<span class="math notranslate nohighlight">\(为\)</span>q_i$的熵。</p>
 <p>上述结论对于所有大于0的分布<span class="math notranslate nohighlight">\(q\)</span>都是成立的。我们应该选择哪一个呢？直觉上，我们应该选择一个分布<span class="math notranslate nohighlight">\(q\)</span>，使得等号刚好成立。第<span class="math notranslate nohighlight">\(i\)</span>个样本的下确界为：
 $$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cb5d6895-ab7a-4355-a565-50fca5df8479">
-<span class="eqno">(7)<a class="headerlink" href="#equation-cb5d6895-ab7a-4355-a565-50fca5df8479" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-2dea8d14-72fe-45d7-9abb-09e64cc36583">
+<span class="eqno">(7)<a class="headerlink" href="#equation-2dea8d14-72fe-45d7-9abb-09e64cc36583" title="Permalink to this equation">¶</a></span>\[\begin{align}
 L(\mathbf{\theta},q_i) &amp; = \sum_{\mathbf{z}_i}q_i(\mathbf{z}_i)\log\frac{p(\mathbf{x}_i,\mathbf{z}_i|\mathbf{\theta})}{q_i(\mathbf{z}_i)}  \tag{11.87} \\
 &amp; = \sum_{\mathbf{z}_i}q_i(\mathbf{z}_i)\log\frac{p(\mathbf{z}_i|\mathbf{x}_i,\mathbf{\theta})p(\mathbf{x}_i|\mathbf{\theta})}{q_i(\mathbf{z_i})} \tag{11.88} \\
 &amp; = \sum_{\mathbf{z}_i}q_i(\mathbf{z}_i)\log\frac{p(\mathbf{z}_i|\mathbf{x}_i,\mathbf{\theta})}{q_i(\mathbf{z}_i)} + \sum_{\mathbf{z}_i}q_i(\mathbf{z}_i)\log p(\mathbf{x}_i|\mathbf{\theta}) \tag{11.98} \\
@@ -1105,16 +1109,36 @@ p(\mathbf{x}_{iv}|\mathbf{\theta})=\sum_{\mathbf{x}_{ih}}p(\mathbf{x}_{iv},\math
               </div>
               
         
-        <div class='prev-next-bottom'>
             
-    <a class='left-prev' id="prev-link" href="10.DirectedGraphicalModels%20%28BayesNets%29.html" title="previous page">10 有向图模型</a>
-    <a class='right-next' id="next-link" href="12.LinearModelwithLatentVariable.html" title="next page">12 隐变量线性模型</a>
 
-        </div>
+
+
+<div class='prev-next-bottom'>
+    
+    <div id="prev">
+        <a class="left-prev" href="10.DirectedGraphicalModels%20%28BayesNets%29.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">10 有向图模型</p>
+            </div>
+        </a>
+    </div>
+     <div id="next">
+        <a class="right-next" href="12.LinearModelwithLatentVariable.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title">12 隐变量线性模型</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
+
+</div>
         
         </div>
     </div>
-    <footer class="footer mt-5 mt-md-0">
+    <footer class="footer">
     <div class="container">
       <p>
         

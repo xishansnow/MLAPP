@@ -23,7 +23,7 @@
 
     
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/sphinx-book-theme.e8e5499552300ddf5d7adccae7cc3b70.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.e2363ea40746bee74734a24ffefccd78.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
@@ -42,15 +42,15 @@
     <script src="../_static/copybutton.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
-    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
         const thebe_selector_input = "pre"
         const thebe_selector_output = ".output"
     </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="18 状态空间模型" href="18.StateSpaceModels.html" />
@@ -73,6 +73,10 @@
         <div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="../index.html">
       
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
       <img src="../_static/logo.png" class="logo" alt="logo">
       
       
@@ -82,7 +86,7 @@
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
         <ul class="nav bd-sidenav">
  <li class="toctree-l1">
@@ -306,7 +310,7 @@
             <div class="tocsection onthispage pt-5 pb-3">
                 <i class="fas fa-list"></i> Contents
             </div>
-            <nav id="bd-toc-nav">
+            <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id2">
@@ -411,8 +415,8 @@ p(X_{1:T})=p(X_1)p(X_2|X_1)p(X_3|X_2)...=p(X_1)\prod_{t=2}^Tp(X_t|X_{t-1})\tag{1
 <p>一个静态的(参数共享)，有限状态(观测值离散)的马尔科夫链等价于一个<strong>随机自动机</strong>(stochastic automaton)。通常情况下我们会使用一个有向图来可视化这样的自动机，其中节点代表状态，箭头代表合法的状态转移(对应于矩阵 <span class="math notranslate nohighlight">\(\bf{A}\)</span> 中的非零元素)。该有向图被称为<strong>状态转移图</strong>(state transition diagram)。图中每一条弧线对应的权重代表转移的概率值。举例来说，图17.1(左)表示了一个 <span class="math notranslate nohighlight">\(2-\rm{state}\)</span> 马尔科夫链:
 $$
 \mathbf{A}=</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d3df28e8-74f2-4dd5-aca3-7819b64f252e">
-<span class="eqno">(21)<a class="headerlink" href="#equation-d3df28e8-74f2-4dd5-aca3-7819b64f252e" title="Permalink to this equation">¶</a></span>\[\begin{pmatrix}
+<div class="amsmath math notranslate nohighlight" id="equation-9004fe97-b3a9-4ec6-8c37-b4f0b283f037">
+<span class="eqno">(20)<a class="headerlink" href="#equation-9004fe97-b3a9-4ec6-8c37-b4f0b283f037" title="Permalink to this equation">¶</a></span>\[\begin{pmatrix}
 1-\alpha &amp; \alpha \\
 \beta &amp; 1-\beta
 \end{pmatrix}\]</div>
@@ -421,8 +425,8 @@ $$
 图17.1(右)表示了一个 $3-\rm{state}$ 的马尔科夫链:
 \]</div>
 <p>\mathbf{A}=</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ce979136-da68-43ca-83f8-7b53d36f0f9b">
-<span class="eqno">(22)<a class="headerlink" href="#equation-ce979136-da68-43ca-83f8-7b53d36f0f9b" title="Permalink to this equation">¶</a></span>\[\begin{pmatrix}
+<div class="amsmath math notranslate nohighlight" id="equation-6c4e5cd2-164a-458c-a236-b637f9bfb4c2">
+<span class="eqno">(21)<a class="headerlink" href="#equation-6c4e5cd2-164a-458c-a236-b637f9bfb4c2" title="Permalink to this equation">¶</a></span>\[\begin{pmatrix}
 A_{11} &amp; A_{12} &amp; 0 \\
 0 &amp; A_{22} &amp; A_{23} \\
 0 &amp; 0 &amp; 1 
@@ -564,8 +568,8 @@ p(z_t=j|\mathbf{x}_{1:t-1})=\sum_{i}p(z_t=j|z_{t-1}=i)p(z_{t-1}|\mathbf{x}_{1:t-
 \)</span><span class="math notranslate nohighlight">\(
 接下来是更新步骤，在这个步骤中，我们使用贝叶斯法则将 \)</span>t<span class="math notranslate nohighlight">\( 时刻的观测值吸收进来：
 \)</span>$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0b592b2e-f528-411f-ba11-22da4ec8f584">
-<span class="eqno">(23)<a class="headerlink" href="#equation-0b592b2e-f528-411f-ba11-22da4ec8f584" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-b06a1e20-cd2b-4d4f-ab15-57a58df3716c">
+<span class="eqno">(22)<a class="headerlink" href="#equation-b06a1e20-cd2b-4d4f-ab15-57a58df3716c" title="Permalink to this equation">¶</a></span>\[\begin{align}
 \alpha_t(j)  &amp; \triangleq p(z_t=j|\mathbf{x}_{1:t})=p(z_t=j|\mathbf{x}_t,\mathbf{x}_{1:t-1}) \tag{17.45} \\
 &amp; = \frac{1}{Z_t}p(\mathbf{x}_t|z_t=j,\cancel{\mathbf{x_{1:t-1}}})p(z_t=j|\mathbf{x}_{1:t-1}) \tag{17.46}
 \end{align}\]</div>
@@ -615,16 +619,36 @@ $<span class="math notranslate nohighlight">\(
               </div>
               
         
-        <div class='prev-next-bottom'>
             
-    <a class='left-prev' id="prev-link" href="16.AdaptiveBasisFunctionModel.html" title="previous page">16 自适应基函数模型</a>
-    <a class='right-next' id="next-link" href="18.StateSpaceModels.html" title="next page">18 状态空间模型</a>
 
-        </div>
+
+
+<div class='prev-next-bottom'>
+    
+    <div id="prev">
+        <a class="left-prev" href="16.AdaptiveBasisFunctionModel.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">16 自适应基函数模型</p>
+            </div>
+        </a>
+    </div>
+     <div id="next">
+        <a class="right-next" href="18.StateSpaceModels.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title">18 状态空间模型</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
+
+</div>
         
         </div>
     </div>
-    <footer class="footer mt-5 mt-md-0">
+    <footer class="footer">
     <div class="container">
       <p>
         

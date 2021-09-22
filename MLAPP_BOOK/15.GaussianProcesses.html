@@ -23,7 +23,7 @@
 
     
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/sphinx-book-theme.e8e5499552300ddf5d7adccae7cc3b70.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.e2363ea40746bee74734a24ffefccd78.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
@@ -42,15 +42,15 @@
     <script src="../_static/copybutton.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
-    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
         const thebe_selector_input = "pre"
         const thebe_selector_output = ".output"
     </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="16 自适应基函数模型" href="16.AdaptiveBasisFunctionModel.html" />
@@ -73,6 +73,10 @@
         <div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="../index.html">
       
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
       <img src="../_static/logo.png" class="logo" alt="logo">
       
       
@@ -82,7 +86,7 @@
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
         <ul class="nav bd-sidenav">
  <li class="toctree-l1">
@@ -306,7 +310,7 @@
             <div class="tocsection onthispage pt-5 pb-3">
                 <i class="fas fa-list"></i> Contents
             </div>
-            <nav id="bd-toc-nav">
+            <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id2">
@@ -434,8 +438,6 @@
                 
   <div class="section" id="id1">
 <h1>15 高斯过程<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
-<p>[原文] <a class="reference external" href="https://probml.github.io/pml-book/book0.html">https://probml.github.io/pml-book/book0.html</a></p>
-<p>[作者] <a class="reference external" href="https://www.cs.ubc.ca/~murphyk/">Kevin Patrick Murphy</a></p>
 <style>p{text-indent:2em;2}</style>
 <div class="section" id="id2">
 <h2>15.1 简介<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
@@ -444,16 +446,16 @@
 \[
 p\left(y_{*} \mid \mathbf{x}_{*}, \mathbf{X}, \mathbf{y}\right)=\int p\left(y_{*} \mid f, \mathbf{x}_{*}\right) p(f \mid \mathbf{X}, \mathbf{y}) df \tag{15.1}
 \]</div>
-<p>到目前为止，我们的重点一直在求解函数 <span class="math notranslate nohighlight">\(f\)</span> 的参数 <span class="math notranslate nohighlight">\(\theta\)</span> 上，即推断 <span class="math notranslate nohighlight">\(p(\theta|D)\)</span> 而不是 <span class="math notranslate nohighlight">\(p(f|D)\)</span> ，本章将讨论一种对函数 <span class="math notranslate nohighlight">\(f\)</span> 本身进行贝叶斯推断的方法 – 高斯过程（<code class="docutils literal notranslate"><span class="pre">Gaussian</span> <span class="pre">Processes</span></code>，高斯过程）。</p>
-<p>高斯过程定义了函数上的先验分布（概率密度函数的横轴代表函数的取值），当看到一些数据时，根据贝叶斯定理，将其变换为函数上的后验分布。函数上的概率分布听起来很抽象、不好理解，但事实表明，只要能在有限任意点集 <span class="math notranslate nohighlight">\(\mathbf{x}_1,...,\mathbf{x}_N\)</span> 上定义一个函数值上的分布即可。</p>
-<p>一个高斯过程通常假设函数的概率分布 <span class="math notranslate nohighlight">\(p(f(\mathbf{x}_1),…,f(\mathbf{x}_N))\)</span> 为联合高斯分布，其均值 <span class="math notranslate nohighlight">\(μ(\mathbf{x})\)</span> 和协方差 <span class="math notranslate nohighlight">\(Σ(\mathbf{x})\)</span> 由 <span class="math notranslate nohighlight">\(Σ_{ij}=\kappa (\mathbf{x}_i，\mathbf{x}_j)\)</span> 给出，其中 <span class="math notranslate nohighlight">\(\kappa\)</span> 是正定核函数（参见第 14.2 节）。其核心理念是：如果核判定 <span class="math notranslate nohighlight">\(x_{i}\)</span> 和 <span class="math notranslate nohighlight">\(x_{j}\)</span>相似，则可以期望其函数的输出也相似。如图 15.1 所示。</p>
+<p>到目前为止，我们的重点一直在求解函数 <span class="math notranslate nohighlight">\(f\)</span> 的参数 <span class="math notranslate nohighlight">\(\theta\)</span> 上，即推断 <span class="math notranslate nohighlight">\(p(\theta|D)\)</span> 而不是 <span class="math notranslate nohighlight">\(p(f|D)\)</span> ，本章将讨论一种对函数 <span class="math notranslate nohighlight">\(f\)</span> 本身进行贝叶斯推断的方法 – <code class="docutils literal notranslate"><span class="pre">高斯过程（Gaussian</span> <span class="pre">Processes）</span></code>。</p>
+<p>高斯过程定义了函数上的先验分布（即概率密度函数的横轴代表了函数的取值），当看到一些数据时，依据贝叶斯定理将先验变换为函数上的后验分布。函数上的分布听起来很抽象、不好理解，但事实表明，只要能在有限任意点集 <span class="math notranslate nohighlight">\(\mathbf{x}_1,...,\mathbf{x}_N\)</span> 上定义一个函数值上的分布即可。</p>
+<p>高斯过程通常假设函数的概率分布 <span class="math notranslate nohighlight">\(p(f(\mathbf{x}_1),…,f(\mathbf{x}_N))\)</span> 呈多维高斯分布，其均值 <span class="math notranslate nohighlight">\(μ(\mathbf{x})\)</span> 和协方差 <span class="math notranslate nohighlight">\(Σ(\mathbf{x})\)</span> 由 <span class="math notranslate nohighlight">\(Σ_{ij}=\kappa (\mathbf{x}_i，\mathbf{x}_j)\)</span> 给出， <span class="math notranslate nohighlight">\(\kappa\)</span> 为正定核函数（参见第 14.2 节）。其理念是：如果核判定 <span class="math notranslate nohighlight">\(x_{i}\)</span> 与 <span class="math notranslate nohighlight">\(x_{j}\)</span> 相似，则可以期望其函数值 <span class="math notranslate nohighlight">\(y_i=f(\mathbf{x_i})\)</span> 和 <span class="math notranslate nohighlight">\(y_j=f(\mathbf{x_j})\)</span> 也相似。如图 15.1 所示。</p>
 <center>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210609143704_4a.webp" /></p>
 </center>
 <p>图 15.1 两个训练数据点和一个测试数据点构成的高斯过程，采用了有向和无向的混合图模型来表示，代表概率模型 <span class="math notranslate nohighlight">\(p(\mathbf{y},\mathbf{f}|\mathbf{x})= \mathcal{N}(\mathbf{f}|0,\mathbf{K} (\mathbf{x})) \prod_i p(y_i|f_i)\)</span> 。隐藏节点 <span class="math notranslate nohighlight">\(f_i=f(\mathbf{x}_i)\)</span> 表示每个数据点的函数值。这些隐藏节点之间由无向边的全互连，形成高斯图模型；边的强度表示协方差项 <span class="math notranslate nohighlight">\(Σ_{ij}=\kappa (\mathbf{x}_i,\mathbf{x}_j)\)</span>。如果测试数据点 <span class="math notranslate nohighlight">\(\mathbf{x}_∗\)</span> 与训练数据点 <span class="math notranslate nohighlight">\(\mathbf{x}_1\)</span> 和 <span class="math notranslate nohighlight">\(\mathbf{x}_2\)</span> 相似，则预测输出 <span class="math notranslate nohighlight">\(y_∗\)</span> 将与 <span class="math notranslate nohighlight">\(y_1\)</span> 和 <span class="math notranslate nohighlight">\(y_2\)</span> 相似。</p>
 <p>结果表明，当上图为回归任务设置时，可以在 <span class="math notranslate nohighlight">\(O(N^3)\)</span> 时间内以封闭形式完成计算（将在 15.6 节中讨论更快的近似计算方法）。而在分类任务设置时，需要使用高斯近似等近似方法。</p>
-<p>高斯过程可以被认为是<code class="docutils literal notranslate"><span class="pre">第</span> <span class="pre">14</span> <span class="pre">章</span> <span class="pre">核方法</span></code>的贝叶斯替代，包括 <code class="docutils literal notranslate"><span class="pre">L1VM</span></code>，<code class="docutils literal notranslate"><span class="pre">RVM</span></code> 和 <code class="docutils literal notranslate"><span class="pre">SVM</span></code>。虽然这些方法更稀疏，因此速度更快，但它们无法给出良好的概率输出（参见 <code class="docutils literal notranslate"><span class="pre">15.4.4</span> <span class="pre">节</span></code> 的深入讨论）。适当调整概率输出在某些应用中非常重要，例如视觉和机器人的在线跟踪（<code class="docutils literal notranslate"><span class="pre">Ko</span> <span class="pre">和</span> <span class="pre">Fox，2009</span></code>）、强化学习和最优控制（<code class="docutils literal notranslate"><span class="pre">Engel</span> <span class="pre">等，2005</span> <span class="pre">年</span></code>；<code class="docutils literal notranslate"><span class="pre">Deisenroth</span> <span class="pre">等，2009</span></code>），非凸函数的全局优化（<code class="docutils literal notranslate"><span class="pre">Mockus</span> <span class="pre">等，1996</span> <span class="pre">年</span></code>；<code class="docutils literal notranslate"><span class="pre">Lizotte,2008</span></code>；<code class="docutils literal notranslate"><span class="pre">Brochu</span> <span class="pre">等，2009</span></code>），实验设计（<code class="docutils literal notranslate"><span class="pre">Santner等，2003</span></code>）等。</p>
-<p>上述表示方法基于（<code class="docutils literal notranslate"><span class="pre">Rasmussen</span> <span class="pre">和</span> <span class="pre">Williams,2006</span></code>），另见（<code class="docutils literal notranslate"><span class="pre">Digger</span> <span class="pre">和</span> <span class="pre">Ribeiro,</span> <span class="pre">2007</span></code>），其中讨论了空间统计文献中广泛使用的克里格法（Kriging）。</p>
+<p>高斯过程可以被认为是第 14 章 “核方法” 的贝叶斯替代，包括 <code class="docutils literal notranslate"><span class="pre">L1VM</span></code>，<code class="docutils literal notranslate"><span class="pre">RVM</span></code> 和 <code class="docutils literal notranslate"><span class="pre">SVM</span></code>。虽然这些核方法更稀疏、速度更快，但无法给出良好的概率输出（参见 <code class="docutils literal notranslate"><span class="pre">15.4.4</span> <span class="pre">节</span></code> 的讨论）。在某些应用中，能够适当调整概率输出非常重要，例如视觉和机器人的在线跟踪应用 <code class="docutils literal notranslate"><span class="pre">（Ko,Fox等，2009）</span></code>、强化学习和最优控制<code class="docutils literal notranslate"><span class="pre">（Engel</span> <span class="pre">等，2005；Deisenroth</span> <span class="pre">等，2009）</span></code>、非凸函数的全局优化 <code class="docutils literal notranslate"><span class="pre">（Mockus</span> <span class="pre">等，1996；Lizotte，2008；Brochu</span> <span class="pre">等，2009）</span></code>、实验设计 <code class="docutils literal notranslate"><span class="pre">（Santner等，2003）</span></code>等。</p>
+<p>上述表示法基于<code class="docutils literal notranslate"><span class="pre">（Rasmussen</span> <span class="pre">和</span> <span class="pre">Williams,2006）</span></code>，另见<code class="docutils literal notranslate"><span class="pre">（Digger</span> <span class="pre">和</span> <span class="pre">Ribeiro,</span> <span class="pre">2007）</span></code>，其中讨论了空间统计文献中广泛使用的克里格方法。</p>
 </div>
 <div class="section" id="id3">
 <h2>15.2 面向回归任务的高斯过程<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
@@ -462,21 +464,19 @@ p\left(y_{*} \mid \mathbf{x}_{*}, \mathbf{X}, \mathbf{y}\right)=\int p\left(y_{*
 \[
 f(\mathbf{x}) \sim G P\left(m(\mathbf{x}), \kappa\left(\mathbf{x}, \mathbf{x}^{\prime}\right)\right) \tag{15.2}
 \]</div>
-<p>其中 <span class="math notranslate nohighlight">\(m(\mathbf{x})\)</span> 是均值函数， <span class="math notranslate nohighlight">\(\kappa\left(\mathbf{x}, \mathbf{x}^{\prime}\right)\)</span> 为核函数或方差函数， 即：</p>
+<p>其中 <span class="math notranslate nohighlight">\(m(\mathbf{x})\)</span> 为均值函数， <span class="math notranslate nohighlight">\(\kappa\left(\mathbf{x}, \mathbf{x}^{\prime}\right)\)</span> 为核函数或方差函数， 即：</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}
-\begin{align*}
+\[\begin{split}\begin{align*}
 m(\mathbf{x}) &amp;=\mathbb{E}[f(\mathbf{x})] \tag{15.3}\\
 \kappa\left(\mathbf{x}, \mathbf{x}^{\prime}\right) &amp;=\mathbb{E}\left[(f(\mathbf{x})-m(\mathbf{x}))\left(f\left(\mathbf{x}^{\prime}\right)-m\left(\mathbf{x}^{\prime}\right)\right)^{T}\right] \tag{15.4}
-\end{align*}
-\end{split}\]</div>
-<p>我们显然要求 <span class="math notranslate nohighlight">\(\kappa()\)</span> 是正定核。对于任何有限点集，该过程定义了一个联合高斯分布：</p>
+\end{align*}\end{split}\]</div>
+<p>显然我们要求 <span class="math notranslate nohighlight">\(\kappa()\)</span> 为正定核。对于任何有限点集，该过程定义了一个多维高斯分布：</p>
 <div class="math notranslate nohighlight">
 \[
 p(\mathbf{f} \mid \mathbf{X})=\mathcal{N}(\mathbf{f} \mid \boldsymbol{\mu}, \mathbf{K}) \tag{15.5}
 \]</div>
-<p>其中 <span class="math notranslate nohighlight">\(K_{i j}=\kappa\left(\mathbf{x}_{i}, \mathbf{x}_{j}\right)\)</span> 并且 <span class="math notranslate nohighlight">\(\boldsymbol{\mu}=\left(m\left(\mathbf{x}_{1}\right), \ldots, m\left(\mathbf{x}_{N}\right)\right)\)</span>。</p>
-<p>请注意，使用 <span class="math notranslate nohighlight">\(m(\mathbf{x})=0\)</span> 的均值函数是很常见的，因为高斯过程足够灵活，可以任意好地模拟平均值，正如下面即将看到的那样。然而，在 <code class="docutils literal notranslate"><span class="pre">15.2.6</span></code> 节中，我们将考虑均值函数的参数模型，因此高斯过程只需对残差进行建模。这种半参数方法结合了参数模型的可解释性和非参数模型的准确性。</p>
+<p>其中 <span class="math notranslate nohighlight">\(K_{i j}=\kappa\left(\mathbf{x}_{i}, \mathbf{x}_{j}\right)\)</span> ，并且 <span class="math notranslate nohighlight">\(\boldsymbol{\mu}=\left(m\left(\mathbf{x}_{1}\right), \ldots, m\left(\mathbf{x}_{N}\right)\right)\)</span>。</p>
+<p>请注意，使用 <span class="math notranslate nohighlight">\(m(\mathbf{x})=0\)</span> 的均值函数是很常见的，因为高斯过程足够灵活，可以任意好地模拟平均值，正如下面即将看到的那样。然而，在 <code class="docutils literal notranslate"><span class="pre">15.2.6</span></code> 节中，我们将考虑均值函数的参数模型，因此此处高斯过程只需对残差进行建模。这种半参数方法结合了参数模型的可解释性和非参数模型的准确性。</p>
 <center>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210609151045_01.webp" /></p>
 </center>
@@ -575,7 +575,7 @@ p\left(f_{*} \mid \mathbf{x}_{*}, \mathbf{X}, \mathbf{y}\right)=\mathcal{N}\left
 </div>
 <div class="section" id="id6">
 <h3>15.2.3 核参数的影响<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
-<p>高斯过程的预测性能完全取决于核的选择。假设我们为噪声观测选择以下平方指数(SE)核：</p>
+<p>高斯过程的预测性能完全取决于核的选择。假设我们为噪声观测选择以下平方指数核：</p>
 <div class="math notranslate nohighlight">
 \[
 \kappa_{y}\left(x_{p}, x_{q}\right)=\sigma_{f}^{2} \exp \left(-\frac{1}{2 \ell^{2}}\left(x_{p}-x_{q}\right)^{2}\right)+\sigma_{y}^{2} \delta_{p q} {\tag{15.19}}
@@ -844,16 +844,36 @@ p\left(f_{*} \mid \mathbf{x}_{*}, \mathbf{X}, \mathbf{y}\right)=\mathcal{N}\left
               </div>
               
         
-        <div class='prev-next-bottom'>
             
-    <a class='left-prev' id="prev-link" href="14.KernelMethod.html" title="previous page">14 核方法</a>
-    <a class='right-next' id="next-link" href="16.AdaptiveBasisFunctionModel.html" title="next page">16 自适应基函数模型</a>
 
-        </div>
+
+
+<div class='prev-next-bottom'>
+    
+    <div id="prev">
+        <a class="left-prev" href="14.KernelMethod.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">14 核方法</p>
+            </div>
+        </a>
+    </div>
+     <div id="next">
+        <a class="right-next" href="16.AdaptiveBasisFunctionModel.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title">16 自适应基函数模型</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
+
+</div>
         
         </div>
     </div>
-    <footer class="footer mt-5 mt-md-0">
+    <footer class="footer">
     <div class="container">
       <p>
         

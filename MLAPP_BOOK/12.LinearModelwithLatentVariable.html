@@ -23,7 +23,7 @@
 
     
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/sphinx-book-theme.e8e5499552300ddf5d7adccae7cc3b70.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.e2363ea40746bee74734a24ffefccd78.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
@@ -42,15 +42,15 @@
     <script src="../_static/copybutton.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
-    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
         const thebe_selector_input = "pre"
         const thebe_selector_output = ".output"
     </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="13 稀疏线性模型" href="13.SparseLinearModel.html" />
@@ -73,6 +73,10 @@
         <div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="../index.html">
       
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
       <img src="../_static/logo.png" class="logo" alt="logo">
       
       
@@ -82,7 +86,7 @@
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
         <ul class="nav bd-sidenav">
  <li class="toctree-l1">
@@ -306,7 +310,7 @@
             <div class="tocsection onthispage pt-5 pb-3">
                 <i class="fas fa-list"></i> Contents
             </div>
-            <nav id="bd-toc-nav">
+            <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#factor-analysis">
@@ -361,8 +365,8 @@ figure 12.1
 <h3>12.1.1 FA是MVN的一个低秩版的参数化<a class="headerlink" href="#famvn" title="Permalink to this headline">¶</a></h3>
 <p>FA可以认为是一种使用较少参数来描述变量<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>的联合分布的方式。为了说明这一点，根据式4.126，推导出来的边缘分布<span class="math notranslate nohighlight">\(p(\mathbf{x}_i|\mathbf{\theta})\)</span>是一个高斯分布：
 $$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ec81e9c0-8234-4f1b-a192-41fff5ccd63b">
-<span class="eqno">(8)<a class="headerlink" href="#equation-ec81e9c0-8234-4f1b-a192-41fff5ccd63b" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-565bb5e2-e6dc-45bb-b399-28c00149d28a">
+<span class="eqno">(8)<a class="headerlink" href="#equation-565bb5e2-e6dc-45bb-b399-28c00149d28a" title="Permalink to this equation">¶</a></span>\[\begin{align}
 p(\mathbf{x}_i|\mathbf{\theta}) &amp; =\int\mathcal{N}(\mathbf{x}_i|\mathbf{W}\mathbf{z}_i+\mathbf{\mu},\mathbf{\Psi})\mathcal{N}(\mathbf{z}_i|\mathbf{\mu}_0,\mathbf{\Sigma}_0)d\mathbf{z}_i  \tag{12.3} \\ 
 &amp; = \mathcal{N}(\mathbf{x}_i|\mathbf{W}\mathbf{\mu}_0+\mathbf{\mu},\mathbf{\Psi}+\mathbf{W}\mathbf{\Sigma}_0\mathbf{W}^T) \tag{12.4}
 \end{align}\]</div>
@@ -383,8 +387,8 @@ $<span class="math notranslate nohighlight">\(
 <h3>12.1.2 隐藏因子的推理<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <p>尽管FA只是被认为是一种定义关于变量<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>概率分布的方式，但我们经常使用它，是因为我们希望隐藏因子<span class="math notranslate nohighlight">\(\mathbf{z}\)</span>可以揭露一些关于数据的有趣的规律。为了实现这一点，我们需要计算关于隐藏因子的后验分布。基于贝叶斯法则，可以得出：
 $$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-47e44178-1635-4954-912b-d362fc9ef3ed">
-<span class="eqno">(9)<a class="headerlink" href="#equation-47e44178-1635-4954-912b-d362fc9ef3ed" title="Permalink to this equation">¶</a></span>\[\begin{alignat}{3}
+<div class="amsmath math notranslate nohighlight" id="equation-033b8864-857c-462b-908c-563d87f929fa">
+<span class="eqno">(9)<a class="headerlink" href="#equation-033b8864-857c-462b-908c-563d87f929fa" title="Permalink to this equation">¶</a></span>\[\begin{alignat}{3}
 p(\mathbf{z}_i|\mathbf{x}_i,\mathbf{\theta}) &amp; =  \mathcal{N}(\mathbf{z}_i|\mathbf{m}_i,\mathbf{\Sigma}_i)   \tag{12.7} \\
 \mathbf{\Sigma}_i   &amp; \triangleq  (\mathbf{\Sigma}_0^{-1}+\mathbf{W}^T\mathbf{\Psi}^{-1}\mathbf{W})^{-1} \tag{12.8} \\
 \mathbf{m}_i &amp; \triangleq \mathbf{\Sigma}_i(\mathbf{W}^T\mathbf{\Psi}^{-1}(\mathbf{x}_i-\mathbf{\mu})+\mathbf{\Sigma}_0^{-1}\mathbf{\mu}_0) \tag{12.9}
@@ -393,8 +397,8 @@ p(\mathbf{z}_i|\mathbf{x}_i,\mathbf{\theta}) &amp; =  \mathcal{N}(\mathbf{z}_i|\
 \[ \begin{align}\begin{aligned}
 值得注意的是，在FA模型中，$\mathbf{\Sigma}_i$事实上与$i$无关，所以我们可以将其表示为$\mathbf{\Sigma}$。计算这个矩阵所花费的时间复杂度为$O(L^3+L^2D)$，计算每个$\mathbf{m}_i=\mathbb{E}[\mathbf{z}_i|\mathbf{x}_i,\mathbf{\theta}]$的时间复杂度为$O(L^2+LD)$。$\mathbf{m}_i$有时又被称为隐藏**分值(scores)**或者隐藏**因子(factors)**。\\让我们给出一个简单的例子。考虑一个数据集，其中变量的数量$D=11$,样本数量$N=387$，这些变量描述了不同车辆的各种方面，比如发动机大小，气缸数量，每加仑公里路(miles per gallon,MPG)，价格等等。我们首先训练一个$L=2$的模型。我们可以在二维空间中绘制$\mathbf{m}_i$来实现数据的可视化，结果如图12.2所示。\\为了进一步加深对隐藏因子的理解，我们可以将每个特征维度对应的单位向量$\mathbf{e}_1=(1,0,...,0),\mathbf{e}_2=(0,1,0,...,0)$等投影到一个低维度的空间。这些结果如图中蓝色直线所示，这被称为**双标图(biplot)**。我们发现水平轴代表价格，对应于特征&quot;经销商&quot;和&quot;零售&quot;，且贵的车在右侧。垂直轴对应于燃油效率（以MPG进行衡量）与尺寸的比例：重型车辆效率更低且分布在上面，然而轻型车辆效率更高且分布在下面。我们可以通过点击某些点来验证这种解释，找到在训练集中距离最近的样例，然后打印出它们的名字。然而，通常情况下，对隐藏因子进行解释是非常困难的，这一点我们会在12.1.3节进行解释。\\### 12.1.3 无法辨别性\\FA模型的参数具有不可辨别性。为了说明这一点，假设$\mathbf{R}$是一个任意的正交旋转矩阵，满足$\mathbf{R}\mathbf{R}^T=\mathbf{I}$。定义$\tilde{\mathbf{W}}=\mathbf{WR}$，基于这个变体矩阵的似然函数与没变化之前的结果是一样的，因为
 \end{aligned}\end{align} \]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-9f26d723-f09e-451c-ae2b-586fb387c603">
-<span class="eqno">(10)<a class="headerlink" href="#equation-9f26d723-f09e-451c-ae2b-586fb387c603" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-dc620e0c-ca16-46e5-8368-b0418d06d28d">
+<span class="eqno">(10)<a class="headerlink" href="#equation-dc620e0c-ca16-46e5-8368-b0418d06d28d" title="Permalink to this equation">¶</a></span>\[\begin{align}
 {\rm{cov}}[\mathbf{x}] &amp; = \tilde{\mathbf{W}}\mathbb{E}[\mathbf{z}\mathbf{z}^T]\tilde{\mathbf{W}}^T+\mathbb{E}[\mathbf{\epsilon\epsilon}^T] \tag{12.10} \\
 &amp; = \mathbf{WR}\mathbf{R}^T\mathbf{W}^T+\mathbf{\Psi}=\mathbf{W}\mathbf{W}^T+\mathbf{\Psi} \tag{12.11}
 \end{align}\]</div>
@@ -411,8 +415,8 @@ $<span class="math notranslate nohighlight">\(
 <li><p>强制要求<span class="math notranslate nohighlight">\(\mathbf{W}\)</span>为下三角矩阵 一种在贝叶斯领域十分著名的方法是强制要求第一个观测变量只由第一个潜在因子产生。第二个观测变量仅由前两个潜在因子产生，以此类推。举例来说，如果<span class="math notranslate nohighlight">\(L=3,D=4\)</span>，对应的因子载入矩阵为：
 $$
 \mathbf{W}=</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f31c5eed-94bc-4ff4-a31b-1ca7c6075ad2">
-<span class="eqno">(11)<a class="headerlink" href="#equation-f31c5eed-94bc-4ff4-a31b-1ca7c6075ad2" title="Permalink to this equation">¶</a></span>\[\begin{pmatrix}
+<div class="amsmath math notranslate nohighlight" id="equation-ac8ed2a7-27e2-4ce1-b0bf-1429ab8c77f2">
+<span class="eqno">(11)<a class="headerlink" href="#equation-ac8ed2a7-27e2-4ce1-b0bf-1429ab8c77f2" title="Permalink to this equation">¶</a></span>\[\begin{pmatrix}
   w_{11} &amp; 0 &amp; 0 \\
   w_{21} &amp; w_{22} &amp; 0 \\
   w_{31} &amp; w_{32} &amp; w_{33} \\
@@ -424,8 +428,8 @@ $$
 \end{aligned}\end{align} \]</div>
 </li>
 </ul>
-<div class="amsmath math notranslate nohighlight" id="equation-bc0b5e2f-2821-4f20-a453-eeabc715acdd">
-<span class="eqno">(12)<a class="headerlink" href="#equation-bc0b5e2f-2821-4f20-a453-eeabc715acdd" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-e830da37-dd08-471a-8a82-50c6357d023a">
+<span class="eqno">(12)<a class="headerlink" href="#equation-e830da37-dd08-471a-8a82-50c6357d023a" title="Permalink to this equation">¶</a></span>\[\begin{align}
 p(\mathbf{x}_i|\mathbf{z}_i,q_i=k,\mathbf{\theta}) &amp; = \mathcal{N}(\mathbf{x}_i|\mathbf{\mu}_k+\mathbf{W}_k\mathbf{z}_i,\mathbf{\Psi})  \tag{12.14} \\
 p(\mathbf{z}_i|\mathbf{\theta}) &amp; = \mathcal{N}(\mathbf{z}_i|\mathbf{0},\mathbf{I}) \tag{12.15} \\
 p(q_i|\mathbf{\theta}) &amp; = {\rm{Cat}}(q_i|\mathbf{\pi}) \tag{12.16}
@@ -438,8 +442,8 @@ p(q_i|\mathbf{\theta}) &amp; = {\rm{Cat}}(q_i|\mathbf{\pi}) \tag{12.16}
 $<span class="math notranslate nohighlight">\(
 关于\)</span>\mathbf{z}_i<span class="math notranslate nohighlight">\(的条件后验分布为:
 \)</span>$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c43fd375-bdc3-4c95-b0b2-d4b5f3d4b39f">
-<span class="eqno">(13)<a class="headerlink" href="#equation-c43fd375-bdc3-4c95-b0b2-d4b5f3d4b39f" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-09a2d8eb-3a14-4df9-8bbb-4d1653777c28">
+<span class="eqno">(13)<a class="headerlink" href="#equation-09a2d8eb-3a14-4df9-8bbb-4d1653777c28" title="Permalink to this equation">¶</a></span>\[\begin{align}
 p(\mathbf{z}_i|\mathbf{x}_i,q_i=c,\mathbf{\theta}) &amp; = \mathcal{N}(\mathbf{z}_i|\mathbf{m}_{ic},\mathbf{\Sigma}_{ic}) \tag{12.18} \\
 \mathbf{\Sigma}_{ic} &amp;=(\mathbf{I}_L+\mathbf{W}_c^T\mathbf{\Psi}_c^{-1}\mathbf{W}_c)^{-1} \tag{12.19} \\
 \mathbf{m}_{ic} &amp;= \mathbf{\Sigma}_{ic}(\mathbf{W}_c^T\mathbf{\Psi}_c^{-1}(\mathbf{x}_i-\mathbf{\mu}_c)) \tag{12.20}
@@ -482,16 +486,36 @@ J(\mathbf{W},\mathbf{Z})=||\mathbf{X}-\mathbf{WZ}^T||^2_F \tag{12.27}
               </div>
               
         
-        <div class='prev-next-bottom'>
             
-    <a class='left-prev' id="prev-link" href="11.MixtureModelandEMAlgorithm.html" title="previous page">11 混合模型与EM算法</a>
-    <a class='right-next' id="next-link" href="13.SparseLinearModel.html" title="next page">13 稀疏线性模型</a>
 
-        </div>
+
+
+<div class='prev-next-bottom'>
+    
+    <div id="prev">
+        <a class="left-prev" href="11.MixtureModelandEMAlgorithm.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">11 混合模型与EM算法</p>
+            </div>
+        </a>
+    </div>
+     <div id="next">
+        <a class="right-next" href="13.SparseLinearModel.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title">13 稀疏线性模型</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
+
+</div>
         
         </div>
     </div>
-    <footer class="footer mt-5 mt-md-0">
+    <footer class="footer">
     <div class="container">
       <p>
         

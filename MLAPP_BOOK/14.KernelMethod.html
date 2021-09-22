@@ -23,7 +23,7 @@
 
     
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/sphinx-book-theme.e8e5499552300ddf5d7adccae7cc3b70.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.e2363ea40746bee74734a24ffefccd78.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
@@ -42,15 +42,15 @@
     <script src="../_static/copybutton.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
-    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
         const thebe_selector_input = "pre"
         const thebe_selector_output = ".output"
     </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="15 高斯过程" href="15.GaussianProcesses.html" />
@@ -73,6 +73,10 @@
         <div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="../index.html">
       
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
       <img src="../_static/logo.png" class="logo" alt="logo">
       
       
@@ -82,7 +86,7 @@
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
         <ul class="nav bd-sidenav">
  <li class="toctree-l1">
@@ -306,7 +310,7 @@
             <div class="tocsection onthispage pt-5 pb-3">
                 <i class="fas fa-list"></i> Contents
             </div>
-            <nav id="bd-toc-nav">
+            <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id2">
@@ -320,7 +324,7 @@
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#rbf">
-     14.2.1 RBF核
+     14.2.1 RBF 核
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -330,7 +334,7 @@
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id5">
-     14.2.3 梅塞(正定)核
+     14.2.3 梅塞（正定）核
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -373,116 +377,114 @@
                 
   <div class="section" id="id1">
 <h1>14 核方法<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
-<p>[原文] <a class="reference external" href="https://probml.github.io/pml-book/book0.html">https://probml.github.io/pml-book/book0.html</a></p>
-<p>[作者] <a class="reference external" href="https://www.cs.ubc.ca/~murphyk/">Kevin Patrick Murphy</a></p>
-<style>p{text-indent:2em;2}</style>
+<style>p {text-indent:2em;2}</style>
 <div class="section" id="id2">
 <h2>14.1 引言<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<p>截止目前，对于那些我们希望进行分类、聚类或者以任何其他方式处理的对象而言，都假设它们可以被一个固定长度的向量表示，即<span class="math notranslate nohighlight">\(\mathbf{x}_i \in \mathbb{R}^D\)</span>。然而，对于某些类型的目标，我们并不清楚如何以一个固定长度的向量表示它。比如说，我们如何表示诸如一个文本文件或者蛋白质序列的具备不定长度的目标？或者一个具备复杂<span class="math notranslate nohighlight">\(3d\)</span>结构的分子结构？或者一个具备不定长度和形状的进化树？</p>
-<p>一种解决这类问题的方法是针对数据建立一个生成式模型，然后使用推理得到的潜在表示和（或者）模型的参数作为特征，并将这些特征用于其他标准的方法中。举例来说，在第28章，我们会介绍深度学习，它是一种可以学习很好的特征表示的无监督方法。</p>
-<p>另一种方法是假设我们有一些衡量对象之间相似度的方法，在这种方法中，我们不需要将对象处理成向量形式。举例来说，当我们比较字符串时，我们可以比较它们之间的编辑距离。令<span class="math notranslate nohighlight">\(\kappa(\mathbf{x},\mathbf{x}^\prime)\ge0\)</span>为目标<span class="math notranslate nohighlight">\(\mathbf{x},\mathbf{x}^\prime\in\chi\)</span>的某种相似度测量，其中<span class="math notranslate nohighlight">\(\chi\)</span>是某个抽象的空间，我们称<span class="math notranslate nohighlight">\(\kappa\)</span>为一个<strong>核函数(kernel function)</strong>。需要注意的是，此处的”核(kernel)”可以表示几种含义，我们会在14.7.1节介绍一种不同的解释。</p>
-<p>本章，我们将介绍几种核函数。然后描述几种算法，这些算法可以写成只需要核函数计算的形式。当我们无法（或者选择不去这么做）深入对象<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>内部时（译者注：即我们并不关心或者无法将对象<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>以固定长度表示），这种方法可以被使用。</p>
+<p>截止目前，对于那些我们希望进行分类、聚类或者以任何其他方式处理的对象而言，都假设它们可以被一个固定长度的向量表示，即 <span class="math notranslate nohighlight">\(\mathbf {x}_i \in \mathbb {R}^D\)</span>。然而，对于某些类型的目标，我们并不清楚如何以一个固定长度的向量表示它。比如说，我们如何表示诸如一个文本文件或者蛋白质序列的具备不定长度的目标？或者一个具备复杂 3D 结构的分子结构？或者一个具备不定长度和形状的进化树？</p>
+<p>一种解决这类问题的方法是针对数据建立一个生成式模型，然后使用推理得到的潜在表示和（或者）模型的参数作为特征，并将这些特征用于其他标准的方法中。举例来说，在第 28 章，我们会介绍深度学习，它是一种可以学习很好的特征表示的无监督方法。</p>
+<p>另一种方法是假设我们有一些衡量对象之间相似度的方法，在这种方法中，我们不需要将对象处理成向量形式。举例来说，当我们比较字符串时，我们可以比较它们之间的编辑距离。令 <span class="math notranslate nohighlight">\(\kappa (\mathbf {x},\mathbf {x}^\prime)\ge0\)</span> 为目标 <span class="math notranslate nohighlight">\(\mathbf {x},\mathbf {x}^\prime\in\chi\)</span> 的某种相似度测量，其中 <span class="math notranslate nohighlight">\(\chi\)</span> 是某个抽象的空间，我们称 <span class="math notranslate nohighlight">\(\kappa\)</span> 为一个<strong>核函数 (kernel function)</strong>。需要注意的是，此处的 “核 (kernel)” 可以表示几种含义，我们会在 14.7.1 节介绍一种不同的解释。</p>
+<p>本章，我们将介绍几种核函数。然后描述几种算法，这些算法可以写成只需要核函数计算的形式。当我们无法（或者选择不去这么做）深入对象 <span class="math notranslate nohighlight">\(\mathbf {x}\)</span> 内部时（译者注：即我们并不关心或者无法将对象 <span class="math notranslate nohighlight">\(\mathbf {x}\)</span> 以固定长度表示），这种方法可以被使用。</p>
 </div>
 <div class="section" id="id3">
 <h2>14.2 核函数<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
-<p>我们定义一个**核函数(kernel function)**为关于两个参数的实数函数，即<span class="math notranslate nohighlight">\(\kappa(\mathbf{x},\mathbf{x}^\prime)\in\mathbb{R}\)</span>,其中<span class="math notranslate nohighlight">\(\mathbf{x},\mathbf{x}^\prime\in\chi\)</span>。其中核函数满足对称性(<span class="math notranslate nohighlight">\(\kappa(\mathbf{x},\mathbf{x}^\prime)=\kappa(\mathbf{x}^\prime,\mathbf{x})\)</span>)，非负性(<span class="math notranslate nohighlight">\(\kappa(\mathbf{x},\mathbf{x}^\prime)\ge 0\)</span>)，所以它可以解释为相似度的衡量，但这种解释并非必须的要求。我们将在下文给出几个例子。</p>
+<p>我们定义一个 <strong>核函数（ kernel function ）</strong> 为关于两个参数的实函数，即 <span class="math notranslate nohighlight">\(\kappa (\mathbf {x},\mathbf {x}^\prime)\in\mathbb {R}\)</span>, 其中 <span class="math notranslate nohighlight">\(\mathbf {x},\mathbf {x}^\prime\in\chi\)</span>。核函数满足对称性（ <span class="math notranslate nohighlight">\(\kappa (\mathbf {x},\mathbf {x}^\prime)=\kappa (\mathbf {x}^\prime,\mathbf {x})\)</span> ），非负性（ <span class="math notranslate nohighlight">\(\kappa (\mathbf {x},\mathbf {x}^\prime)\ge 0\)</span> ），所以可以被解释为相似性的衡量，但这种解释并非必须的要求。下文会给出几个例子。</p>
 <div class="section" id="rbf">
-<h3>14.2.1 RBF核<a class="headerlink" href="#rbf" title="Permalink to this headline">¶</a></h3>
-<p>**平方指数核(squared exponential kernel, SE)<strong>或者</strong>高斯核(Gaussian kernel)**定义为：
+<h3>14.2.1 RBF 核<a class="headerlink" href="#rbf" title="Permalink to this headline">¶</a></h3>
+<p><strong>平方指数核（ squared exponential kernel, SE ）</strong> 或者 <strong>高斯核（ Gaussian kernel ）</strong> 定义为：</p>
+<div class="math notranslate nohighlight">
+\[
+\kappa (\mathbf {x},\mathbf {x}^\prime)=\exp\left (-\frac {1}{2}(\mathbf {x}-\mathbf {x}^\prime)^T\mathbf {\Sigma}^{-1}(\mathbf {x}-\mathbf {x}^\prime)\right) \tag {14.1}
+\]</div>
+<p>如果 <span class="math notranslate nohighlight">\(\mathbf {\Sigma}\)</span> 是对角矩阵，上式可以被写成：</p>
+<div class="math notranslate nohighlight">
+\[
+\kappa (\mathbf {x},\mathbf {x}^\prime)=\exp\left (-\frac {1}{2}\sum_{j=1}^{D}\frac {1}{\sigma_j^2}(x_j-x_j^\prime)^2\right) \tag {14.2}
+\]</div>
+<p>可以将 <span class="math notranslate nohighlight">\(\sigma_j\)</span> 解释为维度 <span class="math notranslate nohighlight">\(j\)</span> 的 <strong>特征长度尺度（ characteristic length scale）</strong>。如果 <span class="math notranslate nohighlight">\(\sigma_j=\infty\)</span>，则对应的维度将被忽略；所以这又被称为<strong>ARD kernel</strong>。如果 <span class="math notranslate nohighlight">\(\mathbf {\Sigma}\)</span> 是球状的矩阵，我们可以得到各向同性的核函数
 $<span class="math notranslate nohighlight">\(
-\kappa(\mathbf{x},\mathbf{x}^\prime)=\exp\left(-\frac{1}{2}(\mathbf{x}-\mathbf{x}^\prime)^T\mathbf{\Sigma}^{-1}(\mathbf{x}-\mathbf{x}^\prime)\right) \tag{14.1}
+\kappa (\mathbf {x},\mathbf {x}^\prime)=\exp\left (-\frac {||\mathbf {x}-\mathbf {x}^\prime||^2}{2\sigma^2}\right) \tag {14.3}
 \)</span><span class="math notranslate nohighlight">\(
-如果\)</span>\mathbf{\Sigma}<span class="math notranslate nohighlight">\(是对角矩阵，上式可以被写成
-\)</span><span class="math notranslate nohighlight">\(
-\kappa(\mathbf{x},\mathbf{x}^\prime)=\exp\left(-\frac{1}{2}\sum_{j=1}^{D}\frac{1}{\sigma_j^2}(x_j-x_j^\prime)^2\right) \tag{14.2}
-\)</span><span class="math notranslate nohighlight">\(
-我们可以将\)</span>\sigma_j<span class="math notranslate nohighlight">\(解释为维度\)</span>j<span class="math notranslate nohighlight">\(的**特征长度尺度(characteristic length scale)**。如果\)</span>\sigma_j=\infty<span class="math notranslate nohighlight">\(，则对应的维度将被忽略；所以这又被称为**ARD kernel**。如果\)</span>\mathbf{\Sigma}<span class="math notranslate nohighlight">\(是球状的矩阵，我们可以得到各向同性的核函数
-\)</span><span class="math notranslate nohighlight">\(
-\kappa(\mathbf{x},\mathbf{x}^\prime)=\exp\left(-\frac{||\mathbf{x}-\mathbf{x}^\prime||^2}{2\sigma^2}\right) \tag{14.3}
-\)</span><span class="math notranslate nohighlight">\(
-其中\)</span>\sigma^2<span class="math notranslate nohighlight">\(被称为**带宽(bandwidth)**。式14.3是**径向基函数(radial basis function)**或者**RBF**核的一个例子，因为它只是关于\)</span>||\mathbf{x}-\mathbf{x}^\prime||$的函数。</p>
+其中 \)</span>\sigma^2<span class="math notranslate nohighlight">\( 被称为**带宽 (bandwidth)**。式 14.3 是**径向基函数 (radial basis function)**或者**RBF**核的一个例子，因为它只是关于 \)</span>||\mathbf {x}-\mathbf {x}^\prime||$ 的函数。</p>
 </div>
 <div class="section" id="id4">
 <h3>14.2.2 用于比较文本的核<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
-<p>在我们进行文本分类或者检索时，需要有一种衡量两个文本<span class="math notranslate nohighlight">\(\mathbf{x}_i\)</span>和<span class="math notranslate nohighlight">\(\mathbf{x}_j\)</span>相似度的方法。 如果我们使用词袋法对向量进行表示，其中<span class="math notranslate nohighlight">\(x_{ij}\)</span>表示在文本<span class="math notranslate nohighlight">\(i\)</span>中单词<span class="math notranslate nohighlight">\(j\)</span>出现的次数，我们使用<strong>余弦相似度(cosine similarity)</strong>，定义为：
+<p>在我们进行文本分类或者检索时，需要有一种衡量两个文本 <span class="math notranslate nohighlight">\(\mathbf {x}_i\)</span> 和 <span class="math notranslate nohighlight">\(\mathbf {x}_j\)</span> 相似度的方法。 如果我们使用词袋法对向量进行表示，其中 <span class="math notranslate nohighlight">\(x_{ij}\)</span> 表示在文本 <span class="math notranslate nohighlight">\(i\)</span> 中单词 <span class="math notranslate nohighlight">\(j\)</span> 出现的次数，我们使用<strong>余弦相似度 (cosine similarity)</strong>，定义为：
 $<span class="math notranslate nohighlight">\(
-\kappa(\mathbf{x}_i,\mathbf{x}_{i^\prime})=\frac{\mathbf{x}_i^T\mathbf{x}_{i^\prime}}{||\mathbf{x}_i||_2||\mathbf{x}_{i^\prime}||_2} \tag{14.4}
+\kappa (\mathbf {x}_i,\mathbf {x}_{i^\prime})=\frac {\mathbf {x}_i^T\mathbf {x}_{i^\prime}}{||\mathbf {x}_i||_2||\mathbf {x}_{i^\prime}||_2} \tag {14.4}
 \)</span>$</p>
-<p>上式表示向量<span class="math notranslate nohighlight">\(\mathbf{x}_i\)</span>和<span class="math notranslate nohighlight">\(\mathbf{x}_j\)</span>之间的夹角的余弦值。因为<span class="math notranslate nohighlight">\(\mathbf{x}_i\)</span>是一个计数向量（非负），所以余弦相似度的区间为0到1。，其中0表示向量正交，也就是说两个文本之间不存在相同的单词。</p>
-<p>不幸的是，这种方式并不一定有效，原因有二。首先，如果<span class="math notranslate nohighlight">\(\mathbf{x}_i\)</span>与<span class="math notranslate nohighlight">\(\mathbf{x}_{i^\prime}\)</span>之间有相同的单词，那使用这种方式计算出来的结果，肯定说明两个文本是相似的，哪怕相同的单词在大部分文本中都会出现，比如”the”​或者​“and”​，这些单词往往不具备判别性。（这些被称为<strong>停用词(stop words)</strong>）。其次，如果一个具有判别性的单词在文本中出现多次，那么相似度将被人为的提升，尽管单词的使用往往具有<strong>突发性(bursty)</strong>，也就是说一旦一个单词在文本中出现过一次，那么它再次被使用的概率将会很大（见3.5.5节）。</p>
-<p>幸运的是，使用一些预处理的方式，我们可以大幅地提高性能。这种方式使用一种新的特征向量取代单词计数的向量，这种新的向量被称为<strong>逆文档频率(TF-IDF, term frequency inverse documnet frequency)</strong>。该向量定义方式如下，首先，定义频率为计数的函数:
+<p>上式表示向量 <span class="math notranslate nohighlight">\(\mathbf {x}_i\)</span> 和 <span class="math notranslate nohighlight">\(\mathbf {x}_j\)</span> 之间的夹角的余弦值。因为 <span class="math notranslate nohighlight">\(\mathbf {x}_i\)</span> 是一个计数向量（非负），所以余弦相似度的区间为 0 到 1。，其中 0 表示向量正交，也就是说两个文本之间不存在相同的单词。</p>
+<p>不幸的是，这种方式并不一定有效，原因有二。首先，如果 <span class="math notranslate nohighlight">\(\mathbf {x}_i\)</span> 与 <span class="math notranslate nohighlight">\(\mathbf {x}_{i^\prime}\)</span> 之间有相同的单词，那使用这种方式计算出来的结果，肯定说明两个文本是相似的，哪怕相同的单词在大部分文本中都会出现，比如 “the”​或者​“and”​，这些单词往往不具备判别性。（这些被称为<strong>停用词 (stop words)</strong>）。其次，如果一个具有判别性的单词在文本中出现多次，那么相似度将被人为的提升，尽管单词的使用往往具有<strong>突发性 (bursty)</strong>，也就是说一旦一个单词在文本中出现过一次，那么它再次被使用的概率将会很大（见 3.5.5 节）。</p>
+<p>幸运的是，使用一些预处理的方式，我们可以大幅地提高性能。这种方式使用一种新的特征向量取代单词计数的向量，这种新的向量被称为<strong>逆文档频率 (TF-IDF, term frequency inverse documnet frequency)</strong>。该向量定义方式如下，首先，定义频率为计数的函数：
 $<span class="math notranslate nohighlight">\(
-{\rm{tf}}(x_{ij})=\log(1+x_{ij}) \tag{14.5}
+{\rm {tf}}(x_{ij})=\log (1+x_{ij}) \tag {14.5}
 \)</span>$</p>
 <p>通过上述方法，我们可以降低那些在一个文本中出现频率特别高的单词的影响。其次，逆文档频率定义为：
 $<span class="math notranslate nohighlight">\(
-{\rm{idf}}(j)=\log \frac{N}{1+\sum_{i=1}^N \mathbb{I}(x_{ij}&gt;0)} \tag{14.6}
+{\rm {idf}}(j)=\log \frac {N}{1+\sum_{i=1}^N \mathbb {I}(x_{ij}&gt;0)} \tag {14.6}
 \)</span>$</p>
-<p>其中<span class="math notranslate nohighlight">\(N\)</span>表示文档的数量之和，分母表示含单词<span class="math notranslate nohighlight">\(j\)</span>的文档数量的总和。最后定义：
+<p>其中 <span class="math notranslate nohighlight">\(N\)</span> 表示文档的数量之和，分母表示含单词 <span class="math notranslate nohighlight">\(j\)</span> 的文档数量的总和。最后定义：
 $<span class="math notranslate nohighlight">\(
-{\rm{tf}}-{\rm{idf}}(\mathbf{x}_i) \triangleq [{\rm{tf}}(x_{ij}) \times {\rm{idf}}(j)]_{j=1}^V \tag{14.7}
+{\rm {tf}}-{\rm {idf}}(\mathbf {x}_i) \triangleq [{\rm {tf}}(x_{ij}) \times {\rm {idf}}(j)]_{j=1}^V \tag {14.7}
 \)</span>$</p>
-<p>(存在一些其他的方式定义<span class="math notranslate nohighlight">\(\rm{tf}\)</span>和<span class="math notranslate nohighlight">\(\rm{idf}\)</span>，更多细节参考(Manning et al.2008))。基于上述定义，使用余弦相似度，也就是说，新的核函数定义为:
+<p>（存在一些其他的方式定义 <span class="math notranslate nohighlight">\(\rm {tf}\)</span> 和 <span class="math notranslate nohighlight">\(\rm {idf}\)</span>，更多细节参考 (Manning et al.2008))。基于上述定义，使用余弦相似度，也就是说，新的核函数定义为：
 $<span class="math notranslate nohighlight">\(
-\kappa(\mathbf{x}_i,\mathbf{x}_{i^\prime})=\frac{\mathbf{\phi}(\mathbf{x}_i)^T\mathbf{\phi}(\mathbf{x}_{i^\prime})}{\left \| \mathbf{\phi}(\mathbf{x}_i) \right \|_2 \left \| \mathbf{\phi}(\mathbf{x}_{i^\prime}) \right \|_2} \tag{14.8}
+\kappa (\mathbf {x}_i,\mathbf {x}_{i^\prime})=\frac {\mathbf {\phi}(\mathbf {x}_i)^T\mathbf {\phi}(\mathbf {x}_{i^\prime})}{\left \| \mathbf {\phi}(\mathbf {x}_i) \right \|_2 \left \| \mathbf {\phi}(\mathbf {x}_{i^\prime}) \right \|_2} \tag {14.8}
 \)</span><span class="math notranslate nohighlight">\(
-其中\)</span>\mathbf{\phi}(\mathbf{x})={\rm{tf-idf}}(\mathbf{x})$。该方式在信息检索领域十分有效。</p>
-<p>关于<span class="math notranslate nohighlight">\(\rm{tf-idf}\)</span>核的概率解释可参考(Elkan 2005)。</p>
+其中 \)</span>\mathbf {\phi}(\mathbf {x})={\rm {tf-idf}}(\mathbf {x})$。该方式在信息检索领域十分有效。</p>
+<p>关于 <span class="math notranslate nohighlight">\(\rm {tf-idf}\)</span> 核的概率解释可参考 (Elkan 2005)。</p>
 </div>
 <div class="section" id="id5">
-<h3>14.2.3 梅塞(正定)核<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
-<p>在我们研究的一些方法中，需要核函数满足：对于输入<span class="math notranslate nohighlight">\(\{\mathbf{x}_i\}_{i=1}^N\)</span>的任意子集，格拉姆(Gram)矩阵为正定矩阵，矩阵定义为：
+<h3>14.2.3 梅塞（正定）核<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>在我们研究的一些方法中，需要核函数满足：对于输入 <span class="math notranslate nohighlight">\(\{\mathbf {x}_i\}_{i=1}^N\)</span> 的任意子集，格拉姆 (Gram) 矩阵为正定矩阵，矩阵定义为：
 $<span class="math notranslate nohighlight">\(
-\rm{\mathbf{K}}= \begin{pmatrix}\kappa(\mathbf{x}_1,\mathbf{x}_1) &amp; \cdots &amp; \kappa(\mathbf{x}_1,\mathbf{x}_N) \\&amp; \vdots \\\kappa(\mathbf{x}_N,\mathbf{x}_1) &amp; \cdots &amp; \kappa(\mathbf{x}_N,\mathbf{x}_N)\end{pmatrix} \tag{14.9}
+\rm {\mathbf {K}}= \begin {pmatrix}\kappa (\mathbf {x}_1,\mathbf {x}_1) &amp; \cdots &amp; \kappa (\mathbf {x}_1,\mathbf {x}_N) \\&amp; \vdots \\\kappa (\mathbf {x}_N,\mathbf {x}_1) &amp; \cdots &amp; \kappa (\mathbf {x}_N,\mathbf {x}_N)\end {pmatrix} \tag {14.9}
 \)</span>$
-我们称这样的核为**梅塞(Mercer)<strong>核,或者</strong>正定(positive definite)**核。结果表明(Schoelkopf and Smola 2002)，高斯核和余弦相似度核都是梅塞核(Sahami and Heilman 2006)。</p>
-<p>梅塞核的重要性在于<strong>梅塞理论(Mercer’s theorem)</strong>。如果格拉姆矩阵为正定矩阵，我们可以计算它的特征向量分解：
+我们称这样的核为**梅塞 (Mercer)<strong>核，或者</strong>正定 (positive definite)**核。结果表明 (Schoelkopf and Smola 2002)，高斯核和余弦相似度核都是梅塞核 (Sahami and Heilman 2006)。</p>
+<p>梅塞核的重要性在于<strong>梅塞理论 (Mercer’s theorem)</strong>。如果格拉姆矩阵为正定矩阵，我们可以计算它的特征向量分解：
 $<span class="math notranslate nohighlight">\(
-\mathbf{K}=\mathbf{U}^T\mathbf{\Lambda}\mathbf{U} \tag{14.10}
+\mathbf {K}=\mathbf {U}^T\mathbf {\Lambda}\mathbf {U} \tag {14.10}
 \)</span><span class="math notranslate nohighlight">\(
-其中\)</span>\mathbf{\Lambda}<span class="math notranslate nohighlight">\(为对角矩阵，对角线元素为奇异值\)</span>\lambda_i\gt0<span class="math notranslate nohighlight">\(。现在考虑\)</span>\mathbf{K}<span class="math notranslate nohighlight">\(中的一个元素:
+其中 \)</span>\mathbf {\Lambda}<span class="math notranslate nohighlight">\( 为对角矩阵，对角线元素为奇异值 \)</span>\lambda_i\gt0<span class="math notranslate nohighlight">\(。现在考虑 \)</span>\mathbf {K}<span class="math notranslate nohighlight">\( 中的一个元素：
 \)</span><span class="math notranslate nohighlight">\(
-k_{ij}=(\mathbf{\Lambda}^{\frac{1}{2}}\mathbf{U}_{:,i})^T(\mathbf{\Lambda}^{\frac{1}{2}}\mathbf{U}_{:,j}) \tag{14.11}
+k_{ij}=(\mathbf {\Lambda}^{\frac {1}{2}}\mathbf {U}_{:,i})^T (\mathbf {\Lambda}^{\frac {1}{2}}\mathbf {U}_{:,j}) \tag {14.11}
 \)</span><span class="math notranslate nohighlight">\(
-定义\)</span>\mathbf{\phi}(\mathbf{x}<em>i)=\mathbf{\Lambda}^{\frac{1}{2}}\mathbf{U}</em>{:,i}<span class="math notranslate nohighlight">\(。则上式可以写成:
+定义 \)</span>\mathbf {\phi}(\mathbf {x}<em>i)=\mathbf {\Lambda}^{\frac {1}{2}}\mathbf {U}</em>{:,i}<span class="math notranslate nohighlight">\(。则上式可以写成：
 \)</span><span class="math notranslate nohighlight">\(
-k_{ij}=\mathbf{\phi}(\mathbf{x}_i)^T\mathbf{\phi}(\mathbf{x}_j) \tag{14.12}
+k_{ij}=\mathbf {\phi}(\mathbf {x}_i)^T\mathbf {\phi}(\mathbf {x}_j) \tag {14.12}
 \)</span><span class="math notranslate nohighlight">\(
-所以我们发现，核矩阵中的元素可以通过计算某个特征向量之间的内积得到，这些向量本质上通过特征向量\)</span>\mathbf{U}<span class="math notranslate nohighlight">\(定义。事实上，对于梅塞核而言，必然存在一个函数\)</span>\mathbf{\phi}<span class="math notranslate nohighlight">\(将\)</span>\mathbf{x}\in{\chi}<span class="math notranslate nohighlight">\(映射到空间\)</span>\mathbb{R}^D<span class="math notranslate nohighlight">\(，从而使得:
+所以我们发现，核矩阵中的元素可以通过计算某个特征向量之间的内积得到，这些向量本质上通过特征向量 \)</span>\mathbf {U}<span class="math notranslate nohighlight">\( 定义。事实上，对于梅塞核而言，必然存在一个函数 \)</span>\mathbf {\phi}<span class="math notranslate nohighlight">\( 将 \)</span>\mathbf {x}\in {\chi}<span class="math notranslate nohighlight">\( 映射到空间 \)</span>\mathbb {R}^D<span class="math notranslate nohighlight">\(，从而使得：
 \)</span><span class="math notranslate nohighlight">\(
-k(\mathbf{x},\mathbf{x}^\prime)=\mathbf{\phi}(\mathbf{x})^T\mathbf{\phi}(\mathbf{x}^\prime) \tag{14.13}
+k (\mathbf {x},\mathbf {x}^\prime)=\mathbf {\phi}(\mathbf {x})^T\mathbf {\phi}(\mathbf {x}^\prime) \tag {14.13}
 \)</span><span class="math notranslate nohighlight">\(
-其中\)</span>\phi<span class="math notranslate nohighlight">\(取决于\)</span>\kappa<span class="math notranslate nohighlight">\(的特征方程式(所以\)</span>D<span class="math notranslate nohighlight">\(本质上是无穷维度的空间)。
-举例来说，考虑一个(非定常)的**多项式核(polynomial kernel)**\)</span>\kappa(\mathbf{x},\mathbf{x}^\prime)=(\gamma\mathbf{x}^T\mathbf{x}^\prime+r)^M<span class="math notranslate nohighlight">\(，其中\)</span>r\gt0<span class="math notranslate nohighlight">\(。我们发现对应的特征向量\)</span>\phi(\mathbf{x})<span class="math notranslate nohighlight">\(包含所有阶数的项。比如，对于\)</span>M=2,\gamma=r=1<span class="math notranslate nohighlight">\(，且\)</span>\mathbf{x},\mathbf{x}^\prime \in \mathbb{R}^2<span class="math notranslate nohighlight">\(，我们有:
-\)</span>$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6ef5b277-4127-46c9-b985-28391726a425">
-<span class="eqno">(20)<a class="headerlink" href="#equation-6ef5b277-4127-46c9-b985-28391726a425" title="Permalink to this equation">¶</a></span>\[\begin{align}(1+\mathbf{x}^T\mathbf{x}^\prime)^2 &amp; = (1+x_1x_1^\prime+x_2x_2^\prime)^2 \tag{14.14} \\&amp; = 1+ 2x_1x_1^\prime + 2x_2x_2^\prime + (x_1x_1^\prime)^2 + (x_2x_2^\prime)^2 + 2x_1x_1^\prime x_2x_2^\prime \tag{14.15} \end{align}\]</div>
-<div class="math notranslate nohighlight">
-\[
-上式可以写成$\phi(\mathbf{x})^T\phi(\mathbf{x^\prime})$的形式,其中
-\]</div>
-<p>\mathbf{\phi}(\mathbf{x})=[1, \sqrt{2}x_1,\sqrt{2}x_2,x_1^2, x_2^2, \sqrt{2}x_1x_2]^T \tag{14.16}
-$$
-所以使用该核等价于在一个6维空间中进行相似度度量。对于一个高斯核，则对应一个无穷维度的空间。在这种情况下，显然没有办法明确的表示出特征向量。</p>
-<p>另一个非梅塞核的例子为<strong>sigmoid</strong>核，定义为:
-$<span class="math notranslate nohighlight">\(
-\kappa(\mathbf{x},\mathbf{x}^\prime)={\rm{tanh}}(\gamma\mathbf{x}^T\mathbf{x}^\prime+r) \tag{14.17}
+其中 \)</span>\phi<span class="math notranslate nohighlight">\( 取决于 \)</span>\kappa<span class="math notranslate nohighlight">\( 的特征方程式（所以 \)</span>D<span class="math notranslate nohighlight">\( 本质上是无穷维度的空间）。
+举例来说，考虑一个（非定常）的**多项式核 (polynomial kernel)**\)</span>\kappa (\mathbf {x},\mathbf {x}^\prime)=(\gamma\mathbf {x}^T\mathbf {x}^\prime+r)^M<span class="math notranslate nohighlight">\(，其中 \)</span>r\gt0<span class="math notranslate nohighlight">\(。我们发现对应的特征向量 \)</span>\phi (\mathbf {x})<span class="math notranslate nohighlight">\( 包含所有阶数的项。比如，对于 \)</span>M=2,\gamma=r=1<span class="math notranslate nohighlight">\(，且 \)</span>\mathbf {x},\mathbf {x}^\prime \in \mathbb {R}^2<span class="math notranslate nohighlight">\(，我们有：
+\)</span><span class="math notranslate nohighlight">\(
+\begin {align}(1+\mathbf {x}^T\mathbf {x}^\prime)^2 &amp; = (1+x_1x_1^\prime+x_2x_2^\prime)^2 \tag {14.14} \\&amp; = 1+ 2x_1x_1^\prime + 2x_2x_2^\prime + (x_1x_1^\prime)^2 + (x_2x_2^\prime)^2 + 2x_1x_1^\prime x_2x_2^\prime \tag {14.15} \end {align}
+\)</span><span class="math notranslate nohighlight">\(
+上式可以写成 \)</span>\phi (\mathbf {x})^T\phi (\mathbf {x^\prime})<span class="math notranslate nohighlight">\( 的形式，其中
+\)</span><span class="math notranslate nohighlight">\(
+\mathbf {\phi}(\mathbf {x})=[1, \sqrt {2} x_1,\sqrt {2} x_2,x_1^2, x_2^2, \sqrt {2} x_1x_2]^T \tag {14.16}
 \)</span>$
-(需要注意的是尽管它被称为sigmoid核，但使用的却是tanh函数)。这个核的灵感来自于多层感知机(见16.5节)，但是没有真正的理由使用它。(15.4.5节将介绍一个真正的正定的“神经网络核”)</p>
-<p>通常情况下，构造一个梅塞核是十分困难的，需要泛函分析的相关技术。然而，基于一些简单形式的核，并且使用一些标准的规则，则有可能构建一个新的梅塞核。举例来说，如果<span class="math notranslate nohighlight">\(\kappa_1\)</span>和<span class="math notranslate nohighlight">\(\kappa_2\)</span>都是梅塞核，那么<span class="math notranslate nohighlight">\(\kappa(\mathbf{x},\mathbf{x}^\prime)=\kappa_1(\mathbf{x},\mathbf{x}^\prime)+\kappa_2(\mathbf{x},\mathbf{x}^\prime)\)</span>也是一个梅塞核。</p>
+所以使用该核等价于在一个 6 维空间中进行相似度度量。对于一个高斯核，则对应一个无穷维度的空间。在这种情况下，显然没有办法明确的表示出特征向量。</p>
+<p>另一个非梅塞核的例子为<strong>sigmoid</strong>核，定义为：
+$<span class="math notranslate nohighlight">\(
+\kappa (\mathbf {x},\mathbf {x}^\prime)={\rm {tanh}}(\gamma\mathbf {x}^T\mathbf {x}^\prime+r) \tag {14.17}
+\)</span>$
+（需要注意的是尽管它被称为 sigmoid 核，但使用的却是 tanh 函数）。这个核的灵感来自于多层感知机（见 16.5 节），但是没有真正的理由使用它。(15.4.5 节将介绍一个真正的正定的 “神经网络核”)</p>
+<p>通常情况下，构造一个梅塞核是十分困难的，需要泛函分析的相关技术。然而，基于一些简单形式的核，并且使用一些标准的规则，则有可能构建一个新的梅塞核。举例来说，如果 <span class="math notranslate nohighlight">\(\kappa_1\)</span> 和 <span class="math notranslate nohighlight">\(\kappa_2\)</span> 都是梅塞核，那么 <span class="math notranslate nohighlight">\(\kappa (\mathbf {x},\mathbf {x}^\prime)=\kappa_1 (\mathbf {x},\mathbf {x}^\prime)+\kappa_2 (\mathbf {x},\mathbf {x}^\prime)\)</span> 也是一个梅塞核。</p>
 </div>
 <div class="section" id="id6">
 <h3>14.2.4 线性核<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
-<p>通常情况下，由一个核推导出特征向量是相当困难的，而且只有在梅塞核的前提下才有可能。然而，基于特征向量推导一个核却是容易的，我们只需要对向量进行内积，即:
+<p>通常情况下，由一个核推导出特征向量是相当困难的，而且只有在梅塞核的前提下才有可能。然而，基于特征向量推导一个核却是容易的，我们只需要对向量进行内积，即：
 $<span class="math notranslate nohighlight">\(
-\kappa(\mathbf{x},\mathbf{x}^\prime)=\phi(\mathbf{x})^T\phi(\mathbf{x}^\prime)=\left\langle \phi(\mathbf{x}),\phi(\mathbf{x}^\prime) \right\rangle \tag{14.18}
+\kappa (\mathbf {x},\mathbf {x}^\prime)=\phi (\mathbf {x})^T\phi (\mathbf {x}^\prime)=\left\langle \phi (\mathbf {x}),\phi (\mathbf {x}^\prime) \right\rangle \tag {14.18}
 \)</span><span class="math notranslate nohighlight">\(
-如果\)</span>\phi(\mathbf{x})=\mathbf{x}<span class="math notranslate nohighlight">\(，我们将得到一个**线性核(linear kernel)**:
+如果 \)</span>\phi (\mathbf {x})=\mathbf {x}<span class="math notranslate nohighlight">\(，我们将得到一个**线性核 (linear kernel)**:
 \)</span><span class="math notranslate nohighlight">\(
-\kappa(\mathbf{x},\mathbf{x}^\prime)=\mathbf{x}^T\mathbf{x}^\prime \tag{14.19}
+\kappa (\mathbf {x},\mathbf {x}^\prime)=\mathbf {x}^T\mathbf {x}^\prime \tag {14.19}
 \)</span>$
 当原始的数据本身已经具备很高的维度时，线性核将十分有用。也就是说，如果原始的特征向量的单个维度可以提供足够的信息，比如说，在词库量巨大的情况下的通过词袋法得到的向量，或者大量基因的表达水平。在这种情况下，决策边界很有可能是原始特征向量的线性组合，而没有必要在其他空间对数据进行处理。</p>
-<p>当然，并不是所有的高维数据都是线性可分的。比如说，图片是高维数据，但单个像素并不能提供有价值的信息，所以在图片分类领域中一般使用非线性核(见14.2.7节)。</p>
+<p>当然，并不是所有的高维数据都是线性可分的。比如说，图片是高维数据，但单个像素并不能提供有价值的信息，所以在图片分类领域中一般使用非线性核（见 14.2.7 节）。</p>
 </div>
 <div class="section" id="matern">
 <h3>14.2.5 Matern 核<a class="headerlink" href="#matern" title="Permalink to this headline">¶</a></h3>
@@ -522,16 +524,36 @@ $<span class="math notranslate nohighlight">\(
               </div>
               
         
-        <div class='prev-next-bottom'>
             
-    <a class='left-prev' id="prev-link" href="13.SparseLinearModel.html" title="previous page">13 稀疏线性模型</a>
-    <a class='right-next' id="next-link" href="15.GaussianProcesses.html" title="next page">15 高斯过程</a>
 
-        </div>
+
+
+<div class='prev-next-bottom'>
+    
+    <div id="prev">
+        <a class="left-prev" href="13.SparseLinearModel.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">13 稀疏线性模型</p>
+            </div>
+        </a>
+    </div>
+     <div id="next">
+        <a class="right-next" href="15.GaussianProcesses.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title">15 高斯过程</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
+
+</div>
         
         </div>
     </div>
-    <footer class="footer mt-5 mt-md-0">
+    <footer class="footer">
     <div class="container">
       <p>
         
