@@ -94,7 +94,7 @@
         <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../intro.html">
-   Machine Learning ：A Probabilistic Perspective
+   封面
   </a>
  </li>
 </ul>
@@ -507,8 +507,8 @@ p(X_{1:T})=p(X_1)p(X_2|X_1)p(X_3|X_2)...=p(X_1)\prod_{t=2}^Tp(X_t|X_{t-1})\tag{1
 <p>一个静态的(参数共享)，有限状态(观测值离散)的马尔科夫链等价于一个<strong>随机自动机</strong>(stochastic automaton)。通常情况下我们会使用一个有向图来可视化这样的自动机，其中节点代表状态，箭头代表合法的状态转移(对应于矩阵 <span class="math notranslate nohighlight">\(\bf{A}\)</span> 中的非零元素)。该有向图被称为<strong>状态转移图</strong>(state transition diagram)。图中每一条弧线对应的权重代表转移的概率值。举例来说，图17.1(左)表示了一个 <span class="math notranslate nohighlight">\(2-\rm{state}\)</span> 马尔科夫链:
 $$
 \mathbf{A}=</p>
-<div class="amsmath math notranslate nohighlight" id="equation-bbd38b6e-8b1a-4995-a825-64ea9c12b89c">
-<span class="eqno">(20)<a class="headerlink" href="#equation-bbd38b6e-8b1a-4995-a825-64ea9c12b89c" title="Permalink to this equation">¶</a></span>\[\begin{pmatrix}
+<div class="amsmath math notranslate nohighlight" id="equation-5ab6cc31-7fd6-4f6e-a128-0e4f1942fe00">
+<span class="eqno">(20)<a class="headerlink" href="#equation-5ab6cc31-7fd6-4f6e-a128-0e4f1942fe00" title="Permalink to this equation">¶</a></span>\[\begin{pmatrix}
 1-\alpha &amp; \alpha \\
 \beta &amp; 1-\beta
 \end{pmatrix}\]</div>
@@ -517,8 +517,8 @@ $$
 图17.1(右)表示了一个 $3-\rm{state}$ 的马尔科夫链:
 \]</div>
 <p>\mathbf{A}=</p>
-<div class="amsmath math notranslate nohighlight" id="equation-361c3f3b-de67-45c6-af34-371b3c11ed35">
-<span class="eqno">(21)<a class="headerlink" href="#equation-361c3f3b-de67-45c6-af34-371b3c11ed35" title="Permalink to this equation">¶</a></span>\[\begin{pmatrix}
+<div class="amsmath math notranslate nohighlight" id="equation-e32ebd7e-5a0a-4117-915c-b3717eebdcbe">
+<span class="eqno">(21)<a class="headerlink" href="#equation-e32ebd7e-5a0a-4117-915c-b3717eebdcbe" title="Permalink to this equation">¶</a></span>\[\begin{pmatrix}
 A_{11} &amp; A_{12} &amp; 0 \\
 0 &amp; A_{22} &amp; A_{23} \\
 0 &amp; 0 &amp; 1 
@@ -660,8 +660,8 @@ p(z_t=j|\mathbf{x}_{1:t-1})=\sum_{i}p(z_t=j|z_{t-1}=i)p(z_{t-1}|\mathbf{x}_{1:t-
 \)</span><span class="math notranslate nohighlight">\(
 接下来是更新步骤，在这个步骤中，我们使用贝叶斯法则将 \)</span>t<span class="math notranslate nohighlight">\( 时刻的观测值吸收进来：
 \)</span>$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-aaa11260-7fa8-4b67-b5d7-81a08d88d407">
-<span class="eqno">(22)<a class="headerlink" href="#equation-aaa11260-7fa8-4b67-b5d7-81a08d88d407" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-aaaec691-97ce-4b09-b0da-b3d04adf92a7">
+<span class="eqno">(22)<a class="headerlink" href="#equation-aaaec691-97ce-4b09-b0da-b3d04adf92a7" title="Permalink to this equation">¶</a></span>\[\begin{align}
 \alpha_t(j)  &amp; \triangleq p(z_t=j|\mathbf{x}_{1:t})=p(z_t=j|\mathbf{x}_t,\mathbf{x}_{1:t-1}) \tag{17.45} \\
 &amp; = \frac{1}{Z_t}p(\mathbf{x}_t|z_t=j,\cancel{\mathbf{x_{1:t-1}}})p(z_t=j|\mathbf{x}_{1:t-1}) \tag{17.46}
 \end{align}\]</div>

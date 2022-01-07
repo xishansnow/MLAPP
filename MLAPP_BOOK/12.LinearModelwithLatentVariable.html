@@ -94,7 +94,7 @@
         <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../intro.html">
-   Machine Learning ：A Probabilistic Perspective
+   封面
   </a>
  </li>
 </ul>
@@ -406,8 +406,8 @@ figure 12.1
 <h3>12.1.1 FA是MVN的一个低秩版的参数化<a class="headerlink" href="#famvn" title="Permalink to this headline">¶</a></h3>
 <p>FA可以认为是一种使用较少参数来描述变量<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>的联合分布的方式。为了说明这一点，根据式4.126，推导出来的边缘分布<span class="math notranslate nohighlight">\(p(\mathbf{x}_i|\mathbf{\theta})\)</span>是一个高斯分布：
 $$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0b51e280-a134-4e5e-a6b1-83f1b50da76d">
-<span class="eqno">(8)<a class="headerlink" href="#equation-0b51e280-a134-4e5e-a6b1-83f1b50da76d" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-1a91934b-887d-4d63-b7ca-c8ece2e6875b">
+<span class="eqno">(8)<a class="headerlink" href="#equation-1a91934b-887d-4d63-b7ca-c8ece2e6875b" title="Permalink to this equation">¶</a></span>\[\begin{align}
 p(\mathbf{x}_i|\mathbf{\theta}) &amp; =\int\mathcal{N}(\mathbf{x}_i|\mathbf{W}\mathbf{z}_i+\mathbf{\mu},\mathbf{\Psi})\mathcal{N}(\mathbf{z}_i|\mathbf{\mu}_0,\mathbf{\Sigma}_0)d\mathbf{z}_i  \tag{12.3} \\ 
 &amp; = \mathcal{N}(\mathbf{x}_i|\mathbf{W}\mathbf{\mu}_0+\mathbf{\mu},\mathbf{\Psi}+\mathbf{W}\mathbf{\Sigma}_0\mathbf{W}^T) \tag{12.4}
 \end{align}\]</div>
@@ -428,8 +428,8 @@ $<span class="math notranslate nohighlight">\(
 <h3>12.1.2 隐藏因子的推理<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <p>尽管FA只是被认为是一种定义关于变量<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>概率分布的方式，但我们经常使用它，是因为我们希望隐藏因子<span class="math notranslate nohighlight">\(\mathbf{z}\)</span>可以揭露一些关于数据的有趣的规律。为了实现这一点，我们需要计算关于隐藏因子的后验分布。基于贝叶斯法则，可以得出：
 $$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1b1cf188-4aec-4737-ad2d-81e7a7bda086">
-<span class="eqno">(9)<a class="headerlink" href="#equation-1b1cf188-4aec-4737-ad2d-81e7a7bda086" title="Permalink to this equation">¶</a></span>\[\begin{alignat}{3}
+<div class="amsmath math notranslate nohighlight" id="equation-7f1dac80-7e2e-45d6-869e-3083806d6502">
+<span class="eqno">(9)<a class="headerlink" href="#equation-7f1dac80-7e2e-45d6-869e-3083806d6502" title="Permalink to this equation">¶</a></span>\[\begin{alignat}{3}
 p(\mathbf{z}_i|\mathbf{x}_i,\mathbf{\theta}) &amp; =  \mathcal{N}(\mathbf{z}_i|\mathbf{m}_i,\mathbf{\Sigma}_i)   \tag{12.7} \\
 \mathbf{\Sigma}_i   &amp; \triangleq  (\mathbf{\Sigma}_0^{-1}+\mathbf{W}^T\mathbf{\Psi}^{-1}\mathbf{W})^{-1} \tag{12.8} \\
 \mathbf{m}_i &amp; \triangleq \mathbf{\Sigma}_i(\mathbf{W}^T\mathbf{\Psi}^{-1}(\mathbf{x}_i-\mathbf{\mu})+\mathbf{\Sigma}_0^{-1}\mathbf{\mu}_0) \tag{12.9}
@@ -438,8 +438,8 @@ p(\mathbf{z}_i|\mathbf{x}_i,\mathbf{\theta}) &amp; =  \mathcal{N}(\mathbf{z}_i|\
 \[ \begin{align}\begin{aligned}
 值得注意的是，在FA模型中，$\mathbf{\Sigma}_i$事实上与$i$无关，所以我们可以将其表示为$\mathbf{\Sigma}$。计算这个矩阵所花费的时间复杂度为$O(L^3+L^2D)$，计算每个$\mathbf{m}_i=\mathbb{E}[\mathbf{z}_i|\mathbf{x}_i,\mathbf{\theta}]$的时间复杂度为$O(L^2+LD)$。$\mathbf{m}_i$有时又被称为隐藏**分值(scores)**或者隐藏**因子(factors)**。\\让我们给出一个简单的例子。考虑一个数据集，其中变量的数量$D=11$,样本数量$N=387$，这些变量描述了不同车辆的各种方面，比如发动机大小，气缸数量，每加仑公里路(miles per gallon,MPG)，价格等等。我们首先训练一个$L=2$的模型。我们可以在二维空间中绘制$\mathbf{m}_i$来实现数据的可视化，结果如图12.2所示。\\为了进一步加深对隐藏因子的理解，我们可以将每个特征维度对应的单位向量$\mathbf{e}_1=(1,0,...,0),\mathbf{e}_2=(0,1,0,...,0)$等投影到一个低维度的空间。这些结果如图中蓝色直线所示，这被称为**双标图(biplot)**。我们发现水平轴代表价格，对应于特征&quot;经销商&quot;和&quot;零售&quot;，且贵的车在右侧。垂直轴对应于燃油效率（以MPG进行衡量）与尺寸的比例：重型车辆效率更低且分布在上面，然而轻型车辆效率更高且分布在下面。我们可以通过点击某些点来验证这种解释，找到在训练集中距离最近的样例，然后打印出它们的名字。然而，通常情况下，对隐藏因子进行解释是非常困难的，这一点我们会在12.1.3节进行解释。\\### 12.1.3 无法辨别性\\FA模型的参数具有不可辨别性。为了说明这一点，假设$\mathbf{R}$是一个任意的正交旋转矩阵，满足$\mathbf{R}\mathbf{R}^T=\mathbf{I}$。定义$\tilde{\mathbf{W}}=\mathbf{WR}$，基于这个变体矩阵的似然函数与没变化之前的结果是一样的，因为
 \end{aligned}\end{align} \]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-bfc2bed5-6704-43aa-ab00-dfff11e75bed">
-<span class="eqno">(10)<a class="headerlink" href="#equation-bfc2bed5-6704-43aa-ab00-dfff11e75bed" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-9d9b199e-4f61-4112-bac4-eeebe2ee82fc">
+<span class="eqno">(10)<a class="headerlink" href="#equation-9d9b199e-4f61-4112-bac4-eeebe2ee82fc" title="Permalink to this equation">¶</a></span>\[\begin{align}
 {\rm{cov}}[\mathbf{x}] &amp; = \tilde{\mathbf{W}}\mathbb{E}[\mathbf{z}\mathbf{z}^T]\tilde{\mathbf{W}}^T+\mathbb{E}[\mathbf{\epsilon\epsilon}^T] \tag{12.10} \\
 &amp; = \mathbf{WR}\mathbf{R}^T\mathbf{W}^T+\mathbf{\Psi}=\mathbf{W}\mathbf{W}^T+\mathbf{\Psi} \tag{12.11}
 \end{align}\]</div>
@@ -456,8 +456,8 @@ $<span class="math notranslate nohighlight">\(
 <li><p>强制要求<span class="math notranslate nohighlight">\(\mathbf{W}\)</span>为下三角矩阵 一种在贝叶斯领域十分著名的方法是强制要求第一个观测变量只由第一个潜在因子产生。第二个观测变量仅由前两个潜在因子产生，以此类推。举例来说，如果<span class="math notranslate nohighlight">\(L=3,D=4\)</span>，对应的因子载入矩阵为：
 $$
 \mathbf{W}=</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f324526e-4f6f-479b-8a81-653accfb8d58">
-<span class="eqno">(11)<a class="headerlink" href="#equation-f324526e-4f6f-479b-8a81-653accfb8d58" title="Permalink to this equation">¶</a></span>\[\begin{pmatrix}
+<div class="amsmath math notranslate nohighlight" id="equation-a18c737f-30b5-4274-918a-daa348287fce">
+<span class="eqno">(11)<a class="headerlink" href="#equation-a18c737f-30b5-4274-918a-daa348287fce" title="Permalink to this equation">¶</a></span>\[\begin{pmatrix}
   w_{11} &amp; 0 &amp; 0 \\
   w_{21} &amp; w_{22} &amp; 0 \\
   w_{31} &amp; w_{32} &amp; w_{33} \\
@@ -469,8 +469,8 @@ $$
 \end{aligned}\end{align} \]</div>
 </li>
 </ul>
-<div class="amsmath math notranslate nohighlight" id="equation-10a9848e-d38c-4cac-bf25-740c81a91361">
-<span class="eqno">(12)<a class="headerlink" href="#equation-10a9848e-d38c-4cac-bf25-740c81a91361" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-22227817-2f1d-4230-ae47-a958df85a7d5">
+<span class="eqno">(12)<a class="headerlink" href="#equation-22227817-2f1d-4230-ae47-a958df85a7d5" title="Permalink to this equation">¶</a></span>\[\begin{align}
 p(\mathbf{x}_i|\mathbf{z}_i,q_i=k,\mathbf{\theta}) &amp; = \mathcal{N}(\mathbf{x}_i|\mathbf{\mu}_k+\mathbf{W}_k\mathbf{z}_i,\mathbf{\Psi})  \tag{12.14} \\
 p(\mathbf{z}_i|\mathbf{\theta}) &amp; = \mathcal{N}(\mathbf{z}_i|\mathbf{0},\mathbf{I}) \tag{12.15} \\
 p(q_i|\mathbf{\theta}) &amp; = {\rm{Cat}}(q_i|\mathbf{\pi}) \tag{12.16}
@@ -483,8 +483,8 @@ p(q_i|\mathbf{\theta}) &amp; = {\rm{Cat}}(q_i|\mathbf{\pi}) \tag{12.16}
 $<span class="math notranslate nohighlight">\(
 关于\)</span>\mathbf{z}_i<span class="math notranslate nohighlight">\(的条件后验分布为:
 \)</span>$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6c3d28bd-06ac-4699-9f1b-20ea0775712d">
-<span class="eqno">(13)<a class="headerlink" href="#equation-6c3d28bd-06ac-4699-9f1b-20ea0775712d" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-69c761f2-b9cd-4624-8959-6274efe3b274">
+<span class="eqno">(13)<a class="headerlink" href="#equation-69c761f2-b9cd-4624-8959-6274efe3b274" title="Permalink to this equation">¶</a></span>\[\begin{align}
 p(\mathbf{z}_i|\mathbf{x}_i,q_i=c,\mathbf{\theta}) &amp; = \mathcal{N}(\mathbf{z}_i|\mathbf{m}_{ic},\mathbf{\Sigma}_{ic}) \tag{12.18} \\
 \mathbf{\Sigma}_{ic} &amp;=(\mathbf{I}_L+\mathbf{W}_c^T\mathbf{\Psi}_c^{-1}\mathbf{W}_c)^{-1} \tag{12.19} \\
 \mathbf{m}_{ic} &amp;= \mathbf{\Sigma}_{ic}(\mathbf{W}_c^T\mathbf{\Psi}_c^{-1}(\mathbf{x}_i-\mathbf{\mu}_c)) \tag{12.20}

@@ -94,7 +94,7 @@
         <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../intro.html">
-   Machine Learning ：A Probabilistic Perspective
+   封面
   </a>
  </li>
 </ul>
@@ -800,8 +800,8 @@ p(\mathbf{x}_i|z_i=k,\mathbf{\theta})=\prod_{j=1}^D {\rm{Ber}}(x_{ij}|\mu_{jk}) 
 其中\)</span>\mu_{jk}<span class="math notranslate nohighlight">\(为在簇\)</span>k<span class="math notranslate nohighlight">\(中第\)</span>j$个属性为真的概率。</p>
 <p>隐变量本身没有任何意义，我们引入隐变量的目的可能仅仅是为了使模型更具有表达力。举例来说，我们可以发现混合分布的期望和协方差由下式给定
 $$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-fb2364f6-0fda-4512-81bc-d03ed5e56b51">
-<span class="eqno">(1)<a class="headerlink" href="#equation-fb2364f6-0fda-4512-81bc-d03ed5e56b51" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-370fdec1-23c3-461c-b96f-e9fc02f4e7c2">
+<span class="eqno">(1)<a class="headerlink" href="#equation-370fdec1-23c3-461c-b96f-e9fc02f4e7c2" title="Permalink to this equation">¶</a></span>\[\begin{align}
 \mathbb{E}[\mathbf{x}] &amp;=\sum_k\pi_k\mathbf{\mu}_k \tag{11.4} \\
 \rm{cov}[\mathbf{x}] &amp;= \sum_k\pi_k[\mathbf{\Sigma}_k+\mathbf{\mu}_k\mathbf{\mu}_k^T] - \mathbb{E}[\mathbf{x}]\mathbb{E}[\mathbf{x}]^T \tag{11.5}\\ 
 \end{align}\]</div>
@@ -813,8 +813,8 @@ $$</p>
 $<span class="math notranslate nohighlight">\(
 我们可以证明：
 \)</span>$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-38621a9f-3569-4680-8a6a-3ab932b0d7a3">
-<span class="eqno">(2)<a class="headerlink" href="#equation-38621a9f-3569-4680-8a6a-3ab932b0d7a3" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-1c92926e-fb2d-4b19-a338-45b8227dedf0">
+<span class="eqno">(2)<a class="headerlink" href="#equation-1c92926e-fb2d-4b19-a338-45b8227dedf0" title="Permalink to this equation">¶</a></span>\[\begin{align}
 \mathbb{E}[\mathbf{x}] &amp; = \int\mathbf{x}p(\mathbf{x})d\mathbf{x} \\
 &amp; = \int \mathbf{x}\sum_{k=1}^{K}\pi_k\mathcal{N}(\mathbf{x}|\mathbf{\mu}_k,\Sigma_k)d\mathbf{x} \\
 &amp; = \sum_{k=1}^K\pi_k\int\mathbf{x}\mathcal{N}(\mathbf{x}|\mathbf{\mu}_k,\Sigma_k)d\mathbf{x} \\
@@ -822,8 +822,8 @@ $<span class="math notranslate nohighlight">\(
 \end{align}\]</div>
 <div class="math notranslate nohighlight">
 \[\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-d4e47d9f-e25d-4564-8c86-5485c440bc5e">
-<span class="eqno">(3)<a class="headerlink" href="#equation-d4e47d9f-e25d-4564-8c86-5485c440bc5e" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c86d46e7-97e7-4e73-b580-3d62ff5264b8">
+<span class="eqno">(3)<a class="headerlink" href="#equation-c86d46e7-97e7-4e73-b580-3d62ff5264b8" title="Permalink to this equation">¶</a></span>\[\begin{align}
 {\rm{cov}}[\mathbf{x}] &amp; = \mathbb{E}[\mathbf{x}\mathbf{x}^T]-\mathbb{E}[\mathbf{x}]\mathbb{E}[\mathbf{x}]^T \\
 &amp; = \int \mathbf{x}\mathbf{x}^T \sum_{k=1}^{K}\pi_k\mathcal{N}(\mathbf{x}|\mathbf{\mu}_k,\Sigma_k)d\mathbf{x} - \mathbb{E}[\mathbf{x}]\mathbb{E}[\mathbf{x}]^T \\
 &amp; = \sum_{k=1}^{K}\pi_k  \int \mathbf{x}\mathbf{x}^T\mathcal{N}(\mathbf{x}|\mathbf{\mu}_k,\Sigma_k)d\mathbf{x} - \mathbb{E}[\mathbf{x}]\mathbb{E}[\mathbf{x}]^T \\
@@ -980,8 +980,8 @@ Q(\mathbf{\theta},\mathbf{\theta}^{t-1})=\mathbb{E}[l_c(\mathbf{\theta})|\mathca
 <h4>11.4.2.1 辅助函数<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h4>
 <p>完整数据的对数似然期望由下式给定：
 $$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-627716cd-ed10-4977-a4e9-38fd4f35190c">
-<span class="eqno">(4)<a class="headerlink" href="#equation-627716cd-ed10-4977-a4e9-38fd4f35190c" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-4079df76-d715-424c-8395-db3da479c797">
+<span class="eqno">(4)<a class="headerlink" href="#equation-4079df76-d715-424c-8395-db3da479c797" title="Permalink to this equation">¶</a></span>\[\begin{align}
 Q(\mathbf{\theta},\mathbf{\theta}^{(t-1)}) &amp; \triangleq \mathbb{E}\left[\sum_{i}\log p(\mathbf{x}_i,z_i|\mathbf{\theta})\right] \tag{11.22} \\
 &amp; = \sum_i \mathbb{E}\left[\log\left[\prod_{k=1}^K(\pi_kp(\mathbf{x}_i|\mathbf{\theta}_k))^{\mathbb{I}(z_i=k)}\right]\right] \tag{11.23} \\
 &amp; = \sum_i\sum_k \mathbb{E}[\mathbb{I}(z_i=k)]\log[\pi_kp(\mathbf{x}_i|\mathbf{\theta}_k)] \tag{11.24} \\
@@ -1004,8 +1004,8 @@ $<span class="math notranslate nohighlight">\(
 其中\)</span>r_k \triangleq \sum_ir_{ik}<span class="math notranslate nohighlight">\(为所有属于簇\)</span>k$的数据点的加权数量。</p>
 <p>为了推导出在步骤<span class="math notranslate nohighlight">\(\rm{M}\)</span>中的<span class="math notranslate nohighlight">\(\mathbf{\mu}_k\)</span>和<span class="math notranslate nohighlight">\(\mathbf{\Sigma}_k\)</span>，我们观察在辅助函数<span class="math notranslate nohighlight">\(Q\)</span>中与<span class="math notranslate nohighlight">\(\mathbf{\mu}_k\)</span>和<span class="math notranslate nohighlight">\(\mathbf{\Sigma}_k\)</span>有关的部分。我们发现结果为：
 $$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7bdd01eb-9e4b-4193-a7da-c9415b2ab5c7">
-<span class="eqno">(5)<a class="headerlink" href="#equation-7bdd01eb-9e4b-4193-a7da-c9415b2ab5c7" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-68bffa25-a440-4699-9b77-4083facf55fa">
+<span class="eqno">(5)<a class="headerlink" href="#equation-68bffa25-a440-4699-9b77-4083facf55fa" title="Permalink to this equation">¶</a></span>\[\begin{align}
 l(\mathbf{\mu}_k,\mathbf{\Sigma}_k) &amp; = \sum_k\sum_ir_{ik}\log p(\mathbf{x}_i|\mathbf{\theta}_k) \tag{11.29} \\
 &amp; = -\frac{1}{2}\sum_ir_{ik}[\log\left|\mathbf{\Sigma}_k\right|+(\mathbf{x}_i-\mathbf{\mu}_k)^T\mathbf{\mathbf{\Sigma}}_k^{-1}(\mathbf{x}_i-\mathbf{\mu}_k)] \tag{11.30}
 \end{align}\]</div>
@@ -1013,8 +1013,8 @@ l(\mathbf{\mu}_k,\mathbf{\Sigma}_k) &amp; = \sum_k\sum_ir_{ik}\log p(\mathbf{x}_
 \[
 这只是计算MVN的MLEs的标准问题（见4.1.3节）的加权版本。结果表明，新的参数估计由下式给定：
 \]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-5a0b26d6-bb06-428d-a7bf-0b02bfe4bb02">
-<span class="eqno">(6)<a class="headerlink" href="#equation-5a0b26d6-bb06-428d-a7bf-0b02bfe4bb02" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-fb8fdb5e-c703-47d0-a118-bb462788afd1">
+<span class="eqno">(6)<a class="headerlink" href="#equation-fb8fdb5e-c703-47d0-a118-bb462788afd1" title="Permalink to this equation">¶</a></span>\[\begin{align}
 \mathbf{\mu}_k &amp; = \frac{\sum_ir_{ik}\mathbf{x}_i}{r_k} \tag{11.31} \\
 \mathbf{\Sigma}_k &amp;= \frac{\sum_ir_{ik}(\mathbf{x}_i-\mathbf{\mu}_k)(\mathbf{x}_i-\mathbf{\mu}_k)^T}{r_k}=\frac{\sum_ir_{ik}\mathbf{x}_i\mathbf{x}_i^T}{r_{ik}}-\mathbf{\mu}_k\mathbf{\mu}_k^T \tag{11.32}
 \end{align}\]</div>
@@ -1195,8 +1195,8 @@ Q(\mathbf{\theta},q) \triangleq \sum_i\mathbb{E}_{q_i}[\log p(\mathbf{x}_i,\math
 其中\)</span>\mathbb{H}(q_i)<span class="math notranslate nohighlight">\(为\)</span>q_i$的熵。</p>
 <p>上述结论对于所有大于0的分布<span class="math notranslate nohighlight">\(q\)</span>都是成立的。我们应该选择哪一个呢？直觉上，我们应该选择一个分布<span class="math notranslate nohighlight">\(q\)</span>，使得等号刚好成立。第<span class="math notranslate nohighlight">\(i\)</span>个样本的下确界为：
 $$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-43d68f84-040d-4a52-b1ba-71900b5c10df">
-<span class="eqno">(7)<a class="headerlink" href="#equation-43d68f84-040d-4a52-b1ba-71900b5c10df" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-fe31377f-6154-4f46-bfb6-516f431eff1f">
+<span class="eqno">(7)<a class="headerlink" href="#equation-fe31377f-6154-4f46-bfb6-516f431eff1f" title="Permalink to this equation">¶</a></span>\[\begin{align}
 L(\mathbf{\theta},q_i) &amp; = \sum_{\mathbf{z}_i}q_i(\mathbf{z}_i)\log\frac{p(\mathbf{x}_i,\mathbf{z}_i|\mathbf{\theta})}{q_i(\mathbf{z}_i)}  \tag{11.87} \\
 &amp; = \sum_{\mathbf{z}_i}q_i(\mathbf{z}_i)\log\frac{p(\mathbf{z}_i|\mathbf{x}_i,\mathbf{\theta})p(\mathbf{x}_i|\mathbf{\theta})}{q_i(\mathbf{z_i})} \tag{11.88} \\
 &amp; = \sum_{\mathbf{z}_i}q_i(\mathbf{z}_i)\log\frac{p(\mathbf{z}_i|\mathbf{x}_i,\mathbf{\theta})}{q_i(\mathbf{z}_i)} + \sum_{\mathbf{z}_i}q_i(\mathbf{z}_i)\log p(\mathbf{x}_i|\mathbf{\theta}) \tag{11.98} \\
