@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>11 混合模型与EM算法 &#8212; 机器学习：概率视角</title>
+    <title>11 混合模型与 EM 算法 &#8212; 机器学习：概率视角</title>
     
-  <link href="../_static/css/theme.css" rel="stylesheet" />
-  <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+  <link href="../_static/css/theme.css" rel="stylesheet">
+  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -22,8 +22,8 @@
       
 
     
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/sphinx-book-theme.e2363ea40746bee74734a24ffefccd78.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
@@ -31,21 +31,21 @@
     <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
-  <link rel="preload" as="script" href="../_static/js/index.1c5a1a01449ed65a7b51.js">
+  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
 
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
     <script src="../_static/togglebutton.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
-    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
-    <script >
+    <script>
         const thebe_selector = ".thebe"
         const thebe_selector_input = "pre"
         const thebe_selector_output = ".output"
@@ -56,7 +56,10 @@
     <link rel="next" title="12 隐变量线性模型" href="12.LinearModelwithLatentVariable.html" />
     <link rel="prev" title="10 有向图模型" href="10.DirectedGraphicalModels%20%28BayesNets%29.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="en" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
     
   </head>
   <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
@@ -90,12 +93,17 @@
     <div class="bd-toc-item active">
         <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../preface.html">
-   前言
+  <a class="reference internal" href="../intro.html">
+   Machine Learning ：A Probabilistic Perspective
   </a>
  </li>
 </ul>
 <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../preface.html">
+   前言
+  </a>
+ </li>
  <li class="toctree-l1">
   <a class="reference internal" href="01.Introduction.html">
    01 引言
@@ -148,7 +156,7 @@
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   11 混合模型与EM算法
+   11 混合模型与 EM 算法
   </a>
  </li>
  <li class="toctree-l1">
@@ -287,7 +295,7 @@
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
     </div>
 </div>
 
@@ -305,7 +313,7 @@
         </div>
 
         <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show">
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
             
             <div class="tocsection onthispage pt-5 pb-3">
                 <i class="fas fa-list"></i> Contents
@@ -500,13 +508,209 @@
 </div>
     <div id="main-content" class="row">
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-        
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>11 混合模型与 EM 算法</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   11.1 隐变量模型
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   11.2 混合模型
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id3">
+     11.2.1 高斯混合模型
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id4">
+     11.2.2 混合多项式分布
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id5">
+     11.2.4 混合专家
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id6">
+       11.2.4.1 反向问题的应用
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id7">
+   11.3 混合模型中的参数估计
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id8">
+     11.3.1 不可辨识性
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#map">
+     11.3.2 MAP估计是一个非凸问题
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id9">
+   11.4 EM算法
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id10">
+     11.4.1 基本思想
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#gmmsem">
+     11.4.2 GMMs的EM
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id11">
+       11.4.2.1 辅助函数
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#rm-m-step">
+       11.4.2.3
+       <span class="math notranslate nohighlight">
+        \(\rm{M}\)
+       </span>
+       step
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#k-means">
+       11.4.2.5 K-means算法
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id12">
+       11.4.2.6 矢量量化
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id13">
+       11.4.2.7 初始化和避免局部最小值
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id14">
+       11.4.2.8 最大后验估计
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id15">
+     11.4.3 EM算法用于混合专家模型
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#emdgms">
+     11.4.4 EM算法用于含隐变量的DGMs
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id16">
+     11.4.5 学生分布的EM算法
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#probitem">
+     11.4.6 probit回归的EM算法
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id17">
+     11.4.7 EM的理论基础
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id18">
+       11.4.7.1 完整数据的对数似然的期望值是一个下确界
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id19">
+       11.4.7.2 EM算法单调地增加观测数据的对数似然
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id20">
+     11.4.8 在线EM算法
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id21">
+     11.4.9 其他EM算法变体
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id22">
+   11.5 潜变量模型的模型选择
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id23">
+     11.5.1 概率模型的模型选择
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id24">
+     11.5.2 非概率模型的模型选择
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id25">
+   11.6 含缺失数据的模型拟合
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#emmle">
+     11.6.1 EM算法用于含缺失数据的模型MLE
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
               <div>
                 
-  <div class="section" id="em">
-<h1>11 混合模型与EM算法<a class="headerlink" href="#em" title="Permalink to this headline">¶</a></h1>
-<p>[原文] <a class="reference external" href="https://probml.github.io/pml-book/book0.html">https://probml.github.io/pml-book/book0.html</a></p>
-<p>[作者] <a class="reference external" href="https://www.cs.ubc.ca/~murphyk/">Kevin Patrick Murphy</a></p>
+  <div class="tex2jax_ignore mathjax_ignore section" id="em">
+<h1>11 混合模型与 EM 算法<a class="headerlink" href="#em" title="Permalink to this headline">¶</a></h1>
 <style>p{text-indent:2em;2}</style>
 <div class="section" id="id1">
 <h2>11.1 隐变量模型<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
@@ -596,8 +800,8 @@ p(\mathbf{x}_i|z_i=k,\mathbf{\theta})=\prod_{j=1}^D {\rm{Ber}}(x_{ij}|\mu_{jk}) 
 其中\)</span>\mu_{jk}<span class="math notranslate nohighlight">\(为在簇\)</span>k<span class="math notranslate nohighlight">\(中第\)</span>j$个属性为真的概率。</p>
 <p>隐变量本身没有任何意义，我们引入隐变量的目的可能仅仅是为了使模型更具有表达力。举例来说，我们可以发现混合分布的期望和协方差由下式给定
 $$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d0d18519-eb34-4e61-be2e-1488a8c09d56">
-<span class="eqno">(1)<a class="headerlink" href="#equation-d0d18519-eb34-4e61-be2e-1488a8c09d56" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-fb2364f6-0fda-4512-81bc-d03ed5e56b51">
+<span class="eqno">(1)<a class="headerlink" href="#equation-fb2364f6-0fda-4512-81bc-d03ed5e56b51" title="Permalink to this equation">¶</a></span>\[\begin{align}
 \mathbb{E}[\mathbf{x}] &amp;=\sum_k\pi_k\mathbf{\mu}_k \tag{11.4} \\
 \rm{cov}[\mathbf{x}] &amp;= \sum_k\pi_k[\mathbf{\Sigma}_k+\mathbf{\mu}_k\mathbf{\mu}_k^T] - \mathbb{E}[\mathbf{x}]\mathbb{E}[\mathbf{x}]^T \tag{11.5}\\ 
 \end{align}\]</div>
@@ -609,8 +813,8 @@ $$</p>
 $<span class="math notranslate nohighlight">\(
 我们可以证明：
 \)</span>$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f0ae3fa0-5d20-408e-9a2b-3c8ab09fd440">
-<span class="eqno">(2)<a class="headerlink" href="#equation-f0ae3fa0-5d20-408e-9a2b-3c8ab09fd440" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-38621a9f-3569-4680-8a6a-3ab932b0d7a3">
+<span class="eqno">(2)<a class="headerlink" href="#equation-38621a9f-3569-4680-8a6a-3ab932b0d7a3" title="Permalink to this equation">¶</a></span>\[\begin{align}
 \mathbb{E}[\mathbf{x}] &amp; = \int\mathbf{x}p(\mathbf{x})d\mathbf{x} \\
 &amp; = \int \mathbf{x}\sum_{k=1}^{K}\pi_k\mathcal{N}(\mathbf{x}|\mathbf{\mu}_k,\Sigma_k)d\mathbf{x} \\
 &amp; = \sum_{k=1}^K\pi_k\int\mathbf{x}\mathcal{N}(\mathbf{x}|\mathbf{\mu}_k,\Sigma_k)d\mathbf{x} \\
@@ -618,8 +822,8 @@ $<span class="math notranslate nohighlight">\(
 \end{align}\]</div>
 <div class="math notranslate nohighlight">
 \[\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-c130f693-0080-4b91-8c16-bccc66a8052b">
-<span class="eqno">(3)<a class="headerlink" href="#equation-c130f693-0080-4b91-8c16-bccc66a8052b" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d4e47d9f-e25d-4564-8c86-5485c440bc5e">
+<span class="eqno">(3)<a class="headerlink" href="#equation-d4e47d9f-e25d-4564-8c86-5485c440bc5e" title="Permalink to this equation">¶</a></span>\[\begin{align}
 {\rm{cov}}[\mathbf{x}] &amp; = \mathbb{E}[\mathbf{x}\mathbf{x}^T]-\mathbb{E}[\mathbf{x}]\mathbb{E}[\mathbf{x}]^T \\
 &amp; = \int \mathbf{x}\mathbf{x}^T \sum_{k=1}^{K}\pi_k\mathcal{N}(\mathbf{x}|\mathbf{\mu}_k,\Sigma_k)d\mathbf{x} - \mathbb{E}[\mathbf{x}]\mathbb{E}[\mathbf{x}]^T \\
 &amp; = \sum_{k=1}^{K}\pi_k  \int \mathbf{x}\mathbf{x}^T\mathcal{N}(\mathbf{x}|\mathbf{\mu}_k,\Sigma_k)d\mathbf{x} - \mathbb{E}[\mathbf{x}]\mathbb{E}[\mathbf{x}]^T \\
@@ -776,8 +980,8 @@ Q(\mathbf{\theta},\mathbf{\theta}^{t-1})=\mathbb{E}[l_c(\mathbf{\theta})|\mathca
 <h4>11.4.2.1 辅助函数<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h4>
 <p>完整数据的对数似然期望由下式给定：
 $$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-06789068-7a2a-46c8-a227-a9abe73e7682">
-<span class="eqno">(4)<a class="headerlink" href="#equation-06789068-7a2a-46c8-a227-a9abe73e7682" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-627716cd-ed10-4977-a4e9-38fd4f35190c">
+<span class="eqno">(4)<a class="headerlink" href="#equation-627716cd-ed10-4977-a4e9-38fd4f35190c" title="Permalink to this equation">¶</a></span>\[\begin{align}
 Q(\mathbf{\theta},\mathbf{\theta}^{(t-1)}) &amp; \triangleq \mathbb{E}\left[\sum_{i}\log p(\mathbf{x}_i,z_i|\mathbf{\theta})\right] \tag{11.22} \\
 &amp; = \sum_i \mathbb{E}\left[\log\left[\prod_{k=1}^K(\pi_kp(\mathbf{x}_i|\mathbf{\theta}_k))^{\mathbb{I}(z_i=k)}\right]\right] \tag{11.23} \\
 &amp; = \sum_i\sum_k \mathbb{E}[\mathbb{I}(z_i=k)]\log[\pi_kp(\mathbf{x}_i|\mathbf{\theta}_k)] \tag{11.24} \\
@@ -800,8 +1004,8 @@ $<span class="math notranslate nohighlight">\(
 其中\)</span>r_k \triangleq \sum_ir_{ik}<span class="math notranslate nohighlight">\(为所有属于簇\)</span>k$的数据点的加权数量。</p>
 <p>为了推导出在步骤<span class="math notranslate nohighlight">\(\rm{M}\)</span>中的<span class="math notranslate nohighlight">\(\mathbf{\mu}_k\)</span>和<span class="math notranslate nohighlight">\(\mathbf{\Sigma}_k\)</span>，我们观察在辅助函数<span class="math notranslate nohighlight">\(Q\)</span>中与<span class="math notranslate nohighlight">\(\mathbf{\mu}_k\)</span>和<span class="math notranslate nohighlight">\(\mathbf{\Sigma}_k\)</span>有关的部分。我们发现结果为：
 $$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b16a8241-d61b-422c-970d-ccc6426912fa">
-<span class="eqno">(5)<a class="headerlink" href="#equation-b16a8241-d61b-422c-970d-ccc6426912fa" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-7bdd01eb-9e4b-4193-a7da-c9415b2ab5c7">
+<span class="eqno">(5)<a class="headerlink" href="#equation-7bdd01eb-9e4b-4193-a7da-c9415b2ab5c7" title="Permalink to this equation">¶</a></span>\[\begin{align}
 l(\mathbf{\mu}_k,\mathbf{\Sigma}_k) &amp; = \sum_k\sum_ir_{ik}\log p(\mathbf{x}_i|\mathbf{\theta}_k) \tag{11.29} \\
 &amp; = -\frac{1}{2}\sum_ir_{ik}[\log\left|\mathbf{\Sigma}_k\right|+(\mathbf{x}_i-\mathbf{\mu}_k)^T\mathbf{\mathbf{\Sigma}}_k^{-1}(\mathbf{x}_i-\mathbf{\mu}_k)] \tag{11.30}
 \end{align}\]</div>
@@ -809,8 +1013,8 @@ l(\mathbf{\mu}_k,\mathbf{\Sigma}_k) &amp; = \sum_k\sum_ir_{ik}\log p(\mathbf{x}_
 \[
 这只是计算MVN的MLEs的标准问题（见4.1.3节）的加权版本。结果表明，新的参数估计由下式给定：
 \]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-04269558-462a-47c4-87a3-cab1d8b0303d">
-<span class="eqno">(6)<a class="headerlink" href="#equation-04269558-462a-47c4-87a3-cab1d8b0303d" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-5a0b26d6-bb06-428d-a7bf-0b02bfe4bb02">
+<span class="eqno">(6)<a class="headerlink" href="#equation-5a0b26d6-bb06-428d-a7bf-0b02bfe4bb02" title="Permalink to this equation">¶</a></span>\[\begin{align}
 \mathbf{\mu}_k &amp; = \frac{\sum_ir_{ik}\mathbf{x}_i}{r_k} \tag{11.31} \\
 \mathbf{\Sigma}_k &amp;= \frac{\sum_ir_{ik}(\mathbf{x}_i-\mathbf{\mu}_k)(\mathbf{x}_i-\mathbf{\mu}_k)^T}{r_k}=\frac{\sum_ir_{ik}\mathbf{x}_i\mathbf{x}_i^T}{r_{ik}}-\mathbf{\mu}_k\mathbf{\mu}_k^T \tag{11.32}
 \end{align}\]</div>
@@ -991,8 +1195,8 @@ Q(\mathbf{\theta},q) \triangleq \sum_i\mathbb{E}_{q_i}[\log p(\mathbf{x}_i,\math
 其中\)</span>\mathbb{H}(q_i)<span class="math notranslate nohighlight">\(为\)</span>q_i$的熵。</p>
 <p>上述结论对于所有大于0的分布<span class="math notranslate nohighlight">\(q\)</span>都是成立的。我们应该选择哪一个呢？直觉上，我们应该选择一个分布<span class="math notranslate nohighlight">\(q\)</span>，使得等号刚好成立。第<span class="math notranslate nohighlight">\(i\)</span>个样本的下确界为：
 $$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2dea8d14-72fe-45d7-9abb-09e64cc36583">
-<span class="eqno">(7)<a class="headerlink" href="#equation-2dea8d14-72fe-45d7-9abb-09e64cc36583" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-43d68f84-040d-4a52-b1ba-71900b5c10df">
+<span class="eqno">(7)<a class="headerlink" href="#equation-43d68f84-040d-4a52-b1ba-71900b5c10df" title="Permalink to this equation">¶</a></span>\[\begin{align}
 L(\mathbf{\theta},q_i) &amp; = \sum_{\mathbf{z}_i}q_i(\mathbf{z}_i)\log\frac{p(\mathbf{x}_i,\mathbf{z}_i|\mathbf{\theta})}{q_i(\mathbf{z}_i)}  \tag{11.87} \\
 &amp; = \sum_{\mathbf{z}_i}q_i(\mathbf{z}_i)\log\frac{p(\mathbf{z}_i|\mathbf{x}_i,\mathbf{\theta})p(\mathbf{x}_i|\mathbf{\theta})}{q_i(\mathbf{z_i})} \tag{11.88} \\
 &amp; = \sum_{\mathbf{z}_i}q_i(\mathbf{z}_i)\log\frac{p(\mathbf{z}_i|\mathbf{x}_i,\mathbf{\theta})}{q_i(\mathbf{z}_i)} + \sum_{\mathbf{z}_i}q_i(\mathbf{z}_i)\log p(\mathbf{x}_i|\mathbf{\theta}) \tag{11.98} \\
@@ -1108,54 +1312,42 @@ p(\mathbf{x}_{iv}|\mathbf{\theta})=\sum_{\mathbf{x}_{ih}}p(\mathbf{x}_{iv},\math
 
               </div>
               
-        
             
-
-
-
-<div class='prev-next-bottom'>
-    
-    <div id="prev">
-        <a class="left-prev" href="10.DirectedGraphicalModels%20%28BayesNets%29.html" title="previous page">
-            <i class="prevnext-label fas fa-angle-left"></i>
-            <div class="prevnext-info">
-                <p class="prevnext-label">previous</p>
-                <p class="prevnext-title">10 有向图模型</p>
-            </div>
-        </a>
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="10.DirectedGraphicalModels%20%28BayesNets%29.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">10 有向图模型</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="12.LinearModelwithLatentVariable.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">12 隐变量线性模型</p>
     </div>
-     <div id="next">
-        <a class="right-next" href="12.LinearModelwithLatentVariable.html" title="next page">
-            <div class="prevnext-info">
-                <p class="prevnext-label">next</p>
-                <p class="prevnext-title">12 隐变量线性模型</p>
-            </div>
-            <i class="prevnext-label fas fa-angle-right"></i>
-        </a>
-     </div>
-
+    <i class="fas fa-angle-right"></i>
+    </a>
 </div>
-        
+            
         </div>
     </div>
     <footer class="footer">
-    <div class="container">
-      <p>
-        
-          By Kevin Murphy<br/>
-        
-            &copy; Copyright 2021.<br/>
-      </p>
-    </div>
-  </footer>
+  <p>
+    
+      By Kevin Murphy<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
 </main>
 
 
       </div>
     </div>
   
-  <script src="../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
 
-  
   </body>
 </html>

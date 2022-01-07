@@ -5,54 +5,53 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>28 深度学习 &#8212; 机器学习：概率视角</title>
+    <title>Machine Learning ：A Probabilistic Perspective &#8212; 机器学习：概率视角</title>
     
-  <link href="../_static/css/theme.css" rel="stylesheet">
-  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
 
     
   <link rel="stylesheet"
-    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
   <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
   <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     
       
 
     
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
-  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
 
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/togglebutton.js"></script>
-    <script src="../_static/clipboard.min.js"></script>
-    <script src="../_static/copybutton.js"></script>
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script>
         const thebe_selector = ".thebe"
         const thebe_selector_input = "pre"
         const thebe_selector_output = ".output"
     </script>
-    <script async="async" src="../_static/sphinx-thebe.js"></script>
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="本书常见缩写列表" href="Abbreviations.html" />
-    <link rel="prev" title="27 离散数据的隐变量模型" href="27.LatentVariableModelsForDiscreteData.html" />
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="前言" href="preface.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -72,178 +71,178 @@
 <div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
     
         <div class="navbar-brand-box">
-    <a class="navbar-brand text-wrap" href="../index.html">
+    <a class="navbar-brand text-wrap" href="index.html">
       
         <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
         
       
       
-      <img src="../_static/logo.png" class="logo" alt="logo">
+      <img src="_static/logo.png" class="logo" alt="logo">
       
       
       <h1 class="site-logo" id="site-title">机器学习：概率视角</h1>
       
     </a>
-</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
         <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../intro.html">
+ <li class="toctree-l1 current">
+  <a class="reference internal" href="#">
    Machine Learning ：A Probabilistic Perspective
   </a>
  </li>
 </ul>
-<ul class="current nav bd-sidenav">
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../preface.html">
+  <a class="reference internal" href="preface.html">
    前言
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="01.Introduction.html">
+  <a class="reference internal" href="MLAPP_BOOK/01.Introduction.html">
    01 引言
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="02.Probability.html">
+  <a class="reference internal" href="MLAPP_BOOK/02.Probability.html">
    02 概率论
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="03.GenerativeModelsForDiscreteData.html">
+  <a class="reference internal" href="MLAPP_BOOK/03.GenerativeModelsForDiscreteData.html">
    03 离散数据的生成式模型
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="04.GaussianModels.html">
+  <a class="reference internal" href="MLAPP_BOOK/04.GaussianModels.html">
    04 高斯模型
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="05.BayesianStatistics.html">
+  <a class="reference internal" href="MLAPP_BOOK/05.BayesianStatistics.html">
    05 贝叶斯学派统计思想
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="06.FrequentistStatistics.html">
+  <a class="reference internal" href="MLAPP_BOOK/06.FrequentistStatistics.html">
    06 频率学派统计思想
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="07.LinearRegression.html">
+  <a class="reference internal" href="MLAPP_BOOK/07.LinearRegression.html">
    07 线性回归
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="08.LogisticRegression.html">
+  <a class="reference internal" href="MLAPP_BOOK/08.LogisticRegression.html">
    08 逻辑回归
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="09.GeneralizedLinearModelsAndTheExponentialFamily.html">
+  <a class="reference internal" href="MLAPP_BOOK/09.GeneralizedLinearModelsAndTheExponentialFamily.html">
    09 广义线性模型
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="10.DirectedGraphicalModels%20%28BayesNets%29.html">
+  <a class="reference internal" href="MLAPP_BOOK/10.DirectedGraphicalModels%20%28BayesNets%29.html">
    10 有向图模型
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="11.MixtureModelandEMAlgorithm.html">
+  <a class="reference internal" href="MLAPP_BOOK/11.MixtureModelandEMAlgorithm.html">
    11 混合模型与 EM 算法
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="12.LinearModelwithLatentVariable.html">
+  <a class="reference internal" href="MLAPP_BOOK/12.LinearModelwithLatentVariable.html">
    12 隐变量线性模型
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="13.SparseLinearModel.html">
+  <a class="reference internal" href="MLAPP_BOOK/13.SparseLinearModel.html">
    13 稀疏线性模型
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="14.KernelMethod.html">
+  <a class="reference internal" href="MLAPP_BOOK/14.KernelMethod.html">
    14 核方法
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="15.GaussianProcesses.html">
+  <a class="reference internal" href="MLAPP_BOOK/15.GaussianProcesses.html">
    15 高斯过程
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="16.AdaptiveBasisFunctionModel.html">
+  <a class="reference internal" href="MLAPP_BOOK/16.AdaptiveBasisFunctionModel.html">
    16 自适应基函数模型
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="17.MarkovAndHiddenMarkovModel.html">
+  <a class="reference internal" href="MLAPP_BOOK/17.MarkovAndHiddenMarkovModel.html">
    17 马尔科夫与隐马尔科夫模型
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="18.StateSpaceModels.html">
+  <a class="reference internal" href="MLAPP_BOOK/18.StateSpaceModels.html">
    18 状态空间模型
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="19.UndirectedGraphicalModels%28MarkovRandomFields%29.html">
+  <a class="reference internal" href="MLAPP_BOOK/19.UndirectedGraphicalModels%28MarkovRandomFields%29.html">
    19 无向图模型（马尔科夫随机场）
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="20.ExactInferenceForGraphicalModels.html">
+  <a class="reference internal" href="MLAPP_BOOK/20.ExactInferenceForGraphicalModels.html">
    20 概率图的精确推断
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="21.VariationalInference.html">
+  <a class="reference internal" href="MLAPP_BOOK/21.VariationalInference.html">
    21 变分推断
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="22.MoreVariationalInference.html">
+  <a class="reference internal" href="MLAPP_BOOK/22.MoreVariationalInference.html">
    22 更多变分推断方法
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="23.MonteCarloInference.html">
+  <a class="reference internal" href="MLAPP_BOOK/23.MonteCarloInference.html">
    23 蒙特卡洛推断
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="24.MarkovChainMonteCarlo%28MCMC%29Inference.html">
+  <a class="reference internal" href="MLAPP_BOOK/24.MarkovChainMonteCarlo%28MCMC%29Inference.html">
    24 马尔科夫链蒙特卡洛 MCMC
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="25.Clustering.html">
+  <a class="reference internal" href="MLAPP_BOOK/25.Clustering.html">
    25 聚簇
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="26.GraphicalModelStructureLearning.html">
+  <a class="reference internal" href="MLAPP_BOOK/26.GraphicalModelStructureLearning.html">
    26 概率图的结构学习
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="27.LatentVariableModelsForDiscreteData.html">
+  <a class="reference internal" href="MLAPP_BOOK/27.LatentVariableModelsForDiscreteData.html">
    27 离散数据的隐变量模型
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="MLAPP_BOOK/28.DeepLearning.html">
    28 深度学习
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="Abbreviations.html">
+  <a class="reference internal" href="MLAPP_BOOK/Abbreviations.html">
    本书常见缩写列表
   </a>
  </li>
@@ -288,7 +287,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/MLAPP_BOOK/28.DeepLearning.md"><button type="button"
+        <a class="dropdown-buttons" href="_sources/intro.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -313,6 +312,24 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show noprint">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Machine Learning ：A Probabilistic Perspective
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   机器学习： 概率视角
+  </a>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -320,20 +337,48 @@
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>28 深度学习</h1>
+                <h1>Machine Learning ：A Probabilistic Perspective</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Machine Learning ：A Probabilistic Perspective
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   机器学习： 概率视角
+  </a>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
             
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="id1">
-<h1>28 深度学习<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
-<style>p{text-indent:2em;2}</style>
+  <div class="tex2jax_ignore mathjax_ignore section" id="machine-learning-a-probabilistic-perspective">
+<h1>Machine Learning ：A Probabilistic Perspective<a class="headerlink" href="#machine-learning-a-probabilistic-perspective" title="Permalink to this headline">¶</a></h1>
+<p>Author： Kevin P. Murphy (2012)
+Chinese Version By: <a class="reference external" href="https://github.com/qiguming/MLAPP_CN_CODE">qiguming</a> and <a class="reference external" href="https://github.com/Kivy-CN/MLAPP-CN">cycleuser</a>
+Chinese Version Updated By( 2021 ): <span class="xref myst">Xishansnow</span></p>
+</div>
+<div class="tex2jax_ignore mathjax_ignore section" id="id1">
+<h1>机器学习： 概率视角<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<p>中文译者: <a class="reference external" href="https://github.com/qiguming/MLAPP_CN_CODE">qiguming</a> and <a class="reference external" href="https://github.com/Kivy-CN/MLAPP-CN">cycleuser</a>
+中文更新（ 2021 ）: <span class="xref myst">西山晴雪</span></p>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/stats-20220107223201-34ec.webp" /></p>
+<div class="toctree-wrapper compound">
+</div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -349,7 +394,7 @@
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./MLAPP_BOOK"
+            path: "./."
         },
         predefinedOutput: true
     }
@@ -360,18 +405,11 @@
               
             
                 <!-- Previous / next buttons -->
-<div class='prev-next-area'> 
-    <a class='left-prev' id="prev-link" href="27.LatentVariableModelsForDiscreteData.html" title="previous page">
-        <i class="fas fa-angle-left"></i>
-        <div class="prev-next-info">
-            <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">27 离散数据的隐变量模型</p>
-        </div>
-    </a>
-    <a class='right-next' id="next-link" href="Abbreviations.html" title="next page">
+<div class='prev-next-area'>
+    <a class='right-next' id="next-link" href="preface.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">本书常见缩写列表</p>
+        <p class="prev-next-title">前言</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
@@ -393,7 +431,7 @@
       </div>
     </div>
   
-  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
 
   </body>
 </html>

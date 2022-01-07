@@ -7,8 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>17 马尔科夫与隐马尔科夫模型 &#8212; 机器学习：概率视角</title>
     
-  <link href="../_static/css/theme.css" rel="stylesheet" />
-  <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+  <link href="../_static/css/theme.css" rel="stylesheet">
+  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -22,8 +22,8 @@
       
 
     
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/sphinx-book-theme.e2363ea40746bee74734a24ffefccd78.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
@@ -31,21 +31,21 @@
     <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
-  <link rel="preload" as="script" href="../_static/js/index.1c5a1a01449ed65a7b51.js">
+  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
 
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
     <script src="../_static/togglebutton.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
-    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
-    <script >
+    <script>
         const thebe_selector = ".thebe"
         const thebe_selector_input = "pre"
         const thebe_selector_output = ".output"
@@ -56,7 +56,10 @@
     <link rel="next" title="18 状态空间模型" href="18.StateSpaceModels.html" />
     <link rel="prev" title="16 自适应基函数模型" href="16.AdaptiveBasisFunctionModel.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="en" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
     
   </head>
   <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
@@ -90,12 +93,17 @@
     <div class="bd-toc-item active">
         <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../preface.html">
-   前言
+  <a class="reference internal" href="../intro.html">
+   Machine Learning ：A Probabilistic Perspective
   </a>
  </li>
 </ul>
 <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../preface.html">
+   前言
+  </a>
+ </li>
  <li class="toctree-l1">
   <a class="reference internal" href="01.Introduction.html">
    01 引言
@@ -148,7 +156,7 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="11.MixtureModelandEMAlgorithm.html">
-   11 混合模型与EM算法
+   11 混合模型与 EM 算法
   </a>
  </li>
  <li class="toctree-l1">
@@ -287,7 +295,7 @@
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
     </div>
 </div>
 
@@ -305,7 +313,7 @@
         </div>
 
         <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show">
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
             
             <div class="tocsection onthispage pt-5 pb-3">
                 <i class="fas fa-list"></i> Contents
@@ -388,13 +396,97 @@
 </div>
     <div id="main-content" class="row">
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-        
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>17 马尔科夫与隐马尔科夫模型</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   17.1 前言
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   17.2 马尔科夫模型
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id4">
+     17.2.1 转移矩阵
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id5">
+     17.2.2 应用：语言模型
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id6">
+       17.2.2.1 马尔科夫语言模型的最大似然解
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id7">
+       17.2.2.2 删除插值法的经验贝叶斯版本
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id8">
+   17.3 隐马尔可夫模型
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#hmms">
+     17.3.1 HMMs的应用
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id9">
+   17.4 HMMs的推理
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id10">
+     17.4.1 时间模型中推理问题的类型
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id11">
+     17.4.2 前向算法
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id12">
+     17.4.3 前向-后向算法
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
               <div>
                 
-  <div class="section" id="id1">
+  <div class="tex2jax_ignore mathjax_ignore section" id="id1">
 <h1>17 马尔科夫与隐马尔科夫模型<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
-<p>[原文] <a class="reference external" href="https://probml.github.io/pml-book/book0.html">https://probml.github.io/pml-book/book0.html</a></p>
-<p>[作者] <a class="reference external" href="https://www.cs.ubc.ca/~murphyk/">Kevin Patrick Murphy</a></p>
 <style>p{text-indent:2em;2}</style>
 <div class="section" id="id2">
 <h2>17.1 前言<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
@@ -415,8 +507,8 @@ p(X_{1:T})=p(X_1)p(X_2|X_1)p(X_3|X_2)...=p(X_1)\prod_{t=2}^Tp(X_t|X_{t-1})\tag{1
 <p>一个静态的(参数共享)，有限状态(观测值离散)的马尔科夫链等价于一个<strong>随机自动机</strong>(stochastic automaton)。通常情况下我们会使用一个有向图来可视化这样的自动机，其中节点代表状态，箭头代表合法的状态转移(对应于矩阵 <span class="math notranslate nohighlight">\(\bf{A}\)</span> 中的非零元素)。该有向图被称为<strong>状态转移图</strong>(state transition diagram)。图中每一条弧线对应的权重代表转移的概率值。举例来说，图17.1(左)表示了一个 <span class="math notranslate nohighlight">\(2-\rm{state}\)</span> 马尔科夫链:
 $$
 \mathbf{A}=</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9004fe97-b3a9-4ec6-8c37-b4f0b283f037">
-<span class="eqno">(20)<a class="headerlink" href="#equation-9004fe97-b3a9-4ec6-8c37-b4f0b283f037" title="Permalink to this equation">¶</a></span>\[\begin{pmatrix}
+<div class="amsmath math notranslate nohighlight" id="equation-bbd38b6e-8b1a-4995-a825-64ea9c12b89c">
+<span class="eqno">(20)<a class="headerlink" href="#equation-bbd38b6e-8b1a-4995-a825-64ea9c12b89c" title="Permalink to this equation">¶</a></span>\[\begin{pmatrix}
 1-\alpha &amp; \alpha \\
 \beta &amp; 1-\beta
 \end{pmatrix}\]</div>
@@ -425,8 +517,8 @@ $$
 图17.1(右)表示了一个 $3-\rm{state}$ 的马尔科夫链:
 \]</div>
 <p>\mathbf{A}=</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6c4e5cd2-164a-458c-a236-b637f9bfb4c2">
-<span class="eqno">(21)<a class="headerlink" href="#equation-6c4e5cd2-164a-458c-a236-b637f9bfb4c2" title="Permalink to this equation">¶</a></span>\[\begin{pmatrix}
+<div class="amsmath math notranslate nohighlight" id="equation-361c3f3b-de67-45c6-af34-371b3c11ed35">
+<span class="eqno">(21)<a class="headerlink" href="#equation-361c3f3b-de67-45c6-af34-371b3c11ed35" title="Permalink to this equation">¶</a></span>\[\begin{pmatrix}
 A_{11} &amp; A_{12} &amp; 0 \\
 0 &amp; A_{22} &amp; A_{23} \\
 0 &amp; 0 &amp; 1 
@@ -568,8 +660,8 @@ p(z_t=j|\mathbf{x}_{1:t-1})=\sum_{i}p(z_t=j|z_{t-1}=i)p(z_{t-1}|\mathbf{x}_{1:t-
 \)</span><span class="math notranslate nohighlight">\(
 接下来是更新步骤，在这个步骤中，我们使用贝叶斯法则将 \)</span>t<span class="math notranslate nohighlight">\( 时刻的观测值吸收进来：
 \)</span>$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b06a1e20-cd2b-4d4f-ab15-57a58df3716c">
-<span class="eqno">(22)<a class="headerlink" href="#equation-b06a1e20-cd2b-4d4f-ab15-57a58df3716c" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-aaa11260-7fa8-4b67-b5d7-81a08d88d407">
+<span class="eqno">(22)<a class="headerlink" href="#equation-aaa11260-7fa8-4b67-b5d7-81a08d88d407" title="Permalink to this equation">¶</a></span>\[\begin{align}
 \alpha_t(j)  &amp; \triangleq p(z_t=j|\mathbf{x}_{1:t})=p(z_t=j|\mathbf{x}_t,\mathbf{x}_{1:t-1}) \tag{17.45} \\
 &amp; = \frac{1}{Z_t}p(\mathbf{x}_t|z_t=j,\cancel{\mathbf{x_{1:t-1}}})p(z_t=j|\mathbf{x}_{1:t-1}) \tag{17.46}
 \end{align}\]</div>
@@ -618,54 +710,42 @@ $<span class="math notranslate nohighlight">\(
 
               </div>
               
-        
             
-
-
-
-<div class='prev-next-bottom'>
-    
-    <div id="prev">
-        <a class="left-prev" href="16.AdaptiveBasisFunctionModel.html" title="previous page">
-            <i class="prevnext-label fas fa-angle-left"></i>
-            <div class="prevnext-info">
-                <p class="prevnext-label">previous</p>
-                <p class="prevnext-title">16 自适应基函数模型</p>
-            </div>
-        </a>
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="16.AdaptiveBasisFunctionModel.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">16 自适应基函数模型</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="18.StateSpaceModels.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">18 状态空间模型</p>
     </div>
-     <div id="next">
-        <a class="right-next" href="18.StateSpaceModels.html" title="next page">
-            <div class="prevnext-info">
-                <p class="prevnext-label">next</p>
-                <p class="prevnext-title">18 状态空间模型</p>
-            </div>
-            <i class="prevnext-label fas fa-angle-right"></i>
-        </a>
-     </div>
-
+    <i class="fas fa-angle-right"></i>
+    </a>
 </div>
-        
+            
         </div>
     </div>
     <footer class="footer">
-    <div class="container">
-      <p>
-        
-          By Kevin Murphy<br/>
-        
-            &copy; Copyright 2021.<br/>
-      </p>
-    </div>
-  </footer>
+  <p>
+    
+      By Kevin Murphy<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
 </main>
 
 
       </div>
     </div>
   
-  <script src="../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
 
-  
   </body>
 </html>
