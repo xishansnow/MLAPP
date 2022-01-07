@@ -1,6 +1,7 @@
 format: jb-book
-root: preface
+root: intro
 chapters:
+- file: preface
 - file: MLAPP_BOOK/01.Introduction
 - file: MLAPP_BOOK/02.Probability
 - file: MLAPP_BOOK/03.GenerativeModelsForDiscreteData
